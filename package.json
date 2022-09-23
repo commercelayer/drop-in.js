@@ -1,22 +1,15 @@
 {
-  "name": "commercelayer-js-dropin",
   "private": true,
-  "description": "",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "pnpm --filter '*' build",
-    "start.drop-in": "pnpm --filter drop-in.js start",
+    "start.drop-in-js": "pnpm --filter drop-in.js start",
     "start.storybook": "concurrently -n drop-in.js,storybook -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in.js build.watch' 'pnpm --filter storybook start'",
     "test": "pnpm --filter 'drop-in.js' test"
   },
-  "keywords": [],
   "author": {
     "name": "Marco Montalbano",
     "email": "marco.montalbano@commercelayer.io"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/commercelayer/commercelayer-js-dropin.git"
   },
   "license": "MIT",
   "engines": {

@@ -1,7 +1,7 @@
 {
   "name": "@commercelayer/drop-in.js",
   "version": "2.0.0-beta.0",
-  "description": "Stencil Component Starter",
+  "description": "A JavaScript library that helps you integrate with Commerce Layer into any HTML page.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
@@ -10,10 +10,6 @@
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/drop-in-js/drop-in-js.esm.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ionic-team/stencil-component-starter.git"
-  },
   "files": [
     "dist/",
     "loader/"
@@ -25,6 +21,10 @@
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate"
+  },
+  "author": {
+    "name": "Marco Montalbano",
+    "email": "marco.montalbano@commercelayer.io"
   },
   "dependencies": {
     "@stencil/core": "^2.13.0"

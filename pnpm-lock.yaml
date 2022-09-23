@@ -28,6 +28,7 @@ importers:
   packages/storybook:
     specifiers:
       '@babel/core': ^7.19.1
+      '@commercelayer/drop-in.js': workspace:^2.0.0-beta.0
       '@storybook/addon-actions': ^6.5.12
       '@storybook/addon-essentials': ^6.5.12
       '@storybook/addon-interactions': ^6.5.12
@@ -38,14 +39,18 @@ importers:
       '@storybook/testing-library': ^0.0.13
       '@types/react': ^18.0.21
       babel-loader: ^8.2.5
+      lit-html: ^2.3.1
       react: '17'
       react-dom: '17'
       typescript: ^4.8.3
       webpack: ^5.74.0
+    dependencies:
+      '@commercelayer/drop-in.js': link:../drop-in-js
+      lit-html: 2.3.1
     devDependencies:
       '@babel/core': 7.19.1
       '@storybook/addon-actions': 6.5.12_sfoxds7t5ydpegc3knd667wn6m
-      '@storybook/addon-essentials': 6.5.12_2ldk6j7hznhkhnug4guidz554e
+      '@storybook/addon-essentials': 6.5.12_apynrv6t7y7sfxn2v4x4zjdoka
       '@storybook/addon-interactions': 6.5.12_vyw3tue44mbcucbbjnh6cqtppy
       '@storybook/addon-links': 6.5.12_sfoxds7t5ydpegc3knd667wn6m
       '@storybook/builder-webpack4': 6.5.12_mjb3abnop6izgvkouxh4aqdnvm
@@ -3149,7 +3154,7 @@ packages:
       - webpack-command
     dev: true
 
-  /@storybook/addon-essentials/6.5.12_2ldk6j7hznhkhnug4guidz554e:
+  /@storybook/addon-essentials/6.5.12_apynrv6t7y7sfxn2v4x4zjdoka:
     resolution: {integrity: sha512-4AAV0/mQPSk3V0Pie1NIqqgBgScUc0VtBEXDm8BgPeuDNVhPEupnaZgVt+I3GkzzPPo6JjdCsp2L11f3bBSEjw==}
     peerDependencies:
       '@babel/core': ^7.9.6
@@ -3222,6 +3227,7 @@ packages:
       '@storybook/html': 6.5.12_tkukl6gqr2kovgcstirnszxlqa
       '@storybook/node-logger': 6.5.12
       core-js: 3.25.2
+      lit-html: 2.3.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       regenerator-runtime: 0.13.9
@@ -4925,6 +4931,9 @@ packages:
   /@types/tapable/1.0.8:
     resolution: {integrity: sha512-ipixuVrh2OdNmauvtT51o3d8z12p6LtFW9in7U79der/kwejjdNchQC5UMn5u/KxNoM7VHHOs/l8KS8uHxhODQ==}
     dev: true
+
+  /@types/trusted-types/2.0.2:
+    resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
 
   /@types/uglify-js/3.17.0:
     resolution: {integrity: sha512-3HO6rm0y+/cqvOyA8xcYLweF0TKXlAxmQASjbOi49Co51A1N4nR4bEwBgRoD9kNM+rqFGArjKr654SLp2CoGmQ==}
@@ -10359,6 +10368,11 @@ packages:
   /lines-and-columns/1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
     dev: true
+
+  /lit-html/2.3.1:
+    resolution: {integrity: sha512-FyKH6LTW6aBdkfNhNSHyZTnLgJSTe5hMk7HFtc/+DcN1w74C215q8B+Cfxc2OuIEpBNcEKxgF64qL8as30FDHA==}
+    dependencies:
+      '@types/trusted-types': 2.0.2
 
   /load-json-file/1.1.0:
     resolution: {integrity: sha512-cy7ZdNRXdablkXYNI049pthVeXFurRyb9+hA/dZzerZ0pGTx42z+y+ssxBaVV2l70t1muq5IdKhn4UtcoGUY9A==}
