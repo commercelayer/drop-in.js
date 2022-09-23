@@ -3,7 +3,11 @@
   "private": true,
   "description": "",
   "scripts": {
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "build": "pnpm --filter '*' build",
+    "start.drop-in": "pnpm --filter drop-in.js start",
+    "start.storybook": "concurrently -n drop-in.js,storybook -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in.js build.watch' 'pnpm --filter storybook start'",
+    "test": "pnpm --filter 'drop-in.js' test"
   },
   "keywords": [],
   "author": {
@@ -20,6 +24,7 @@
     "pnpm": ">=7"
   },
   "devDependencies": {
+    "concurrently": "^7.4.0",
     "lerna": "^5.5.1"
   }
 }
