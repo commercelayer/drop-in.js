@@ -1,0 +1,25 @@
+{
+  "name": "commercelayer-js-dropin",
+  "private": true,
+  "description": "",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Marco Montalbano",
+    "email": "marco.montalbano@commercelayer.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/commercelayer/commercelayer-js-dropin.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
+  },
+  "devDependencies": {
+    "lerna": "^5.5.1"
+  }
+}
