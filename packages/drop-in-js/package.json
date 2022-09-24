@@ -27,7 +27,11 @@
     "email": "marco.montalbano@commercelayer.io"
   },
   "dependencies": {
-    "@stencil/core": "^2.13.0"
+    "@commercelayer/js-auth": "^2.3.0",
+    "@commercelayer/sdk": "^4.16.0",
+    "@stencil/core": "^2.13.0",
+    "@types/js-cookie": "^3.0.2",
+    "js-cookie": "^3.0.1"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",

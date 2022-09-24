@@ -4,12 +4,10 @@ import { create } from '../utils'
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
-  title: 'Example/MyComponent',
+  title: 'Example/CLPrice',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
-    first: { control: 'text' },
-    middle: { control: 'text' },
-    last: { control: 'text' }
+    sku: { control: 'text' }
   },
 };
 
@@ -23,7 +21,17 @@ const Template = (args) => {
 
   return create(
     html`
-      <my-component first="${args.first}" middle="${args.middle}" last="${args.last}" />
+      <div>
+        <script>
+          window.commercelayerConfig = {
+            clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
+            endpoint: 'https://demo-store-1.commercelayer.io',
+            scope: 'market:10426'
+          }
+          </script>
+        <cl-price sku="${args.sku}" />
+        <cl-price sku="${args.sku}" />
+      </div>
     `
   )
 };
@@ -31,6 +39,5 @@ const Template = (args) => {
 export const Example = Template.bind({});
 // More on args: https://storybook.js.org/docs/html/writing-stories/args
 Example.args = {
-  first: 'Stencil',
-  last: `'Don't call me a framework' JS`
+  sku: 'BACKPACK818488000000XXXX'
 };

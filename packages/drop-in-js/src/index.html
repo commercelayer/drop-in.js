@@ -7,8 +7,21 @@
 
     <script type="module" src="/build/drop-in-js.esm.js"></script>
     <script nomodule src="/build/drop-in-js.js"></script>
+
+    <script>
+      (function() {
+        commercelayerConfig = {
+          // TODO: this should be an env variable (?!)
+          clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
+          endpoint: 'https://demo-store-1.commercelayer.io',
+          scope: 'market:10426'
+        }
+      }());
+    </script>
+
   </head>
   <body>
     <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
+    <cl-price sku="BACKPACK818488000000XXXX"></cl-price>
   </body>
 </html>

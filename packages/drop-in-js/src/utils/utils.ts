@@ -1,3 +1,3 @@
-export function format(first: string, middle: string, last: string): string {
+export function format(first: string| undefined, middle: string| undefined, last: string| undefined): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
