@@ -1,4 +1,4 @@
-import { defineCustomElements } from '@commercelayer/drop-in.js/loader'
+import { defineCustomElements } from '@commercelayer/drop-in/loader'
 import { html } from 'lit-html'
 import { create } from '../utils'
 

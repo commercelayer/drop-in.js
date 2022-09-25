@@ -1,5 +1,5 @@
 {
-  "name": "@commercelayer/drop-in.js",
+  "name": "@commercelayer/drop-in",
   "version": "2.0.0-beta.0",
   "description": "A JavaScript library that helps you integrate with Commerce Layer into any HTML page.",
   "main": "dist/index.cjs.js",
@@ -9,7 +9,7 @@
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/drop-in-js/drop-in-js.esm.js",
+  "unpkg": "dist/drop-in/drop-in.esm.js",
   "files": [
     "dist/",
     "loader/"

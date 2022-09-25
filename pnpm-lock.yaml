@@ -10,7 +10,7 @@ importers:
       concurrently: 7.4.0
       lerna: 5.5.2
 
-  packages/drop-in-js:
+  packages/drop-in:
     specifiers:
       '@commercelayer/js-auth': ^2.3.0
       '@commercelayer/sdk': ^4.16.0
@@ -36,7 +36,7 @@ importers:
   packages/storybook:
     specifiers:
       '@babel/core': ^7.19.1
-      '@commercelayer/drop-in.js': workspace:^2.0.0-beta.0
+      '@commercelayer/drop-in': workspace:^2.0.0-beta.0
       '@storybook/addon-actions': ^6.5.12
       '@storybook/addon-essentials': ^6.5.12
       '@storybook/addon-interactions': ^6.5.12
@@ -53,7 +53,7 @@ importers:
       typescript: ^4.8.3
       webpack: ^5.74.0
     dependencies:
-      '@commercelayer/drop-in.js': link:../drop-in-js
+      '@commercelayer/drop-in': link:../drop-in
       lit-html: 2.3.1
     devDependencies:
       '@babel/core': 7.19.1

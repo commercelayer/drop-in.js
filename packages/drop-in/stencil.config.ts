@@ -1,7 +1,7 @@
 import { Config } from '@stencil/core';
 
 export const config: Config = {
-  namespace: 'drop-in-js',
+  namespace: 'drop-in',
   preamble: 'MIT License\nCopyright (c) 2022 Commerce Layer',
   globalScript: './src/global/app.ts',
   minifyJs: true,

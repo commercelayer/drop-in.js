@@ -3,9 +3,9 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "pnpm --filter '*' build",
-    "start.drop-in-js": "pnpm --filter drop-in.js start",
-    "start.storybook": "concurrently -n drop-in.js,storybook -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in.js build.watch' 'pnpm --filter storybook start'",
-    "test": "pnpm --filter 'drop-in.js' test"
+    "start.drop-in": "pnpm --filter drop-in start",
+    "start.storybook": "concurrently -n drop-in,storybook -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in build.watch' 'pnpm --filter storybook start'",
+    "test": "pnpm --filter 'drop-in' test"
   },
   "author": {
     "name": "Marco Montalbano",

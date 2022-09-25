@@ -28,7 +28,7 @@
     "webpack": "^5.74.0"
   },
   "dependencies": {
-    "@commercelayer/drop-in.js": "workspace:^2.0.0-beta.0",
+    "@commercelayer/drop-in": "workspace:^2.0.0-beta.0",
     "lit-html": "^2.3.1"
   }
 }
