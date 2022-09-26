@@ -5,7 +5,8 @@
     "build": "pnpm --filter '*' build",
     "start.drop-in": "pnpm --filter drop-in start",
     "start.storybook": "concurrently -n drop-in,storybook -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in build.watch' 'pnpm --filter storybook start'",
-    "test": "pnpm --filter 'drop-in' test"
+    "test": "pnpm --filter 'drop-in' test",
+    "test.watch": "pnpm --filter 'drop-in' test.watch"
   },
   "author": {
     "name": "Marco Montalbano",

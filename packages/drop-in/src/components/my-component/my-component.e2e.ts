@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-describe('my-component', () => {
+describe.skip('my-component', () => {
   it('renders', async () => {
     const page = await newE2EPage();
 

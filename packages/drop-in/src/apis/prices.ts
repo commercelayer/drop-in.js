@@ -27,9 +27,11 @@ export const registerPrices = async (client: CommerceLayerClient): Promise<void>
       if (sku) {
         const price = prices[sku]
         if (price) {
-          element.dispatchEvent(new CustomEvent(`priceFetched`, { detail: price }))
+          element.dispatchEvent(new CustomEvent(`priceUpdate`, { detail: price }))
         }
       }
     })
+
+    // TODO: MutationObserver
   })
 }

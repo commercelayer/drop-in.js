@@ -15,7 +15,7 @@ export class CLPrice {
   @State() formatted_amount: string | undefined;
   @State() formatted_compare_at_amount: string | undefined;
 
-  @Listen('priceFetched')
+  @Listen('priceUpdate')
   todoCompletedHandler(event: CustomEvent<Price>) {
     this.formatted_amount = event.detail.formatted_amount
     this.formatted_compare_at_amount = event.detail.formatted_compare_at_amount

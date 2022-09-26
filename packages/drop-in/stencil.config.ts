@@ -1,11 +1,14 @@
-import { Config } from '@stencil/core';
+import { Config } from '@stencil/core'
 
 export const config: Config = {
   namespace: 'drop-in',
   preamble: 'MIT License\nCopyright (c) 2022 Commerce Layer',
+
   globalScript: './src/global/app.ts',
+
   minifyJs: true,
   minifyCss: true,
+
   outputTargets: [
     {
       type: 'dist',
@@ -22,4 +25,8 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
     },
   ],
-};
+
+  testing: {
+    browserHeadless: true
+  }
+}

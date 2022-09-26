@@ -1,32 +1,70 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-describe('cl-price', () => {
-  it('renders', async () => {
-    const page = await newE2EPage();
+describe('e2e.cl-price', () => {
+  it('renders without a sku', async () => {
+    const page = await newE2EPage({
+      waitUntil: 'networkidle0',
+      html: `
+        <script>
+          (function() {
+            commercelayerConfig = {
+              clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
+              endpoint: 'https://demo-store-1.commercelayer.io',
+              scope: 'market:10426'
+            }
+          }());
+        </script>
+        <cl-price></cl-price>
+      `
+    })
 
-    await page.setContent('<cl-price></cl-price>');
-    const element = await page.find('cl-price');
-    expect(element).toHaveClass('hydrated');
+    await page.waitForChanges()
+
+    const element = await page.find('cl-price')
+
+    expect(element).toEqualHtml(`
+      <cl-price class="hydrated">
+        <mock:shadow-root>
+          <div>
+            <s></s>
+            
+          </div>
+        </mock:shadow-root>
+      </cl-price>
+    `)
   });
 
-  it('renders changes to the name data', async () => {
-    const page = await newE2EPage();
+  it('renders with a sku', async () => {
+    const page = await newE2EPage({
+      waitUntil: 'networkidle0',
+      html: `
+        <script>
+        (function() {
+          commercelayerConfig = {
+            clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
+            endpoint: 'https://demo-store-1.commercelayer.io',
+            scope: 'market:10426'
+          }
+        }());
+        </script>
+        <cl-price sku="BACKPACK818488000000XXXX"></cl-price>
+      `
+    })
 
-    await page.setContent('<cl-price></cl-price>');
-    const component = await page.find('cl-price');
-    const element = await page.find('cl-price >>> div');
-    expect(element.textContent).toEqual(`Hello, World! I'm `);
+    await page.waitForChanges()
 
-    component.setProperty('first', 'James');
-    await page.waitForChanges();
-    expect(element.textContent).toEqual(`Hello, World! I'm James`);
+    const element = await page.find('cl-price')
+    // await element.waitForEvent('priceUpdate')
 
-    component.setProperty('last', 'Quincy');
-    await page.waitForChanges();
-    expect(element.textContent).toEqual(`Hello, World! I'm James Quincy`);
-
-    component.setProperty('middle', 'Earl');
-    await page.waitForChanges();
-    expect(element.textContent).toEqual(`Hello, World! I'm James Earl Quincy`);
+    expect(element).toEqualHtml(`
+      <cl-price class="hydrated" sku="BACKPACK818488000000XXXX">
+        <mock:shadow-root>
+          <div>
+            <s>$152.00</s>
+            $130.00
+          </div>
+        </mock:shadow-root>
+      </cl-price>
+    `)
   });
 });
