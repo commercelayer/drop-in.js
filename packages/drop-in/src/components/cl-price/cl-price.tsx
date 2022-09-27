@@ -1,5 +1,6 @@
-import { Price } from '@commercelayer/sdk'
-import { Component, Prop, h, Listen, Element } from '@stencil/core';
+import type { Price } from '@commercelayer/sdk'
+import { Component, Prop, h, Listen, Element } from '@stencil/core'
+import { log } from '../../utils/logger'
 
 @Component({
   tag: 'cl-price',
@@ -9,10 +10,16 @@ export class CLPrice {
   /**
    * Sku code
    */
-  @Prop() sku: string | undefined;
+  @Prop() sku: string | undefined
 
   @Element()
   host!: HTMLElement
+
+  componentWillLoad() {
+    if (typeof this.sku !== 'string') {
+      log('warn', '"sku" should be a string.', this.host)
+    }
+  }
 
   @Listen('priceUpdate')
   priceUpdateHandler({ type, detail }: CustomEvent<Price>) {
@@ -21,11 +28,9 @@ export class CLPrice {
     })
   }
 
-  // TODO: console.warn when sku is undefined.
-
   render() {
     return (
       <slot></slot>
-    );
+    )
   }
 }

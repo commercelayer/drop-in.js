@@ -3,7 +3,8 @@ declare global {
     clientId: string
     endpoint: string
     scope: string
-  }
+    debug: 'all' | 'none'
+  } | undefined
 }
 
 export {}
