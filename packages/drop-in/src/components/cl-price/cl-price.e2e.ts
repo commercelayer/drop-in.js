@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-describe('e2e.cl-price', () => {
+describe('cl-price.e2e', () => {
   it('renders without a sku', async () => {
     const page = await newE2EPage({
       waitUntil: 'networkidle0',
@@ -25,10 +25,7 @@ describe('e2e.cl-price', () => {
     expect(element).toEqualHtml(`
       <cl-price class="hydrated">
         <mock:shadow-root>
-          <div>
-            <s></s>
-            
-          </div>
+          <slot></slot>
         </mock:shadow-root>
       </cl-price>
     `)
@@ -59,12 +56,61 @@ describe('e2e.cl-price', () => {
     expect(element).toEqualHtml(`
       <cl-price class="hydrated" sku="BACKPACK818488000000XXXX">
         <mock:shadow-root>
-          <div>
-            <s>$152.00</s>
-            $130.00
-          </div>
+          <slot></slot>
         </mock:shadow-root>
       </cl-price>
+    `)
+  });
+
+  it('renders with a sku and display prices into cl-price inner-components', async () => {
+    const page = await newE2EPage({
+      waitUntil: 'networkidle0',
+      html: `
+        <script>
+        (function() {
+          commercelayerConfig = {
+            clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
+            endpoint: 'https://demo-store-1.commercelayer.io',
+            scope: 'market:10426'
+          }
+        }());
+        </script>
+        <cl-price sku="BACKPACK818488000000XXXX">
+          <s><cl-price-compare-at-amount></cl-price-compare-at-amount></s>
+          <cl-price-amount></cl-price-amount>
+        </cl-price>
+      `
+    })
+
+    await page.waitForChanges()
+
+    const clPrice = await page.find('cl-price')
+    expect(clPrice).toEqualHtml(`
+      <cl-price class="hydrated" sku="BACKPACK818488000000XXXX">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        <s><cl-price-compare-at-amount class="hydrated"></cl-price-compare-at-amount></s>
+        <cl-price-amount class="hydrated"></cl-price-amount>
+      </cl-price>
+    `)
+
+    const clPriceCompareAtAmount = await page.find('cl-price-compare-at-amount')
+    expect(clPriceCompareAtAmount).toEqualHtml(`
+      <cl-price-compare-at-amount class="hydrated" >
+        <mock:shadow-root>
+          $152.00
+        </mock:shadow-root>
+      </cl-price-compare-at-amount>
+    `)
+
+    const clPriceAmount = await page.find('cl-price-amount')
+    expect(clPriceAmount).toEqualHtml(`
+      <cl-price-amount class="hydrated" >
+        <mock:shadow-root>
+          $130.00
+        </mock:shadow-root>
+      </cl-price-amount>
     `)
   });
 });

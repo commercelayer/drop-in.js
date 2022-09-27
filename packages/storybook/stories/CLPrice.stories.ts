@@ -22,7 +22,10 @@ const Template = (args) => {
 
   return create(
     html`
-      <cl-price sku="${args.sku}" />
+      <cl-price sku="${args.sku}">
+        The price was: <s><cl-price-compare-at-amount></cl-price-compare-at-amount></s><br />
+        Now the price is: <cl-price-amount></cl-price-amount>
+      </cl-price>
     `
   )
 };

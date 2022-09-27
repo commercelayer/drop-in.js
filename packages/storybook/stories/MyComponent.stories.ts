@@ -23,7 +23,7 @@ const Template = (args) => {
 
   return create(
     html`
-      <my-component first="${args.first}" middle="${args.middle}" last="${args.last}" />
+      <my-component first="${args.first}" middle="${args.middle}" last="${args.last}"></my-component>
     `
   )
 };
