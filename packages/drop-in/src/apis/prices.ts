@@ -1,17 +1,29 @@
 import { CommerceLayerClient, Price } from '@commercelayer/sdk'
+import { chunk, isNotNullish, uniq } from '../utils/utils'
 
 const componentName = 'cl-price'
+
+function getSku(element: HTMLClPriceElement): string | null {
+  return element.getAttribute('sku')
+}
 
 export const registerPrices = async (client: CommerceLayerClient): Promise<void> => {
   customElements.whenDefined(componentName).then(async () => {
 
-    const elements = document.querySelectorAll(componentName)
-    const skus = Array.from(elements).map(element => element.getAttribute('sku'))
+    const elements = Array.from(document.querySelectorAll(componentName))
+    const skus = uniq(elements.map(getSku).filter(isNotNullish))
 
-    // TODO: `chunk` skus with pagination
-    const pricesResponse = await client.prices.list({
-      filters: { sku_code_in: skus.join(',') }
-    })
+    const pageSize = 25
+    const chunkedSkus = chunk(skus, pageSize)
+
+    const pricesResponse = (await Promise.all(
+      chunkedSkus.map(async (skus) => {
+        return await client.prices.list({
+          pageSize,
+          filters: { sku_code_in: skus.join(',') }
+        })
+      })
+    )).flat()
 
     // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
     const prices: { [sku: string]: Price } = pricesResponse.reduce((prices, price) => {
@@ -23,7 +35,7 @@ export const registerPrices = async (client: CommerceLayerClient): Promise<void>
     }, {} as { [sku: string]: Price })
 
     elements.forEach(element => {
-      const sku = element.getAttribute('sku')
+      const sku = getSku(element)
       if (sku) {
         const price = prices[sku]
         if (price) {

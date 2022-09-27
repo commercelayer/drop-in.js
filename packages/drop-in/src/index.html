@@ -16,18 +16,168 @@
           // TODO: this should be an env variable (?!)
           clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
           endpoint: 'https://demo-store-1.commercelayer.io',
-          scope: 'market:10426'
+          scope: 'market:10426',
+          // TODO: add debug configuration
+          debug: 'none (default)' | 'all'
         }
       }());
     </script>
 
   </head>
   <body>
+    <cl-price sku="5PANECAP000000FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="5PANECAP9D9CA1FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="APRONXXX000000FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="APRONXXXFFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BABYBIBXA19D9D000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BACKPACK000000FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
     <cl-price sku="BACKPACK818488000000XXXX">
       The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
       Now the price is: <cl-price-amount></cl-price-amount>
-    </cl-price>
+    </cl-price><br /><br />
 
-    <input />
+    <cl-price sku="BACKPACKFFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BASEBHAT000000FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BASEBHATFFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BEACHAIR000000FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BEACHAIRFFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BEACHBAG000000FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BEACHBAGFFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BEANIEXX000000FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BEANIEXXFFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BODYBSSS000000FFFFFF12MX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BODYBSSS000000FFFFFF6MXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BODYBSSSFFFFFF00000012MX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BODYBSSSFFFFFF0000006MXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BOTT17OZFFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BTOW3060000000FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BTOW3060FFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="CROPTOPW000000FFFFFFLXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="CROPTOPW000000FFFFFFMXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BOTT17OZFFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BTOW3060000000FFFFFFXXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="BTOW3060FFFFFF000000XXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="CROPTOPW000000FFFFFFLXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price sku="CROPTOPW000000FFFFFFMXXX">
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
+
+    <cl-price>
+      The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+      Now the price is: <cl-price-amount></cl-price-amount>
+    </cl-price><br /><br />
   </body>
 </html>

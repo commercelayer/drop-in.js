@@ -21,6 +21,8 @@ export class CLPrice {
     })
   }
 
+  // TODO: console.warn when sku is undefined.
+
   render() {
     return (
       <slot></slot>
