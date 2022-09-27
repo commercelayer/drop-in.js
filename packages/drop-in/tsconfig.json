@@ -16,6 +16,14 @@
     "jsx": "react",
     "jsxFactory": "h",
 
+    "baseUrl": "./",
+    "paths": {
+      "#apis/*": ["src/apis/*"],
+      "#components/*": ["src/components/*"],
+      "#global/*": ["src/global/*"],
+      "#utils/*": ["src/utils/*"]
+    },
+
     /* Type Checking */
     "strict": true,                                      /* Enable all strict type-checking options. */
     "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */

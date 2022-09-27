@@ -1,5 +1,5 @@
-import { getClient } from '../apis/auth'
-import { registerPrices } from '../apis/prices'
+import { getClient } from '#apis/auth'
+import { registerPrices } from '#apis/prices'
 
 export default async function () {
   if (!window.commercelayerConfig) {
