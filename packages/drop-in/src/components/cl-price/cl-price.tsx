@@ -16,7 +16,7 @@ export class CLPrice {
 
   @Listen('priceUpdate')
   priceUpdateHandler({ type, detail }: CustomEvent<Price>) {
-    this.host.querySelectorAll('cl-price-amount, cl-price-compare-at-amount').forEach(element => {
+    this.host.querySelectorAll('cl-price-amount').forEach(element => {
       element.dispatchEvent(new CustomEvent<Price>(type, { detail }))
     })
   }

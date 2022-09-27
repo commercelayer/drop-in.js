@@ -13,8 +13,7 @@ export namespace Components {
         "sku": string | undefined;
     }
     interface ClPriceAmount {
-    }
-    interface ClPriceCompareAtAmount {
+        "type": 'price' | 'compare-at';
     }
     interface MyComponent {
         /**
@@ -44,12 +43,6 @@ declare global {
         prototype: HTMLClPriceAmountElement;
         new (): HTMLClPriceAmountElement;
     };
-    interface HTMLClPriceCompareAtAmountElement extends Components.ClPriceCompareAtAmount, HTMLStencilElement {
-    }
-    var HTMLClPriceCompareAtAmountElement: {
-        prototype: HTMLClPriceCompareAtAmountElement;
-        new (): HTMLClPriceCompareAtAmountElement;
-    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -59,7 +52,6 @@ declare global {
     interface HTMLElementTagNameMap {
         "cl-price": HTMLClPriceElement;
         "cl-price-amount": HTMLClPriceAmountElement;
-        "cl-price-compare-at-amount": HTMLClPriceCompareAtAmountElement;
         "my-component": HTMLMyComponentElement;
     }
 }
@@ -71,8 +63,7 @@ declare namespace LocalJSX {
         "sku"?: string | undefined;
     }
     interface ClPriceAmount {
-    }
-    interface ClPriceCompareAtAmount {
+        "type"?: 'price' | 'compare-at';
     }
     interface MyComponent {
         /**
@@ -91,7 +82,6 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "cl-price": ClPrice;
         "cl-price-amount": ClPriceAmount;
-        "cl-price-compare-at-amount": ClPriceCompareAtAmount;
         "my-component": MyComponent;
     }
 }
@@ -101,7 +91,6 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "cl-price": LocalJSX.ClPrice & JSXBase.HTMLAttributes<HTMLClPriceElement>;
             "cl-price-amount": LocalJSX.ClPriceAmount & JSXBase.HTMLAttributes<HTMLClPriceAmountElement>;
-            "cl-price-compare-at-amount": LocalJSX.ClPriceCompareAtAmount & JSXBase.HTMLAttributes<HTMLClPriceCompareAtAmountElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }

@@ -76,7 +76,7 @@ describe('cl-price.e2e', () => {
         }());
         </script>
         <cl-price sku="BACKPACK818488000000XXXX">
-          <s><cl-price-compare-at-amount></cl-price-compare-at-amount></s>
+          <s><cl-price-amount type="compare-at"></cl-price-amount></s>
           <cl-price-amount></cl-price-amount>
         </cl-price>
       `
@@ -90,23 +90,23 @@ describe('cl-price.e2e', () => {
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-        <s><cl-price-compare-at-amount class="hydrated"></cl-price-compare-at-amount></s>
+        <s><cl-price-amount class="hydrated" type="compare-at"></cl-price-amount></s>
         <cl-price-amount class="hydrated"></cl-price-amount>
       </cl-price>
     `)
 
-    const clPriceCompareAtAmount = await page.find('cl-price-compare-at-amount')
+    const clPriceCompareAtAmount = await page.find('cl-price-amount[type="compare-at"]')
     expect(clPriceCompareAtAmount).toEqualHtml(`
-      <cl-price-compare-at-amount class="hydrated" >
+      <cl-price-amount class="hydrated" type="compare-at">
         <mock:shadow-root>
           $152.00
         </mock:shadow-root>
-      </cl-price-compare-at-amount>
+      </cl-price-amount>
     `)
 
-    const clPriceAmount = await page.find('cl-price-amount')
+    const clPriceAmount = await page.find('cl-price-amount:not([type])')
     expect(clPriceAmount).toEqualHtml(`
-      <cl-price-amount class="hydrated" >
+      <cl-price-amount class="hydrated">
         <mock:shadow-root>
           $130.00
         </mock:shadow-root>
