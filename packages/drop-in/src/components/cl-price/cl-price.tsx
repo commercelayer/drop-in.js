@@ -1,6 +1,6 @@
 import { log } from '#utils/logger'
 import type { Price } from '@commercelayer/sdk'
-import { Component, Element, h, Listen, Prop } from '@stencil/core'
+import { Component, Element, h, Listen, Prop, Watch } from '@stencil/core'
 
 @Component({
   tag: 'cl-price',
@@ -10,15 +10,24 @@ export class CLPrice {
   /**
    * Sku code
    */
-  @Prop() sku: string | undefined
+  @Prop({ reflect: true }) sku: string | undefined
 
-  @Element()
-  host!: HTMLElement
+  @Element() host!: HTMLElement
 
-  componentWillLoad() {
-    if (typeof this.sku !== 'string') {
+  private validateSku(sku: string | undefined) {
+    if (typeof sku !== 'string') {
       log('warn', '"sku" should be a string.', this.host)
     }
+  }
+
+  componentWillLoad() {
+    this.validateSku(this.sku)
+  }
+
+  @Watch('sku')
+  watchPropHandler(newValue: string, oldValue: string) {
+    this.validateSku(newValue)
+    console.log('The new value of activated is: ', newValue, 'value was: ', oldValue)
   }
 
   @Listen('priceUpdate')

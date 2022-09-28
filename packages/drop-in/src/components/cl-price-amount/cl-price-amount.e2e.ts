@@ -24,7 +24,7 @@ describe('cl-price-amount.e2e', () => {
     const element = await page.find('cl-price-amount')
 
     expect(element).toEqualHtml(`
-      <cl-price-amount class="hydrated">
+      <cl-price-amount class="hydrated" type="price">
         <mock:shadow-root>
         </mock:shadow-root>
       </cl-price-amount>
@@ -35,7 +35,7 @@ describe('cl-price-amount.e2e', () => {
     await page.waitForChanges()
 
     expect(element).toEqualHtml(`
-      <cl-price-amount class="hydrated">
+      <cl-price-amount class="hydrated" type="price">
         <mock:shadow-root>
           123$
         </mock:shadow-root>

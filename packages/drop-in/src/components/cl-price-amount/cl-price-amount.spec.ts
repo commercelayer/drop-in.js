@@ -8,7 +8,7 @@ describe('cl-price-amount.spec', () => {
       html: '<cl-price-amount></cl-price-amount>',
     })
     expect(root).toEqualHtml(`
-      <cl-price-amount>
+      <cl-price-amount type="price">
         <mock:shadow-root>
         </mock:shadow-root>
       </cl-price-amount>

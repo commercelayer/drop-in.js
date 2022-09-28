@@ -7,7 +7,7 @@ import { Component, h, Listen, State, Host, Prop } from '@stencil/core';
 })
 export class CLPriceAmount {
 
-  @Prop() type: 'price' | 'compare-at' = 'price'
+  @Prop({ reflect: true }) type: 'price' | 'compare-at' = 'price'
 
   @State() price: string | undefined;
 

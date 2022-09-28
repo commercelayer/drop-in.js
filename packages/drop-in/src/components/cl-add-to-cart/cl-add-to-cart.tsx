@@ -12,12 +12,12 @@ export class CLPrice {
   /**
    * Sku code
    */
-  @Prop() sku: string | undefined
+  @Prop({ reflect: true }) sku: string | undefined
 
   /**
    * Quantity
    */
-  @Prop() quantity: number = 1
+  @Prop({ reflect: true }) quantity: number = 1
 
   @Element()
   host!: HTMLElement
