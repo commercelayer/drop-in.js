@@ -1,4 +1,6 @@
 import { Config } from '@stencil/core'
+import { pathsToModuleNameMapper } from 'ts-jest'
+import { compilerOptions } from './tsconfig.json'
 
 export const config: Config = {
   namespace: 'drop-in',
@@ -28,6 +30,9 @@ export const config: Config = {
   ],
 
   testing: {
-    browserHeadless: true
+    browserHeadless: true,
+    moduleNameMapper: {
+      ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' })
+    }
   }
 }
