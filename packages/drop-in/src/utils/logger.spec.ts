@@ -1,4 +1,20 @@
+import { Config } from '#apis/commercelayer'
 import { log } from './logger'
+
+function injectConfig({ 
+  clientId = '1234',
+  endpoint = 'https://example.com',
+  scope = 'market:123',
+  debug
+}: Partial<Config>) {
+  // @ts-expect-error
+  window.commercelayerConfig = {
+    clientId,
+    endpoint,
+    scope,
+    debug
+  }
+}
 
 describe('logger', () => {
   let consoleError: jest.SpyInstance<void, [message?: any, ...optionalParams: any[]]>
@@ -18,9 +34,14 @@ describe('logger', () => {
     consoleInfo.mockClear()
     consoleLog.mockClear()
     consoleWarn.mockClear()
+
+    // @ts-expect-error
+    delete window['commercelayerConfig']
   })
 
   it('should not send anything to console when debug is not define (default to "none")', () => {
+    injectConfig({})
+
     log('error', 'This is a "error" message', 'with a second argument')
     log('info', 'This is a "info" message', 'with a second argument')
     log('log', 'This is a "log" message', 'with a second argument')
@@ -33,6 +54,8 @@ describe('logger', () => {
   })
 
   it('should not send anything to console when debug is set to "none"', () => {
+    injectConfig({ debug: 'none' })
+
     log('error', 'This is a "error" message', 'with a second argument')
     log('info', 'This is a "info" message', 'with a second argument')
     log('log', 'This is a "log" message', 'with a second argument')
@@ -46,8 +69,7 @@ describe('logger', () => {
 
   describe('when debug is set to "all"', () => {
     it('should pass-through the information to console.error', () => {
-      // @ts-expect-error
-      window.commercelayerConfig = { debug: 'all' }
+      injectConfig({ debug: 'all' })
 
       log('error', 'This is a "error" message', 'with a second argument')
 
@@ -60,8 +82,7 @@ describe('logger', () => {
     })
 
     it('should pass-through the information to console.info', () => {
-      // @ts-expect-error
-      window.commercelayerConfig = { debug: 'all' }
+      injectConfig({ debug: 'all' })
 
       log('info', 'This is a "info" message', 'with a second argument')
 
@@ -74,8 +95,7 @@ describe('logger', () => {
     })
 
     it('should pass-through the information to console.log', () => {
-      // @ts-expect-error
-      window.commercelayerConfig = { debug: 'all' }
+      injectConfig({ debug: 'all' })
 
       log('log', 'This is a "log" message', 'with a second argument')
 
@@ -88,8 +108,7 @@ describe('logger', () => {
     })
 
     it('should pass-through the information to console.warn', () => {
-      // @ts-expect-error
-      window.commercelayerConfig = { debug: 'all' }
+      injectConfig({ debug: 'all' })
 
       log('warn', 'This is a "warn" message', 'with a second argument')
 

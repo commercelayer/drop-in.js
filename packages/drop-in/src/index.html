@@ -12,7 +12,7 @@
 
     <script>
       (function() {
-        commercelayerConfig = {
+        window.commercelayerConfig = {
           // TODO: this should be an env variable (?!)
           clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
           endpoint: 'https://demo-store-1.commercelayer.io',
@@ -24,6 +24,8 @@
 
   </head>
   <body>
+    <cl-add-to-cart sku="5PANECAP000000FFFFFFXXXX">Add to cart</cl-add-to-cart><br /><br />
+
     <cl-price sku="5PANECAP000000FFFFFFXXXX">
       The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
       Now the price is: <cl-price-amount></cl-price-amount>

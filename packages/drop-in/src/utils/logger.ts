@@ -1,7 +1,9 @@
+import { Config, getConfig } from '#apis/commercelayer'
+
 export const log = (type: 'error' | 'info' | 'log' | 'warn', ...message: any) => {
 
-  type Debug = Exclude<typeof commercelayerConfig, undefined>['debug']
-  const debug: Debug = window.commercelayerConfig?.debug || 'none'
+  type Debug = Exclude<Config, undefined>['debug']
+  const debug: Debug = getConfig().debug || 'none'
 
   if (debug === 'all') {
     console[type](...message)

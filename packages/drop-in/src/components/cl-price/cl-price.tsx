@@ -1,6 +1,6 @@
 import { log } from '#utils/logger'
 import type { Price } from '@commercelayer/sdk'
-import { Component, Prop, h, Listen, Element } from '@stencil/core'
+import { Component, Element, h, Listen, Prop } from '@stencil/core'
 
 @Component({
   tag: 'cl-price',
