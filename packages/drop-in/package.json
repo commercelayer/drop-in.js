@@ -11,8 +11,7 @@
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/drop-in/drop-in.esm.js",
   "files": [
-    "dist/",
-    "loader/"
+    "dist/"
   ],
   "scripts": {
     "build": "stencil build --docs",
@@ -29,12 +28,15 @@
   "dependencies": {
     "@commercelayer/js-auth": "^2.3.0",
     "@commercelayer/sdk": "^4.16.0",
-    "@stencil/core": "^2.13.0",
-    "@types/js-cookie": "^3.0.2",
     "js-cookie": "^3.0.1"
   },
+  "peerDependencies": {
+    "@stencil/core": "^2.13.0"
+  },
   "devDependencies": {
+    "@stencil/core": "^2.13.0",
     "@types/jest": "^27.0.3",
+    "@types/js-cookie": "^3.0.2",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
     "puppeteer": "^17.1.3",

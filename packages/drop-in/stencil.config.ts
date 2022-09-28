@@ -9,16 +9,20 @@ export const config: Config = {
   globalScript: './src/global/app.ts',
   globalStyle: './src/global/app.scss',
 
+  buildEs5: false,
+
   minifyJs: true,
   minifyCss: true,
 
   outputTargets: [
     {
       type: 'dist',
-      esmLoaderPath: '../loader',
+      // esmLoaderPath: '../loader',
     },
     {
       type: 'dist-custom-elements',
+      dir: 'dist/components',
+      includeGlobalScripts: false
     },
     {
       type: 'docs-readme',
@@ -26,7 +30,7 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
-    },
+    }
   ],
 
   testing: {

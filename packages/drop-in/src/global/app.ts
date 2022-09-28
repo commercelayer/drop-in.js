@@ -11,7 +11,7 @@ function isClPrice(element: any): element is HTMLClPriceElement {
   return (element as HTMLClPriceElement).nodeName.toLowerCase() === 'cl-price'
 }
 
-export default async function () {
+export const initialize = async function () {
   const clClient = await createClient(getConfig())
 
   registerPrices(clClient)
@@ -40,3 +40,5 @@ export default async function () {
     subtree: true
   })
 }
+
+export default initialize
