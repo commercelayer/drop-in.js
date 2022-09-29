@@ -22,9 +22,13 @@ export const initialize = async function () {
         if (mutation.type === 'childList') {
           (Object.keys(registrableNodes) as Array<keyof typeof registrableNodes>).forEach(nodeName => {
             nodes[nodeName] ||= []
-            nodes[nodeName] = nodes[nodeName].concat(
-              Array.from(mutation.addedNodes).filter(registrableNodes[nodeName])
-            )
+            nodes[nodeName] = nodes[nodeName]
+              .concat(
+                Array.from(mutation.addedNodes).filter(registrableNodes[nodeName])
+              )
+              .concat(
+                Array.from(mutation.addedNodes).flatMap(node => Array.from((node as HTMLElement).querySelectorAll(nodeName)))
+              )
           })
         }
 
