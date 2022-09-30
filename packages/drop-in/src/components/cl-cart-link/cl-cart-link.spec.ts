@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing'
-import { CLAddToCart } from './cl-add-to-cart'
+import { CLCartLink } from './cl-cart-link'
 
 describe.skip('cl-add-to-cart.spec', () => {
   it('renders', async () => {
     const { root } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [CLCartLink],
       html: '<cl-add-to-cart sku="BACKPACK818488000000XXXX"></cl-add-to-cart>',
     })
     expect(root).toEqualHtml(`

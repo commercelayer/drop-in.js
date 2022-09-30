@@ -4,11 +4,9 @@ import { Component, Prop, h, Element, Watch } from '@stencil/core'
 
 @Component({
   tag: 'cl-add-to-cart',
-  styleUrl: 'cl-add-to-cart.css',
   shadow: true,
-
 })
-export class CLPrice {
+export class CLAddToCart {
   /**
    * Sku code
    */

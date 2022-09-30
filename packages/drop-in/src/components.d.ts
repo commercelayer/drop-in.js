@@ -16,6 +16,12 @@ export namespace Components {
          */
         "sku": string | undefined;
     }
+    interface ClCartLink {
+        /**
+          * Target
+         */
+        "target": string | undefined;
+    }
     interface ClPrice {
         /**
           * Sku code
@@ -47,6 +53,12 @@ declare global {
         prototype: HTMLClAddToCartElement;
         new (): HTMLClAddToCartElement;
     };
+    interface HTMLClCartLinkElement extends Components.ClCartLink, HTMLStencilElement {
+    }
+    var HTMLClCartLinkElement: {
+        prototype: HTMLClCartLinkElement;
+        new (): HTMLClCartLinkElement;
+    };
     interface HTMLClPriceElement extends Components.ClPrice, HTMLStencilElement {
     }
     var HTMLClPriceElement: {
@@ -67,6 +79,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "cl-add-to-cart": HTMLClAddToCartElement;
+        "cl-cart-link": HTMLClCartLinkElement;
         "cl-price": HTMLClPriceElement;
         "cl-price-amount": HTMLClPriceAmountElement;
         "my-component": HTMLMyComponentElement;
@@ -82,6 +95,12 @@ declare namespace LocalJSX {
           * Sku code
          */
         "sku"?: string | undefined;
+    }
+    interface ClCartLink {
+        /**
+          * Target
+         */
+        "target"?: string | undefined;
     }
     interface ClPrice {
         /**
@@ -108,6 +127,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "cl-add-to-cart": ClAddToCart;
+        "cl-cart-link": ClCartLink;
         "cl-price": ClPrice;
         "cl-price-amount": ClPriceAmount;
         "my-component": MyComponent;
@@ -118,6 +138,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "cl-add-to-cart": LocalJSX.ClAddToCart & JSXBase.HTMLAttributes<HTMLClAddToCartElement>;
+            "cl-cart-link": LocalJSX.ClCartLink & JSXBase.HTMLAttributes<HTMLClCartLinkElement>;
             "cl-price": LocalJSX.ClPrice & JSXBase.HTMLAttributes<HTMLClPriceElement>;
             "cl-price-amount": LocalJSX.ClPriceAmount & JSXBase.HTMLAttributes<HTMLClPriceAmountElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;

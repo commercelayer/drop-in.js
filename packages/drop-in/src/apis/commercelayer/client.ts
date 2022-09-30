@@ -6,13 +6,9 @@ function getCookieName(clientCredentials: ClientCredentials): string {
   return `clayer_token-${clientCredentials.clientId}-${clientCredentials.scope}`
 }
 
-export function getAccessToken(clientCredentials: ClientCredentials): string | null {
+export async function getAccessToken(clientCredentials: ClientCredentials): Promise<string> {
   const name = getCookieName(clientCredentials)
-  return Cookies.get(name) || null
-}
-
-async function requestAccessToken(clientCredentials: ClientCredentials): Promise<string> {
-  const value = getAccessToken(clientCredentials)
+  const value = Cookies.get(name)
 
   if (value) {
     return value
@@ -32,7 +28,7 @@ async function requestAccessToken(clientCredentials: ClientCredentials): Promise
 }
 
 export async function createClient(clientCredentials: ClientCredentials): Promise<CommerceLayerClient> {
-  const accessToken = await requestAccessToken(clientCredentials)
+  const accessToken = await getAccessToken(clientCredentials)
 
   const { hostname } = new URL(clientCredentials.endpoint)
   const [, organization, domain] = hostname.match(/^(.*).(commercelayer.(co|io))$/) || []

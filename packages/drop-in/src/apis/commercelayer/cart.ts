@@ -1,4 +1,4 @@
-import { createClient } from '#apis/commercelayer/client'
+import { createClient, getAccessToken } from '#apis/commercelayer/client'
 import { getConfig } from '#apis/commercelayer/config'
 import type { Order } from '@commercelayer/sdk'
 
@@ -11,10 +11,20 @@ async function createEmptyCart(): Promise<Order> {
   return order
 }
 
+function getCartId(): string | null {
+  return window.localStorage.getItem(cartKey)
+}
+
+export async function getCartUrl(): Promise<string> {
+  const config = getConfig()
+  const accessToken = await getAccessToken(config)
+  return `https://${config.slug}.commercelayer.app/cart/${getCartId()}?accessToken=${accessToken}`
+}
+
 export async function getCart(): Promise<Order | null> {
   const client = await createClient(getConfig())
 
-  const orderId = window.localStorage.getItem(cartKey)
+  const orderId = getCartId()
 
   if (!orderId) {
     return null

@@ -9,7 +9,7 @@ describe('cl-price.e2e', () => {
           (function() {
             commercelayerConfig = {
               clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
-              endpoint: 'https://demo-store-1.commercelayer.io',
+              slug: 'demo-store-1',
               scope: 'market:10426'
             }
           }());
@@ -39,7 +39,7 @@ describe('cl-price.e2e', () => {
         (function() {
           commercelayerConfig = {
             clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
-            endpoint: 'https://demo-store-1.commercelayer.io',
+            slug: 'demo-store-1',
             scope: 'market:10426'
           }
         }());
@@ -70,7 +70,7 @@ describe('cl-price.e2e', () => {
         (function() {
           commercelayerConfig = {
             clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
-            endpoint: 'https://demo-store-1.commercelayer.io',
+            slug: 'demo-store-1',
             scope: 'market:10426'
           }
         }());

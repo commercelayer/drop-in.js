@@ -3,14 +3,14 @@ import { log } from './logger'
 
 function injectConfig({ 
   clientId = '1234',
-  endpoint = 'https://example.com',
+  slug = 'example',
   scope = 'market:123',
   debug
 }: Partial<Config>) {
   // @ts-expect-error
   window.commercelayerConfig = {
     clientId,
-    endpoint,
+    slug,
     scope,
     debug
   }

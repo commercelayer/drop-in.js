@@ -1,36 +1,47 @@
-export type Config = {
+type CommerceLayerConfig = {
   clientId: string
-  endpoint: string
+  slug: string
   scope: string
   debug?: 'none' | 'all'
 }
 
+export type Config = CommerceLayerConfig & {
+  debug: Exclude<CommerceLayerConfig['debug'], undefined>
+  endpoint: string
+}
+
+// TODO: update all error messages with a proper link to documentation
 export function getConfig(): Config {
+
   if (!('commercelayerConfig' in window)) {
-    // TODO: define a proper error message
     throw new Error(`"window.commercelayerConfig" is required.\nLink to doc here.`)
   }
 
   // @ts-expect-error
-  if (typeof (window.commercelayerConfig as Config).clientId !== 'string') {
+  const commercelayerConfig: CommerceLayerConfig = window.commercelayerConfig
+
+  if (typeof commercelayerConfig.clientId !== 'string') {
     throw new Error(`"window.commercelayerConfig.clientId" is required.\nLink to doc here.`)
   }
 
-  // @ts-expect-error
-  if (typeof (window.commercelayerConfig as Config).endpoint !== 'string') {
-    throw new Error(`"window.commercelayerConfig.endpoint" is required.\nLink to doc here.`)
+  if (typeof commercelayerConfig.slug !== 'string') {
+    throw new Error(`"window.commercelayerConfig.slug" is required.\nLink to doc here.`)
   }
 
-  // @ts-expect-error
-  if (typeof (window.commercelayerConfig as Config).scope !== 'string') {
+  if (typeof commercelayerConfig.scope !== 'string') {
     throw new Error(`"window.commercelayerConfig.scope" is required.\nLink to doc here.`)
   }
 
-  // @ts-expect-error
-  if (![undefined, 'none', 'all'].includes((window.commercelayerConfig as Config).debug)) {
+  if (![undefined, 'none', 'all'].includes(commercelayerConfig.debug)) {
     throw new Error(`"window.commercelayerConfig.debug" should one of 'none' (default) or 'all'.\nLink to doc here.`)
   }
 
-  // @ts-expect-error
-  return window.commercelayerConfig
+  const debug: Config['debug'] = commercelayerConfig.debug || 'none'
+  const endpoint: Config['endpoint'] = `https://${commercelayerConfig.slug}.commercelayer.io`
+
+  return {
+    ...commercelayerConfig,
+    debug,
+    endpoint
+  }
 }
