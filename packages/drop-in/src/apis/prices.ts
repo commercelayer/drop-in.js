@@ -1,5 +1,5 @@
 import { log } from '#utils/logger'
-import { CommerceLayerClient, Price } from '@commercelayer/sdk'
+import type { CommerceLayerClient, Price } from '@commercelayer/sdk'
 import { chunk, isNotNullish, uniq } from '../utils/utils'
 
 const componentName = 'cl-price'

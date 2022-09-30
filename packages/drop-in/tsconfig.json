@@ -24,6 +24,8 @@
       "#utils/*": ["src/utils/*"]
     },
 
+    "importsNotUsedAsValues": "error",
+
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,

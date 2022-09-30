@@ -1,4 +1,5 @@
-import { createClient, getConfig } from '#apis/commercelayer'
+import { createClient } from '#apis/commercelayer/client'
+import { getConfig } from '#apis/commercelayer/config'
 import { registerPrices } from '#apis/prices'
 
 type GuardedType<T> = T extends (x: any) => x is (infer T) ? T : never

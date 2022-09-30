@@ -1,4 +1,4 @@
-import { Config } from '#apis/commercelayer'
+import type { Config } from '#apis/commercelayer/config'
 import { log } from './logger'
 
 function injectConfig({ 

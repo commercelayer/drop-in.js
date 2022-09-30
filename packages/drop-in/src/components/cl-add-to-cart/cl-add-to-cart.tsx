@@ -1,4 +1,5 @@
-import { createClient, getConfig } from '#apis/commercelayer'
+import { createClient } from '#apis/commercelayer/client'
+import { getConfig } from '#apis/commercelayer/config'
 import { log } from '#utils/logger'
 import { Component, Prop, h, Element } from '@stencil/core'
 

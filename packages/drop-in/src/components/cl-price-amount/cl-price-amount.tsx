@@ -1,5 +1,5 @@
-import { Price } from '@commercelayer/sdk'
-import { Component, h, Listen, State, Host, Prop } from '@stencil/core';
+import type { Price } from '@commercelayer/sdk'
+import { Component, h, Host, Listen, Prop, State } from '@stencil/core'
 
 @Component({
   tag: 'cl-price-amount',
