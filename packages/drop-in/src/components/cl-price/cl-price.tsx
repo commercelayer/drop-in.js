@@ -14,20 +14,23 @@ export class CLPrice {
 
   @Element() host!: HTMLElement
 
-  private validateSku(sku: string | undefined) {
-    if (typeof sku !== 'string') {
+  logSku(sku: string | undefined): void {
+    if (!this.validateSku(sku)) {
       log('warn', '"sku" should be a string.', this.host)
     }
   }
 
+  validateSku(sku: string | undefined): sku is string {
+    return typeof sku === 'string'
+  }
+
   componentWillLoad() {
-    this.validateSku(this.sku)
+    this.logSku(this.sku)
   }
 
   @Watch('sku')
-  watchPropHandler(newValue: string, oldValue: string) {
-    this.validateSku(newValue)
-    console.log('The new value of activated is: ', newValue, 'value was: ', oldValue)
+  watchPropHandler(newValue: string, _oldValue: string) {
+    this.logSku(newValue)
   }
 
   @Listen('priceUpdate')

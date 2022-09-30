@@ -2,9 +2,17 @@ import { getSalesChannelToken, ClientCredentials } from '@commercelayer/js-auth'
 import CommerceLayer, { CommerceLayerClient } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 
-const getAccessToken = async (clientCredentials: ClientCredentials): Promise<string> => {
-  const name = `clayer_token-${clientCredentials.clientId}-${clientCredentials.scope}`
-  const value = Cookies.get(name)
+function getCookieName(clientCredentials: ClientCredentials): string {
+  return `clayer_token-${clientCredentials.clientId}-${clientCredentials.scope}`
+}
+
+export function getAccessToken(clientCredentials: ClientCredentials): string | null {
+  const name = getCookieName(clientCredentials)
+  return Cookies.get(name) || null
+}
+
+async function requestAccessToken(clientCredentials: ClientCredentials): Promise<string> {
+  const value = getAccessToken(clientCredentials)
 
   if (value) {
     return value
@@ -18,13 +26,13 @@ const getAccessToken = async (clientCredentials: ClientCredentials): Promise<str
   }
 
   const { accessToken, expires } = salesChannelToken
-  Cookies.set(name, accessToken, { expires })
+  Cookies.set(getCookieName(clientCredentials), accessToken, { expires })
 
   return accessToken
 }
 
-export const createClient = async (clientCredentials: ClientCredentials): Promise<CommerceLayerClient> => {
-  const accessToken = await getAccessToken(clientCredentials)
+export async function createClient(clientCredentials: ClientCredentials): Promise<CommerceLayerClient> {
+  const accessToken = await requestAccessToken(clientCredentials)
 
   const { hostname } = new URL(clientCredentials.endpoint)
   const [, organization, domain] = hostname.match(/^(.*).(commercelayer.(co|io))$/) || []

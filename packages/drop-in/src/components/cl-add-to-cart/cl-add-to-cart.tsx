@@ -1,7 +1,6 @@
-import { createClient } from '#apis/commercelayer/client'
-import { getConfig } from '#apis/commercelayer/config'
+import { addItem } from '#apis/commercelayer/cart'
 import { log } from '#utils/logger'
-import { Component, Prop, h, Element } from '@stencil/core'
+import { Component, Prop, h, Element, Watch } from '@stencil/core'
 
 @Component({
   tag: 'cl-add-to-cart',
@@ -18,29 +17,60 @@ export class CLPrice {
   /**
    * Quantity
    */
-  @Prop({ reflect: true }) quantity: number = 1
+  @Prop({ reflect: true, mutable: true }) quantity: number = 1
 
   @Element()
   host!: HTMLElement
 
-  componentWillLoad() {
-    if (typeof this.sku !== 'string') {
+  logSku(sku: string | undefined): void {
+    if (!this.validateSku(sku)) {
       log('warn', '"sku" should be a string.', this.host)
     }
+  }
 
-    if (this.quantity < 1) {
+  logQuantity(quantity: number): void {
+    if (!this.validateQuantity(quantity)) {
       log('warn', '"quantity" should be a number greater than 0.', this.host)
     }
   }
 
-  private async handleClick() {
-    const client = await createClient(getConfig())
-    console.log(client)
+  validateSku(sku: string | undefined): sku is string {
+    return typeof sku === 'string'
+  }
+
+  validateQuantity(quantity: number): boolean {
+    return quantity >= 1
+  }
+
+  @Watch('sku')
+  watchSkuHandler(newValue: string, _oldValue: string) {
+    this.logSku(newValue)
+  }
+
+  @Watch('quantity')
+  watchQuantityHandler(newValue: number, _oldValue: number) {
+    if (!this.validateQuantity(newValue)) {
+      this.quantity = 1
+    }
+  }
+
+  componentWillLoad() {
+    this.logSku(this.sku)
+    this.logQuantity(this.quantity)
+  }
+
+  async handleClick(_event: MouseEvent) {
+    if (this.validateSku(this.sku)) {
+      await addItem(this.sku, this.quantity)
+    }
   }
 
   render() {
+    // TODO: check for stock
+    const enabled = this.validateSku(this.sku) && this.validateQuantity(this.quantity)
+
     return (
-      <button onClick={this.handleClick}>
+      <button disabled={!enabled} onClick={ev => this.handleClick(ev)}>
         <slot></slot>
       </button>
     )
