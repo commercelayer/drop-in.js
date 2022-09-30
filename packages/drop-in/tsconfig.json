@@ -41,7 +41,6 @@
     "allowUnusedLabels": true
   },
   "include": [
-    "global.d.ts",
     "src"
   ],
   "exclude": [
