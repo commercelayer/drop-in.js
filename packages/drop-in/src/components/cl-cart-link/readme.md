@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                  | Default     |
-| -------- | --------- | ----------- | --------------------- | ----------- |
-| `target` | `target`  | Target      | `string \| undefined` | `undefined` |
+| Property | Attribute | Description | Type     | Default   |
+| -------- | --------- | ----------- | -------- | --------- |
+| `target` | `target`  | Target      | `string` | `'_self'` |
 
 
 ----------------------------------------------

@@ -20,7 +20,7 @@ export namespace Components {
         /**
           * Target
          */
-        "target": string | undefined;
+        "target": string;
     }
     interface ClPrice {
         /**
@@ -100,7 +100,7 @@ declare namespace LocalJSX {
         /**
           * Target
          */
-        "target"?: string | undefined;
+        "target"?: string;
     }
     interface ClPrice {
         /**

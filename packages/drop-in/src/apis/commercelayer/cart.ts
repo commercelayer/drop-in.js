@@ -15,10 +15,28 @@ function getCartId(): string | null {
   return window.localStorage.getItem(cartKey)
 }
 
-export async function getCartUrl(): Promise<string> {
+export function isValidUrl(url: string): boolean {
+  const cartId = getCartId()
+
+  return cartId !== null && url.includes(`/${cartId}?`)
+}
+
+/**
+ * Get the Hosted Cart url.
+ * @param forceCartToExist When true it will create an empty cart if not existing before.
+ * @returns Returns the Hosted Cart url.
+ */
+export async function getCartUrl(forceCartToExist: boolean = false): Promise<string> {
   const config = getConfig()
   const accessToken = await getAccessToken(config)
-  return `https://${config.slug}.commercelayer.app/cart/${getCartId()}?accessToken=${accessToken}`
+  let cartId = getCartId()
+
+  if (cartId === null && forceCartToExist === true) {
+    const cart = await createEmptyCart()
+    cartId = cart.id
+  }
+
+  return `https://${config.slug}.commercelayer.app/cart/${cartId}?accessToken=${accessToken}`
 }
 
 export async function getCart(): Promise<Order | null> {
