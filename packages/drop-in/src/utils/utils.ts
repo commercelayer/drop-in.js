@@ -39,3 +39,20 @@ export function isNotNullish<T>(value: T | null | undefined): value is T {
 export function uniq<T>(array: T[]): T[] {
   return [...new Set(array)]
 }
+
+/**
+ * Creates a function that memoizes the result of func.
+ * @param func The function to have its output memoized.
+ * @returns Returns the new memoized function.
+ */
+export const memoize = <T extends (...args: any) => any>(func: T): (...args: Parameters<T>) => ReturnType<T> => {
+  const cache: { [key: string]: any } = {}
+
+  return (...args: any): any => {
+    const cacheKey = JSON.stringify(args)
+    if (!cache[cacheKey]) {
+      cache[cacheKey] = func(...args)
+    }
+    return cache[cacheKey]
+  }
+}
