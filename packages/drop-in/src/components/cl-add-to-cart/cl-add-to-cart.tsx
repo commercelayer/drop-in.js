@@ -22,7 +22,7 @@ export class CLAddToCart {
 
   logSku(sku: string | undefined): void {
     if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a string.', this.host)
+      log('warn', '"sku" should be a not empty string.', this.host)
     }
   }
 
@@ -33,7 +33,7 @@ export class CLAddToCart {
   }
 
   validateSku(sku: string | undefined): sku is string {
-    return typeof sku === 'string'
+    return typeof sku === 'string' && sku !== ''
   }
 
   validateQuantity(quantity: number): boolean {

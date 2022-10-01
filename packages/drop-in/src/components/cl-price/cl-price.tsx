@@ -16,12 +16,12 @@ export class CLPrice {
 
   logSku(sku: string | undefined): void {
     if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a string.', this.host)
+      log('warn', '"sku" should be a not empty string.', this.host)
     }
   }
 
   validateSku(sku: string | undefined): sku is string {
-    return typeof sku === 'string'
+    return typeof sku === 'string' && sku !== ''
   }
 
   componentWillLoad() {
