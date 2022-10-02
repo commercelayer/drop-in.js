@@ -15,6 +15,7 @@ importers:
       '@commercelayer/js-auth': ^2.3.0
       '@commercelayer/sdk': ^4.16.0
       '@stencil/core': ^2.13.0
+      '@stencil/sass': ^2.0.0
       '@types/jest': ^27.0.3
       '@types/js-cookie': ^3.0.2
       jest: ^27.4.5
@@ -29,6 +30,7 @@ importers:
       js-cookie: 3.0.1
     devDependencies:
       '@stencil/core': 2.18.0
+      '@stencil/sass': 2.0.0_@stencil+core@2.18.0
       '@types/jest': 27.5.2
       '@types/js-cookie': 3.0.2
       jest: 27.5.1
@@ -3033,6 +3035,14 @@ packages:
     resolution: {integrity: sha512-NLEY8Jq59smyiivBAxHKipsp9YkkW/K/Vm90zAyXQqukb12i2SFucWHJ1Ik7ropVlhmMVvigyxXgRfQ9quIqtg==}
     engines: {node: '>=12.10.0', npm: '>=6.0.0'}
     hasBin: true
+    dev: true
+
+  /@stencil/sass/2.0.0_@stencil+core@2.18.0:
+    resolution: {integrity: sha512-Be7Tz7YJnMzloot0aG3m2wTVt9Dg0rjOU+ZVx49ts9+hyeW+NEmvSWPv6bhypblRXbSGik2Cc3AYboTma4Qpgg==}
+    peerDependencies:
+      '@stencil/core': '>=2.0.0'
+    dependencies:
+      '@stencil/core': 2.18.0
     dev: true
 
   /@storybook/addon-actions/6.5.12_sfoxds7t5ydpegc3knd667wn6m:

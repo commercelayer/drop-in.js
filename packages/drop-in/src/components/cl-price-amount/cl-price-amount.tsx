@@ -30,7 +30,9 @@ export class CLPriceAmount {
   render() {
     return (
       <Host>
-        {this.price}
+        {
+          this.type === 'compare-at' ? <s part='strikethrough'>{this.price}</s> : this.price
+        }
       </Host>
     );
   }

@@ -1,4 +1,5 @@
 import { Config } from '@stencil/core'
+import { sass } from '@stencil/sass'
 import { pathsToModuleNameMapper } from 'ts-jest'
 import { compilerOptions } from './tsconfig.json'
 
@@ -13,6 +14,10 @@ export const config: Config = {
 
   minifyJs: true,
   minifyCss: true,
+
+  plugins: [
+    sass()
+  ],
 
   outputTargets: [
     {

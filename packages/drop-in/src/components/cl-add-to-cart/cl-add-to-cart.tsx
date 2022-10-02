@@ -1,6 +1,6 @@
 import { addItem } from '#apis/commercelayer/cart'
 import { log } from '#utils/logger'
-import { Component, Prop, h, Element, Watch } from '@stencil/core'
+import { Component, Prop, h, Element, Watch, Host } from '@stencil/core'
 
 @Component({
   tag: 'cl-add-to-cart',
@@ -28,7 +28,7 @@ export class CLAddToCart {
 
   logQuantity(quantity: number): void {
     if (!this.validateQuantity(quantity)) {
-      log('warn', '"quantity" should be a number greater than 0.', this.host)
+      log('warn', '"quantity" should be a number equal or greater than 0.', this.host)
     }
   }
 
@@ -37,7 +37,7 @@ export class CLAddToCart {
   }
 
   validateQuantity(quantity: number): boolean {
-    return quantity >= 1
+    return quantity >= 0
   }
 
   @Watch('sku')
@@ -48,7 +48,7 @@ export class CLAddToCart {
   @Watch('quantity')
   watchQuantityHandler(newValue: number, _oldValue: number) {
     if (!this.validateQuantity(newValue)) {
-      this.quantity = 1
+      this.quantity = 0
     }
   }
 
@@ -57,7 +57,13 @@ export class CLAddToCart {
     this.logQuantity(this.quantity)
   }
 
-  async handleClick(_event: MouseEvent) {
+  async handleKeyPress(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.handleAddItem()
+    }
+  }
+
+  async handleAddItem() {
     if (this.validateSku(this.sku)) {
       await addItem(this.sku, this.quantity)
     }
@@ -65,12 +71,18 @@ export class CLAddToCart {
 
   render() {
     // TODO: check for stock
-    const enabled = this.validateSku(this.sku) && this.validateQuantity(this.quantity)
+    const enabled = this.validateSku(this.sku) && this.quantity > 0
 
     return (
-      <button disabled={!enabled} onClick={ev => this.handleClick(ev)}>
+      <Host
+        role='button'
+        tabindex='0'
+        disabled={!enabled}
+        aria-disabled={enabled ? undefined : 'true'}
+        onKeyPress={(event: KeyboardEvent) => this.handleKeyPress(event)}
+        onClick={() => this.handleAddItem()} >
         <slot></slot>
-      </button>
+      </Host>
     )
   }
 }
