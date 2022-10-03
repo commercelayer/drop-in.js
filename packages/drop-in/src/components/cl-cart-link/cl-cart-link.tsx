@@ -11,7 +11,7 @@ export class CLCartLink {
   /**
    * Target
    */
-  @Prop() target: string = '_self'
+  @Prop({ reflect: true }) target: string = '_self'
 
   @State() href: string | undefined
 

@@ -38,7 +38,8 @@ export const decorators = [
         window.commercelayerConfig = {
           clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
           slug: 'demo-store-1',
-          scope: 'market:10426'
+          scope: 'market:10426',
+          debug: 'all'
         }
       </script>
       ${ typeof tale === 'string' ? tale : storyAsHTML(tale) }
