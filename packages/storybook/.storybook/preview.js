@@ -1,4 +1,9 @@
-import { defineCustomElements } from '@commercelayer/drop-in/loader'
+import { defineCustomElements } from '@commercelayer/drop-in/dist/loader'
+
+// https://storybook.js.org/docs/react/essentials/controls#annotation
+export const argTypes = { styles: { control: 'boolean' } }
+
+export const args = { styles: false };
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -17,6 +22,14 @@ const storyAsHTML = (story) => {
 };
 
 export const decorators = [
+  (story, options) => {
+    const tale = story()
+
+    return `
+      ${ options.args.styles ? '<link href="/drop-in.css" rel="stylesheet">' : '' }
+      ${ typeof tale === 'string' ? tale : storyAsHTML(tale) }
+    `
+  },
   (story) => {
     const tale = story()
 

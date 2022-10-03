@@ -12,6 +12,13 @@
 | `type`   | `type`    |             | `"compare-at" \| "price"` | `'price'` |
 
 
+## Shadow Parts
+
+| Part              | Description |
+| ----------------- | ----------- |
+| `"strikethrough"` |             |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

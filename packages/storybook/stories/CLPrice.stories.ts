@@ -23,7 +23,7 @@ const Template = (args) => {
   return create(
     html`
       <cl-price sku="${args.sku}">
-        The price was: <s><cl-price-amount type="compare-at"></cl-price-amount></s><br />
+        The price was: <cl-price-amount type="compare-at"></cl-price-amount><br />
         Now the price is: <cl-price-amount></cl-price-amount>
       </cl-price>
     `
@@ -36,4 +36,3 @@ WithSku.args = {
 }
 
 export const WithoutSku = Template.bind({})
-
