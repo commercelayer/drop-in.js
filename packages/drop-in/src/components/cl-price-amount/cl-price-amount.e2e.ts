@@ -108,6 +108,7 @@ describe('cl-price-amount.e2e', () => {
     expect(element).toEqualHtml(`
       <cl-price-amount class="hydrated" type="compare-at">
         <mock:shadow-root>
+          <s part="strikethrough"></s>
         </mock:shadow-root>
       </cl-price-amount>
     `)
@@ -119,7 +120,9 @@ describe('cl-price-amount.e2e', () => {
     expect(element).toEqualHtml(`
       <cl-price-amount class="hydrated" type="compare-at">
         <mock:shadow-root>
-          321$
+          <s part="strikethrough">
+            321$
+          </s>
         </mock:shadow-root>
       </cl-price-amount>
     `)
