@@ -74,7 +74,9 @@ describe('cl-cart-link.e2e', () => {
     const aTag = await page.find('cl-cart-link >>> a')
     await aTag.click()
 
-    await page.waitForResponse('https://demo-store-1.commercelayer.io/api/orders')
+    await page.waitForResponse(response => {
+      return response.url() === 'https://demo-store-1.commercelayer.io/api/orders' && response.request().method() === 'POST'
+    })
     await page.waitForChanges()
 
     const accessTokenCookieName = 'clayer_token-xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU-market:10426'
