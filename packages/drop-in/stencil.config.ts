@@ -40,6 +40,7 @@ export const config: Config = {
 
   testing: {
     browserHeadless: true,
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
     moduleNameMapper: {
       ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' })
     }

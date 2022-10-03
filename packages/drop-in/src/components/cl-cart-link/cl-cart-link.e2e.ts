@@ -1,9 +1,21 @@
-import { newE2EPage } from '@stencil/core/testing';
+import * as cart from '#apis/commercelayer/cart'
+import { newE2EPage } from '@stencil/core/testing'
 
-describe.skip('cl-add-to-cart.e2e', () => {
-  it('renders without a sku', async () => {
+const cartUrl = 'https://example.com/checkout-url'
+
+const getCartUrlSpy = jest.spyOn(cart, 'getCartUrl').mockReturnValue(
+  Promise.resolve(cartUrl)
+)
+
+beforeEach(() => {
+  getCartUrlSpy.mockClear()
+})
+
+describe('cl-cart-link.e2e', () => {
+  it('renders the cart url without a cartId during the fist load', async () => {
     const page = await newE2EPage({
       waitUntil: 'networkidle0',
+      url: 'https://demo-store-1.commercelayer.io',
       html: `
         <script>
           (function() {
@@ -14,103 +26,74 @@ describe.skip('cl-add-to-cart.e2e', () => {
             }
           }());
         </script>
-        <cl-add-to-cart></cl-add-to-cart>
+        <cl-cart-link>Cart</cl-cart-link>
       `
     })
 
     await page.waitForChanges()
 
-    const element = await page.find('cl-add-to-cart')
+    const element = await page.find('cl-cart-link')
+
+    const accessTokenCookieName = 'clayer_token-xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU-market:10426'
+    const accessTokenCookie = await (await page.cookies()).find(cookie => cookie.name === encodeURIComponent(accessTokenCookieName))
 
     expect(element).toEqualHtml(`
-      <cl-add-to-cart class="hydrated">
+      <cl-cart-link class="hydrated" target="_self">
         <mock:shadow-root>
-          <slot></slot>
+          <a href="${`https://demo-store-1.commercelayer.app/cart/null?accessToken=${accessTokenCookie?.value}`}" target="_self">
+            <slot></slot>
+          </a>
         </mock:shadow-root>
-      </cl-add-to-cart>
+        Cart
+      </cl-cart-link>
     `)
-  });
+  })
 
-  it('renders with a sku', async () => {
+  it('renders a cart url with a proper orderId when clicking on the link', async () => {
     const page = await newE2EPage({
       waitUntil: 'networkidle0',
+      url: 'https://demo-store-1.commercelayer.io',
       html: `
         <script>
-        (function() {
-          commercelayerConfig = {
-            clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
-            slug: 'demo-store-1',
-            scope: 'market:10426'
-          }
-        }());
+          (function() {
+            commercelayerConfig = {
+              clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
+              slug: 'demo-store-1',
+              scope: 'market:10426'
+            }
+          }());
         </script>
-        <cl-add-to-cart sku="BACKPACK818488000000XXXX"></cl-add-to-cart>
+        <cl-cart-link>Cart</cl-cart-link>
       `
     })
 
     await page.waitForChanges()
 
-    const element = await page.find('cl-add-to-cart')
-    // await element.waitForEvent('priceUpdate')
+    await page.addScriptTag({ content: 'window.open = function() {}' })
+
+    const aTag = await page.find('cl-cart-link >>> a')
+    await aTag.click()
+
+    await page.waitForResponse('https://demo-store-1.commercelayer.io/api/orders')
+    await page.waitForChanges()
+
+    const accessTokenCookieName = 'clayer_token-xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU-market:10426'
+    const accessTokenCookie = await (await page.cookies()).find(cookie => cookie.name === encodeURIComponent(accessTokenCookieName))
+
+    const orderIdCookieName = 'cl-drop-in--order-id'
+    const orderIdCookie = await (await page.cookies()).find(cookie => cookie.name === encodeURIComponent(orderIdCookieName))
+
+    const element = await page.find('cl-cart-link')
 
     expect(element).toEqualHtml(`
-      <cl-add-to-cart class="hydrated" sku="BACKPACK818488000000XXXX">
+      <cl-cart-link class="hydrated" target="_self">
         <mock:shadow-root>
-          <slot></slot>
+          <a href="${`https://demo-store-1.commercelayer.app/cart/${orderIdCookie?.value}?accessToken=${accessTokenCookie?.value}`}" target="_self">
+            <slot></slot>
+          </a>
         </mock:shadow-root>
-      </cl-add-to-cart>
+        Cart
+      </cl-cart-link>
     `)
-  });
-
-  it('renders with a sku and display prices into cl-add-to-cart inner-components', async () => {
-    const page = await newE2EPage({
-      waitUntil: 'networkidle0',
-      html: `
-        <script>
-        (function() {
-          commercelayerConfig = {
-            clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
-            slug: 'demo-store-1',
-            scope: 'market:10426'
-          }
-        }());
-        </script>
-        <cl-add-to-cart sku="BACKPACK818488000000XXXX">
-          <s><cl-add-to-cart-amount type="compare-at"></cl-add-to-cart-amount></s>
-          <cl-add-to-cart-amount></cl-add-to-cart-amount>
-        </cl-add-to-cart>
-      `
-    })
-
-    await page.waitForChanges()
-
-    const clPrice = await page.find('cl-add-to-cart')
-    expect(clPrice).toEqualHtml(`
-      <cl-add-to-cart class="hydrated" sku="BACKPACK818488000000XXXX">
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-        <s><cl-add-to-cart-amount class="hydrated" type="compare-at"></cl-add-to-cart-amount></s>
-        <cl-add-to-cart-amount class="hydrated"></cl-add-to-cart-amount>
-      </cl-add-to-cart>
-    `)
-
-    const clPriceCompareAtAmount = await page.find('cl-add-to-cart-amount[type="compare-at"]')
-    expect(clPriceCompareAtAmount).toEqualHtml(`
-      <cl-add-to-cart-amount class="hydrated" type="compare-at">
-        <mock:shadow-root>
-          $152.00
-        </mock:shadow-root>
-      </cl-add-to-cart-amount>
-    `)
-
-    const clPriceAmount = await page.find('cl-add-to-cart-amount:not([type])')
-    expect(clPriceAmount).toEqualHtml(`
-      <cl-add-to-cart-amount class="hydrated">
-        <mock:shadow-root>
-          $130.00
-        </mock:shadow-root>
-      </cl-add-to-cart-amount>
-    `)
-  });
-});
+  })
+})

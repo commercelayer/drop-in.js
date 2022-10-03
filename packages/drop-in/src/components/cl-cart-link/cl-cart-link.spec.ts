@@ -1,18 +1,32 @@
+import * as cart from '#apis/commercelayer/cart'
 import { newSpecPage } from '@stencil/core/testing'
 import { CLCartLink } from './cl-cart-link'
 
-describe.skip('cl-add-to-cart.spec', () => {
+const cartUrl = 'https://example.com/checkout-url'
+
+const getCartUrlSpy = jest.spyOn(cart, 'getCartUrl').mockReturnValue(
+  Promise.resolve(cartUrl)
+);
+
+beforeEach(() => {
+  getCartUrlSpy.mockClear()
+})
+
+describe('cl-cart-link.spec', () => {
   it('renders', async () => {
     const { root } = await newSpecPage({
       components: [CLCartLink],
-      html: '<cl-add-to-cart sku="BACKPACK818488000000XXXX"></cl-add-to-cart>',
+      html: '<cl-cart-link>Cart</cl-cart-link>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart sku="BACKPACK818488000000XXXX">
+      <cl-cart-link target="_self">
         <mock:shadow-root>
-          <slot></slot>
+          <a href="${cartUrl}" target="_self">
+            <slot></slot>
+          </a>
         </mock:shadow-root>
-      </cl-add-to-cart>
+        Cart
+      </cl-cart-link>
     `)
   })
 })

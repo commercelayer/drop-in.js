@@ -7,13 +7,14 @@ function injectConfig({
   scope = 'market:123',
   debug
 }: Partial<Config>) {
-  // @ts-expect-error
-  window.commercelayerConfig = {
-    clientId,
-    slug,
-    scope,
-    debug
-  }
+  Object.defineProperty(window, 'commercelayerConfig', {
+    value: {
+      clientId,
+      slug,
+      scope,
+      debug
+    }
+  })
 }
 
 describe('logger', () => {
@@ -41,8 +42,8 @@ describe('logger', () => {
     consoleGroup.mockClear()
     consoleGroupEnd.mockClear()
 
-    // @ts-expect-error
-    delete window['commercelayerConfig']
+    // // @ts-expect-error
+    // delete window['commercelayerConfig']
   })
 
   it('should not send anything to console when debug is not define (default to "none")', () => {

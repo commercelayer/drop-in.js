@@ -1,18 +1,19 @@
 import { createClient, getAccessToken } from '#apis/commercelayer/client'
 import { getConfig } from '#apis/commercelayer/config'
 import type { Order } from '@commercelayer/sdk'
+import Cookies from 'js-cookie'
 
 const cartKey = 'cl-drop-in--order-id'
 
 async function createEmptyCart(): Promise<Order> {
   const client = await createClient(getConfig())
   const order = await client.orders.create({})
-  window.localStorage.setItem(cartKey, order.id)
+  Cookies.set(cartKey, order.id)
   return order
 }
 
 function getCartId(): string | null {
-  return window.localStorage.getItem(cartKey)
+  return Cookies.get(cartKey) || null
 }
 
 export function isValidUrl(url: string): boolean {
