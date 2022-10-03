@@ -51,13 +51,13 @@ export async function getCart(): Promise<Order | null> {
   return await (client.orders.retrieve(orderId).catch(() => null))
 }
 
-export async function addItem(sku_code: string, quantity: number) {
+export async function addItem(sku_code: string, quantity: number): Promise<void> {
   const client = await createClient(getConfig())
-  const order = await getCart() || await createEmptyCart()
+  const orderId = getCartId() || await (await createEmptyCart()).id
 
   await client.line_items.create({
     order: {
-      id: order.id,
+      id: orderId,
       type: 'orders'
     },
     quantity,
@@ -65,5 +65,5 @@ export async function addItem(sku_code: string, quantity: number) {
     _update_quantity: true
   })
 
-  return await getCart()
+  // return await getCart()
 }

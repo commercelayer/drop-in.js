@@ -1,12 +1,14 @@
 import { addItem } from '#apis/commercelayer/cart'
 import { log } from '#utils/logger'
-import { Component, Prop, h, Element, Watch, Host } from '@stencil/core'
+import { Component, Element, h, Host, Prop, Watch } from '@stencil/core'
 
 @Component({
   tag: 'cl-add-to-cart',
   shadow: true,
 })
 export class CLAddToCart {
+  @Element() host!: HTMLElement
+
   /**
    * Sku code
    */
@@ -16,9 +18,6 @@ export class CLAddToCart {
    * Quantity
    */
   @Prop({ reflect: true, mutable: true }) quantity: number = 1
-
-  @Element()
-  host!: HTMLElement
 
   logSku(sku: string | undefined): void {
     if (!this.validateSku(sku)) {
@@ -57,21 +56,29 @@ export class CLAddToCart {
     this.logQuantity(this.quantity)
   }
 
-  async handleKeyPress(event: KeyboardEvent) {
+  handleKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter' || event.key === ' ') {
       this.handleAddItem()
     }
   }
 
-  async handleAddItem() {
-    if (this.validateSku(this.sku)) {
-      await addItem(this.sku, this.quantity)
+  handleAddItem() {
+    if (this.sku && this.canBeSold()) {
+      addItem(this.sku, this.quantity)
     }
   }
 
-  render() {
+  /**
+   * Check whether the sku is soldable.
+   * @returns Returns true when item is soldable.
+   */
+  canBeSold() {
     // TODO: check for stock
-    const enabled = this.validateSku(this.sku) && this.quantity > 0
+    return this.validateSku(this.sku) && this.quantity > 0
+  }
+
+  render() {
+    const enabled = this.canBeSold()
 
     return (
       <Host
