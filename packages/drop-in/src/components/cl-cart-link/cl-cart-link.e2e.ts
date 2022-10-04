@@ -15,7 +15,6 @@ describe('cl-cart-link.e2e', () => {
   it('renders the cart url without a cartId during the fist load', async () => {
     const page = await newE2EPage({
       waitUntil: 'networkidle0',
-      url: 'https://demo-store-1.commercelayer.io',
       html: `
         <script>
           (function() {
@@ -52,7 +51,6 @@ describe('cl-cart-link.e2e', () => {
   it('renders a cart url with a proper orderId when clicking on the link', async () => {
     const page = await newE2EPage({
       waitUntil: 'networkidle0',
-      url: 'https://demo-store-1.commercelayer.io',
       html: `
         <script>
           (function() {
