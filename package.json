@@ -6,7 +6,9 @@
     "start.drop-in": "pnpm --filter drop-in start",
     "start.storybook": "concurrently -n drop-in,storybook -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in build.watch' 'pnpm --filter storybook start'",
     "test": "pnpm --filter 'drop-in' test",
-    "test.watch": "pnpm --filter 'drop-in' test.watch"
+    "test.watch": "pnpm --filter 'drop-in' test.watch",
+    "dep.upgrade.major": "pnpm -r exec npm-check-updates -u",
+    "dep.upgrade.minor": "pnpm dep.upgrade.major -t minor"
   },
   "author": {
     "name": "Marco Montalbano",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.4.0",
-    "lerna": "^5.5.1"
+    "lerna": "^5.5.1",
+    "npm-check-updates": "^16.3.8"
   }
 }

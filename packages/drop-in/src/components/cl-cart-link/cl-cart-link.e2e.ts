@@ -1,15 +1,5 @@
-import * as cart from '#apis/commercelayer/cart'
 import { newE2EPage } from '@stencil/core/testing'
-
-const cartUrl = 'https://example.com/checkout-url'
-
-const getCartUrlSpy = jest.spyOn(cart, 'getCartUrl').mockReturnValue(
-  Promise.resolve(cartUrl)
-)
-
-beforeEach(() => {
-  getCartUrlSpy.mockClear()
-})
+import { getAccessToken, getCartId } from 'jest.e2e.helpers'
 
 describe('cl-cart-link.e2e', () => {
   it('renders the cart url without a cartId during the fist load', async () => {
@@ -33,13 +23,12 @@ describe('cl-cart-link.e2e', () => {
 
     const element = await page.find('cl-cart-link')
 
-    const accessTokenCookieName = 'clayer_token-xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU-market:10426'
-    const accessTokenCookie = await (await page.cookies()).find(cookie => cookie.name === encodeURIComponent(accessTokenCookieName))
+    const accessToken = await getAccessToken(page)
 
     expect(element).toEqualHtml(`
       <cl-cart-link class="hydrated" target="_self">
         <mock:shadow-root>
-          <a href="${`https://demo-store-1.commercelayer.app/cart/null?accessToken=${accessTokenCookie?.value}`}" target="_self">
+          <a href="${`https://demo-store-1.commercelayer.app/cart/null?accessToken=${accessToken}`}" target="_self">
             <slot></slot>
           </a>
         </mock:shadow-root>
@@ -67,33 +56,25 @@ describe('cl-cart-link.e2e', () => {
 
     await page.waitForChanges()
 
-    await page.addScriptTag({ content: 'window.open = function() {}' })
+    const accessToken = await getAccessToken(page)
 
     const aTag = await page.find('cl-cart-link >>> a')
     await aTag.click()
 
-    await page.waitForResponse(response => {
-      return response.url() === 'https://demo-store-1.commercelayer.io/api/orders' && response.request().method() === 'POST'
+    await page.waitForResponse(async RESPONSE => {
+      return RESPONSE.url().startsWith('https://demo-store-1.commercelayer.app/cart')
     })
+
+    await page.waitForNetworkIdle()
+
+    const cartUrl = page.url()
+
+    // @ts-ignore
+    await page.goBack()
     await page.waitForChanges()
 
-    const accessTokenCookieName = 'clayer_token-xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU-market:10426'
-    const accessTokenCookie = await (await page.cookies()).find(cookie => cookie.name === encodeURIComponent(accessTokenCookieName))
+    const cartId = await getCartId(page)
 
-    const orderIdCookieName = 'cl-drop-in--order-id'
-    const orderIdCookie = await (await page.cookies()).find(cookie => cookie.name === encodeURIComponent(orderIdCookieName))
-
-    const element = await page.find('cl-cart-link')
-
-    expect(element).toEqualHtml(`
-      <cl-cart-link class="hydrated" target="_self">
-        <mock:shadow-root>
-          <a href="${`https://demo-store-1.commercelayer.app/cart/${orderIdCookie?.value}?accessToken=${accessTokenCookie?.value}`}" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Cart
-      </cl-cart-link>
-    `)
+    expect(cartUrl).toEqual(`https://demo-store-1.commercelayer.app/cart/${cartId}?accessToken=${accessToken}`)
   })
 })

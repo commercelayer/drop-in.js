@@ -36,7 +36,7 @@ cl-add-to-cart {
   background-color: #dbdcdc;
   cursor: default;
 
-  &.hydrated:not([disabled]) {
+  &.hydrated:not([aria-disabled="true"]) {
     background-color: var(--cl-primary-color);
     cursor: pointer;
   }

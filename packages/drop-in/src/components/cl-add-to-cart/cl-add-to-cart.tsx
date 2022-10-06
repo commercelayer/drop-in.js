@@ -84,7 +84,6 @@ export class CLAddToCart {
       <Host
         role='button'
         tabindex='0'
-        disabled={!enabled}
         aria-disabled={enabled ? undefined : 'true'}
         onKeyPress={(event: KeyboardEvent) => this.handleKeyPress(event)}
         onClick={() => this.handleAddItem()} >
