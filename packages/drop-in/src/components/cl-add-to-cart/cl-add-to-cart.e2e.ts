@@ -1,4 +1,4 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing'
 import { expectForLineItems } from 'jest.e2e.helpers'
 
 describe('cl-add-to-cart.e2e', () => {

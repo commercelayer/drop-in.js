@@ -4,9 +4,9 @@ import { CLCartLink } from './cl-cart-link'
 
 const cartUrl = 'https://example.com/checkout-url'
 
-const getCartUrlSpy = jest.spyOn(cart, 'getCartUrl').mockReturnValue(
-  Promise.resolve(cartUrl)
-);
+const getCartUrlSpy = jest
+  .spyOn(cart, 'getCartUrl')
+  .mockReturnValue(Promise.resolve(cartUrl))
 
 beforeEach(() => {
   getCartUrlSpy.mockClear()

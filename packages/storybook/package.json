@@ -3,9 +3,9 @@
   "private": true,
   "version": "2.0.0-beta.0",
   "scripts": {
-    "start": "pnpm build.sass && start-storybook -s ./public -p 6006",
-    "build.sass": "sass stories/assets/drop-in.scss public/drop-in.css",
-    "build": "pnpm build.sass && build-storybook -s ./public"
+    "start": "pnpm build:sass && start-storybook -s ./public -p 6006",
+    "build:sass": "sass stories/assets/drop-in.scss public/drop-in.css",
+    "build": "pnpm build:sass && build-storybook -s ./public"
   },
   "author": {
     "name": "Marco Montalbano",

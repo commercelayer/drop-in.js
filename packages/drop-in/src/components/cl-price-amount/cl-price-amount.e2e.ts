@@ -1,7 +1,6 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing'
 
 describe('cl-price-amount.e2e', () => {
-
   it('renders as price when `type` is not defined', async () => {
     const page = await newE2EPage({
       waitUntil: 'networkidle0',
@@ -30,7 +29,9 @@ describe('cl-price-amount.e2e', () => {
       </cl-price-amount>
     `)
 
-    element.triggerEvent('priceUpdate', { detail: { formatted_amount: '123$', formatted_compare_at_amount: '321$' } })
+    element.triggerEvent('priceUpdate', {
+      detail: { formatted_amount: '123$', formatted_compare_at_amount: '321$' }
+    })
 
     await page.waitForChanges()
 
@@ -71,7 +72,9 @@ describe('cl-price-amount.e2e', () => {
       </cl-price-amount>
     `)
 
-    element.triggerEvent('priceUpdate', { detail: { formatted_amount: '123$', formatted_compare_at_amount: '321$' } })
+    element.triggerEvent('priceUpdate', {
+      detail: { formatted_amount: '123$', formatted_compare_at_amount: '321$' }
+    })
 
     await page.waitForChanges()
 
@@ -113,7 +116,9 @@ describe('cl-price-amount.e2e', () => {
       </cl-price-amount>
     `)
 
-    element.triggerEvent('priceUpdate', { detail: { formatted_amount: '123$', formatted_compare_at_amount: '321$' } })
+    element.triggerEvent('priceUpdate', {
+      detail: { formatted_amount: '123$', formatted_compare_at_amount: '321$' }
+    })
 
     await page.waitForChanges()
 
@@ -127,5 +132,4 @@ describe('cl-price-amount.e2e', () => {
       </cl-price-amount>
     `)
   })
-
 })

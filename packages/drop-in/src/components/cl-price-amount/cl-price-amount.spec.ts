@@ -5,7 +5,7 @@ describe('cl-price-amount.spec', () => {
   it('renders', async () => {
     const { root } = await newSpecPage({
       components: [CLPriceAmount],
-      html: '<cl-price-amount></cl-price-amount>',
+      html: '<cl-price-amount></cl-price-amount>'
     })
     expect(root).toEqualHtml(`
       <cl-price-amount type="price">

@@ -1,0 +1,6 @@
+{
+  "eslint.workingDirectories": [
+    "packages/drop-in",
+    "packages/storybook"
+  ]
+}

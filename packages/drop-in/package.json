@@ -15,10 +15,10 @@
   ],
   "scripts": {
     "build": "stencil build --docs",
-    "build.watch": "stencil build --docs --watch",
+    "build:watch": "stencil build --docs --watch",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
-    "test.watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --e2e'",
+    "test:watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --e2e'",
     "generate": "stencil generate"
   },
   "author": {
@@ -40,7 +40,7 @@
     "@types/js-cookie": "^3.0.2",
     "jest": "^27.5.1",
     "jest-cli": "^27.5.1",
-    "puppeteer": "^18.2.0",
+    "puppeteer": "^18.2.1",
     "ts-jest": "^27",
     "typescript": "^4.8.4"
   },

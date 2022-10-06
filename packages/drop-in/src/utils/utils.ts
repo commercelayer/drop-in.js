@@ -1,7 +1,3 @@
-export function format(first: string| undefined, middle: string| undefined, last: string| undefined): string {
-  return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
-}
-
 /**
  * Creates an array of elements split into groups the length of `size`. If `array` can't be split evenly, the final chunk will be the remaining elements.
  * @param array The array to process.
@@ -13,14 +9,16 @@ export function chunk<T>(array: T[], size: number = 1): T[][] {
     return []
   }
 
-  return array.reduce((resultArray, item, index) => {
+  return array.reduce<T[][]>((resultArray, item, index) => {
     const chunkIndex = Math.floor(index / size)
 
     resultArray[chunkIndex] ||= []
-    resultArray[chunkIndex]!.push(item)
+
+    // @ts-expect-error
+    resultArray[chunkIndex].push(item)
 
     return resultArray
-  }, [] as T[][])
+  }, [])
 }
 
 /**
@@ -45,12 +43,14 @@ export function uniq<T>(array: T[]): T[] {
  * @param func The function to have its output memoized.
  * @returns Returns the new memoized function.
  */
-export const memoize = <T extends (...args: any) => any>(func: T): (...args: Parameters<T>) => ReturnType<T> => {
+export const memoize = <T extends (...args: any) => any>(
+  func: T
+): ((...args: Parameters<T>) => ReturnType<T>) => {
   const cache: { [key: string]: any } = {}
 
   return (...args: any): any => {
     const cacheKey = JSON.stringify(args)
-    if (!cache[cacheKey]) {
+    if (cache[cacheKey] === undefined) {
       cache[cacheKey] = func(...args)
     }
     return cache[cacheKey]

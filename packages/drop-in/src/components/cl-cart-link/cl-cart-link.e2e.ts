@@ -23,7 +23,7 @@ describe('cl-cart-link.e2e', () => {
 
     const element = await page.find('cl-cart-link')
 
-    const accessToken = await getAccessToken(page)
+    const accessToken = (await getAccessToken(page)) ?? 'null'
 
     expect(element).toEqualHtml(`
       <cl-cart-link class="hydrated" target="_self">
@@ -56,25 +56,29 @@ describe('cl-cart-link.e2e', () => {
 
     await page.waitForChanges()
 
-    const accessToken = await getAccessToken(page)
+    const accessToken = (await getAccessToken(page)) ?? 'null'
 
     const aTag = await page.find('cl-cart-link >>> a')
     await aTag.click()
 
-    await page.waitForResponse(async RESPONSE => {
-      return RESPONSE.url().startsWith('https://demo-store-1.commercelayer.app/cart')
+    await page.waitForResponse(async (RESPONSE) => {
+      return RESPONSE.url().startsWith(
+        'https://demo-store-1.commercelayer.app/cart'
+      )
     })
 
     await page.waitForNetworkIdle()
 
     const cartUrl = page.url()
 
-    // @ts-ignore
+    // @ts-expect-error
     await page.goBack()
     await page.waitForChanges()
 
-    const cartId = await getCartId(page)
+    const cartId = (await getCartId(page)) ?? 'null'
 
-    expect(cartUrl).toEqual(`https://demo-store-1.commercelayer.app/cart/${cartId}?accessToken=${accessToken}`)
+    expect(cartUrl).toEqual(
+      `https://demo-store-1.commercelayer.app/cart/${cartId}?accessToken=${accessToken}`
+    )
   })
 })

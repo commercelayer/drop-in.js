@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "@commercelayer/eslint-config-ts"
+  ],
+  "ignorePatterns": [
+    "packages/drop-in/stencil.config.ts",
+    "packages/drop-in/jest.setup.ts",
+    "*.d.ts"
+  ]
+}

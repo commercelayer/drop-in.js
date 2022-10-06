@@ -13,7 +13,7 @@ async function createEmptyCart(): Promise<Order> {
 }
 
 function getCartId(): string | null {
-  return Cookies.get(cartKey) || null
+  return Cookies.get(cartKey) ?? null
 }
 
 export function isValidUrl(url: string): boolean {
@@ -27,17 +27,21 @@ export function isValidUrl(url: string): boolean {
  * @param forceCartToExist When true it will create an empty cart if not existing before.
  * @returns Returns the Hosted Cart url.
  */
-export async function getCartUrl(forceCartToExist: boolean = false): Promise<string> {
+export async function getCartUrl(
+  forceCartToExist: boolean = false
+): Promise<string> {
   const config = getConfig()
   const accessToken = await getAccessToken(config)
   let cartId = getCartId()
 
-  if (cartId === null && forceCartToExist === true) {
+  if (cartId === null && forceCartToExist) {
     const cart = await createEmptyCart()
     cartId = cart.id
   }
 
-  return `https://${config.slug}.commercelayer.app/cart/${cartId}?accessToken=${accessToken}`
+  return `https://${config.slug}.commercelayer.app/cart/${
+    cartId ?? 'null'
+  }?accessToken=${accessToken}`
 }
 
 export async function getCart(): Promise<Order | null> {
@@ -45,16 +49,16 @@ export async function getCart(): Promise<Order | null> {
 
   const orderId = getCartId()
 
-  if (!orderId) {
+  if (orderId === null) {
     return null
   }
 
-  return await (client.orders.retrieve(orderId).catch(() => null))
+  return await client.orders.retrieve(orderId).catch(() => null)
 }
 
-export async function addItem(sku_code: string, quantity: number): Promise<void> {
+export async function addItem(sku: string, quantity: number): Promise<void> {
   const client = await createClient(getConfig())
-  const orderId = getCartId() || await (await createEmptyCart()).id
+  const orderId = getCartId() ?? (await (await createEmptyCart()).id)
 
   await client.line_items.create({
     order: {
@@ -62,7 +66,7 @@ export async function addItem(sku_code: string, quantity: number): Promise<void>
       type: 'orders'
     },
     quantity,
-    sku_code,
+    sku_code: sku,
     _update_quantity: true
   })
 

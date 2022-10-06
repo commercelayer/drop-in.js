@@ -8,46 +8,55 @@ function getSku(element: HTMLClPriceElement): string | undefined {
   return element.sku
 }
 
-export const registerPrices = async (client: CommerceLayerClient, elements: HTMLClPriceElement[] = Array.from(document.querySelectorAll(componentName))): Promise<void> => {
-  customElements.whenDefined(componentName).then(async () => {
-    log('group', 'registerPrices invoked')
+export const registerPrices = async (
+  client: CommerceLayerClient,
+  elements: HTMLClPriceElement[] = Array.from(
+    document.querySelectorAll(componentName)
+  )
+): Promise<void> => {
+  await customElements.whenDefined(componentName)
 
-    log('info', `found`, elements.length, componentName)
+  log('group', 'registerPrices invoked')
 
-    const skus = uniq(elements.map(getSku).filter(isNotNullish))
-    log('info', `found`, skus.length, 'unique skus', skus)
+  log('info', `found`, elements.length, componentName)
 
-    const pageSize = 25
-    const chunkedSkus = chunk(skus, pageSize)
+  const skus = uniq(elements.map(getSku).filter(isNotNullish))
+  log('info', `found`, skus.length, 'unique skus', skus)
 
-    const pricesResponse = (await Promise.all(
+  const pageSize = 25
+  const chunkedSkus = chunk(skus, pageSize)
+
+  const pricesResponse = (
+    await Promise.all(
       chunkedSkus.map(async (skus) => {
         return await client.prices.list({
           pageSize,
           filters: { sku_code_in: skus.join(',') }
         })
       })
-    )).flat()
+    )
+  ).flat()
 
-    // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
-    const prices: { [sku: string]: Price } = pricesResponse.reduce((prices, price) => {
-      if (price.sku_code) {
-        prices[price.sku_code] = price
+  // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
+  const prices: { [sku: string]: Price } = pricesResponse.reduce<{
+    [sku: string]: Price
+  }>((prices, price) => {
+    if (price.sku_code !== undefined) {
+      prices[price.sku_code] = price
+    }
+
+    return prices
+  }, {})
+
+  elements.forEach((element) => {
+    const sku = getSku(element)
+    if (sku !== undefined) {
+      const price = prices[sku]
+      if (price != null) {
+        element.dispatchEvent(new CustomEvent(`priceUpdate`, { detail: price }))
       }
-
-      return prices
-    }, {} as { [sku: string]: Price })
-
-    elements.forEach(element => {
-      const sku = getSku(element)
-      if (sku) {
-        const price = prices[sku]
-        if (price) {
-          element.dispatchEvent(new CustomEvent(`priceUpdate`, { detail: price }))
-        }
-      }
-    })
-
-    log('groupEnd')
+    }
   })
+
+  log('groupEnd')
 }

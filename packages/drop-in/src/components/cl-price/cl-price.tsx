@@ -1,10 +1,10 @@
 import { log } from '#utils/logger'
 import type { Price } from '@commercelayer/sdk'
-import { Component, Element, h, Listen, Prop, Watch } from '@stencil/core'
+import { Component, Element, h, JSX, Listen, Prop, Watch } from '@stencil/core'
 
 @Component({
   tag: 'cl-price',
-  shadow: true,
+  shadow: true
 })
 export class CLPrice {
   /**
@@ -24,25 +24,23 @@ export class CLPrice {
     return typeof sku === 'string' && sku !== ''
   }
 
-  componentWillLoad() {
+  componentWillLoad(): void {
     this.logSku(this.sku)
   }
 
   @Watch('sku')
-  watchPropHandler(newValue: string, _oldValue: string) {
+  watchPropHandler(newValue: string, _oldValue: string): void {
     this.logSku(newValue)
   }
 
   @Listen('priceUpdate')
-  priceUpdateHandler({ type, detail }: CustomEvent<Price>) {
-    this.host.querySelectorAll('cl-price-amount').forEach(element => {
+  priceUpdateHandler({ type, detail }: CustomEvent<Price>): void {
+    this.host.querySelectorAll('cl-price-amount').forEach((element) => {
       element.dispatchEvent(new CustomEvent<Price>(type, { detail }))
     })
   }
 
-  render() {
-    return (
-      <slot></slot>
-    )
+  render(): JSX.Element {
+    return <slot></slot>
   }
 }

@@ -1,10 +1,10 @@
 import { addItem } from '#apis/commercelayer/cart'
 import { log } from '#utils/logger'
-import { Component, Element, h, Host, Prop, Watch } from '@stencil/core'
+import { Component, Element, h, Host, JSX, Prop, Watch } from '@stencil/core'
 
 @Component({
   tag: 'cl-add-to-cart',
-  shadow: true,
+  shadow: true
 })
 export class CLAddToCart {
   @Element() host!: HTMLElement
@@ -27,7 +27,11 @@ export class CLAddToCart {
 
   logQuantity(quantity: number): void {
     if (!this.validateQuantity(quantity)) {
-      log('warn', '"quantity" should be a number equal or greater than 0.', this.host)
+      log(
+        'warn',
+        '"quantity" should be a number equal or greater than 0.',
+        this.host
+      )
     }
   }
 
@@ -40,31 +44,33 @@ export class CLAddToCart {
   }
 
   @Watch('sku')
-  watchSkuHandler(newValue: string, _oldValue: string) {
+  watchSkuHandler(newValue: string, _oldValue: string): void {
     this.logSku(newValue)
   }
 
   @Watch('quantity')
-  watchQuantityHandler(newValue: number, _oldValue: number) {
+  watchQuantityHandler(newValue: number, _oldValue: number): void {
     if (!this.validateQuantity(newValue)) {
       this.quantity = 0
     }
   }
 
-  componentWillLoad() {
+  componentWillLoad(): void {
     this.logSku(this.sku)
     this.logQuantity(this.quantity)
   }
 
-  handleKeyPress(event: KeyboardEvent) {
+  handleKeyPress(event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === ' ') {
       this.handleAddItem()
     }
   }
 
-  handleAddItem() {
-    if (this.sku && this.canBeSold()) {
-      addItem(this.sku, this.quantity)
+  handleAddItem(): void {
+    if (this.sku !== undefined && this.canBeSold()) {
+      addItem(this.sku, this.quantity).catch((error) => {
+        throw error
+      })
     }
   }
 
@@ -72,12 +78,12 @@ export class CLAddToCart {
    * Check whether the sku is soldable.
    * @returns Returns true when item is soldable.
    */
-  canBeSold() {
+  canBeSold(): boolean {
     // TODO: check for stock
     return this.validateSku(this.sku) && this.quantity > 0
   }
 
-  render() {
+  render(): JSX.Element {
     const enabled = this.canBeSold()
 
     return (
@@ -86,7 +92,8 @@ export class CLAddToCart {
         tabindex='0'
         aria-disabled={enabled ? undefined : 'true'}
         onKeyPress={(event: KeyboardEvent) => this.handleKeyPress(event)}
-        onClick={() => this.handleAddItem()} >
+        onClick={() => this.handleAddItem()}
+      >
         <slot></slot>
       </Host>
     )

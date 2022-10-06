@@ -1,4 +1,4 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing'
 
 describe('cl-price.e2e', () => {
   it('renders without a sku', async () => {
@@ -29,7 +29,7 @@ describe('cl-price.e2e', () => {
         </mock:shadow-root>
       </cl-price>
     `)
-  });
+  })
 
   it('renders with a sku', async () => {
     const page = await newE2EPage({
@@ -60,7 +60,7 @@ describe('cl-price.e2e', () => {
         </mock:shadow-root>
       </cl-price>
     `)
-  });
+  })
 
   it('renders with a sku and display prices into cl-price inner-components', async () => {
     const page = await newE2EPage({
@@ -95,7 +95,9 @@ describe('cl-price.e2e', () => {
       </cl-price>
     `)
 
-    const clPriceCompareAtAmount = await page.find('cl-price-amount[type="compare-at"]')
+    const clPriceCompareAtAmount = await page.find(
+      'cl-price-amount[type="compare-at"]'
+    )
     expect(clPriceCompareAtAmount).toEqualHtml(`
       <cl-price-amount class="hydrated" type="compare-at">
         <mock:shadow-root>
@@ -114,5 +116,5 @@ describe('cl-price.e2e', () => {
         </mock:shadow-root>
       </cl-price-amount>
     `)
-  });
-});
+  })
+})

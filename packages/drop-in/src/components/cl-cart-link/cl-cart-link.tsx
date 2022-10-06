@@ -1,9 +1,9 @@
 import { getCartUrl, isValidUrl } from '#apis/commercelayer/cart'
-import { Component, Prop, h, Element, State } from '@stencil/core'
+import { Component, Element, h, JSX, Prop, State } from '@stencil/core'
 
 @Component({
   tag: 'cl-cart-link',
-  shadow: true,
+  shadow: true
 })
 export class CLCartLink {
   @Element() host!: HTMLElement
@@ -15,21 +15,29 @@ export class CLCartLink {
 
   @State() href: string | undefined
 
-  async componentWillLoad() {
+  async componentWillLoad(): Promise<void> {
     this.href = await getCartUrl()
   }
 
-  async handleClick(event: MouseEvent) {
-    if (!this.href || !isValidUrl(this.href)) {
+  async handleClick(event: MouseEvent): Promise<void> {
+    if (this.href === undefined || !isValidUrl(this.href)) {
       event.preventDefault()
       this.href = await getCartUrl(true)
       window.open(this.href, this.target)
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
-      <a target={this.target} href={this.href} onClick={e => this.handleClick(e)}>
+      <a
+        target={this.target}
+        href={this.href}
+        onClick={(e) => {
+          this.handleClick(e).catch((error) => {
+            throw error
+          })
+        }}
+      >
         <slot></slot>
       </a>
     )
