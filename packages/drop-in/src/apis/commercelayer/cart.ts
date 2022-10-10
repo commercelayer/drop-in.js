@@ -1,19 +1,30 @@
 import { createClient, getAccessToken } from '#apis/commercelayer/client'
 import { getConfig } from '#apis/commercelayer/config'
+import { getKeyForCart } from '#apis/storage'
 import type { Order } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 
-const cartKey = 'cl-drop-in--order-id'
-
+/**
+ * Create a draft order.
+ * @see https://docs.commercelayer.io/core/v/how-tos/shopping-cart/create-a-shopping-cart
+ * @returns Returns the created draft order.
+ */
 async function createEmptyCart(): Promise<Order> {
   const client = await createClient(getConfig())
   const order = await client.orders.create({})
-  Cookies.set(cartKey, order.id)
+  setCartId(order.id)
+
+  await triggerCartUpdate(order)
+
   return order
 }
 
+function setCartId(cartId: string): void {
+  Cookies.set(getKeyForCart(), cartId)
+}
+
 function getCartId(): string | null {
-  return Cookies.get(cartKey) ?? null
+  return Cookies.get(getKeyForCart()) ?? null
 }
 
 export function isValidUrl(url: string): boolean {
@@ -53,7 +64,24 @@ export async function getCart(): Promise<Order | null> {
     return null
   }
 
-  return await client.orders.retrieve(orderId).catch(() => null)
+  const order = await client.orders.retrieve(orderId).catch(() => null)
+
+  await triggerCartUpdate(order)
+
+  return order
+}
+
+export async function triggerCartUpdate(order: Order | null): Promise<void> {
+  // TODO: manage events in separate file
+
+  if (order === null) {
+    const order = await getCart()
+    if (order !== null) {
+      window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }))
+    }
+  } else {
+    window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }))
+  }
 }
 
 export async function addItem(sku: string, quantity: number): Promise<void> {
@@ -70,5 +98,5 @@ export async function addItem(sku: string, quantity: number): Promise<void> {
     _update_quantity: true
   })
 
-  // return await getCart()
+  await triggerCartUpdate(null)
 }

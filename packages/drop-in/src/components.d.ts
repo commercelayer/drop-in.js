@@ -16,6 +16,8 @@ export namespace Components {
          */
         "sku": string | undefined;
     }
+    interface ClCartCount {
+    }
     interface ClCartLink {
         /**
           * Target
@@ -39,6 +41,12 @@ declare global {
         prototype: HTMLClAddToCartElement;
         new (): HTMLClAddToCartElement;
     };
+    interface HTMLClCartCountElement extends Components.ClCartCount, HTMLStencilElement {
+    }
+    var HTMLClCartCountElement: {
+        prototype: HTMLClCartCountElement;
+        new (): HTMLClCartCountElement;
+    };
     interface HTMLClCartLinkElement extends Components.ClCartLink, HTMLStencilElement {
     }
     var HTMLClCartLinkElement: {
@@ -59,6 +67,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "cl-add-to-cart": HTMLClAddToCartElement;
+        "cl-cart-count": HTMLClCartCountElement;
         "cl-cart-link": HTMLClCartLinkElement;
         "cl-price": HTMLClPriceElement;
         "cl-price-amount": HTMLClPriceAmountElement;
@@ -74,6 +83,8 @@ declare namespace LocalJSX {
           * Sku code
          */
         "sku"?: string | undefined;
+    }
+    interface ClCartCount {
     }
     interface ClCartLink {
         /**
@@ -92,6 +103,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "cl-add-to-cart": ClAddToCart;
+        "cl-cart-count": ClCartCount;
         "cl-cart-link": ClCartLink;
         "cl-price": ClPrice;
         "cl-price-amount": ClPriceAmount;
@@ -102,6 +114,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "cl-add-to-cart": LocalJSX.ClAddToCart & JSXBase.HTMLAttributes<HTMLClAddToCartElement>;
+            "cl-cart-count": LocalJSX.ClCartCount & JSXBase.HTMLAttributes<HTMLClCartCountElement>;
             "cl-cart-link": LocalJSX.ClCartLink & JSXBase.HTMLAttributes<HTMLClCartLinkElement>;
             "cl-price": LocalJSX.ClPrice & JSXBase.HTMLAttributes<HTMLClPriceElement>;
             "cl-price-amount": LocalJSX.ClPriceAmount & JSXBase.HTMLAttributes<HTMLClPriceAmountElement>;

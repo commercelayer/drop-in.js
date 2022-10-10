@@ -12,7 +12,7 @@ export async function getCookie(
 }
 
 export async function getCartId(page: E2EPage): Promise<string | null> {
-  const cookieName = 'cl-drop-in--order-id'
+  const cookieName = 'commercelayer_order-id'
   const cookie = await getCookie(page, cookieName)
 
   return cookie?.value ?? null
@@ -20,7 +20,7 @@ export async function getCartId(page: E2EPage): Promise<string | null> {
 
 export async function getAccessToken(page: E2EPage): Promise<string | null> {
   const cookieName =
-    'clayer_token-xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU-market:10426'
+    'commercelayer_token-xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU-market:10426'
   const cookie = await getCookie(page, cookieName)
 
   return cookie?.value ?? null

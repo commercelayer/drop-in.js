@@ -1,20 +1,13 @@
+import { getKeyForAccessToken } from '#apis/storage'
 import { memoize } from '#utils/utils'
 import { getSalesChannelToken, ClientCredentials } from '@commercelayer/js-auth'
 import CommerceLayer, { CommerceLayerClient } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 
-function getCookieName(clientCredentials: ClientCredentials): string {
-  const scope = Array.isArray(clientCredentials.scope)
-    ? clientCredentials.scope.join('-')
-    : clientCredentials.scope ?? 'undefined'
-
-  return `clayer_token-${clientCredentials.clientId}-${scope}`
-}
-
 export const getAccessToken = memoize(async function (
   clientCredentials: ClientCredentials
 ): Promise<string> {
-  const name = getCookieName(clientCredentials)
+  const name = getKeyForAccessToken(clientCredentials)
   const value = Cookies.get(name)
 
   if (value !== undefined) {
@@ -29,7 +22,9 @@ export const getAccessToken = memoize(async function (
   }
 
   const { accessToken, expires } = salesChannelToken
-  Cookies.set(getCookieName(clientCredentials), accessToken, { expires })
+  Cookies.set(getKeyForAccessToken(clientCredentials), accessToken, {
+    expires
+  })
 
   return accessToken
 })

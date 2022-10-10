@@ -41,3 +41,30 @@ cl-add-to-cart {
     cursor: pointer;
   }
 }
+
+cl-cart-link {
+  position: relative;
+  display: inline-block;
+
+  cl-cart-count[quantity] {
+    font-size: .5rem;
+    border-radius: 50%;
+    background-color: var(--cl-primary-color);
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    bottom: 0%;
+    right: 0%;
+    transform: translate(120%, 0%);
+  }
+
+  svg ~ cl-cart-count[quantity] {
+    bottom: 0%;
+    right: 0%;
+    transform: translate(30%, 0%);
+  }
+}
