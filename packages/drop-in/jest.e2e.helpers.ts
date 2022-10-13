@@ -1,6 +1,25 @@
+import type { CommerceLayerConfig } from '#apis/commercelayer/config'
 import type { E2EPage } from '@stencil/core/testing'
 
 type Cookie = Awaited<ReturnType<E2EPage['cookies']>>[number]
+
+export function getCommerceLayerConfiguration({
+  clientId = 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
+  slug = 'demo-store-1',
+  scope = 'market:10426'
+}: Partial<CommerceLayerConfig> = {}): string {
+  return `
+    <script>
+      (function() {
+        commercelayerConfig = {
+          clientId: '${clientId}',
+          slug: '${slug}',
+          scope: '${scope}'
+        }
+      }());
+    </script>
+  `
+}
 
 export async function getCookie(
   page: E2EPage,
@@ -26,7 +45,7 @@ export async function getAccessToken(page: E2EPage): Promise<string | null> {
   return cookie?.value ?? null
 }
 
-export async function expectForLineItems(
+export async function waitAndExpectForLineItems(
   page: E2EPage,
   options: { sku: string; quantity: number }
 ): Promise<void> {

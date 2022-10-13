@@ -17,6 +17,8 @@ export class ClCartCount {
   cartUpdateHandler(event: CustomEvent<Order>): void {
     if (event.detail.skus_count !== undefined && event.detail.skus_count > 0) {
       this.count = event.detail.skus_count
+    } else {
+      this.count = undefined
     }
   }
 

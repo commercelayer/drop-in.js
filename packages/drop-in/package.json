@@ -17,8 +17,8 @@
     "build": "stencil build --docs",
     "build:watch": "stencil build --docs --watch",
     "start": "stencil build --dev --watch --serve",
-    "test": "stencil test --spec --e2e",
-    "test:watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --e2e'",
+    "test": "stencil test --spec --e2e --detectOpenHandles",
+    "test:watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --e2e --detectOpenHandles'",
     "generate": "stencil generate"
   },
   "author": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "@commercelayer/js-auth": "^2.3.0",
     "@commercelayer/sdk": "^4.16.0",
+    "iframe-resizer": "^4.3.2",
     "js-cookie": "^3.0.1"
   },
   "peerDependencies": {
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@stencil/core": "^2.18.1",
     "@stencil/sass": "^2.0.0",
+    "@types/iframe-resizer": "^3.5.9",
     "@types/jest": "^27.5.2",
     "@types/js-cookie": "^3.0.2",
     "jest": "^27.5.1",

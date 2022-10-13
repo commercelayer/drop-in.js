@@ -24,8 +24,10 @@ importers:
       '@commercelayer/sdk': ^4.16.0
       '@stencil/core': ^2.18.1
       '@stencil/sass': ^2.0.0
+      '@types/iframe-resizer': ^3.5.9
       '@types/jest': ^27.5.2
       '@types/js-cookie': ^3.0.2
+      iframe-resizer: ^4.3.2
       jest: ^27.5.1
       jest-cli: ^27.5.1
       js-cookie: ^3.0.1
@@ -35,10 +37,12 @@ importers:
     dependencies:
       '@commercelayer/js-auth': 2.3.0
       '@commercelayer/sdk': 4.16.0
+      iframe-resizer: 4.3.2
       js-cookie: 3.0.1
     devDependencies:
       '@stencil/core': 2.18.1
       '@stencil/sass': 2.0.0_@stencil+core@2.18.1
+      '@types/iframe-resizer': 3.5.9
       '@types/jest': 27.5.2
       '@types/js-cookie': 3.0.2
       jest: 27.5.1
@@ -4987,6 +4991,10 @@ packages:
     resolution: {integrity: sha512-SZs7ekbP8CN0txVG2xVRH6EgKmEm31BOxA07vkFaETzZz1xh+cbt8BcI0slpymvwhx5dlFnQG2rTlPVQn+iRPQ==}
     dev: true
 
+  /@types/iframe-resizer/3.5.9:
+    resolution: {integrity: sha512-RQUBI75F+uXruB95BFpC/8V8lPgJg4MQ6HxOCtAZYBB/h0FNCfrFfb4I+u2pZJIV7sKeszZbFqy1UnGeBMrvsA==}
+    dev: true
+
   /@types/is-function/1.0.1:
     resolution: {integrity: sha512-A79HEEiwXTFtfY+Bcbo58M2GRYzCr9itHWzbzHVFNEYCcoU/MMGwYYf721gBrnhpj1s6RGVVha/IgNFnR0Iw/Q==}
     dev: true
@@ -9869,6 +9877,11 @@ packages:
   /iferr/0.1.5:
     resolution: {integrity: sha512-DUNFN5j7Tln0D+TxzloUjKB+CtVu6myn0JEFak6dG18mNt9YkQ6lzGCdafwofISZ1lLF3xRHJ98VKy9ynkcFaA==}
     dev: true
+
+  /iframe-resizer/4.3.2:
+    resolution: {integrity: sha512-gOWo2hmdPjMQsQ+zTKbses08mDfDEMh4NneGQNP4qwePYujY1lguqP6gnbeJkf154gojWlBhIltlgnMfYjGHWA==}
+    engines: {node: '>=0.8.0'}
+    dev: false
 
   /ignore-walk/5.0.1:
     resolution: {integrity: sha512-yemi4pMf51WKT7khInJqAvsIGzoqYXblnsz0ql8tM+yi1EKYTY1evX4NAbJrLL/Aanr2HyZeluqU+Oi7MGHokw==}

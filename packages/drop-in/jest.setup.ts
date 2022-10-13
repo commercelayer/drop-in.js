@@ -1,3 +1,12 @@
+Object.defineProperty(window, 'postMessage', {
+  // @ts-expect-error
+  value: jest.fn()
+})
+
+Object.defineProperty(window, 'parent', {
+  value: Object.create(window)
+})
+
 Object.defineProperty(window, 'commercelayerConfig', {
   configurable: true,
   value: {

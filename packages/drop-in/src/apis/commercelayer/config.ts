@@ -1,4 +1,4 @@
-interface CommerceLayerConfig {
+export interface CommerceLayerConfig {
   clientId: string
   slug: string
   scope: string

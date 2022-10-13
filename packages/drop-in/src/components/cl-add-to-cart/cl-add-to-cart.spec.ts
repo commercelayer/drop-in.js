@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing'
 import { CLAddToCart } from './cl-add-to-cart'
 
 describe('cl-add-to-cart.spec', () => {
-  it('renders without attributes', async () => {
+  it('renders as disabled when created without attributes', async () => {
     const { root } = await newSpecPage({
       components: [CLAddToCart],
       html: '<cl-add-to-cart>Add to cart</cl-add-to-cart>'
@@ -32,7 +32,7 @@ describe('cl-add-to-cart.spec', () => {
     `)
   })
 
-  it('renders disabled when providing an invalid quantity', async () => {
+  it('renders as disabled when providing an invalid quantity', async () => {
     const { root } = await newSpecPage({
       components: [CLAddToCart],
       html: '<cl-add-to-cart sku="BACKPACK818488000000XXXX" quantity="-3">Add to cart</cl-add-to-cart>'

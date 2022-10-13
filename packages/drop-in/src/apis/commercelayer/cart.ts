@@ -66,20 +66,14 @@ export async function getCart(): Promise<Order | null> {
 
   const order = await client.orders.retrieve(orderId).catch(() => null)
 
-  await triggerCartUpdate(order)
-
   return order
 }
 
 export async function triggerCartUpdate(order: Order | null): Promise<void> {
-  // TODO: manage events in separate file
+  order ||= await getCart()
 
-  if (order === null) {
-    const order = await getCart()
-    if (order !== null) {
-      window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }))
-    }
-  } else {
+  if (order !== null) {
+    // TODO: manage events in separate file
     window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }))
   }
 }

@@ -1,5 +1,6 @@
 import { getCartUrl, isValidUrl } from '#apis/commercelayer/cart'
-import { Component, Element, h, JSX, Prop, State } from '@stencil/core'
+import type { Order } from '@commercelayer/sdk'
+import { Component, Element, h, JSX, Listen, Prop, State } from '@stencil/core'
 
 @Component({
   tag: 'cl-cart-link',
@@ -24,6 +25,13 @@ export class CLCartLink {
       event.preventDefault()
       this.href = await getCartUrl(true)
       window.open(this.href, this.target)
+    }
+  }
+
+  @Listen('cartUpdate', { target: 'window' })
+  async cartUpdateHandler(_event: CustomEvent<Order>): Promise<void> {
+    if (this.href === undefined || !isValidUrl(this.href)) {
+      this.href = await getCartUrl()
     }
   }
 
