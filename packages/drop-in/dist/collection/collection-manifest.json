@@ -1,6 +1,7 @@
 {
   "entries": [
     "./components/cl-add-to-cart/cl-add-to-cart.js",
+    "./components/cl-cart/cl-cart.js",
     "./components/cl-cart-count/cl-cart-count.js",
     "./components/cl-cart-link/cl-cart-link.js",
     "./components/cl-price/cl-price.js",

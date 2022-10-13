@@ -1,6 +1,4 @@
-'use strict';
-
-const logger = require('./logger-dbb3111f.js');
+import { l as log, u as uniq, i as isNotNullish, c as chunk, a as createClient, g as getConfig } from './logger-f397dbdc.js';
 
 const componentName = 'cl-price';
 function getSku(element) {
@@ -8,12 +6,12 @@ function getSku(element) {
 }
 const registerPrices = async (client, elements = Array.from(document.querySelectorAll(componentName))) => {
   await customElements.whenDefined(componentName);
-  logger.log('group', 'registerPrices invoked');
-  logger.log('info', `found`, elements.length, componentName);
-  const skus = logger.uniq(elements.map(getSku).filter(logger.isNotNullish));
-  logger.log('info', `found`, skus.length, 'unique skus', skus);
+  log('group', 'registerPrices invoked');
+  log('info', `found`, elements.length, componentName);
+  const skus = uniq(elements.map(getSku).filter(isNotNullish));
+  log('info', `found`, skus.length, 'unique skus', skus);
   const pageSize = 25;
-  const chunkedSkus = logger.chunk(skus, pageSize);
+  const chunkedSkus = chunk(skus, pageSize);
   const pricesResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
     return await client.prices.list({
       pageSize,
@@ -36,7 +34,7 @@ const registerPrices = async (client, elements = Array.from(document.querySelect
       }
     }
   });
-  logger.log('groupEnd');
+  log('groupEnd');
 };
 
 const registrableNodes = {
@@ -46,7 +44,7 @@ function isClPrice(element) {
   return element.nodeName.toLowerCase() === 'cl-price';
 }
 const initialize = async function () {
-  const clClient = await logger.createClient(logger.getConfig());
+  const clClient = await createClient(getConfig());
   await registerPrices(clClient);
   const observer = new MutationObserver((mutationList) => {
     const nodes = mutationList.reduce((nodes, mutation) => {
@@ -79,4 +77,4 @@ const initialize = async function () {
   });
 };
 
-exports.initialize = initialize;
+export { initialize as i };

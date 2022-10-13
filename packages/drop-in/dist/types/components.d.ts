@@ -16,6 +16,8 @@ export namespace Components {
          */
         "sku": string | undefined;
     }
+    interface ClCart {
+    }
     interface ClCartCount {
     }
     interface ClCartLink {
@@ -40,6 +42,12 @@ declare global {
     var HTMLClAddToCartElement: {
         prototype: HTMLClAddToCartElement;
         new (): HTMLClAddToCartElement;
+    };
+    interface HTMLClCartElement extends Components.ClCart, HTMLStencilElement {
+    }
+    var HTMLClCartElement: {
+        prototype: HTMLClCartElement;
+        new (): HTMLClCartElement;
     };
     interface HTMLClCartCountElement extends Components.ClCartCount, HTMLStencilElement {
     }
@@ -67,6 +75,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "cl-add-to-cart": HTMLClAddToCartElement;
+        "cl-cart": HTMLClCartElement;
         "cl-cart-count": HTMLClCartCountElement;
         "cl-cart-link": HTMLClCartLinkElement;
         "cl-price": HTMLClPriceElement;
@@ -83,6 +92,8 @@ declare namespace LocalJSX {
           * Sku code
          */
         "sku"?: string | undefined;
+    }
+    interface ClCart {
     }
     interface ClCartCount {
     }
@@ -103,6 +114,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "cl-add-to-cart": ClAddToCart;
+        "cl-cart": ClCart;
         "cl-cart-count": ClCartCount;
         "cl-cart-link": ClCartLink;
         "cl-price": ClPrice;
@@ -114,6 +126,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "cl-add-to-cart": LocalJSX.ClAddToCart & JSXBase.HTMLAttributes<HTMLClAddToCartElement>;
+            "cl-cart": LocalJSX.ClCart & JSXBase.HTMLAttributes<HTMLClCartElement>;
             "cl-cart-count": LocalJSX.ClCartCount & JSXBase.HTMLAttributes<HTMLClCartCountElement>;
             "cl-cart-link": LocalJSX.ClCartLink & JSXBase.HTMLAttributes<HTMLClCartLinkElement>;
             "cl-price": LocalJSX.ClPrice & JSXBase.HTMLAttributes<HTMLClPriceElement>;

@@ -14,6 +14,9 @@ const ClCartCount$1 = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement
     if (event.detail.skus_count !== undefined && event.detail.skus_count > 0) {
       this.count = event.detail.skus_count;
     }
+    else {
+      this.count = undefined;
+    }
   }
   render() {
     return h(Host, { quantity: this.count }, this.count);

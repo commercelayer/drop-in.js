@@ -1,5 +1,3 @@
-'use strict';
-
 const prefix = 'commercelayer_';
 // TODO: shall we manage the country?
 function getKeyForCart() {
@@ -4146,12 +4144,4 @@ const log = (type, ...message) => {
   }
 };
 
-exports.chunk = chunk;
-exports.createClient = createClient;
-exports.getAccessToken = getAccessToken;
-exports.getConfig = getConfig;
-exports.getKeyForCart = getKeyForCart;
-exports.isNotNullish = isNotNullish;
-exports.js_cookie = js_cookie;
-exports.log = log;
-exports.uniq = uniq;
+export { createClient as a, getKeyForCart as b, chunk as c, getAccessToken as d, createCommonjsModule as e, getConfig as g, isNotNullish as i, js_cookie as j, log as l, uniq as u };

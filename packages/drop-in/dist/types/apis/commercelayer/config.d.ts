@@ -1,4 +1,4 @@
-interface CommerceLayerConfig {
+export interface CommerceLayerConfig {
   clientId: string;
   slug: string;
   scope: string;
@@ -9,4 +9,3 @@ export declare type Config = CommerceLayerConfig & {
   endpoint: string;
 };
 export declare function getConfig(): Config;
-export {};

@@ -1,5 +1,6 @@
 /* DropIn custom elements */
 export { CLAddToCart as ClAddToCart } from '../types/components/cl-add-to-cart/cl-add-to-cart';
+export { ClCart as ClCart } from '../types/components/cl-cart/cl-cart';
 export { ClCartCount as ClCartCount } from '../types/components/cl-cart-count/cl-cart-count';
 export { CLCartLink as ClCartLink } from '../types/components/cl-cart-link/cl-cart-link';
 export { CLPrice as ClPrice } from '../types/components/cl-price/cl-price';

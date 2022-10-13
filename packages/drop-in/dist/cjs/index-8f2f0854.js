@@ -191,7 +191,38 @@ const setAccessor = (elm, memberName, oldValue, newValue, isSvg, flags) => {
     if (oldValue !== newValue) {
         let isProp = isMemberInElement(elm, memberName);
         let ln = memberName.toLowerCase();
-        if ((!isProp ) &&
+        if (memberName === 'style') {
+            // update style attribute, css properties and values
+            {
+                for (const prop in oldValue) {
+                    if (!newValue || newValue[prop] == null) {
+                        if (prop.includes('-')) {
+                            elm.style.removeProperty(prop);
+                        }
+                        else {
+                            elm.style[prop] = '';
+                        }
+                    }
+                }
+            }
+            for (const prop in newValue) {
+                if (!oldValue || newValue[prop] !== oldValue[prop]) {
+                    if (prop.includes('-')) {
+                        elm.style.setProperty(prop, newValue[prop]);
+                    }
+                    else {
+                        elm.style[prop] = newValue[prop];
+                    }
+                }
+            }
+        }
+        else if (memberName === 'ref') {
+            // minifier will clean this up
+            if (newValue) {
+                newValue(elm);
+            }
+        }
+        else if ((!isProp ) &&
             memberName[0] === 'o' &&
             memberName[1] === 'n') {
             // Event Handlers
@@ -355,6 +386,7 @@ const removeVnodes = (vnodes, startIdx, endIdx, vnode, elm) => {
     for (; startIdx <= endIdx; ++startIdx) {
         if ((vnode = vnodes[startIdx])) {
             elm = vnode.$elm$;
+            callNodeRefs(vnode);
             // remove the vnode's element from the dom
             elm.remove();
         }
@@ -606,6 +638,12 @@ const patch = (oldVNode, newVNode) => {
         elm.data = text;
     }
 };
+const callNodeRefs = (vNode) => {
+    {
+        vNode.$attrs$ && vNode.$attrs$.ref && vNode.$attrs$.ref(null);
+        vNode.$children$ && vNode.$children$.map(callNodeRefs);
+    }
+};
 const renderVdom = (hostRef, renderFnResults) => {
     const hostElm = hostRef.$hostElement$;
     const cmpMeta = hostRef.$cmpMeta$;
@@ -725,12 +763,16 @@ const postUpdateComponent = (hostRef) => {
     const tagName = hostRef.$cmpMeta$.$tagName$;
     const elm = hostRef.$hostElement$;
     const endPostUpdate = createTime('postUpdate', tagName);
+    const instance = hostRef.$lazyInstance$ ;
     const ancestorComponent = hostRef.$ancestorComponent$;
     if (!(hostRef.$flags$ & 64 /* HOST_FLAGS.hasLoadedComponent */)) {
         hostRef.$flags$ |= 64 /* HOST_FLAGS.hasLoadedComponent */;
         {
             // DOM WRITE!
             addHydratedFlag(elm);
+        }
+        {
+            safeCall(instance, 'componentDidLoad');
         }
         endPostUpdate();
         {

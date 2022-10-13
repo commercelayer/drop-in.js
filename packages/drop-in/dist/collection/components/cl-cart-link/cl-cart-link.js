@@ -17,6 +17,11 @@ export class CLCartLink {
       window.open(this.href, this.target);
     }
   }
+  async cartUpdateHandler(_event) {
+    if (this.href === undefined || !isValidUrl(this.href)) {
+      this.href = await getCartUrl();
+    }
+  }
   render() {
     return (h("a", { target: this.target, href: this.href, onClick: (e) => {
         this.handleClick(e).catch((error) => {
@@ -54,4 +59,13 @@ export class CLCartLink {
     };
   }
   static get elementRef() { return "host"; }
+  static get listeners() {
+    return [{
+        "name": "cartUpdate",
+        "method": "cartUpdateHandler",
+        "target": "window",
+        "capture": false,
+        "passive": false
+      }];
+  }
 }

@@ -1,4 +1,6 @@
-import { l as log, u as uniq, i as isNotNullish, c as chunk, a as createClient, g as getConfig } from './logger-5483df89.js';
+'use strict';
+
+const logger = require('./logger-c7277a91.js');
 
 const componentName = 'cl-price';
 function getSku(element) {
@@ -6,12 +8,12 @@ function getSku(element) {
 }
 const registerPrices = async (client, elements = Array.from(document.querySelectorAll(componentName))) => {
   await customElements.whenDefined(componentName);
-  log('group', 'registerPrices invoked');
-  log('info', `found`, elements.length, componentName);
-  const skus = uniq(elements.map(getSku).filter(isNotNullish));
-  log('info', `found`, skus.length, 'unique skus', skus);
+  logger.log('group', 'registerPrices invoked');
+  logger.log('info', `found`, elements.length, componentName);
+  const skus = logger.uniq(elements.map(getSku).filter(logger.isNotNullish));
+  logger.log('info', `found`, skus.length, 'unique skus', skus);
   const pageSize = 25;
-  const chunkedSkus = chunk(skus, pageSize);
+  const chunkedSkus = logger.chunk(skus, pageSize);
   const pricesResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
     return await client.prices.list({
       pageSize,
@@ -34,7 +36,7 @@ const registerPrices = async (client, elements = Array.from(document.querySelect
       }
     }
   });
-  log('groupEnd');
+  logger.log('groupEnd');
 };
 
 const registrableNodes = {
@@ -44,7 +46,7 @@ function isClPrice(element) {
   return element.nodeName.toLowerCase() === 'cl-price';
 }
 const initialize = async function () {
-  const clClient = await createClient(getConfig());
+  const clClient = await logger.createClient(logger.getConfig());
   await registerPrices(clClient);
   const observer = new MutationObserver((mutationList) => {
     const nodes = mutationList.reduce((nodes, mutation) => {
@@ -77,4 +79,4 @@ const initialize = async function () {
   });
 };
 
-export { initialize as i };
+exports.initialize = initialize;

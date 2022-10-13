@@ -47,18 +47,12 @@ export async function getCart() {
     return null;
   }
   const order = await client.orders.retrieve(orderId).catch(() => null);
-  await triggerCartUpdate(order);
   return order;
 }
 export async function triggerCartUpdate(order) {
-  // TODO: manage events in separate file
-  if (order === null) {
-    const order = await getCart();
-    if (order !== null) {
-      window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }));
-    }
-  }
-  else {
+  order || (order = await getCart());
+  if (order !== null) {
+    // TODO: manage events in separate file
     window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }));
   }
 }

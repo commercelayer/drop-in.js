@@ -4158,18 +4158,12 @@ async function getCart() {
     return null;
   }
   const order = await client.orders.retrieve(orderId).catch(() => null);
-  await triggerCartUpdate(order);
   return order;
 }
 async function triggerCartUpdate(order) {
-  // TODO: manage events in separate file
-  if (order === null) {
-    const order = await getCart();
-    if (order !== null) {
-      window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }));
-    }
-  }
-  else {
+  order || (order = await getCart());
+  if (order !== null) {
+    // TODO: manage events in separate file
     window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }));
   }
 }
@@ -4189,4 +4183,4 @@ async function addItem(sku, quantity) {
   await triggerCartUpdate(null);
 }
 
-export { createClient as a, addItem as b, chunk as c, isValidUrl as d, getCartUrl as g, isNotNullish as i, triggerCartUpdate as t, uniq as u };
+export { createClient as a, addItem as b, chunk as c, createCommonjsModule as d, isValidUrl as e, getCartUrl as g, isNotNullish as i, triggerCartUpdate as t, uniq as u };

@@ -3,6 +3,7 @@ import { u as uniq, i as isNotNullish, c as chunk, a as createClient } from './c
 import { g as getConfig } from './config.js';
 import { l as log } from './logger.js';
 export { ClAddToCart, defineCustomElement as defineCustomElementClAddToCart } from './cl-add-to-cart.js';
+export { ClCart, defineCustomElement as defineCustomElementClCart } from './cl-cart.js';
 export { ClCartCount, defineCustomElement as defineCustomElementClCartCount } from './cl-cart-count.js';
 export { ClCartLink, defineCustomElement as defineCustomElementClCartLink } from './cl-cart-link.js';
 export { ClPrice, defineCustomElement as defineCustomElementClPrice } from './cl-price.js';

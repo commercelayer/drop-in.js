@@ -1,5 +1,5 @@
 import { proxyCustomElement, HTMLElement, h } from '@stencil/core/internal/client';
-import { g as getCartUrl, d as isValidUrl } from './cart.js';
+import { g as getCartUrl, e as isValidUrl } from './cart.js';
 
 const CLCartLink = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   constructor() {
@@ -21,6 +21,11 @@ const CLCartLink = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
       window.open(this.href, this.target);
     }
   }
+  async cartUpdateHandler(_event) {
+    if (this.href === undefined || !isValidUrl(this.href)) {
+      this.href = await getCartUrl();
+    }
+  }
   render() {
     return (h("a", { target: this.target, href: this.href, onClick: (e) => {
         this.handleClick(e).catch((error) => {
@@ -32,7 +37,7 @@ const CLCartLink = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
 }, [1, "cl-cart-link", {
     "target": [513],
     "href": [32]
-  }]);
+  }, [[8, "cartUpdate", "cartUpdateHandler"]]]);
 function defineCustomElement$1() {
   if (typeof customElements === "undefined") {
     return;
