@@ -21,14 +21,29 @@ export const args = { styles: false };
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
-  // viewMode: 'docs',
   previewTabs: { 'storybook/docs/panel': { index: -1 } },
+  // viewMode: 'docs',
   // previewTabs: {
   //   canvas: {
   //     disable: true,
   //     hidden: false
   //   }
   // },
+  options: {
+    storySort: {
+      order: [
+        'drop-in.js',
+        'Components', [
+          'cl-price',
+          'cl-add-to-cart',
+          'Cart', [
+            'cl-cart-link',
+            'cl-cart-count'
+          ]
+        ]
+      ]
+    },
+  },
   controls: {
     expanded: true,
     matchers: {
