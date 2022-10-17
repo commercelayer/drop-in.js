@@ -1,4 +1,4 @@
-import { createButton } from './Button';
+import { createButton } from './StorybookButton';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {

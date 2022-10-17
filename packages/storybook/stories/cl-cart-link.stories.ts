@@ -12,13 +12,20 @@ const meta: Meta<Args> = {
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
     target: {
-      description: 'SKU is a unique identifier, meaning Stock Keeping Unit.',
+      description:
+        'Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).',
       type: {
         name: 'enum',
         value: ['_self', '_blank', '_parent', '_top'],
         required: false
       },
-      control: { type: 'select' }
+      control: { type: 'select' },
+      table: {
+        category: 'component props',
+        defaultValue: {
+          summary: '_self'
+        }
+      }
     }
   }
 }
@@ -26,6 +33,7 @@ const meta: Meta<Args> = {
 export default meta
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
+
 const Template: StoryFn<Args> = (args) => {
   return create(
     html`

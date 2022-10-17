@@ -13,7 +13,10 @@ const meta: Meta<Args> = {
   argTypes: {
     sku: {
       description: 'SKU is a unique identifier, meaning Stock Keeping Unit.',
-      type: { name: 'string', required: false }
+      type: { name: 'string', required: false },
+      table: {
+        category: 'component props'
+      }
     }
   }
 }

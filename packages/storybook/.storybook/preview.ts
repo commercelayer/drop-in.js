@@ -1,13 +1,36 @@
+import { ArgTypes } from '@storybook/html'
+import { DecoratorFunction } from '@storybook/addons'
 import { defineCustomElements } from '@commercelayer/drop-in/dist/loader'
 
+type Args = {
+  styles: Boolean;
+}
+
 // https://storybook.js.org/docs/react/essentials/controls#annotation
-export const argTypes = { styles: { control: 'boolean' } }
+export const argTypes: ArgTypes<Args> = {
+  styles: {
+    description: 'When `true` it loads drop-in.css. Components are shipped unstyled, you can import this css or create your own.',
+    control: 'boolean',
+    table: {
+      category: 'global'
+    }
+  }
+}
 
 export const args = { styles: false };
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
+  // viewMode: 'docs',
+  previewTabs: { 'storybook/docs/panel': { index: -1 } },
+  // previewTabs: {
+  //   canvas: {
+  //     disable: true,
+  //     hidden: false
+  //   }
+  // },
   controls: {
+    expanded: true,
     matchers: {
       color: /(background|color)$/i,
       date: /Date$/,
@@ -15,13 +38,15 @@ export const parameters = {
   },
 }
 
-const storyAsHTML = (story) => {
+const storyAsHTML = (story: unknown) => {
   const wrapper = document.createElement('div')
-  wrapper.appendChild(story)
+  if (story instanceof HTMLElement) {
+    wrapper.appendChild(story)
+  }
   return wrapper.innerHTML
 };
 
-export const decorators = [
+export const decorators: DecoratorFunction[] = [
   (story) => {
     const tale = story()
 
@@ -43,19 +68,15 @@ export const decorators = [
     `
   },
   (story) => {
-    const tale = story()
+    // @ts-expect-error
+    window.commercelayerConfig = {
+      clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
+      slug: 'demo-store-1',
+      scope: 'market:10426',
+      debug: 'all'
+    }
 
-    return `
-      <script>
-        window.commercelayerConfig = {
-          clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
-          slug: 'demo-store-1',
-          scope: 'market:10426',
-          debug: 'all'
-        }
-      </script>
-      ${ typeof tale === 'string' ? tale : storyAsHTML(tale) }
-    `
+    return story()
   },
   (story) => {
     defineCustomElements()
