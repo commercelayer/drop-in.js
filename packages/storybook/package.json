@@ -24,6 +24,7 @@
     "@storybook/html": "^6.5.12",
     "@storybook/manager-webpack4": "^6.5.12",
     "@storybook/testing-library": "^0.0.13",
+    "@storybook/theming": "^6.5.12",
     "@types/react": "^18.0.21",
     "babel-loader": "^8.2.5",
     "react": "17",

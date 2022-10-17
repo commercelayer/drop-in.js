@@ -8,7 +8,7 @@ interface Args {
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta: Meta<Args> = {
-  title: 'Components/cl-cart-link',
+  title: 'Components/Cart/cl-cart-link',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
     target: {

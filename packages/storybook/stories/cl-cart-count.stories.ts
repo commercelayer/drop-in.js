@@ -4,7 +4,7 @@ import { create } from '../utils'
 
 // // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export const meta: Meta = {
-  title: 'Components/cl-cart-count'
+  title: 'Components/Cart/cl-cart-count'
 }
 
 // export default meta
