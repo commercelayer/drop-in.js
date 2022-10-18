@@ -34,8 +34,11 @@ export const parameters = {
       order: [
         'drop-in.js',
         'Components', [
-          'cl-price',
           'cl-add-to-cart',
+          'Price', [
+            'cl-price',
+            'cl-price-amount'
+          ],
           'Cart', [
             'introduction',
             'cl-cart-link',

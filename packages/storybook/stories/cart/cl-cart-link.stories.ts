@@ -23,7 +23,7 @@ export const meta: Meta<Args> = {
       },
       control: { type: 'select' },
       table: {
-        category: 'props',
+        category: 'attributes',
         defaultValue: {
           summary: '_self'
         }
@@ -38,7 +38,7 @@ export const meta: Meta<Args> = {
       control: { type: 'text' },
       table: {
         disable: true,
-        category: 'props'
+        category: 'attributes'
       }
     }
   }

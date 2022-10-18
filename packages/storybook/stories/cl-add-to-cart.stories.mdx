@@ -1,0 +1,27 @@
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
+import { meta, Basic, WithoutAttributes } from './cl-add-to-cart.stories.ts';
+
+<Meta
+  title={meta.title}
+  argTypes={meta.argTypes}
+/>
+
+# `cl-add-to-cart`
+
+Add a buy button to any page with embedded validation rules.
+
+<Canvas withSource="open">
+  <Story story={Basic} name="Basic" />
+</Canvas>
+
+<ArgsTable story="Basic" />
+
+### Disabled
+
+To enable the **add to cart** button, you'll need to have a `sku` attribute and a `quantity` value greater than 0.
+
+The button below is disabled since there's no `sku` nor `quantity`.
+
+<Canvas withSource="open">
+  <Story story={WithoutAttributes} name="Without Attributes" />
+</Canvas>
