@@ -1,0 +1,15 @@
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
+import { meta, Basic, WithIcon } from './cl-cart.stories.ts';
+
+<Meta
+  title={meta.title}
+  argTypes={meta.argTypes}
+/>
+
+# `cl-cart`
+
+You can use this component to embed the Hosted Cart in your own cart page instead of redirecting the user outside of your website.
+
+<Canvas withSource="open">
+  <Story story={Basic} name="Basic" />
+</Canvas>
