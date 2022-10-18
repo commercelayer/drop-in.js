@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html } from 'lit-html'
-import { create } from '../utils'
+import { create } from '../../utils'
 
 // // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export const meta: Meta = {

@@ -1,0 +1,39 @@
+import { Meta } from '@storybook/addon-docs'
+import { linkTo } from '@storybook/addon-links';
+
+<Meta title="Components/Cart/introduction" />
+
+# Cart
+
+Commerce Layer drop-in.js lets you transform any plain HTML page into an enterprise-grade static commerce website, with almost no coding required.
+All you need to do is embed the library and add tags to the HTML page.
+
+Prices, availability messages, shopping bag, and any other commerce functionality are automatically mixed into your own content and styling,
+whatever the CMS, SSG, and tools you use to build your site pages.
+
+## Components
+
+<div className="link-list">
+
+  <a onClick={linkTo('components-cart-cl-cart-link--basic')}>
+    <span>
+      <strong>&lt;cl-cart-link&gt;</strong>
+      Display a price with localized currency, discounts, and personalization rules.
+    </span>
+  </a>
+
+  <a onClick={linkTo('components-cart-cl-cart-count--basic')}>
+    <span>
+      <strong>&lt;cl-cart-count&gt;</strong>
+      Link or embed a hosted cart with line items preview and edit actions.
+    </span>
+  </a>
+
+  <a>
+    <span>
+      <strong>&lt;cl-cart&gt;</strong>
+      Display an availability message with localized delivery lead time and cost.
+    </span>
+  </a>
+
+</div>

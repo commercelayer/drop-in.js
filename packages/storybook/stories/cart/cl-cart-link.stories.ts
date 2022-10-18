@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
-import { create } from '../utils'
+import { create } from '../../utils'
 
 interface Args {
   target: '_self' | '_blank' | '_parent' | '_top' | undefined
@@ -30,14 +30,14 @@ export const meta: Meta<Args> = {
       }
     },
     text: {
-      description:
-        'Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).',
+      description: 'Markup contained within the element.',
       type: {
         name: 'string',
         required: false
       },
       control: { type: 'text' },
       table: {
+        disable: true,
         category: 'props'
       }
     }

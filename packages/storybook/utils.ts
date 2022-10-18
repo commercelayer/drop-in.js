@@ -6,4 +6,6 @@ export const create = (value: litHtml.TemplateResult): string => {
   render(value, container)
 
   return container.innerHTML
+    .replace(/^[\s]+<!--[\s\S]*?-->\n/gm, '')
+    .replace(/<!--[\s\S]*?-->/g, '')
 }

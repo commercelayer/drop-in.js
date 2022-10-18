@@ -37,6 +37,7 @@ export const parameters = {
           'cl-price',
           'cl-add-to-cart',
           'Cart', [
+            'introduction',
             'cl-cart-link',
             'cl-cart-count'
           ]
