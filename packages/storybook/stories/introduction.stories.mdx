@@ -10,6 +10,7 @@ import { linkTo } from '@storybook/addon-links';
       grid-template-columns: 1fr;
       grid-template-rows: 1fr 1fr;
       row-gap: 10px;
+      margin-top: 24px;
     }
 
     @media (min-width: 620px) {
@@ -73,14 +74,47 @@ import { linkTo } from '@storybook/addon-links';
 
 # `drop-in.js`
 
-Storybook helps you build UI components in isolation from your app's business logic, data, and context.
-That makes it easy to develop hard-to-reach states. Save these UI states as **stories** to revisit during development, testing, or QA.
+Commerce Layer drop-in.js lets you transform any plain HTML page into an enterprise-grade static commerce website, with almost no coding required.
+All you need to do is embed the library and add tags to the HTML page.
 
-Browse example stories now by navigating to them in the sidebar.
-View their code in the `stories` directory to learn how they work.
-We recommend building UIs with a [**component-driven**](https://componentdriven.org) process starting with atomic components and ending with pages.
+Prices, availability messages, shopping bag, and any other commerce functionality are automatically mixed into your own content and styling,
+whatever the CMS, SSG, and tools you use to build your site pages.
+
+## Getting Started
+
+First of all you need to import the `drop-in.js` from a cdn.
+
+```html dark
+<script type="module" src=".../drop-in.esm.js"></script>
+<script nomodule src=".../drop-in.js"></script>
+
+<script>
+  (function() {
+    window.commercelayerConfig = {
+      clientId: 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
+      slug: 'my-store',
+      scope: 'market:1234',
+      debug: 'none' | 'all'
+    }
+  }());
+</script>
+```
+
+### `drop-in.css`
+
+This library is shipped unstyled, so that you can apply your own styles. 
+
+If you prefer you can add the following `link` tag:
+
+```html dark
+<link href=".../drop-in.css" rel="stylesheet" />
+```
+
+
+## Components
 
 <div className="link-list">
+
   <a onClick={linkTo('components-cl-price--with-sku')}>
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M15.3375 3.23738L5.25001 5.24988L3.23751 15.3374C3.20597 15.4984 3.21456 15.6648 3.26252 15.8218C3.31048 15.9787 3.39633 16.1215 3.51251 16.2374L16.5625 29.2874C16.6545 29.3815 16.7643 29.4563 16.8856 29.5073C17.0069 29.5584 17.1372 29.5847 17.2688 29.5847C17.4003 29.5847 17.5306 29.5584 17.6519 29.5073C17.7732 29.4563 17.883 29.3815 17.975 29.2874L29.2875 17.9749C29.3816 17.8829 29.4564 17.7731 29.5075 17.6518C29.5585 17.5305 29.5848 17.4002 29.5848 17.2686C29.5848 17.137 29.5585 17.0068 29.5075 16.8855C29.4564 16.7642 29.3816 16.6544 29.2875 16.5624L16.2375 3.51239C16.1216 3.39621 15.9788 3.31036 15.8219 3.2624C15.6649 3.21444 15.4986 3.20585 15.3375 3.23738V3.23738Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -91,7 +125,8 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
       Display a price with localized currency, discounts, and personalization rules.
     </span>
   </a>
-  <a onClick={linkTo('components-cart-cl-cart-count--basic')}>
+
+  <a onClick={linkTo('components-cart-cl-cart-link--basic')}>
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M23 23H8.725L5.2375 3.825C5.1967 3.59537 5.07691 3.38722 4.89887 3.23657C4.72082 3.08592 4.49572 3.00223 4.2625 3H2" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M10 28C11.3807 28 12.5 26.8807 12.5 25.5C12.5 24.1193 11.3807 23 10 23C8.61929 23 7.5 24.1193 7.5 25.5C7.5 26.8807 8.61929 28 10 28Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -103,6 +138,7 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
       Link or embed a hosted cart with line items preview and edit actions.
     </span>
   </a>
+
   <a>
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M28 22.1624V9.83741C27.999 9.65938 27.9512 9.48475 27.8612 9.33113C27.7712 9.17751 27.6423 9.05033 27.4875 8.96241L16.4875 2.77491C16.3393 2.68934 16.1711 2.64429 16 2.64429C15.8289 2.64429 15.6607 2.68934 15.5125 2.77491L4.5125 8.96241C4.35769 9.05033 4.22879 9.17751 4.13882 9.33113C4.04884 9.48475 4.00096 9.65938 4 9.83741V22.1624C4.00096 22.3404 4.04884 22.5151 4.13882 22.6687C4.22879 22.8223 4.35769 22.9495 4.5125 23.0374L15.5125 29.2249C15.6607 29.3105 15.8289 29.3555 16 29.3555C16.1711 29.3555 16.3393 29.3105 16.4875 29.2249L27.4875 23.0374C27.6423 22.9495 27.7712 22.8223 27.8612 22.6687C27.9512 22.5151 27.999 22.3404 28 22.1624V22.1624Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -115,6 +151,7 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
       Display an availability message with localized delivery lead time and cost.
     </span>
   </a>
+
   <a>
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M28 7H4C3.44772 7 3 7.44772 3 8V24C3 24.5523 3.44772 25 4 25H28C28.5523 25 29 24.5523 29 24V8C29 7.44772 28.5523 7 28 7Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -127,7 +164,8 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
       Link or embed a hosted, PCI-compliant checkout with integrated payments.
     </span>
   </a>
-  <a>
+
+  <a onClick={linkTo('components-cl-add-to-cart--with-sku')}>
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4.67498 5.94998L12 27.1125C12.3125 28.025 13.6125 28 13.9 27.075L16.85 17.5C16.8945 17.3435 16.979 17.2012 17.0951 17.0872C17.2113 16.9733 17.3551 16.8915 17.5125 16.85L27.075 13.9C28 13.6125 28.025 12.3125 27.1125 12L5.94998 4.67498C5.77217 4.61249 5.58032 4.60152 5.39655 4.64333C5.21278 4.68514 5.04457 4.77803 4.9113 4.9113C4.77803 5.04457 4.68514 5.21278 4.64333 5.39655C4.60152 5.58032 4.61249 5.77217 4.67498 5.94998V5.94998Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -136,6 +174,7 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
       Add a buy button to any page with embedded validation rules.
     </span>
   </a>
+
   <a>
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M16 20C20.4183 20 24 16.4183 24 12C24 7.58172 20.4183 4 16 4C11.5817 4 8 7.58172 8 12C8 16.4183 11.5817 20 16 20Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
@@ -146,4 +185,5 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
       Link or embed a customer portal with personal account management.
     </span>
   </a>
+
 </div>

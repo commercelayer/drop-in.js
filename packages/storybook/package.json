@@ -7,7 +7,7 @@
     "build:sass": "sass stories/assets/drop-in.scss public/drop-in.css",
     "build": "pnpm build:sass && build-storybook -s ./public",
     "build:docs": "pnpm build:sass && build-storybook -s ./public --docs",
-    "serve": "pnpm build:docs && pnpx http-server storybook-static"
+    "serve": "pnpm build:docs && pnpx http-server storybook-static -o"
   },
   "author": {
     "name": "Marco Montalbano",

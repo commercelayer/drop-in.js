@@ -1,0 +1,29 @@
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
+import { meta, Basic, WithIcon } from './cl-cart-link.stories.ts';
+
+<Meta
+  title={meta.title}
+  argTypes={meta.argTypes}
+/>
+
+# `cl-cart-link`
+
+Any Commerce Layer account comes with a [hosted version of the Cart](https://github.com/commercelayer/commercelayer-cart#hosted-version) application that is automatically enabled.
+
+You can use the hosted version of the Cart application with the following URL format: `https://<your-organization-slug>.commercelayer.app/cart/<order-id>?accessToken=<your-access-token>`
+
+This component can be used as in-place replacement for an `<a>` tag pointing to that url.
+
+<Canvas withSource="open">
+  <Story story={Basic} name="Basic" />
+</Canvas>
+
+<ArgsTable story='Basic' />
+
+---
+
+Here below you have an example of a `cl-cart-link` with an svg icon.
+
+<Canvas withSource="open">
+  <Story story={WithIcon} name="With Icon" />
+</Canvas>
