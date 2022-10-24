@@ -1,6 +1,7 @@
 import { createClient, getAccessToken } from '#apis/commercelayer/client'
 import { getConfig } from '#apis/commercelayer/config'
 import { getKeyForCart } from '#apis/storage'
+import { pDebounce } from '#utils/promise'
 import type { Order } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 
@@ -55,7 +56,7 @@ export async function getCartUrl(
   }?accessToken=${accessToken}`
 }
 
-export async function getCart(): Promise<Order | null> {
+export async function _getCart(): Promise<Order | null> {
   const client = await createClient(getConfig())
 
   const orderId = getCartId()
@@ -68,6 +69,8 @@ export async function getCart(): Promise<Order | null> {
 
   return order
 }
+
+export const getCart = pDebounce(_getCart, { wait: 100, maxWait: 500 })
 
 export async function triggerCartUpdate(order: Order | null): Promise<void> {
   order ||= await getCart()

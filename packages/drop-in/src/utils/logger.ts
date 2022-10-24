@@ -1,12 +1,19 @@
 import { getConfig } from '#apis/commercelayer/config'
 
-export const log = (
-  type: 'error' | 'info' | 'log' | 'warn' | 'group' | 'groupEnd',
-  ...message: any
-): void => {
+export function log(
+  type:
+    | 'error'
+    | 'info'
+    | 'log'
+    | 'warn'
+    | 'group'
+    | 'groupCollapsed'
+    | 'groupEnd',
+  ...messages: any[]
+): void {
   const { debug } = getConfig()
 
   if (debug === 'all') {
-    console[type](...message)
+    console[type](...messages)
   }
 }

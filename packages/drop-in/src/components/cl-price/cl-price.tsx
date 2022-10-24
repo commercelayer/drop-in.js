@@ -1,6 +1,7 @@
+import { getPrice } from '#apis/prices'
 import { log } from '#utils/logger'
 import type { Price } from '@commercelayer/sdk'
-import { Component, Element, h, JSX, Listen, Prop, Watch } from '@stencil/core'
+import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
 
 @Component({
   tag: 'cl-price',
@@ -24,7 +25,15 @@ export class CLPrice {
     return typeof sku === 'string' && sku !== ''
   }
 
-  componentWillLoad(): void {
+  async componentWillLoad(): Promise<void> {
+    if (this.validateSku(this.sku)) {
+      const price = await getPrice(this.sku)
+
+      if (price !== undefined) {
+        this.updatePrice(price)
+      }
+    }
+
     this.logSku(this.sku)
   }
 
@@ -33,10 +42,11 @@ export class CLPrice {
     this.logSku(newValue)
   }
 
-  @Listen('priceUpdate')
-  priceUpdateHandler({ type, detail }: CustomEvent<Price>): void {
+  private updatePrice(price: Price): void {
     this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-      element.dispatchEvent(new CustomEvent<Price>(type, { detail }))
+      element.dispatchEvent(
+        new CustomEvent<Price>('priceUpdate', { detail: price })
+      )
     })
   }
 

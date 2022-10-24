@@ -7,7 +7,6 @@ export const config: Config = {
   namespace: 'drop-in',
   // preamble: 'MIT License\nCopyright (c) 2022 Commerce Layer',
 
-  globalScript: './src/global/app.ts',
   globalStyle: './src/global/app.scss',
 
   buildEs5: false,

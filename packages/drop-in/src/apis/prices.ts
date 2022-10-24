@@ -1,30 +1,28 @@
 import { log } from '#utils/logger'
-import type { CommerceLayerClient, Price } from '@commercelayer/sdk'
-import { chunk, isNotNullish, uniq } from '../utils/utils'
+import { pDebounce } from '#utils/promise'
+import type { Price } from '@commercelayer/sdk'
+import { chunk, uniq } from '../utils/utils'
+import { createClient } from './commercelayer/client'
+import { getConfig } from './commercelayer/config'
 
-const componentName = 'cl-price'
+// const componentName = 'cl-price'
 
-function getSku(element: HTMLClPriceElement): string | undefined {
-  return element.sku
+interface PriceList {
+  [sku: string]: Price | undefined
 }
 
-export const registerPrices = async (
-  client: CommerceLayerClient,
-  elements: HTMLClPriceElement[] = Array.from(
-    document.querySelectorAll(componentName)
-  )
-): Promise<void> => {
-  await customElements.whenDefined(componentName)
+export const _getPrices = async (skus: string[]): Promise<PriceList> => {
+  const client = await createClient(getConfig())
 
-  log('group', 'registerPrices invoked')
+  const uniqSkus = uniq(skus)
 
-  log('info', `found`, elements.length, componentName)
+  log('groupCollapsed', 'getPrices invoked')
 
-  const skus = uniq(elements.map(getSku).filter(isNotNullish))
-  log('info', `found`, skus.length, 'unique skus', skus)
+  log('info', `found`, uniqSkus.length)
+  log('info', 'unique skus', uniqSkus)
 
   const pageSize = 25
-  const chunkedSkus = chunk(skus, pageSize)
+  const chunkedSkus = chunk(uniqSkus, pageSize)
 
   const pricesResponse = (
     await Promise.all(
@@ -38,25 +36,32 @@ export const registerPrices = async (
   ).flat()
 
   // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
-  const prices: { [sku: string]: Price } = pricesResponse.reduce<{
-    [sku: string]: Price
-  }>((prices, price) => {
-    if (price.sku_code !== undefined) {
-      prices[price.sku_code] = price
-    }
-
-    return prices
-  }, {})
-
-  elements.forEach((element) => {
-    const sku = getSku(element)
-    if (sku !== undefined) {
-      const price = prices[sku]
-      if (price != null) {
-        element.dispatchEvent(new CustomEvent(`priceUpdate`, { detail: price }))
+  const prices: PriceList = pricesResponse.reduce<PriceList>(
+    (prices, price) => {
+      if (price.sku_code !== undefined) {
+        prices[price.sku_code] = price
       }
-    }
-  })
+
+      return prices
+    },
+    {}
+  )
 
   log('groupEnd')
+
+  return prices
+}
+
+const getPrices = pDebounce(_getPrices, { wait: 100, maxWait: 500 })
+
+const priceCache: PriceList = {}
+export const getPrice = async (sku: string): Promise<Price | undefined> => {
+  if (sku in priceCache) {
+    return priceCache[sku]
+  }
+
+  return await getPrices([sku]).then((result) => {
+    priceCache[sku] = result[sku]
+    return result[sku]
+  })
 }

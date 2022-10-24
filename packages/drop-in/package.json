@@ -28,6 +28,7 @@
   "dependencies": {
     "@commercelayer/js-auth": "^2.3.0",
     "@commercelayer/sdk": "^4.16.0",
+    "debounce-fn": "^5.1.2",
     "iframe-resizer": "^4.3.2",
     "js-cookie": "^3.0.1"
   },
