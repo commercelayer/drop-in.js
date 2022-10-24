@@ -1,5 +1,5 @@
 import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
-import { b as addItem } from './cart.js';
+import { a as addItem } from './cart.js';
 import { l as log } from './logger.js';
 
 const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {

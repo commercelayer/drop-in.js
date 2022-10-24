@@ -1,5 +1,6 @@
 import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
-import { d as createCommonjsModule, g as getCartUrl, t as triggerCartUpdate } from './cart.js';
+import { g as getCartUrl, t as triggerCartUpdate } from './cart.js';
+import { c as createCommonjsModule } from './promise.js';
 
 var iframeResizer$2 = createCommonjsModule(function (module) {
 (function (undefined$1) {

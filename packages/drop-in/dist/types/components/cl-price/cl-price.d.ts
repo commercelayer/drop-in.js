@@ -1,4 +1,3 @@
-import type { Price } from '@commercelayer/sdk';
 import { JSX } from '../../stencil-public-runtime';
 export declare class CLPrice {
   /**
@@ -8,8 +7,8 @@ export declare class CLPrice {
   host: HTMLElement;
   logSku(sku: string | undefined): void;
   validateSku(sku: string | undefined): sku is string;
-  componentWillLoad(): void;
+  componentWillLoad(): Promise<void>;
   watchPropHandler(newValue: string, _oldValue: string): void;
-  priceUpdateHandler({ type, detail }: CustomEvent<Price>): void;
+  private updatePrice;
   render(): JSX.Element;
 }

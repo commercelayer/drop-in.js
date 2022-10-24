@@ -1,2 +1,7 @@
-import type { CommerceLayerClient } from '@commercelayer/sdk';
-export declare const registerPrices: (client: CommerceLayerClient, elements?: HTMLClPriceElement[]) => Promise<void>;
+import type { Price } from '@commercelayer/sdk';
+interface PriceList {
+  [sku: string]: Price | undefined;
+}
+export declare const _getPrices: (skus: string[]) => Promise<PriceList>;
+export declare const getPrice: (sku: string) => Promise<Price | undefined>;
+export {};

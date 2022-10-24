@@ -1,3 +1,4 @@
+import { getPrice } from '#apis/prices';
 import { log } from '#utils/logger';
 import { h } from '@stencil/core';
 export class CLPrice {
@@ -9,15 +10,21 @@ export class CLPrice {
   validateSku(sku) {
     return typeof sku === 'string' && sku !== '';
   }
-  componentWillLoad() {
+  async componentWillLoad() {
+    if (this.validateSku(this.sku)) {
+      const price = await getPrice(this.sku);
+      if (price !== undefined) {
+        this.updatePrice(price);
+      }
+    }
     this.logSku(this.sku);
   }
   watchPropHandler(newValue, _oldValue) {
     this.logSku(newValue);
   }
-  priceUpdateHandler({ type, detail }) {
+  updatePrice(price) {
     this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-      element.dispatchEvent(new CustomEvent(type, { detail }));
+      element.dispatchEvent(new CustomEvent('priceUpdate', { detail: price }));
     });
   }
   render() {
@@ -51,15 +58,6 @@ export class CLPrice {
     return [{
         "propName": "sku",
         "methodName": "watchPropHandler"
-      }];
-  }
-  static get listeners() {
-    return [{
-        "name": "priceUpdate",
-        "method": "priceUpdateHandler",
-        "target": undefined,
-        "capture": false,
-        "passive": false
       }];
   }
 }

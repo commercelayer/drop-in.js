@@ -1,10 +1,10 @@
-import { g as getConfig } from './config.js';
+import { g as getConfig } from './promise.js';
 
-const log = (type, ...message) => {
+function log(type, ...messages) {
   const { debug } = getConfig();
   if (debug === 'all') {
-    console[type](...message);
+    console[type](...messages);
   }
-};
+}
 
 export { log as l };

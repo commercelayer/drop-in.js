@@ -1,5 +1,5 @@
 import { proxyCustomElement, HTMLElement, h } from '@stencil/core/internal/client';
-import { g as getCartUrl, e as isValidUrl } from './cart.js';
+import { g as getCartUrl, i as isValidUrl } from './cart.js';
 
 const CLCartLink = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   constructor() {

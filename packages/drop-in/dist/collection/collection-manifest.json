@@ -13,6 +13,5 @@
     "typescriptVersion": "4.7.4"
   },
   "collections": [],
-  "bundles": [],
-  "global": "./global/app.js"
+  "bundles": []
 }

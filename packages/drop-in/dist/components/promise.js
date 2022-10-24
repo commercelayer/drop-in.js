@@ -1,5 +1,3 @@
-'use strict';
-
 const prefix = 'commercelayer_';
 // TODO: shall we manage the country?
 function getKeyForCart() {
@@ -30,13 +28,6 @@ function chunk(array, size = 1) {
     resultArray[chunkIndex].push(item);
     return resultArray;
   }, []);
-}
-/**
- * Check if the value is different from `null` and `undefined`.
- * @returns `true` when `value` is different from `null` and `undefined`.
- */
-function isNotNullish(value) {
-  return value !== null && value !== undefined;
 }
 /**
  * Creates a duplicate-free version of an array.
@@ -4139,20 +4130,180 @@ function getConfig() {
     endpoint });
 }
 
-const log = (type, ...message) => {
-  const { debug } = getConfig();
-  if (debug === 'all') {
-    console[type](...message);
-  }
+const copyProperty = (to, from, property, ignoreNonConfigurable) => {
+	// `Function#length` should reflect the parameters of `to` not `from` since we keep its body.
+	// `Function#prototype` is non-writable and non-configurable so can never be modified.
+	if (property === 'length' || property === 'prototype') {
+		return;
+	}
+
+	// `Function#arguments` and `Function#caller` should not be copied. They were reported to be present in `Reflect.ownKeys` for some devices in React Native (#41), so we explicitly ignore them here.
+	if (property === 'arguments' || property === 'caller') {
+		return;
+	}
+
+	const toDescriptor = Object.getOwnPropertyDescriptor(to, property);
+	const fromDescriptor = Object.getOwnPropertyDescriptor(from, property);
+
+	if (!canCopyProperty(toDescriptor, fromDescriptor) && ignoreNonConfigurable) {
+		return;
+	}
+
+	Object.defineProperty(to, property, fromDescriptor);
 };
 
-exports.chunk = chunk;
-exports.createClient = createClient;
-exports.createCommonjsModule = createCommonjsModule;
-exports.getAccessToken = getAccessToken;
-exports.getConfig = getConfig;
-exports.getKeyForCart = getKeyForCart;
-exports.isNotNullish = isNotNullish;
-exports.js_cookie = js_cookie;
-exports.log = log;
-exports.uniq = uniq;
+// `Object.defineProperty()` throws if the property exists, is not configurable and either:
+// - one its descriptors is changed
+// - it is non-writable and its value is changed
+const canCopyProperty = function (toDescriptor, fromDescriptor) {
+	return toDescriptor === undefined || toDescriptor.configurable || (
+		toDescriptor.writable === fromDescriptor.writable &&
+		toDescriptor.enumerable === fromDescriptor.enumerable &&
+		toDescriptor.configurable === fromDescriptor.configurable &&
+		(toDescriptor.writable || toDescriptor.value === fromDescriptor.value)
+	);
+};
+
+const changePrototype = (to, from) => {
+	const fromPrototype = Object.getPrototypeOf(from);
+	if (fromPrototype === Object.getPrototypeOf(to)) {
+		return;
+	}
+
+	Object.setPrototypeOf(to, fromPrototype);
+};
+
+const wrappedToString = (withName, fromBody) => `/* Wrapped ${withName}*/\n${fromBody}`;
+
+const toStringDescriptor = Object.getOwnPropertyDescriptor(Function.prototype, 'toString');
+const toStringName = Object.getOwnPropertyDescriptor(Function.prototype.toString, 'name');
+
+// We call `from.toString()` early (not lazily) to ensure `from` can be garbage collected.
+// We use `bind()` instead of a closure for the same reason.
+// Calling `from.toString()` early also allows caching it in case `to.toString()` is called several times.
+const changeToString = (to, from, name) => {
+	const withName = name === '' ? '' : `with ${name.trim()}() `;
+	const newToString = wrappedToString.bind(null, withName, from.toString());
+	// Ensure `to.toString.toString` is non-enumerable and has the same `same`
+	Object.defineProperty(newToString, 'name', toStringName);
+	Object.defineProperty(to, 'toString', {...toStringDescriptor, value: newToString});
+};
+
+function mimicFunction(to, from, {ignoreNonConfigurable = false} = {}) {
+	const {name} = to;
+
+	for (const property of Reflect.ownKeys(from)) {
+		copyProperty(to, from, property, ignoreNonConfigurable);
+	}
+
+	changePrototype(to, from);
+	changeToString(to, from, name);
+
+	return to;
+}
+
+const debounceFn = (inputFunction, options = {}) => {
+	if (typeof inputFunction !== 'function') {
+		throw new TypeError(`Expected the first argument to be a function, got \`${typeof inputFunction}\``);
+	}
+
+	const {
+		wait = 0,
+		maxWait = Number.POSITIVE_INFINITY,
+		before = false,
+		after = true,
+	} = options;
+
+	if (!before && !after) {
+		throw new Error('Both `before` and `after` are false, function wouldn\'t be called.');
+	}
+
+	let timeout;
+	let maxTimeout;
+	let result;
+
+	const debouncedFunction = function (...arguments_) {
+		const context = this; // eslint-disable-line unicorn/no-this-assignment
+
+		const later = () => {
+			timeout = undefined;
+
+			if (maxTimeout) {
+				clearTimeout(maxTimeout);
+				maxTimeout = undefined;
+			}
+
+			if (after) {
+				result = inputFunction.apply(context, arguments_);
+			}
+		};
+
+		const maxLater = () => {
+			maxTimeout = undefined;
+
+			if (timeout) {
+				clearTimeout(timeout);
+				timeout = undefined;
+			}
+
+			if (after) {
+				result = inputFunction.apply(context, arguments_);
+			}
+		};
+
+		const shouldCallNow = before && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+
+		if (maxWait > 0 && maxWait !== Number.POSITIVE_INFINITY && !maxTimeout) {
+			maxTimeout = setTimeout(maxLater, maxWait);
+		}
+
+		if (shouldCallNow) {
+			result = inputFunction.apply(context, arguments_);
+		}
+
+		return result;
+	};
+
+	mimicFunction(debouncedFunction, inputFunction);
+
+	debouncedFunction.cancel = () => {
+		if (timeout) {
+			clearTimeout(timeout);
+			timeout = undefined;
+		}
+
+		if (maxTimeout) {
+			clearTimeout(maxTimeout);
+			maxTimeout = undefined;
+		}
+	};
+
+	return debouncedFunction;
+};
+
+const pDebounce = (input, options) => {
+  const incrementalArgs = [];
+  const incrementalResolve = [];
+  const fn = async (resolves) => {
+    const result = await input(incrementalArgs);
+    resolves.forEach((resolve) => {
+      resolve(result);
+    });
+    incrementalResolve.length = 0;
+    incrementalArgs.length = 0;
+  };
+  const debounced = debounceFn(fn, options);
+  return async (item) => {
+    if (item !== undefined) {
+      incrementalArgs.push(...item);
+    }
+    return await new Promise((resolve) => {
+      incrementalResolve.push(resolve);
+      void debounced(incrementalResolve);
+    });
+  };
+};
+
+export { createClient as a, chunk as b, createCommonjsModule as c, getKeyForCart as d, getAccessToken as e, getConfig as g, js_cookie as j, pDebounce as p, uniq as u };

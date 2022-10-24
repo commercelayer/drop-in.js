@@ -1,17 +1,16 @@
 import { log } from '#utils/logger';
-import { chunk, isNotNullish, uniq } from '../utils/utils';
-const componentName = 'cl-price';
-function getSku(element) {
-  return element.sku;
-}
-export const registerPrices = async (client, elements = Array.from(document.querySelectorAll(componentName))) => {
-  await customElements.whenDefined(componentName);
-  log('group', 'registerPrices invoked');
-  log('info', `found`, elements.length, componentName);
-  const skus = uniq(elements.map(getSku).filter(isNotNullish));
-  log('info', `found`, skus.length, 'unique skus', skus);
+import { pDebounce } from '#utils/promise';
+import { chunk, uniq } from '../utils/utils';
+import { createClient } from './commercelayer/client';
+import { getConfig } from './commercelayer/config';
+export const _getPrices = async (skus) => {
+  const client = await createClient(getConfig());
+  const uniqSkus = uniq(skus);
+  log('groupCollapsed', 'getPrices invoked');
+  log('info', `found`, uniqSkus.length);
+  log('info', 'unique skus', uniqSkus);
   const pageSize = 25;
-  const chunkedSkus = chunk(skus, pageSize);
+  const chunkedSkus = chunk(uniqSkus, pageSize);
   const pricesResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
     return await client.prices.list({
       pageSize,
@@ -25,14 +24,17 @@ export const registerPrices = async (client, elements = Array.from(document.quer
     }
     return prices;
   }, {});
-  elements.forEach((element) => {
-    const sku = getSku(element);
-    if (sku !== undefined) {
-      const price = prices[sku];
-      if (price != null) {
-        element.dispatchEvent(new CustomEvent(`priceUpdate`, { detail: price }));
-      }
-    }
-  });
   log('groupEnd');
+  return prices;
+};
+const getPrices = pDebounce(_getPrices, { wait: 100, maxWait: 500 });
+const priceCache = {};
+export const getPrice = async (sku) => {
+  if (sku in priceCache) {
+    return priceCache[sku];
+  }
+  return await getPrices([sku]).then((result) => {
+    priceCache[sku] = result[sku];
+    return result[sku];
+  });
 };

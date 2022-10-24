@@ -6,6 +6,7 @@ export declare function isValidUrl(url: string): boolean;
  * @returns Returns the Hosted Cart url.
  */
 export declare function getCartUrl(forceCartToExist?: boolean): Promise<string>;
-export declare function getCart(): Promise<Order | null>;
+export declare function _getCart(): Promise<Order | null>;
+export declare const getCart: () => Promise<Order | null>;
 export declare function triggerCartUpdate(order: Order | null): Promise<void>;
 export declare function addItem(sku: string, quantity: number): Promise<void>;

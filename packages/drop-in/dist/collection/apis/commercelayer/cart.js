@@ -1,6 +1,7 @@
 import { createClient, getAccessToken } from '#apis/commercelayer/client';
 import { getConfig } from '#apis/commercelayer/config';
 import { getKeyForCart } from '#apis/storage';
+import { pDebounce } from '#utils/promise';
 import Cookies from 'js-cookie';
 /**
  * Create a draft order.
@@ -40,7 +41,7 @@ export async function getCartUrl(forceCartToExist = false) {
   }
   return `https://${config.slug}.commercelayer.app/cart/${cartId !== null && cartId !== void 0 ? cartId : 'null'}?accessToken=${accessToken}`;
 }
-export async function getCart() {
+export async function _getCart() {
   const client = await createClient(getConfig());
   const orderId = getCartId();
   if (orderId === null) {
@@ -49,6 +50,7 @@ export async function getCart() {
   const order = await client.orders.retrieve(orderId).catch(() => null);
   return order;
 }
+export const getCart = pDebounce(_getCart, { wait: 100, maxWait: 500 });
 export async function triggerCartUpdate(order) {
   order || (order = await getCart());
   if (order !== null) {
