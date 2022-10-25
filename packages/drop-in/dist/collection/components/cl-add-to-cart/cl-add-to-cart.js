@@ -1,4 +1,5 @@
 import { addItem } from '#apis/commercelayer/cart';
+import { getSku } from '#apis/commercelayer/skus';
 import { log } from '#utils/logger';
 import { h, Host } from '@stencil/core';
 export class CLAddToCart {
@@ -32,7 +33,10 @@ export class CLAddToCart {
       this.quantity = 0;
     }
   }
-  componentWillLoad() {
+  async componentWillLoad() {
+    if (this.validateSku(this.sku)) {
+      this.skuObject = await getSku(this.sku);
+    }
     this.logSku(this.sku);
     this.logQuantity(this.quantity);
   }
@@ -53,8 +57,12 @@ export class CLAddToCart {
    * @returns Returns true when item is soldable.
    */
   canBeSold() {
+    var _a, _b;
     // TODO: check for stock
-    return this.validateSku(this.sku) && this.quantity > 0;
+    return (this.validateSku(this.sku) &&
+      this.quantity > 0 &&
+      // @ts-expect-error
+      ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true);
   }
   render() {
     const enabled = this.canBeSold();
@@ -99,6 +107,11 @@ export class CLAddToCart {
         "reflect": true,
         "defaultValue": "1"
       }
+    };
+  }
+  static get states() {
+    return {
+      "skuObject": {}
     };
   }
   static get elementRef() { return "host"; }

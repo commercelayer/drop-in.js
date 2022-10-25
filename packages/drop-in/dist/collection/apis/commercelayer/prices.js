@@ -1,12 +1,12 @@
-import { log } from '#utils/logger';
+import { logGroup } from '#utils/logger';
 import { pDebounce } from '#utils/promise';
-import { chunk, uniq } from '../utils/utils';
-import { createClient } from './commercelayer/client';
-import { getConfig } from './commercelayer/config';
-export const _getPrices = async (skus) => {
+import { chunk, memoize, uniq } from '../../utils/utils';
+import { createClient } from './client';
+import { getConfig } from './config';
+const _getPrices = async (skus) => {
   const client = await createClient(getConfig());
   const uniqSkus = uniq(skus);
-  log('groupCollapsed', 'getPrices invoked');
+  const log = logGroup('getPrices invoked');
   log('info', `found`, uniqSkus.length);
   log('info', 'unique skus', uniqSkus);
   const pageSize = 25;
@@ -24,17 +24,10 @@ export const _getPrices = async (skus) => {
     }
     return prices;
   }, {});
-  log('groupEnd');
+  log.end();
   return prices;
 };
-const getPrices = pDebounce(_getPrices, { wait: 100, maxWait: 500 });
-const priceCache = {};
-export const getPrice = async (sku) => {
-  if (sku in priceCache) {
-    return priceCache[sku];
-  }
-  return await getPrices([sku]).then((result) => {
-    priceCache[sku] = result[sku];
-    return result[sku];
-  });
-};
+const getPrices = pDebounce(_getPrices, { wait: 50, maxWait: 100 });
+export const getPrice = memoize(async (sku) => {
+  return await getPrices([sku]).then((result) => result[sku]);
+});

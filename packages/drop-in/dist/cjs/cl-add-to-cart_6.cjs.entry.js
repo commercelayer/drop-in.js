@@ -4359,7 +4359,7 @@ async function _getCart() {
   const order = await client.orders.retrieve(orderId).catch(() => null);
   return order;
 }
-const getCart = pDebounce(_getCart, { wait: 100, maxWait: 500 });
+const getCart = pDebounce(_getCart, { wait: 50, maxWait: 100 });
 async function triggerCartUpdate(order) {
   order || (order = await getCart());
   if (order !== null) {
@@ -4383,12 +4383,83 @@ async function addItem(sku, quantity) {
   await triggerCartUpdate(null);
 }
 
-function log(type, ...messages) {
+/**
+ * Outputs a message to the Web console.
+ * @param type Type of message.
+ * @param messages List of messages.
+ */
+const log = (type, ...messages) => {
   const { debug } = getConfig();
   if (debug === 'all') {
     console[type](...messages);
   }
+};
+/**
+ * The `logGroup()` method creates a new inline group in the Web console log,
+ * causing any subsequent console messages to be indented by an additional level,
+ * until `log.end()` is called.
+ * @param label Label for the group.
+ * @param collapsed The new block is collapsed and requires clicking a disclosure button to read it.
+ * @returns Returns a function that can be invoked to collect logs. To display collected log you should call `.end()` method.
+ * @example
+ * const log = logGroup('Label for the group', false)
+ * log('info', 'Message for the group')
+ * log('warn', 'Field should not be empty')
+ * log.end()
+ */
+function logGroup(label, collapsed = true) {
+  const logs = [];
+  const end = () => {
+    log(collapsed ? 'groupCollapsed' : 'group', label);
+    logs.forEach((messages) => {
+      log(...messages);
+    });
+    log('groupEnd');
+  };
+  const _log = (type, ...messages) => {
+    logs.push([type, ...messages]);
+  };
+  _log.end = end;
+  return _log;
 }
+
+const _getSkuIds = async (skus) => {
+  const client = await createClient(getConfig());
+  const uniqSkus = uniq(skus);
+  const log = logGroup('getSkuIds invoked');
+  log('info', `found`, uniqSkus.length);
+  log('info', 'unique skus', uniqSkus);
+  const pageSize = 25;
+  const chunkedSkus = chunk(uniqSkus, pageSize);
+  const idsResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
+    return await client.skus.list({
+      pageSize,
+      filters: { sku_code_in: skus.join(',') },
+      fields: ['id', 'code']
+    });
+  }))).flat();
+  // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
+  const ids = idsResponse.reduce((ids, sku) => {
+    if (sku.id !== undefined && sku.code !== undefined) {
+      ids[sku.code] = sku.id;
+    }
+    return ids;
+  }, {});
+  log.end();
+  return ids;
+};
+const getSkuIds = pDebounce(_getSkuIds, { wait: 50, maxWait: 100 });
+const getSkuId = memoize(async (sku) => {
+  return await getSkuIds([sku]).then((result) => result[sku]);
+});
+const getSku = memoize(async (sku) => {
+  const id = await getSkuId(sku);
+  if (id === undefined) {
+    return undefined;
+  }
+  const client = await createClient(getConfig());
+  return await client.skus.retrieve(id);
+});
 
 const CLAddToCart = class {
   constructor(hostRef) {
@@ -4422,7 +4493,10 @@ const CLAddToCart = class {
       this.quantity = 0;
     }
   }
-  componentWillLoad() {
+  async componentWillLoad() {
+    if (this.validateSku(this.sku)) {
+      this.skuObject = await getSku(this.sku);
+    }
     this.logSku(this.sku);
     this.logQuantity(this.quantity);
   }
@@ -4443,8 +4517,12 @@ const CLAddToCart = class {
    * @returns Returns true when item is soldable.
    */
   canBeSold() {
+    var _a, _b;
     // TODO: check for stock
-    return this.validateSku(this.sku) && this.quantity > 0;
+    return (this.validateSku(this.sku) &&
+      this.quantity > 0 &&
+      // @ts-expect-error
+      ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true);
   }
   render() {
     const enabled = this.canBeSold();
@@ -7283,7 +7361,7 @@ const CLCartLink = class {
 const _getPrices = async (skus) => {
   const client = await createClient(getConfig());
   const uniqSkus = uniq(skus);
-  log('groupCollapsed', 'getPrices invoked');
+  const log = logGroup('getPrices invoked');
   log('info', `found`, uniqSkus.length);
   log('info', 'unique skus', uniqSkus);
   const pageSize = 25;
@@ -7301,20 +7379,13 @@ const _getPrices = async (skus) => {
     }
     return prices;
   }, {});
-  log('groupEnd');
+  log.end();
   return prices;
 };
-const getPrices = pDebounce(_getPrices, { wait: 100, maxWait: 500 });
-const priceCache = {};
-const getPrice = async (sku) => {
-  if (sku in priceCache) {
-    return priceCache[sku];
-  }
-  return await getPrices([sku]).then((result) => {
-    priceCache[sku] = result[sku];
-    return result[sku];
-  });
-};
+const getPrices = pDebounce(_getPrices, { wait: 50, maxWait: 100 });
+const getPrice = memoize(async (sku) => {
+  return await getPrices([sku]).then((result) => result[sku]);
+});
 
 const CLPrice = class {
   constructor(hostRef) {

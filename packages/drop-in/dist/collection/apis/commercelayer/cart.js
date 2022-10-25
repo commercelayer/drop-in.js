@@ -50,7 +50,7 @@ export async function _getCart() {
   const order = await client.orders.retrieve(orderId).catch(() => null);
   return order;
 }
-export const getCart = pDebounce(_getCart, { wait: 100, maxWait: 500 });
+export const getCart = pDebounce(_getCart, { wait: 50, maxWait: 100 });
 export async function triggerCartUpdate(order) {
   order || (order = await getCart());
   if (order !== null) {

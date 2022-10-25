@@ -1,6 +1,45 @@
 import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
 import { a as addItem } from './cart.js';
-import { l as log } from './logger.js';
+import { l as logGroup, a as log } from './logger.js';
+import { p as pDebounce, c as createClient, g as getConfig, a as chunk, m as memoize, u as uniq } from './promise.js';
+
+const _getSkuIds = async (skus) => {
+  const client = await createClient(getConfig());
+  const uniqSkus = uniq(skus);
+  const log = logGroup('getSkuIds invoked');
+  log('info', `found`, uniqSkus.length);
+  log('info', 'unique skus', uniqSkus);
+  const pageSize = 25;
+  const chunkedSkus = chunk(uniqSkus, pageSize);
+  const idsResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
+    return await client.skus.list({
+      pageSize,
+      filters: { sku_code_in: skus.join(',') },
+      fields: ['id', 'code']
+    });
+  }))).flat();
+  // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
+  const ids = idsResponse.reduce((ids, sku) => {
+    if (sku.id !== undefined && sku.code !== undefined) {
+      ids[sku.code] = sku.id;
+    }
+    return ids;
+  }, {});
+  log.end();
+  return ids;
+};
+const getSkuIds = pDebounce(_getSkuIds, { wait: 50, maxWait: 100 });
+const getSkuId = memoize(async (sku) => {
+  return await getSkuIds([sku]).then((result) => result[sku]);
+});
+const getSku = memoize(async (sku) => {
+  const id = await getSkuId(sku);
+  if (id === undefined) {
+    return undefined;
+  }
+  const client = await createClient(getConfig());
+  return await client.skus.retrieve(id);
+});
 
 const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   constructor() {
@@ -36,7 +75,10 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
       this.quantity = 0;
     }
   }
-  componentWillLoad() {
+  async componentWillLoad() {
+    if (this.validateSku(this.sku)) {
+      this.skuObject = await getSku(this.sku);
+    }
     this.logSku(this.sku);
     this.logQuantity(this.quantity);
   }
@@ -57,8 +99,12 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
    * @returns Returns true when item is soldable.
    */
   canBeSold() {
+    var _a, _b;
     // TODO: check for stock
-    return this.validateSku(this.sku) && this.quantity > 0;
+    return (this.validateSku(this.sku) &&
+      this.quantity > 0 &&
+      // @ts-expect-error
+      ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true);
   }
   render() {
     const enabled = this.canBeSold();
@@ -71,7 +117,8 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   }; }
 }, [1, "cl-add-to-cart", {
     "sku": [513],
-    "quantity": [1538]
+    "quantity": [1538],
+    "skuObject": [32]
   }]);
 function defineCustomElement$1() {
   if (typeof customElements === "undefined") {

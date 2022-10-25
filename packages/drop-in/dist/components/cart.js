@@ -1,4 +1,4 @@
-import { p as pDebounce, j as js_cookie, d as getKeyForCart, g as getConfig, e as getAccessToken, a as createClient } from './promise.js';
+import { p as pDebounce, j as js_cookie, d as getKeyForCart, g as getConfig, e as getAccessToken, c as createClient } from './promise.js';
 
 /**
  * Create a draft order.
@@ -47,7 +47,7 @@ async function _getCart() {
   const order = await client.orders.retrieve(orderId).catch(() => null);
   return order;
 }
-const getCart = pDebounce(_getCart, { wait: 100, maxWait: 500 });
+const getCart = pDebounce(_getCart, { wait: 50, maxWait: 100 });
 async function triggerCartUpdate(order) {
   order || (order = await getCart());
   if (order !== null) {

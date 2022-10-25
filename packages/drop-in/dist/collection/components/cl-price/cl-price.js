@@ -1,4 +1,4 @@
-import { getPrice } from '#apis/prices';
+import { getPrice } from '#apis/commercelayer/prices';
 import { log } from '#utils/logger';
 import { h } from '@stencil/core';
 export class CLPrice {

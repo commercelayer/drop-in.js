@@ -1,11 +1,11 @@
 import { proxyCustomElement, HTMLElement, h } from '@stencil/core/internal/client';
-import { l as log } from './logger.js';
-import { p as pDebounce, a as createClient, g as getConfig, b as chunk, u as uniq } from './promise.js';
+import { l as logGroup, a as log } from './logger.js';
+import { p as pDebounce, c as createClient, g as getConfig, a as chunk, m as memoize, u as uniq } from './promise.js';
 
 const _getPrices = async (skus) => {
   const client = await createClient(getConfig());
   const uniqSkus = uniq(skus);
-  log('groupCollapsed', 'getPrices invoked');
+  const log = logGroup('getPrices invoked');
   log('info', `found`, uniqSkus.length);
   log('info', 'unique skus', uniqSkus);
   const pageSize = 25;
@@ -23,20 +23,13 @@ const _getPrices = async (skus) => {
     }
     return prices;
   }, {});
-  log('groupEnd');
+  log.end();
   return prices;
 };
-const getPrices = pDebounce(_getPrices, { wait: 100, maxWait: 500 });
-const priceCache = {};
-const getPrice = async (sku) => {
-  if (sku in priceCache) {
-    return priceCache[sku];
-  }
-  return await getPrices([sku]).then((result) => {
-    priceCache[sku] = result[sku];
-    return result[sku];
-  });
-};
+const getPrices = pDebounce(_getPrices, { wait: 50, maxWait: 100 });
+const getPrice = memoize(async (sku) => {
+  return await getPrices([sku]).then((result) => result[sku]);
+});
 
 const CLPrice = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   constructor() {
