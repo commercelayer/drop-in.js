@@ -1,6 +1,17 @@
 import { addItem } from '#apis/commercelayer/cart'
+import { getSku } from '#apis/commercelayer/skus'
 import { log } from '#utils/logger'
-import { Component, Element, h, Host, JSX, Prop, Watch } from '@stencil/core'
+import type { Sku } from '@commercelayer/sdk'
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  JSX,
+  Prop,
+  State,
+  Watch
+} from '@stencil/core'
 
 @Component({
   tag: 'cl-add-to-cart',
@@ -18,6 +29,8 @@ export class CLAddToCart {
    * Quantity
    */
   @Prop({ reflect: true, mutable: true }) quantity: number = 1
+
+  @State() skuObject: Sku | undefined
 
   logSku(sku: string | undefined): void {
     if (!this.validateSku(sku)) {
@@ -55,7 +68,11 @@ export class CLAddToCart {
     }
   }
 
-  componentWillLoad(): void {
+  async componentWillLoad(): Promise<void> {
+    if (this.validateSku(this.sku)) {
+      this.skuObject = await getSku(this.sku)
+    }
+
     this.logSku(this.sku)
     this.logQuantity(this.quantity)
   }
@@ -80,7 +97,12 @@ export class CLAddToCart {
    */
   canBeSold(): boolean {
     // TODO: check for stock
-    return this.validateSku(this.sku) && this.quantity > 0
+    return (
+      this.validateSku(this.sku) &&
+      this.quantity > 0 &&
+      // @ts-expect-error
+      this.skuObject?.inventory?.available === true
+    )
   }
 
   render(): JSX.Element {

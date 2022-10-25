@@ -1,22 +1,20 @@
-import { log } from '#utils/logger'
+import { logGroup } from '#utils/logger'
 import { pDebounce } from '#utils/promise'
 import type { Price } from '@commercelayer/sdk'
-import { chunk, uniq } from '../utils/utils'
-import { createClient } from './commercelayer/client'
-import { getConfig } from './commercelayer/config'
-
-// const componentName = 'cl-price'
+import { chunk, memoize, uniq } from '../../utils/utils'
+import { createClient } from './client'
+import { getConfig } from './config'
 
 interface PriceList {
   [sku: string]: Price | undefined
 }
 
-export const _getPrices = async (skus: string[]): Promise<PriceList> => {
+const _getPrices = async (skus: string[]): Promise<PriceList> => {
   const client = await createClient(getConfig())
 
   const uniqSkus = uniq(skus)
 
-  log('groupCollapsed', 'getPrices invoked')
+  const log = logGroup('getPrices invoked')
 
   log('info', `found`, uniqSkus.length)
   log('info', 'unique skus', uniqSkus)
@@ -47,21 +45,15 @@ export const _getPrices = async (skus: string[]): Promise<PriceList> => {
     {}
   )
 
-  log('groupEnd')
+  log.end()
 
   return prices
 }
 
-const getPrices = pDebounce(_getPrices, { wait: 100, maxWait: 500 })
+const getPrices = pDebounce(_getPrices, { wait: 50, maxWait: 100 })
 
-const priceCache: PriceList = {}
-export const getPrice = async (sku: string): Promise<Price | undefined> => {
-  if (sku in priceCache) {
-    return priceCache[sku]
+export const getPrice = memoize(
+  async (sku: string): Promise<Price | undefined> => {
+    return await getPrices([sku]).then((result) => result[sku])
   }
-
-  return await getPrices([sku]).then((result) => {
-    priceCache[sku] = result[sku]
-    return result[sku]
-  })
-}
+)

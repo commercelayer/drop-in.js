@@ -1,4 +1,4 @@
-import { getPrice } from '#apis/prices'
+import { getPrice } from '#apis/commercelayer/prices'
 import { log } from '#utils/logger'
 import type { Price } from '@commercelayer/sdk'
 import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'

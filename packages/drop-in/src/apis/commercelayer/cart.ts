@@ -70,7 +70,7 @@ export async function _getCart(): Promise<Order | null> {
   return order
 }
 
-export const getCart = pDebounce(_getCart, { wait: 100, maxWait: 500 })
+export const getCart = pDebounce(_getCart, { wait: 50, maxWait: 100 })
 
 export async function triggerCartUpdate(order: Order | null): Promise<void> {
   order ||= await getCart()
