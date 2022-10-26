@@ -63,3 +63,9 @@ export const Nonexisting = Template.bind({})
 Nonexisting.args = {
   sku: skus.nonexisting
 }
+
+export const NoOverselling = Template.bind({})
+NoOverselling.args = {
+  sku: skus.bag,
+  quantity: 100
+}

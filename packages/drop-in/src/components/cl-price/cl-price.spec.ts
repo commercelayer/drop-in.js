@@ -1,8 +1,8 @@
+import * as prices from '#apis/commercelayer/prices'
+import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
 import type { Price } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { CLPrice } from './cl-price'
-import * as prices from '#apis/commercelayer/prices'
-import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
 
 describe('cl-price.spec', () => {
   it('renders without attributes', async () => {

@@ -1,5 +1,5 @@
 import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
-import { meta, Basic, WithoutAttributes, OutOfStock, Nonexisting } from './cl-add-to-cart.stories.ts';
+import { meta, Basic, WithoutAttributes, OutOfStock, Nonexisting, NoOverselling } from './cl-add-to-cart.stories.ts';
 
 <Meta
   title={meta.title}
@@ -40,4 +40,12 @@ The provided `sku` must exists. If nonexisting the add to cart button will stay 
 
 <Canvas withSource="open">
   <Story story={Nonexisting} name="Nonexisting" />
+</Canvas>
+
+### No Overselling
+
+The product with sku *BACKPACKFFFFFF000000XXXX* has less than `100` stock unit, so the button with be disabled.
+
+<Canvas withSource="open">
+  <Story story={NoOverselling} name="No Overselling" />
 </Canvas>

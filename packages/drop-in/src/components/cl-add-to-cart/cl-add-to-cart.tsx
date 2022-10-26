@@ -104,7 +104,9 @@ export class CLAddToCart {
       this.validateSku(this.sku) &&
       this.quantity > 0 &&
       // @ts-expect-error
-      this.skuObject?.inventory?.available === true
+      this.skuObject?.inventory?.available === true &&
+      // @ts-expect-error
+      this.quantity <= this.skuObject?.inventory?.quantity
     )
   }
 
