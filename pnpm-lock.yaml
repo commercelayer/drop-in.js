@@ -7,6 +7,7 @@ importers:
       '@commercelayer/eslint-config-ts': ^0.1.3
       concurrently: ^7.4.0
       eslint: ^8.25.0
+      husky: ^8.0.1
       lerna: ^5.6.2
       npm-check-updates: ^16.3.13
       typescript: ^4.8.4
@@ -14,6 +15,7 @@ importers:
       '@commercelayer/eslint-config-ts': 0.1.3_z4bbprzjrhnsfa24uvmcbu7f5q
       concurrently: 7.4.0
       eslint: 8.25.0
+      husky: 8.0.1
       lerna: 5.6.2
       npm-check-updates: 16.3.13
       typescript: 4.8.4
@@ -9943,6 +9945,12 @@ packages:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
     dependencies:
       ms: 2.1.3
+    dev: true
+
+  /husky/8.0.1:
+    resolution: {integrity: sha512-xs7/chUH/CKdOCs7Zy0Aev9e/dKOMZf3K1Az1nar3tzlv0jfqnYtu235bstsWTmXOR0EfINrPa97yy4Lz6RiKw==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /iconv-lite/0.4.24:
