@@ -5,8 +5,8 @@
   "scripts": {
     "start": "pnpm build:sass && start-storybook -s ./public -p 6006",
     "build:sass": "sass stories/assets/drop-in.scss public/drop-in.css",
-    "build": "pnpm build:sass && build-storybook -s ./public",
-    "build:docs": "pnpm build:sass && build-storybook -s ./public --docs",
+    "build:full": "pnpm build:sass && build-storybook -s ./public",
+    "build": "pnpm build:sass && build-storybook -s ./public --docs",
     "serve": "pnpm build:docs && pnpx http-server storybook-static -o"
   },
   "author": {
