@@ -1,5 +1,5 @@
 import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
-import { meta, Basic, WithIcon, WithText } from './cl-cart-count.stories.ts'
+import { meta, Basic, WithIcon, WithText, LinkWithStyle } from './cl-cart-count.stories.ts'
 import { skus } from '../assets/constants.ts'
 
 <Meta
@@ -23,12 +23,22 @@ Here below an example of the same, this time inside a `cl-cart-link` with an svg
   <Story story={WithIcon} />
 </Canvas>
 
+And another one with simply a text.
+
+<Canvas withSource="open">
+  <Story story={WithText} />
+</Canvas>
+
 The `cl-cart-count` is shipped without any props, you can preview the styles from [drop-in.css](drop-in.css) by toggling on/off the `styles` property below.
 
 <ArgsTable story='Basic' />
 
----
+### Styling with `<a>`
+
+The component `cl-cart-link` automatically generates the url to point to the hosted cart.
+
+But what if you want to point to your internal cart page? You can simply use an `<a>` tag and add the `cl-cart-link` class to it.
 
 <Canvas withSource="open">
-  <Story story={WithText} />
+  <Story story={LinkWithStyle} />
 </Canvas>

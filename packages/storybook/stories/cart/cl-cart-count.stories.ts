@@ -67,3 +67,14 @@ export const WithText: StoryFn = () => {
     `
   )
 }
+
+export const LinkWithStyle: StoryFn = () => {
+  return create(
+    html`
+      <a class="cl-cart-link" target="_blank" href="#link-to-cart">
+        Cart
+        <cl-cart-count></cl-cart-count>
+      </a>
+    `
+  )
+}
