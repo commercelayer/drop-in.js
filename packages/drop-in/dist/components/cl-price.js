@@ -1,6 +1,6 @@
 import { proxyCustomElement, HTMLElement, h } from '@stencil/core/internal/client';
 import { l as logGroup, a as log } from './logger.js';
-import { c as createClient, g as getConfig, u as uniq, a as chunk, p as pDebounce, m as memoize } from './promise.js';
+import { p as pDebounce, m as memoize, c as createClient, g as getConfig, a as chunk, u as uniq } from './promise.js';
 
 const _getPrices = async (skus) => {
   const client = await createClient(getConfig());

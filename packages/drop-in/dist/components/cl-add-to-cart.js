@@ -1,7 +1,7 @@
 import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
 import { a as addItem } from './cart.js';
 import { l as logGroup, a as log } from './logger.js';
-import { c as createClient, g as getConfig, u as uniq, a as chunk, p as pDebounce, m as memoize } from './promise.js';
+import { p as pDebounce, m as memoize, c as createClient, g as getConfig, a as chunk, u as uniq } from './promise.js';
 
 const _getSkuIds = async (skus) => {
   const client = await createClient(getConfig());
@@ -102,12 +102,14 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
    * @returns Returns true when item is soldable.
    */
   canBeSold() {
-    var _a, _b;
+    var _a, _b, _c, _d;
     // TODO: check for stock
     return (this.validateSku(this.sku) &&
       this.quantity > 0 &&
       // @ts-expect-error
-      ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true);
+      ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true &&
+      // @ts-expect-error
+      this.quantity <= ((_d = (_c = this.skuObject) === null || _c === void 0 ? void 0 : _c.inventory) === null || _d === void 0 ? void 0 : _d.quantity));
   }
   render() {
     const enabled = this.canBeSold();

@@ -1,20 +1,8 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f356444b.js';
-import { g as getCartUrl, t as triggerCartUpdate } from './cart-39ffce27.js';
-import { e as createCommonjsModule } from './promise-e502bcc3.js';
+import { r as registerInstance, h, H as Host, g as getElement } from './index-31d6f700.js';
+import { e as createCommonjsModule, d as getCartUrl, t as triggerCartUpdate } from './cart-1518a9d0.js';
 
 var iframeResizer$2 = createCommonjsModule(function (module) {
-/*
- * File: iframeResizer.js
- * Desc: Force iframes to size to content.
- * Requires: iframeResizer.contentWindow.js to be loaded into the target frame.
- * Doc: https://github.com/davidjbradshaw/iframe-resizer
- * Author: David J. Bradshaw - dave@bradshaw.net
- * Contributor: Jure Mav - jure.mav@gmail.com
- * Contributor: Reed Dadoune - reed@dadoune.com
- */
-
-// eslint-disable-next-line sonarjs/cognitive-complexity, no-shadow-restricted-names
-;(function (undefined$1) {
+(function (undefined$1) {
   if (typeof window === 'undefined') return // don't run for server side render
 
   var count = 0,
@@ -355,8 +343,7 @@ var iframeResizer$2 = createCommonjsModule(function (module) {
             stop();
           }
         }
-
-        ;['scroll', 'resize'].forEach(function (evt) {
+['scroll', 'resize'].forEach(function (evt) {
           log(id, type + evt + ' listener for sendPageInfo');
           func(window, evt, sendPageInfo);
         });
@@ -1438,7 +1425,7 @@ var iframeResizer$2 = createCommonjsModule(function (module) {
 
   if (typeof undefined$1 === 'function' && undefined$1.amd) {
     undefined$1([], factory);
-  } else if ('object' === 'object' && 'object' === 'object') {
+  } else {
     // Node for browserfy
     module.exports = factory();
   }
@@ -1447,18 +1434,7 @@ var iframeResizer$2 = createCommonjsModule(function (module) {
 });
 
 var iframeResizer_contentWindow = createCommonjsModule(function (module) {
-/*
- * File: iframeResizer.contentWindow.js
- * Desc: Include this file in any page being loaded into an iframe
- *       to force the iframe to resize to the content size.
- * Requires: iframeResizer.js on host page.
- * Doc: https://github.com/davidjbradshaw/iframe-resizer
- * Author: David J. Bradshaw - dave@bradshaw.net
- *
- */
-
-// eslint-disable-next-line sonarjs/cognitive-complexity, no-shadow-restricted-names
-;(function (undefined$1) {
+(function (undefined$1) {
   if (typeof window === 'undefined') return // don't run for server side render
 
   var autoResize = true,
@@ -1492,7 +1468,6 @@ var iframeResizer_contentWindow = createCommonjsModule(function (module) {
       documentElementScroll: 1
     },
     resizeFrom = 'child',
-    sendPermit = true,
     target = window.parent,
     targetOriginDefault = '*',
     tolerance = 0,
@@ -2625,7 +2600,7 @@ var iframeResizer_contentWindow = createCommonjsModule(function (module) {
       target.postMessage(msgID + message, targetOrigin);
     }
 
-    if (true === sendPermit) {
+    {
       setTargetOrigin();
       sendToParent();
     }
@@ -2695,7 +2670,7 @@ var iframeResizer_contentWindow = createCommonjsModule(function (module) {
 
     function isMiddleTier() {
       return (
-        (!('object' !== 'undefined' && module.exports) &&
+        (!(module.exports) &&
           'iFrameResize' in window) ||
         ('jQuery' in window && 'iFrameResize' in window.jQuery.prototype)
       )
