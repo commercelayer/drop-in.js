@@ -34,10 +34,10 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@stencil/core": "^2.18.1"
+    "@stencil/core": "^2.19.1"
   },
   "devDependencies": {
-    "@stencil/core": "^2.18.1",
+    "@stencil/core": "^2.19.1",
     "@stencil/sass": "^2.0.0",
     "@types/iframe-resizer": "^3.5.9",
     "@types/jest": "^27.5.2",
