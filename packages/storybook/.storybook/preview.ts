@@ -83,7 +83,7 @@ export const decorators: DecoratorFunction[] = [
     const tale = story()
 
     return `
-      ${ options.args.styles ? '<link href="/drop-in.css" rel="stylesheet">' : '' }
+      ${ options.args.styles ? '<link href="drop-in.css" rel="stylesheet">' : '' }
       ${ typeof tale === 'string' ? tale : storyAsHTML(tale) }
     `
   },
