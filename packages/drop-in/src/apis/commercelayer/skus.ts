@@ -27,7 +27,7 @@ const _getSkuIds = async (skus: string[]): Promise<SkuIdList> => {
       chunkedSkus.map(async (skus) => {
         return await client.skus.list({
           pageSize,
-          filters: { sku_code_in: skus.join(',') },
+          filters: { code_in: skus.join(',') },
           fields: ['id', 'code']
         })
       })
