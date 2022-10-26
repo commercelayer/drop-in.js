@@ -1,16 +1,20 @@
-import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
-import { a as addItem } from './cart.js';
-import { l as logGroup, a as log } from './logger.js';
-import { c as createClient, g as getConfig, u as uniq, a as chunk, p as pDebounce, m as memoize } from './promise.js';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+const index = require('./index-59aec873.js');
+const cart = require('./cart-049301c5.js');
+const logger = require('./logger-a98be2b0.js');
+const promise = require('./promise-c0988a5f.js');
 
 const _getSkuIds = async (skus) => {
-  const client = await createClient(getConfig());
-  const uniqSkus = uniq(skus);
-  const log = logGroup('getSkuIds invoked');
+  const client = await promise.createClient(promise.getConfig());
+  const uniqSkus = promise.uniq(skus);
+  const log = logger.logGroup('getSkuIds invoked');
   log('info', `found`, uniqSkus.length);
   log('info', 'unique skus', uniqSkus);
   const pageSize = 25;
-  const chunkedSkus = chunk(uniqSkus, pageSize);
+  const chunkedSkus = promise.chunk(uniqSkus, pageSize);
   const idsResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
     return await client.skus.list({
       pageSize,
@@ -28,24 +32,22 @@ const _getSkuIds = async (skus) => {
   log.end();
   return ids;
 };
-const getSkuIds = pDebounce(_getSkuIds, { wait: 50, maxWait: 100 });
-const getSkuId = memoize(async (sku) => {
+const getSkuIds = promise.pDebounce(_getSkuIds, { wait: 50, maxWait: 100 });
+const getSkuId = promise.memoize(async (sku) => {
   return await getSkuIds([sku]).then((result) => result[sku]);
 });
-const getSku = memoize(async (sku) => {
+const getSku = promise.memoize(async (sku) => {
   const id = await getSkuId(sku);
   if (id === undefined) {
     return undefined;
   }
-  const client = await createClient(getConfig());
+  const client = await promise.createClient(promise.getConfig());
   return await client.skus.retrieve(id);
 });
 
-const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.__attachShadow();
+const CLAddToCart = class {
+  constructor(hostRef) {
+    index.registerInstance(this, hostRef);
     /**
      * Quantity
      */
@@ -53,12 +55,12 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   }
   logSku(sku) {
     if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not empty string.', this.host);
+      logger.log('warn', '"sku" should be a not empty string.', this.host);
     }
   }
   logQuantity(quantity) {
     if (!this.validateQuantity(quantity)) {
-      log('warn', '"quantity" should be a number equal or greater than 0.', this.host);
+      logger.log('warn', '"quantity" should be a number equal or greater than 0.', this.host);
     }
   }
   validateSku(sku) {
@@ -79,7 +81,7 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
     if (this.validateSku(this.sku)) {
       this.skuObject = await getSku(this.sku);
       if (this.skuObject === undefined) {
-        log('warn', `Cannot find sku ${this.sku}.`, this.host);
+        logger.log('warn', `Cannot find sku ${this.sku}.`, this.host);
       }
     }
     this.logSku(this.sku);
@@ -92,7 +94,7 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   }
   handleAddItem() {
     if (this.sku !== undefined && this.canBeSold()) {
-      addItem(this.sku, this.quantity).catch((error) => {
+      cart.addItem(this.sku, this.quantity).catch((error) => {
         throw error;
       });
     }
@@ -111,33 +113,13 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   }
   render() {
     const enabled = this.canBeSold();
-    return (h(Host, { role: 'button', tabindex: '0', "aria-disabled": enabled ? undefined : 'true', onKeyPress: (event) => this.handleKeyPress(event), onClick: () => this.handleAddItem() }, h("slot", null)));
+    return (index.h(index.Host, { role: 'button', tabindex: '0', "aria-disabled": enabled ? undefined : 'true', onKeyPress: (event) => this.handleKeyPress(event), onClick: () => this.handleAddItem() }, index.h("slot", null)));
   }
-  get host() { return this; }
+  get host() { return index.getElement(this); }
   static get watchers() { return {
     "sku": ["watchSkuHandler"],
     "quantity": ["watchQuantityHandler"]
   }; }
-}, [1, "cl-add-to-cart", {
-    "sku": [513],
-    "quantity": [1538],
-    "skuObject": [32]
-  }]);
-function defineCustomElement$1() {
-  if (typeof customElements === "undefined") {
-    return;
-  }
-  const components = ["cl-add-to-cart"];
-  components.forEach(tagName => { switch (tagName) {
-    case "cl-add-to-cart":
-      if (!customElements.get(tagName)) {
-        customElements.define(tagName, CLAddToCart);
-      }
-      break;
-  } });
-}
+};
 
-const ClAddToCart = CLAddToCart;
-const defineCustomElement = defineCustomElement$1;
-
-export { ClAddToCart, defineCustomElement };
+exports.cl_add_to_cart = CLAddToCart;

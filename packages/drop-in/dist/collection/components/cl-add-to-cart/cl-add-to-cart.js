@@ -36,6 +36,9 @@ export class CLAddToCart {
   async componentWillLoad() {
     if (this.validateSku(this.sku)) {
       this.skuObject = await getSku(this.sku);
+      if (this.skuObject === undefined) {
+        log('warn', `Cannot find sku ${this.sku}.`, this.host);
+      }
     }
     this.logSku(this.sku);
     this.logQuantity(this.quantity);

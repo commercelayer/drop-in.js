@@ -1,4 +1,4 @@
-import debounce from 'debounce-fn';
+import debounce from 'lodash/debounce';
 export const pDebounce = (input, options) => {
   const incrementalArgs = [];
   const incrementalResolve = [];
@@ -10,7 +10,7 @@ export const pDebounce = (input, options) => {
     incrementalResolve.length = 0;
     incrementalArgs.length = 0;
   };
-  const debounced = debounce(fn, options);
+  const debounced = debounce(fn, options === null || options === void 0 ? void 0 : options.wait, { maxWait: options === null || options === void 0 ? void 0 : options.maxWait });
   return async (item) => {
     if (item !== undefined) {
       incrementalArgs.push(...item);

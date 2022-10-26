@@ -30,13 +30,6 @@ function chunk(array, size = 1) {
   }, []);
 }
 /**
- * Check if the value is different from `null` and `undefined`.
- * @returns `true` when `value` is different from `null` and `undefined`.
- */
-function isNotNullish(value) {
-  return value !== null && value !== undefined;
-}
-/**
  * Creates a duplicate-free version of an array.
  * @param array The array to inspect.
  * @returns Returns the new duplicate free array.
@@ -69,26 +62,14 @@ const _nodeResolve_empty$1 = /*#__PURE__*/Object.freeze({
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function getDefaultExportFromCjs (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
 function createCommonjsModule(fn, basedir, module) {
 	return module = {
 		path: basedir,
 		exports: {},
 		require: function (path, base) {
-			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+			return commonjsRequire();
 		}
 	}, fn(module, module.exports), module.exports;
-}
-
-function getDefaultExportFromNamespaceIfPresent (n) {
-	return n && Object.prototype.hasOwnProperty.call(n, 'default') ? n['default'] : n;
-}
-
-function getDefaultExportFromNamespaceIfNotNamed (n) {
-	return n && Object.prototype.hasOwnProperty.call(n, 'default') && Object.keys(n).length === 1 ? n['default'] : n;
 }
 
 function getAugmentedNamespace(n) {
@@ -111,27 +92,6 @@ function commonjsRequire () {
 }
 
 // Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-'use strict';
 
 // If obj.hasOwnProperty has been overridden, then calling
 // obj.hasOwnProperty(prop) will break.
@@ -192,27 +152,6 @@ var decode = function(qs, sep, eq, options) {
 };
 
 // Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-'use strict';
 
 var stringifyPrimitive = function(v) {
   switch (typeof v) {
@@ -257,7 +196,6 @@ var encode$1 = function(obj, sep, eq, name) {
 };
 
 var querystring = createCommonjsModule(function (module, exports) {
-'use strict';
 
 exports.decode = exports.parse = decode;
 exports.encode = exports.stringify = encode$1;
@@ -1013,266 +951,7 @@ const authenticate=async({type,config,scope,code,refreshToken})=>{const auth=cre
 
 const salesChannel=async({clientId,endpoint,scope},user)=>{if(!scope)throw new Error("scope param is required.");const config={clientId,clientSecret:"",accessTokenUri:`${endpoint}/oauth/token`,redirectUri:void 0,username:user==null?void 0:user.username,password:user==null?void 0:user.password};return user?authenticate({type:"owner",config,scope}):authenticate({type:"clientCredentials",config,scope})};
 
-const integration=async({clientId,clientSecret,endpoint,scope},user)=>{const config={clientId,clientSecret,accessTokenUri:`${endpoint}/oauth/token`,redirectUri:"",username:user==null?void 0:user.username,password:user==null?void 0:user.password};return user?authenticate({type:"owner",config,scope}):authenticate({type:"clientCredentials",config,scope})};
-
-const webapp=async({clientId,clientSecret,callbackUrl,endpoint,scope,callbackUrlWithCode})=>{const config={clientId,clientSecret,accessTokenUri:`${endpoint}/oauth/token`,authorizationUri:`${endpoint}/oauth/authorize`,redirectUri:callbackUrl};return await authenticate({type:"authorizationCode",config,scope,code:callbackUrlWithCode})};
-
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global Reflect, Promise */
-
-var extendStatics = function(d, b) {
-    extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-    return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-    if (typeof b !== "function" && b !== null)
-        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    extendStatics(d, b);
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
-function __rest(s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-}
-
-function __decorate(decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-}
-
-function __param(paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-}
-
-function __metadata(metadataKey, metadataValue) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
-}
-
-function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-}
-
-function __generator(thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-}
-
-var __createBinding = Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-});
-
-function __exportStar(m, o) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
-}
-
-function __values(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-}
-
-function __read(o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-}
-
-/** @deprecated */
-function __spread() {
-    for (var ar = [], i = 0; i < arguments.length; i++)
-        ar = ar.concat(__read(arguments[i]));
-    return ar;
-}
-
-/** @deprecated */
-function __spreadArrays() {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-}
-
-function __spreadArray(to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-}
-
-function __await(v) {
-    return this instanceof __await ? (this.v = v, this) : new __await(v);
-}
-
-function __asyncGenerator(thisArg, _arguments, generator) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var g = generator.apply(thisArg, _arguments || []), i, q = [];
-    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
-    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
-    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
-    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
-    function fulfill(value) { resume("next", value); }
-    function reject(value) { resume("throw", value); }
-    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
-}
-
-function __asyncDelegator(o) {
-    var i, p;
-    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
-}
-
-function __asyncValues(o) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var m = o[Symbol.asyncIterator], i;
-    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-}
-
-function __makeTemplateObject(cooked, raw) {
-    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-    return cooked;
-};
-
-var __setModuleDefault = Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-};
-
-function __importStar(mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-}
-
-function __importDefault(mod) {
-    return (mod && mod.__esModule) ? mod : { default: mod };
-}
-
-function __classPrivateFieldGet(receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-}
-
-function __classPrivateFieldSet(receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-}
-
-function __classPrivateFieldIn(state, receiver) {
-    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
-    return typeof state === "function" ? receiver === state : state.has(receiver);
-}
-
-async function clientCredentials(args){const{scope,endpoint,clientSecret=""}=args,obj=__rest(args,["scope","endpoint","clientSecret"]),config=Object.assign(Object.assign({},obj),{clientSecret,accessTokenUri:`${endpoint}/oauth/token`,redirectUri:""});return authenticate({type:"clientCredentials",config,scope})}
-
-async function refreshToken({clientId,endpoint,scope,refreshToken:refreshToken2,clientSecret=""}){const config={clientId,clientSecret,accessTokenUri:`${endpoint}/oauth/token`,redirectUri:void 0};return authenticate({type:"refreshToken",config,scope,refreshToken:refreshToken2})}
-
-const authorizeWebapp=webapp,getCustomerToken=salesChannel,getIntegrationToken=integration,getSalesChannelToken=salesChannel,getWebappToken=webapp;const CLayerAuth={authorizeWebapp,clientCredentials,getCustomerToken,getIntegrationToken,getRefreshToken: refreshToken,getSalesChannelToken,getWebappToken};
-
-'use strict';
+const getSalesChannelToken=salesChannel;
 
 var bind = function bind(fn, thisArg) {
   return function wrap() {
@@ -1283,10 +962,6 @@ var bind = function bind(fn, thisArg) {
     return fn.apply(thisArg, args);
   };
 };
-
-'use strict';
-
-
 
 // utils is a library of generic helper functions non-specific to axios
 
@@ -1755,10 +1430,6 @@ var utils = {
   isFileList: isFileList
 };
 
-'use strict';
-
-
-
 function encode(val) {
   return encodeURIComponent(val).
     replace(/%3A/gi, ':').
@@ -1826,10 +1497,6 @@ var buildURL = function buildURL(url, params, paramsSerializer) {
   return url;
 };
 
-'use strict';
-
-
-
 function InterceptorManager() {
   this.handlers = [];
 }
@@ -1881,10 +1548,6 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 var InterceptorManager_1 = InterceptorManager;
 
-'use strict';
-
-
-
 var normalizeHeaderName = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
     if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
@@ -1893,10 +1556,6 @@ var normalizeHeaderName = function normalizeHeaderName(headers, normalizedName) 
     }
   });
 };
-
-'use strict';
-
-
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -1981,17 +1640,11 @@ AxiosError.from = function(error, code, config, request, response, customProps) 
 
 var AxiosError_1 = AxiosError;
 
-'use strict';
-
 var transitional = {
   silentJSONParsing: true,
   forcedJSONParsing: true,
   clarifyTimeoutError: false
 };
-
-'use strict';
-
-
 
 /**
  * Convert a data object to FormData
@@ -2062,10 +1715,6 @@ function toFormData(obj, formData) {
 
 var toFormData_1 = toFormData;
 
-'use strict';
-
-
-
 /**
  * Resolve or reject a Promise based on response status.
  *
@@ -2087,10 +1736,6 @@ var settle = function settle(resolve, reject, response) {
     ));
   }
 };
-
-'use strict';
-
-
 
 var cookies = (
   utils.isStandardBrowserEnv() ?
@@ -2142,8 +1787,6 @@ var cookies = (
     })()
 );
 
-'use strict';
-
 /**
  * Determines whether the specified URL is absolute
  *
@@ -2157,8 +1800,6 @@ var isAbsoluteURL = function isAbsoluteURL(url) {
   return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
 };
 
-'use strict';
-
 /**
  * Creates a new URL by combining the specified URLs
  *
@@ -2171,11 +1812,6 @@ var combineURLs = function combineURLs(baseURL, relativeURL) {
     ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
     : baseURL;
 };
-
-'use strict';
-
-
-
 
 /**
  * Creates a new URL by combining the baseURL with the requestedURL,
@@ -2192,10 +1828,6 @@ var buildFullPath = function buildFullPath(baseURL, requestedURL) {
   }
   return requestedURL;
 };
-
-'use strict';
-
-
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -2246,10 +1878,6 @@ var parseHeaders = function parseHeaders(headers) {
 
   return parsed;
 };
-
-'use strict';
-
-
 
 var isURLSameOrigin = (
   utils.isStandardBrowserEnv() ?
@@ -2316,11 +1944,6 @@ var isURLSameOrigin = (
     })()
 );
 
-'use strict';
-
-
-
-
 /**
  * A `CanceledError` is an object that is thrown when an operation is canceled.
  *
@@ -2339,26 +1962,10 @@ utils.inherits(CanceledError, AxiosError_1, {
 
 var CanceledError_1 = CanceledError;
 
-'use strict';
-
 var parseProtocol = function parseProtocol(url) {
   var match = /^([-+\w]{1,25})(:?\/\/|:)/.exec(url);
   return match && match[1] || '';
 };
-
-'use strict';
-
-
-
-
-
-
-
-
-
-
-
-
 
 var xhr = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -2572,14 +2179,6 @@ var xhr = function xhrAdapter(config) {
 // eslint-disable-next-line strict
 var _null = null;
 
-'use strict';
-
-
-
-
-
-
-
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
 };
@@ -2719,11 +2318,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 var defaults_1 = defaults;
 
-'use strict';
-
-
-
-
 /**
  * Transform the data for a request or a response
  *
@@ -2742,19 +2336,9 @@ var transformData = function transformData(data, headers, fns) {
   return data;
 };
 
-'use strict';
-
 var isCancel = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
-
-'use strict';
-
-
-
-
-
-
 
 /**
  * Throws a `CanceledError` if cancellation has been requested.
@@ -2835,10 +2419,6 @@ var dispatchRequest = function dispatchRequest(config) {
     return Promise.reject(reason);
   });
 };
-
-'use strict';
-
-
 
 /**
  * Config-specific merge-function which creates a new config-object
@@ -2941,8 +2521,6 @@ var data = {
   "version": "0.27.2"
 };
 
-'use strict';
-
 var VERSION = data.version;
 
 
@@ -3027,16 +2605,6 @@ var validator = {
   assertOptions: assertOptions,
   validators: validators$1
 };
-
-'use strict';
-
-
-
-
-
-
-
-
 
 var validators = validator.validators;
 /**
@@ -3189,10 +2757,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 var Axios_1 = Axios;
 
-'use strict';
-
-
-
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
  *
@@ -3309,8 +2873,6 @@ CancelToken.source = function source() {
 
 var CancelToken_1 = CancelToken;
 
-'use strict';
-
 /**
  * Syntactic sugar for invoking a function and expanding an array for arguments.
  *
@@ -3337,10 +2899,6 @@ var spread = function spread(callback) {
   };
 };
 
-'use strict';
-
-
-
 /**
  * Determines whether the payload is an error thrown by Axios
  *
@@ -3350,14 +2908,6 @@ var spread = function spread(callback) {
 var isAxiosError = function isAxiosError(payload) {
   return utils.isObject(payload) && (payload.isAxiosError === true);
 };
-
-'use strict';
-
-
-
-
-
-
 
 /**
  * Create an instance of Axios
@@ -3896,10 +3446,8 @@ function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
 
 
 function reduceToSingleString(output, base, braces) {
-  var numLinesEst = 0;
   var length = output.reduce(function(prev, cur) {
-    numLinesEst++;
-    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    if (cur.indexOf('\n') >= 0) ;
     return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
   }, 0);
 
@@ -4387,18 +3935,9 @@ const CommerceLayerStatic={resources:()=>resourceList,isSdkError:r=>s$G.isSdkErr
 var f=undefined&&undefined.__classPrivateFieldSet||function(r,i,n,o,a){if(o==="m")throw new TypeError("Private method is not writable");if(o==="a"&&!a)throw new TypeError("Private accessor was defined without a setter");if(typeof i=="function"?r!==i||!a:!i.has(r))throw new TypeError("Cannot write private member to an object whose class did not declare it");return o==="a"?a.call(r,n):a?a.value=n:i.set(r,n),n},s=undefined&&undefined.__classPrivateFieldGet||function(r,i,n,o){if(n==="a"&&!o)throw new TypeError("Private accessor was defined without a getter");if(typeof i=="function"?r!==i||!o:!i.has(r))throw new TypeError("Cannot read private member from an object whose class did not declare it");return n==="m"?o:n==="a"?o.call(r):o?o.value:i.get(r)},t,h;const p=n$2("commercelayer"),u="3.0.0";class _{constructor(i$1){this.openApiSchemaVersion=u,t.set(this,void 0),h.set(this,void 0),p("new commercelayer instance %O",i$1),f(this,t,new C(i$1),"f"),f(this,h,i$1.organization,"f"),this.addresses=new t$t(s(this,t,"f")),this.adjustments=new s$F(s(this,t,"f")),this.adyen_gateways=new s$E(s(this,t,"f")),this.adyen_payments=new r$i(s(this,t,"f")),this.application=new e$4(s(this,t,"f")),this.attachments=new t$s(s(this,t,"f")),this.authorizations=new t$r(s(this,t,"f")),this.avalara_accounts=new s$D(s(this,t,"f")),this.billing_info_validation_rules=new t$q(s(this,t,"f")),this.bing_geocoders=new s$C(s(this,t,"f")),this.braintree_gateways=new s$B(s(this,t,"f")),this.braintree_payments=new s$A(s(this,t,"f")),this.bundles=new r$h(s(this,t,"f")),this.captures=new t$p(s(this,t,"f")),this.carrier_accounts=new e$3(s(this,t,"f")),this.checkout_com_gateways=new s$z(s(this,t,"f")),this.checkout_com_payments=new r$g(s(this,t,"f")),this.coupon_codes_promotion_rules=new t$o(s(this,t,"f")),this.coupon_recipients=new r$f(s(this,t,"f")),this.coupons=new t$n(s(this,t,"f")),this.customer_addresses=new r$e(s(this,t,"f")),this.customer_groups=new s$y(s(this,t,"f")),this.customer_password_resets=new t$m(s(this,t,"f")),this.customer_payment_sources=new t$l(s(this,t,"f")),this.customer_subscriptions=new s$x(s(this,t,"f")),this.customers=new c$3(s(this,t,"f")),this.delivery_lead_times=new s$w(s(this,t,"f")),this.event_callbacks=new t$k(s(this,t,"f")),this.events=new t$j(s(this,t,"f")),this.exports=new t$i(s(this,t,"f")),this.external_gateways=new s$v(s(this,t,"f")),this.external_payments=new s$u(s(this,t,"f")),this.external_promotions=new s$t(s(this,t,"f")),this.external_tax_calculators=new s$s(s(this,t,"f")),this.fixed_amount_promotions=new s$r(s(this,t,"f")),this.fixed_price_promotions=new o$2(s(this,t,"f")),this.free_gift_promotions=new o$1(s(this,t,"f")),this.free_shipping_promotions=new s$q(s(this,t,"f")),this.geocoders=new t$h(s(this,t,"f")),this.gift_card_recipients=new s$p(s(this,t,"f")),this.gift_cards=new r$d(s(this,t,"f")),this.google_geocoders=new s$o(s(this,t,"f")),this.imports=new t$g(s(this,t,"f")),this.in_stock_subscriptions=new r$c(s(this,t,"f")),this.inventory_models=new s$n(s(this,t,"f")),this.inventory_return_locations=new s$m(s(this,t,"f")),this.inventory_stock_locations=new s$l(s(this,t,"f")),this.klarna_gateways=new s$k(s(this,t,"f")),this.klarna_payments=new r$b(s(this,t,"f")),this.line_item_options=new s$j(s(this,t,"f")),this.line_items=new r$a(s(this,t,"f")),this.manual_gateways=new t$f(s(this,t,"f")),this.manual_tax_calculators=new r$9(s(this,t,"f")),this.markets=new r$8(s(this,t,"f")),this.merchants=new s$i(s(this,t,"f")),this.order_amount_promotion_rules=new t$e(s(this,t,"f")),this.order_copies=new s$h(s(this,t,"f")),this.order_subscriptions=new t$d(s(this,t,"f")),this.order_validation_rules=new t$c(s(this,t,"f")),this.orders=new c$2(s(this,t,"f")),this.organization=new e$2(s(this,t,"f")),this.packages=new s$g(s(this,t,"f")),this.parcel_line_items=new s$f(s(this,t,"f")),this.parcels=new c$1(s(this,t,"f")),this.payment_gateways=new t$b(s(this,t,"f")),this.payment_methods=new s$e(s(this,t,"f")),this.paypal_gateways=new s$d(s(this,t,"f")),this.paypal_payments=new r$7(s(this,t,"f")),this.percentage_discount_promotions=new o(s(this,t,"f")),this.price_lists=new s$c(s(this,t,"f")),this.price_tiers=new t$a(s(this,t,"f")),this.price_volume_tiers=new s$b(s(this,t,"f")),this.prices=new r$6(s(this,t,"f")),this.promotion_rules=new t$9(s(this,t,"f")),this.promotions=new s$a(s(this,t,"f")),this.refunds=new t$8(s(this,t,"f")),this.return_line_items=new r$5(s(this,t,"f")),this.returns=new n(s(this,t,"f")),this.shipments=new i(s(this,t,"f")),this.shipping_categories=new s$9(s(this,t,"f")),this.shipping_method_tiers=new e$1(s(this,t,"f")),this.shipping_methods=new r$4(s(this,t,"f")),this.shipping_weight_tiers=new s$8(s(this,t,"f")),this.shipping_zones=new t$7(s(this,t,"f")),this.sku_list_items=new t$6(s(this,t,"f")),this.sku_list_promotion_rules=new t$5(s(this,t,"f")),this.sku_lists=new t$4(s(this,t,"f")),this.sku_options=new s$7(s(this,t,"f")),this.skus=new r$3(s(this,t,"f")),this.stock_items=new s$6(s(this,t,"f")),this.stock_line_items=new s$5(s(this,t,"f")),this.stock_locations=new c(s(this,t,"f")),this.stock_transfers=new r$2(s(this,t,"f")),this.stripe_gateways=new s$4(s(this,t,"f")),this.stripe_payments=new s$3(s(this,t,"f")),this.tax_calculators=new r$1(s(this,t,"f")),this.tax_categories=new s$2(s(this,t,"f")),this.tax_rules=new t$3(s(this,t,"f")),this.taxjar_accounts=new s$1(s(this,t,"f")),this.transactions=new e(s(this,t,"f")),this.voids=new r(s(this,t,"f")),this.webhooks=new t$2(s(this,t,"f")),this.wire_transfers=new t$1(s(this,t,"f"));}static get openApiSchemaVersion(){return u}get currentOrganization(){return s(this,h,"f")}localConfig(i){i.organization&&f(this,h,i.organization,"f");}config(i){p("config %o",i),this.localConfig(i),i.organization||(i.organization=this.currentOrganization),s(this,t,"f").config(i);}resources(){return CommerceLayerStatic.resources()}isApiError(i){return CommerceLayerStatic.isApiError(i)}addRequestInterceptor(i,n){return s(this,t,"f").interceptors.request.use(i,n)}addResponseInterceptor(i,n){return s(this,t,"f").interceptors.response.use(i,n)}removeInterceptor(i,n){return s(this,t,"f").interceptors[i].eject(n)}addRawResponseReader(i){const n={id:void 0,rawResponse:void 0,headers:void 0};function o(c){return n.rawResponse=c?.data,i?.headers&&(n.headers=c.headers),c}const a=this.addResponseInterceptor(o);return n.id=a,n}removeRawResponseReader(i){const n=typeof i=="number"?i:i?.id;if(n&&n>=0)return this.removeInterceptor("response",n)}}t=new WeakMap,h=new WeakMap;const d=r=>new _(r);
 
 var js_cookie = createCommonjsModule(function (module, exports) {
-/*! js-cookie v3.0.1 | MIT */
-;
 (function (global, factory) {
-  'object' === 'object' && 'object' !== 'undefined' ? module.exports = factory() :
-  typeof undefined === 'function' && undefined.amd ? undefined(factory) :
-  (global = global || self, (function () {
-    var current = global.Cookies;
-    var exports = global.Cookies = factory();
-    exports.noConflict = function () { global.Cookies = current; return exports; };
-  }()));
-}(commonjsGlobal, (function () { 'use strict';
-
+  module.exports = factory() ;
+}(commonjsGlobal, (function () {
   /* eslint-disable no-var */
   function assign (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -5123,4 +4662,75 @@ const pDebounce = (input, options) => {
   };
 };
 
-export { chunk as a, createCommonjsModule as b, createClient as c, getKeyForCart as d, getAccessToken as e, getConfig as g, js_cookie as j, memoize as m, pDebounce as p, uniq as u };
+/**
+ * Create a draft order.
+ * @see https://docs.commercelayer.io/core/v/how-tos/shopping-cart/create-a-shopping-cart
+ * @returns Returns the created draft order.
+ */
+async function createEmptyCart() {
+  const client = await createClient(getConfig());
+  const order = await client.orders.create({});
+  setCartId(order.id);
+  await triggerCartUpdate(order);
+  return order;
+}
+function setCartId(cartId) {
+  js_cookie.set(getKeyForCart(), cartId);
+}
+function getCartId() {
+  var _a;
+  return (_a = js_cookie.get(getKeyForCart())) !== null && _a !== void 0 ? _a : null;
+}
+function isValidUrl(url) {
+  const cartId = getCartId();
+  return cartId !== null && url.includes(`/${cartId}?`);
+}
+/**
+ * Get the Hosted Cart url.
+ * @param forceCartToExist When true it will create an empty cart if not existing before.
+ * @returns Returns the Hosted Cart url.
+ */
+async function getCartUrl(forceCartToExist = false) {
+  const config = getConfig();
+  const accessToken = await getAccessToken(config);
+  let cartId = getCartId();
+  if (cartId === null && forceCartToExist) {
+    const cart = await createEmptyCart();
+    cartId = cart.id;
+  }
+  return `https://${config.slug}.commercelayer.app/cart/${cartId !== null && cartId !== void 0 ? cartId : 'null'}?accessToken=${accessToken}`;
+}
+async function _getCart() {
+  const client = await createClient(getConfig());
+  const orderId = getCartId();
+  if (orderId === null) {
+    return null;
+  }
+  const order = await client.orders.retrieve(orderId).catch(() => null);
+  return order;
+}
+const getCart = pDebounce(_getCart, { wait: 50, maxWait: 100 });
+async function triggerCartUpdate(order) {
+  order || (order = await getCart());
+  if (order !== null) {
+    // TODO: manage events in separate file
+    window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }));
+  }
+}
+async function addItem(sku, quantity) {
+  var _a;
+  const client = await createClient(getConfig());
+  const orderId = (_a = getCartId()) !== null && _a !== void 0 ? _a : (await (await createEmptyCart()).id);
+  await client.line_items.create({
+    order: {
+      id: orderId,
+      type: 'orders'
+    },
+    quantity,
+    sku_code: sku,
+    _update_quantity: true
+  });
+  await triggerCartUpdate(null);
+}
+
+export { chunk as a, addItem as b, createClient as c, getCartUrl as d, createCommonjsModule as e, getConfig as g, isValidUrl as i, memoize as m, pDebounce as p, triggerCartUpdate as t, uniq as u };

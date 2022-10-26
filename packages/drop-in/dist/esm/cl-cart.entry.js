@@ -1,6 +1,6 @@
-import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
-import { g as getCartUrl, t as triggerCartUpdate } from './cart.js';
-import { b as createCommonjsModule } from './promise.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-f356444b.js';
+import { g as getCartUrl, t as triggerCartUpdate } from './cart-39ffce27.js';
+import { e as createCommonjsModule } from './promise-e502bcc3.js';
 
 var iframeResizer$2 = createCommonjsModule(function (module) {
 /*
@@ -2764,11 +2764,9 @@ var js = {
 
 var iframeResizer = js;
 
-const ClCart$1 = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.__attachShadow();
+const ClCart = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
   }
   async componentWillLoad() {
     this.href = await getCartUrl();
@@ -2795,25 +2793,7 @@ const ClCart$1 = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
         overflow: 'hidden'
       }, scrolling: 'no' })));
   }
-  get host() { return this; }
-}, [1, "cl-cart", {
-    "href": [32]
-  }]);
-function defineCustomElement$1() {
-  if (typeof customElements === "undefined") {
-    return;
-  }
-  const components = ["cl-cart"];
-  components.forEach(tagName => { switch (tagName) {
-    case "cl-cart":
-      if (!customElements.get(tagName)) {
-        customElements.define(tagName, ClCart$1);
-      }
-      break;
-  } });
-}
+  get host() { return getElement(this); }
+};
 
-const ClCart = ClCart$1;
-const defineCustomElement = defineCustomElement$1;
-
-export { ClCart, defineCustomElement };
+export { ClCart as cl_cart };

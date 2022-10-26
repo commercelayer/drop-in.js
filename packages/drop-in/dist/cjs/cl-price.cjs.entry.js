@@ -1,15 +1,19 @@
-import { proxyCustomElement, HTMLElement, h } from '@stencil/core/internal/client';
-import { l as logGroup, a as log } from './logger.js';
-import { c as createClient, g as getConfig, u as uniq, a as chunk, p as pDebounce, m as memoize } from './promise.js';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+const index = require('./index-59aec873.js');
+const logger = require('./logger-a98be2b0.js');
+const promise = require('./promise-c0988a5f.js');
 
 const _getPrices = async (skus) => {
-  const client = await createClient(getConfig());
-  const uniqSkus = uniq(skus);
-  const log = logGroup('getPrices invoked');
+  const client = await promise.createClient(promise.getConfig());
+  const uniqSkus = promise.uniq(skus);
+  const log = logger.logGroup('getPrices invoked');
   log('info', `found`, uniqSkus.length);
   log('info', 'unique skus', uniqSkus);
   const pageSize = 25;
-  const chunkedSkus = chunk(uniqSkus, pageSize);
+  const chunkedSkus = promise.chunk(uniqSkus, pageSize);
   const pricesResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
     return await client.prices.list({
       pageSize,
@@ -26,20 +30,18 @@ const _getPrices = async (skus) => {
   log.end();
   return prices;
 };
-const getPrices = pDebounce(_getPrices, { wait: 50, maxWait: 100 });
-const getPrice = memoize(async (sku) => {
+const getPrices = promise.pDebounce(_getPrices, { wait: 50, maxWait: 100 });
+const getPrice = promise.memoize(async (sku) => {
   return await getPrices([sku]).then((result) => result[sku]);
 });
 
-const CLPrice = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.__attachShadow();
+const CLPrice = class {
+  constructor(hostRef) {
+    index.registerInstance(this, hostRef);
   }
   logSku(sku) {
     if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not string.', this.host);
+      logger.log('warn', '"sku" should be a not string.', this.host);
     }
   }
   validateSku(sku) {
@@ -63,30 +65,12 @@ const CLPrice = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
     });
   }
   render() {
-    return h("slot", null);
+    return index.h("slot", null);
   }
-  get host() { return this; }
+  get host() { return index.getElement(this); }
   static get watchers() { return {
     "sku": ["watchPropHandler"]
   }; }
-}, [1, "cl-price", {
-    "sku": [513]
-  }]);
-function defineCustomElement$1() {
-  if (typeof customElements === "undefined") {
-    return;
-  }
-  const components = ["cl-price"];
-  components.forEach(tagName => { switch (tagName) {
-    case "cl-price":
-      if (!customElements.get(tagName)) {
-        customElements.define(tagName, CLPrice);
-      }
-      break;
-  } });
-}
+};
 
-const ClPrice = CLPrice;
-const defineCustomElement = defineCustomElement$1;
-
-export { ClPrice, defineCustomElement };
+exports.cl_price = CLPrice;

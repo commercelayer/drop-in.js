@@ -1,6 +1,6 @@
-import { proxyCustomElement, HTMLElement, h } from '@stencil/core/internal/client';
-import { l as logGroup, a as log } from './logger.js';
-import { c as createClient, g as getConfig, u as uniq, a as chunk, p as pDebounce, m as memoize } from './promise.js';
+import { r as registerInstance, h, g as getElement } from './index-f356444b.js';
+import { l as logGroup, a as log } from './logger-3878ee81.js';
+import { c as createClient, g as getConfig, u as uniq, a as chunk, p as pDebounce, m as memoize } from './promise-e502bcc3.js';
 
 const _getPrices = async (skus) => {
   const client = await createClient(getConfig());
@@ -31,11 +31,9 @@ const getPrice = memoize(async (sku) => {
   return await getPrices([sku]).then((result) => result[sku]);
 });
 
-const CLPrice = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.__attachShadow();
+const CLPrice = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
   }
   logSku(sku) {
     if (!this.validateSku(sku)) {
@@ -65,28 +63,10 @@ const CLPrice = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   render() {
     return h("slot", null);
   }
-  get host() { return this; }
+  get host() { return getElement(this); }
   static get watchers() { return {
     "sku": ["watchPropHandler"]
   }; }
-}, [1, "cl-price", {
-    "sku": [513]
-  }]);
-function defineCustomElement$1() {
-  if (typeof customElements === "undefined") {
-    return;
-  }
-  const components = ["cl-price"];
-  components.forEach(tagName => { switch (tagName) {
-    case "cl-price":
-      if (!customElements.get(tagName)) {
-        customElements.define(tagName, CLPrice);
-      }
-      break;
-  } });
-}
+};
 
-const ClPrice = CLPrice;
-const defineCustomElement = defineCustomElement$1;
-
-export { ClPrice, defineCustomElement };
+export { CLPrice as cl_price };

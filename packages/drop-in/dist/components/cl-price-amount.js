@@ -15,6 +15,8 @@ const CLPriceAmount = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement
       case 'price':
         this.price = event.detail.formatted_amount;
         break;
+      default:
+        break;
     }
   }
   render() {

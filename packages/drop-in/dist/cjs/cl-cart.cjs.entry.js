@@ -1,8 +1,12 @@
-import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
-import { g as getCartUrl, t as triggerCartUpdate } from './cart.js';
-import { b as createCommonjsModule } from './promise.js';
+'use strict';
 
-var iframeResizer$2 = createCommonjsModule(function (module) {
+Object.defineProperty(exports, '__esModule', { value: true });
+
+const index = require('./index-59aec873.js');
+const cart = require('./cart-049301c5.js');
+const promise = require('./promise-c0988a5f.js');
+
+var iframeResizer$2 = promise.createCommonjsModule(function (module) {
 /*
  * File: iframeResizer.js
  * Desc: Force iframes to size to content.
@@ -1446,7 +1450,7 @@ var iframeResizer$2 = createCommonjsModule(function (module) {
 })();
 });
 
-var iframeResizer_contentWindow = createCommonjsModule(function (module) {
+var iframeResizer_contentWindow = promise.createCommonjsModule(function (module) {
 /*
  * File: iframeResizer.contentWindow.js
  * Desc: Include this file in any page being loaded into an iframe
@@ -2764,14 +2768,12 @@ var js = {
 
 var iframeResizer = js;
 
-const ClCart$1 = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.__attachShadow();
+const ClCart = class {
+  constructor(hostRef) {
+    index.registerInstance(this, hostRef);
   }
   async componentWillLoad() {
-    this.href = await getCartUrl();
+    this.href = await cart.getCartUrl();
   }
   componentDidLoad() {
     iframeResizer.iframeResizer({
@@ -2780,7 +2782,7 @@ const ClCart$1 = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
       // @ts-expect-error
       onMessage(data) {
         if (data.message.type === 'updateCart') {
-          triggerCartUpdate(null).catch((error) => {
+          cart.triggerCartUpdate(null).catch((error) => {
             throw error;
           });
         }
@@ -2788,32 +2790,14 @@ const ClCart$1 = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
     }, this.iframe);
   }
   render() {
-    return (h(Host, null, h("iframe", { ref: (el) => (this.iframe = el), src: this.href, frameBorder: 0, style: {
+    return (index.h(index.Host, null, index.h("iframe", { ref: (el) => (this.iframe = el), src: this.href, frameBorder: 0, style: {
         width: '1px',
         'min-width': '100%',
         'min-height': '100%',
         overflow: 'hidden'
       }, scrolling: 'no' })));
   }
-  get host() { return this; }
-}, [1, "cl-cart", {
-    "href": [32]
-  }]);
-function defineCustomElement$1() {
-  if (typeof customElements === "undefined") {
-    return;
-  }
-  const components = ["cl-cart"];
-  components.forEach(tagName => { switch (tagName) {
-    case "cl-cart":
-      if (!customElements.get(tagName)) {
-        customElements.define(tagName, ClCart$1);
-      }
-      break;
-  } });
-}
+  get host() { return index.getElement(this); }
+};
 
-const ClCart = ClCart$1;
-const defineCustomElement = defineCustomElement$1;
-
-export { ClCart, defineCustomElement };
+exports.cl_cart = ClCart;

@@ -1,7 +1,7 @@
-import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
-import { a as addItem } from './cart.js';
-import { l as logGroup, a as log } from './logger.js';
-import { c as createClient, g as getConfig, u as uniq, a as chunk, p as pDebounce, m as memoize } from './promise.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-f356444b.js';
+import { a as addItem } from './cart-39ffce27.js';
+import { l as logGroup, a as log } from './logger-3878ee81.js';
+import { c as createClient, g as getConfig, u as uniq, a as chunk, p as pDebounce, m as memoize } from './promise-e502bcc3.js';
 
 const _getSkuIds = async (skus) => {
   const client = await createClient(getConfig());
@@ -41,11 +41,9 @@ const getSku = memoize(async (sku) => {
   return await client.skus.retrieve(id);
 });
 
-const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.__attachShadow();
+const CLAddToCart = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
     /**
      * Quantity
      */
@@ -113,31 +111,11 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
     const enabled = this.canBeSold();
     return (h(Host, { role: 'button', tabindex: '0', "aria-disabled": enabled ? undefined : 'true', onKeyPress: (event) => this.handleKeyPress(event), onClick: () => this.handleAddItem() }, h("slot", null)));
   }
-  get host() { return this; }
+  get host() { return getElement(this); }
   static get watchers() { return {
     "sku": ["watchSkuHandler"],
     "quantity": ["watchQuantityHandler"]
   }; }
-}, [1, "cl-add-to-cart", {
-    "sku": [513],
-    "quantity": [1538],
-    "skuObject": [32]
-  }]);
-function defineCustomElement$1() {
-  if (typeof customElements === "undefined") {
-    return;
-  }
-  const components = ["cl-add-to-cart"];
-  components.forEach(tagName => { switch (tagName) {
-    case "cl-add-to-cart":
-      if (!customElements.get(tagName)) {
-        customElements.define(tagName, CLAddToCart);
-      }
-      break;
-  } });
-}
+};
 
-const ClAddToCart = CLAddToCart;
-const defineCustomElement = defineCustomElement$1;
-
-export { ClAddToCart, defineCustomElement };
+export { CLAddToCart as cl_add_to_cart };

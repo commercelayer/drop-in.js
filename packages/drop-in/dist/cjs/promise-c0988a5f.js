@@ -1,4 +1,4 @@
-import { r as registerInstance, h as h$1, H as Host, g as getElement } from './index-31d6f700.js';
+'use strict';
 
 const prefix = 'commercelayer_';
 // TODO: shall we manage the country?
@@ -30,6 +30,13 @@ function chunk(array, size = 1) {
     resultArray[chunkIndex].push(item);
     return resultArray;
   }, []);
+}
+/**
+ * Check if the value is different from `null` and `undefined`.
+ * @returns `true` when `value` is different from `null` and `undefined`.
+ */
+function isNotNullish(value) {
+  return value !== null && value !== undefined;
 }
 /**
  * Creates a duplicate-free version of an array.
@@ -64,14 +71,26 @@ const _nodeResolve_empty$1 = /*#__PURE__*/Object.freeze({
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
 function createCommonjsModule(fn, basedir, module) {
 	return module = {
 		path: basedir,
 		exports: {},
 		require: function (path, base) {
-			return commonjsRequire();
+			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
 		}
 	}, fn(module, module.exports), module.exports;
+}
+
+function getDefaultExportFromNamespaceIfPresent (n) {
+	return n && Object.prototype.hasOwnProperty.call(n, 'default') ? n['default'] : n;
+}
+
+function getDefaultExportFromNamespaceIfNotNamed (n) {
+	return n && Object.prototype.hasOwnProperty.call(n, 'default') && Object.keys(n).length === 1 ? n['default'] : n;
 }
 
 function getAugmentedNamespace(n) {
@@ -94,11 +113,32 @@ function commonjsRequire () {
 }
 
 // Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+'use strict';
 
 // If obj.hasOwnProperty has been overridden, then calling
 // obj.hasOwnProperty(prop) will break.
 // See: https://github.com/joyent/node/issues/1707
-function hasOwnProperty(obj, prop) {
+function hasOwnProperty$1(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
@@ -141,7 +181,7 @@ var decode = function(qs, sep, eq, options) {
     k = decodeURIComponent(kstr);
     v = decodeURIComponent(vstr);
 
-    if (!hasOwnProperty(obj, k)) {
+    if (!hasOwnProperty$1(obj, k)) {
       obj[k] = v;
     } else if (Array.isArray(obj[k])) {
       obj[k].push(v);
@@ -154,6 +194,27 @@ var decode = function(qs, sep, eq, options) {
 };
 
 // Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+'use strict';
 
 var stringifyPrimitive = function(v) {
   switch (typeof v) {
@@ -198,6 +259,7 @@ var encode$1 = function(obj, sep, eq, name) {
 };
 
 var querystring = createCommonjsModule(function (module, exports) {
+'use strict';
 
 exports.decode = exports.parse = decode;
 exports.encode = exports.stringify = encode$1;
@@ -953,7 +1015,266 @@ const authenticate=async({type,config,scope,code,refreshToken})=>{const auth=cre
 
 const salesChannel=async({clientId,endpoint,scope},user)=>{if(!scope)throw new Error("scope param is required.");const config={clientId,clientSecret:"",accessTokenUri:`${endpoint}/oauth/token`,redirectUri:void 0,username:user==null?void 0:user.username,password:user==null?void 0:user.password};return user?authenticate({type:"owner",config,scope}):authenticate({type:"clientCredentials",config,scope})};
 
-const getSalesChannelToken=salesChannel;
+const integration=async({clientId,clientSecret,endpoint,scope},user)=>{const config={clientId,clientSecret,accessTokenUri:`${endpoint}/oauth/token`,redirectUri:"",username:user==null?void 0:user.username,password:user==null?void 0:user.password};return user?authenticate({type:"owner",config,scope}):authenticate({type:"clientCredentials",config,scope})};
+
+const webapp=async({clientId,clientSecret,callbackUrl,endpoint,scope,callbackUrlWithCode})=>{const config={clientId,clientSecret,accessTokenUri:`${endpoint}/oauth/token`,authorizationUri:`${endpoint}/oauth/authorize`,redirectUri:callbackUrl};return await authenticate({type:"authorizationCode",config,scope,code:callbackUrlWithCode})};
+
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+var __createBinding = Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+});
+
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+/** @deprecated */
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+/** @deprecated */
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+}
+
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+var __setModuleDefault = Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+}
+
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+
+async function clientCredentials(args){const{scope,endpoint,clientSecret=""}=args,obj=__rest(args,["scope","endpoint","clientSecret"]),config=Object.assign(Object.assign({},obj),{clientSecret,accessTokenUri:`${endpoint}/oauth/token`,redirectUri:""});return authenticate({type:"clientCredentials",config,scope})}
+
+async function refreshToken({clientId,endpoint,scope,refreshToken:refreshToken2,clientSecret=""}){const config={clientId,clientSecret,accessTokenUri:`${endpoint}/oauth/token`,redirectUri:void 0};return authenticate({type:"refreshToken",config,scope,refreshToken:refreshToken2})}
+
+const authorizeWebapp=webapp,getCustomerToken=salesChannel,getIntegrationToken=integration,getSalesChannelToken=salesChannel,getWebappToken=webapp;const CLayerAuth={authorizeWebapp,clientCredentials,getCustomerToken,getIntegrationToken,getRefreshToken: refreshToken,getSalesChannelToken,getWebappToken};
+
+'use strict';
 
 var bind = function bind(fn, thisArg) {
   return function wrap() {
@@ -964,6 +1285,10 @@ var bind = function bind(fn, thisArg) {
     return fn.apply(thisArg, args);
   };
 };
+
+'use strict';
+
+
 
 // utils is a library of generic helper functions non-specific to axios
 
@@ -1068,7 +1393,7 @@ function isNumber(val) {
  * @param {Object} val The value to test
  * @returns {boolean} True if value is an Object, otherwise false
  */
-function isObject(val) {
+function isObject$1(val) {
   return val !== null && typeof val === 'object';
 }
 
@@ -1140,7 +1465,7 @@ function isFunction(val) {
  * @returns {boolean} True if value is a Stream, otherwise false
  */
 function isStream(val) {
-  return isObject(val) && isFunction(val.pipe);
+  return isObject$1(val) && isFunction(val.pipe);
 }
 
 /**
@@ -1407,7 +1732,7 @@ var utils = {
   isArrayBufferView: isArrayBufferView,
   isString: isString,
   isNumber: isNumber,
-  isObject: isObject,
+  isObject: isObject$1,
   isPlainObject: isPlainObject,
   isUndefined: isUndefined,
   isDate: isDate,
@@ -1431,6 +1756,10 @@ var utils = {
   isTypedArray: isTypedArray,
   isFileList: isFileList
 };
+
+'use strict';
+
+
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -1499,6 +1828,10 @@ var buildURL = function buildURL(url, params, paramsSerializer) {
   return url;
 };
 
+'use strict';
+
+
+
 function InterceptorManager() {
   this.handlers = [];
 }
@@ -1550,6 +1883,10 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 var InterceptorManager_1 = InterceptorManager;
 
+'use strict';
+
+
+
 var normalizeHeaderName = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
     if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
@@ -1558,6 +1895,10 @@ var normalizeHeaderName = function normalizeHeaderName(headers, normalizedName) 
     }
   });
 };
+
+'use strict';
+
+
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -1642,11 +1983,17 @@ AxiosError.from = function(error, code, config, request, response, customProps) 
 
 var AxiosError_1 = AxiosError;
 
+'use strict';
+
 var transitional = {
   silentJSONParsing: true,
   forcedJSONParsing: true,
   clarifyTimeoutError: false
 };
+
+'use strict';
+
+
 
 /**
  * Convert a data object to FormData
@@ -1717,6 +2064,10 @@ function toFormData(obj, formData) {
 
 var toFormData_1 = toFormData;
 
+'use strict';
+
+
+
 /**
  * Resolve or reject a Promise based on response status.
  *
@@ -1738,6 +2089,10 @@ var settle = function settle(resolve, reject, response) {
     ));
   }
 };
+
+'use strict';
+
+
 
 var cookies = (
   utils.isStandardBrowserEnv() ?
@@ -1789,6 +2144,8 @@ var cookies = (
     })()
 );
 
+'use strict';
+
 /**
  * Determines whether the specified URL is absolute
  *
@@ -1802,6 +2159,8 @@ var isAbsoluteURL = function isAbsoluteURL(url) {
   return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
 };
 
+'use strict';
+
 /**
  * Creates a new URL by combining the specified URLs
  *
@@ -1814,6 +2173,11 @@ var combineURLs = function combineURLs(baseURL, relativeURL) {
     ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
     : baseURL;
 };
+
+'use strict';
+
+
+
 
 /**
  * Creates a new URL by combining the baseURL with the requestedURL,
@@ -1830,6 +2194,10 @@ var buildFullPath = function buildFullPath(baseURL, requestedURL) {
   }
   return requestedURL;
 };
+
+'use strict';
+
+
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -1880,6 +2248,10 @@ var parseHeaders = function parseHeaders(headers) {
 
   return parsed;
 };
+
+'use strict';
+
+
 
 var isURLSameOrigin = (
   utils.isStandardBrowserEnv() ?
@@ -1946,6 +2318,11 @@ var isURLSameOrigin = (
     })()
 );
 
+'use strict';
+
+
+
+
 /**
  * A `CanceledError` is an object that is thrown when an operation is canceled.
  *
@@ -1964,10 +2341,26 @@ utils.inherits(CanceledError, AxiosError_1, {
 
 var CanceledError_1 = CanceledError;
 
+'use strict';
+
 var parseProtocol = function parseProtocol(url) {
   var match = /^([-+\w]{1,25})(:?\/\/|:)/.exec(url);
   return match && match[1] || '';
 };
+
+'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
 
 var xhr = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -2181,6 +2574,14 @@ var xhr = function xhrAdapter(config) {
 // eslint-disable-next-line strict
 var _null = null;
 
+'use strict';
+
+
+
+
+
+
+
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
 };
@@ -2320,6 +2721,11 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 var defaults_1 = defaults;
 
+'use strict';
+
+
+
+
 /**
  * Transform the data for a request or a response
  *
@@ -2338,9 +2744,19 @@ var transformData = function transformData(data, headers, fns) {
   return data;
 };
 
+'use strict';
+
 var isCancel = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
+
+'use strict';
+
+
+
+
+
+
 
 /**
  * Throws a `CanceledError` if cancellation has been requested.
@@ -2421,6 +2837,10 @@ var dispatchRequest = function dispatchRequest(config) {
     return Promise.reject(reason);
   });
 };
+
+'use strict';
+
+
 
 /**
  * Config-specific merge-function which creates a new config-object
@@ -2523,6 +2943,8 @@ var data = {
   "version": "0.27.2"
 };
 
+'use strict';
+
 var VERSION = data.version;
 
 
@@ -2607,6 +3029,16 @@ var validator = {
   assertOptions: assertOptions,
   validators: validators$1
 };
+
+'use strict';
+
+
+
+
+
+
+
+
 
 var validators = validator.validators;
 /**
@@ -2759,6 +3191,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 var Axios_1 = Axios;
 
+'use strict';
+
+
+
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
  *
@@ -2875,6 +3311,8 @@ CancelToken.source = function source() {
 
 var CancelToken_1 = CancelToken;
 
+'use strict';
+
 /**
  * Syntactic sugar for invoking a function and expanding an array for arguments.
  *
@@ -2901,6 +3339,10 @@ var spread = function spread(callback) {
   };
 };
 
+'use strict';
+
+
+
 /**
  * Determines whether the payload is an error thrown by Axios
  *
@@ -2910,6 +3352,14 @@ var spread = function spread(callback) {
 var isAxiosError = function isAxiosError(payload) {
   return utils.isObject(payload) && (payload.isAxiosError === true);
 };
+
+'use strict';
+
+
+
+
+
+
 
 /**
  * Create an instance of Axios
@@ -3448,8 +3898,10 @@ function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
 
 
 function reduceToSingleString(output, base, braces) {
+  var numLinesEst = 0;
   var length = output.reduce(function(prev, cur) {
-    if (cur.indexOf('\n') >= 0) ;
+    numLinesEst++;
+    if (cur.indexOf('\n') >= 0) numLinesEst++;
     return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
   }, 0);
 
@@ -3937,9 +4389,18 @@ const CommerceLayerStatic={resources:()=>resourceList,isSdkError:r=>s$G.isSdkErr
 var f=undefined&&undefined.__classPrivateFieldSet||function(r,i,n,o,a){if(o==="m")throw new TypeError("Private method is not writable");if(o==="a"&&!a)throw new TypeError("Private accessor was defined without a setter");if(typeof i=="function"?r!==i||!a:!i.has(r))throw new TypeError("Cannot write private member to an object whose class did not declare it");return o==="a"?a.call(r,n):a?a.value=n:i.set(r,n),n},s=undefined&&undefined.__classPrivateFieldGet||function(r,i,n,o){if(n==="a"&&!o)throw new TypeError("Private accessor was defined without a getter");if(typeof i=="function"?r!==i||!o:!i.has(r))throw new TypeError("Cannot read private member from an object whose class did not declare it");return n==="m"?o:n==="a"?o.call(r):o?o.value:i.get(r)},t,h;const p=n$2("commercelayer"),u="3.0.0";class _{constructor(i$1){this.openApiSchemaVersion=u,t.set(this,void 0),h.set(this,void 0),p("new commercelayer instance %O",i$1),f(this,t,new C(i$1),"f"),f(this,h,i$1.organization,"f"),this.addresses=new t$t(s(this,t,"f")),this.adjustments=new s$F(s(this,t,"f")),this.adyen_gateways=new s$E(s(this,t,"f")),this.adyen_payments=new r$i(s(this,t,"f")),this.application=new e$4(s(this,t,"f")),this.attachments=new t$s(s(this,t,"f")),this.authorizations=new t$r(s(this,t,"f")),this.avalara_accounts=new s$D(s(this,t,"f")),this.billing_info_validation_rules=new t$q(s(this,t,"f")),this.bing_geocoders=new s$C(s(this,t,"f")),this.braintree_gateways=new s$B(s(this,t,"f")),this.braintree_payments=new s$A(s(this,t,"f")),this.bundles=new r$h(s(this,t,"f")),this.captures=new t$p(s(this,t,"f")),this.carrier_accounts=new e$3(s(this,t,"f")),this.checkout_com_gateways=new s$z(s(this,t,"f")),this.checkout_com_payments=new r$g(s(this,t,"f")),this.coupon_codes_promotion_rules=new t$o(s(this,t,"f")),this.coupon_recipients=new r$f(s(this,t,"f")),this.coupons=new t$n(s(this,t,"f")),this.customer_addresses=new r$e(s(this,t,"f")),this.customer_groups=new s$y(s(this,t,"f")),this.customer_password_resets=new t$m(s(this,t,"f")),this.customer_payment_sources=new t$l(s(this,t,"f")),this.customer_subscriptions=new s$x(s(this,t,"f")),this.customers=new c$3(s(this,t,"f")),this.delivery_lead_times=new s$w(s(this,t,"f")),this.event_callbacks=new t$k(s(this,t,"f")),this.events=new t$j(s(this,t,"f")),this.exports=new t$i(s(this,t,"f")),this.external_gateways=new s$v(s(this,t,"f")),this.external_payments=new s$u(s(this,t,"f")),this.external_promotions=new s$t(s(this,t,"f")),this.external_tax_calculators=new s$s(s(this,t,"f")),this.fixed_amount_promotions=new s$r(s(this,t,"f")),this.fixed_price_promotions=new o$2(s(this,t,"f")),this.free_gift_promotions=new o$1(s(this,t,"f")),this.free_shipping_promotions=new s$q(s(this,t,"f")),this.geocoders=new t$h(s(this,t,"f")),this.gift_card_recipients=new s$p(s(this,t,"f")),this.gift_cards=new r$d(s(this,t,"f")),this.google_geocoders=new s$o(s(this,t,"f")),this.imports=new t$g(s(this,t,"f")),this.in_stock_subscriptions=new r$c(s(this,t,"f")),this.inventory_models=new s$n(s(this,t,"f")),this.inventory_return_locations=new s$m(s(this,t,"f")),this.inventory_stock_locations=new s$l(s(this,t,"f")),this.klarna_gateways=new s$k(s(this,t,"f")),this.klarna_payments=new r$b(s(this,t,"f")),this.line_item_options=new s$j(s(this,t,"f")),this.line_items=new r$a(s(this,t,"f")),this.manual_gateways=new t$f(s(this,t,"f")),this.manual_tax_calculators=new r$9(s(this,t,"f")),this.markets=new r$8(s(this,t,"f")),this.merchants=new s$i(s(this,t,"f")),this.order_amount_promotion_rules=new t$e(s(this,t,"f")),this.order_copies=new s$h(s(this,t,"f")),this.order_subscriptions=new t$d(s(this,t,"f")),this.order_validation_rules=new t$c(s(this,t,"f")),this.orders=new c$2(s(this,t,"f")),this.organization=new e$2(s(this,t,"f")),this.packages=new s$g(s(this,t,"f")),this.parcel_line_items=new s$f(s(this,t,"f")),this.parcels=new c$1(s(this,t,"f")),this.payment_gateways=new t$b(s(this,t,"f")),this.payment_methods=new s$e(s(this,t,"f")),this.paypal_gateways=new s$d(s(this,t,"f")),this.paypal_payments=new r$7(s(this,t,"f")),this.percentage_discount_promotions=new o(s(this,t,"f")),this.price_lists=new s$c(s(this,t,"f")),this.price_tiers=new t$a(s(this,t,"f")),this.price_volume_tiers=new s$b(s(this,t,"f")),this.prices=new r$6(s(this,t,"f")),this.promotion_rules=new t$9(s(this,t,"f")),this.promotions=new s$a(s(this,t,"f")),this.refunds=new t$8(s(this,t,"f")),this.return_line_items=new r$5(s(this,t,"f")),this.returns=new n(s(this,t,"f")),this.shipments=new i(s(this,t,"f")),this.shipping_categories=new s$9(s(this,t,"f")),this.shipping_method_tiers=new e$1(s(this,t,"f")),this.shipping_methods=new r$4(s(this,t,"f")),this.shipping_weight_tiers=new s$8(s(this,t,"f")),this.shipping_zones=new t$7(s(this,t,"f")),this.sku_list_items=new t$6(s(this,t,"f")),this.sku_list_promotion_rules=new t$5(s(this,t,"f")),this.sku_lists=new t$4(s(this,t,"f")),this.sku_options=new s$7(s(this,t,"f")),this.skus=new r$3(s(this,t,"f")),this.stock_items=new s$6(s(this,t,"f")),this.stock_line_items=new s$5(s(this,t,"f")),this.stock_locations=new c(s(this,t,"f")),this.stock_transfers=new r$2(s(this,t,"f")),this.stripe_gateways=new s$4(s(this,t,"f")),this.stripe_payments=new s$3(s(this,t,"f")),this.tax_calculators=new r$1(s(this,t,"f")),this.tax_categories=new s$2(s(this,t,"f")),this.tax_rules=new t$3(s(this,t,"f")),this.taxjar_accounts=new s$1(s(this,t,"f")),this.transactions=new e(s(this,t,"f")),this.voids=new r(s(this,t,"f")),this.webhooks=new t$2(s(this,t,"f")),this.wire_transfers=new t$1(s(this,t,"f"));}static get openApiSchemaVersion(){return u}get currentOrganization(){return s(this,h,"f")}localConfig(i){i.organization&&f(this,h,i.organization,"f");}config(i){p("config %o",i),this.localConfig(i),i.organization||(i.organization=this.currentOrganization),s(this,t,"f").config(i);}resources(){return CommerceLayerStatic.resources()}isApiError(i){return CommerceLayerStatic.isApiError(i)}addRequestInterceptor(i,n){return s(this,t,"f").interceptors.request.use(i,n)}addResponseInterceptor(i,n){return s(this,t,"f").interceptors.response.use(i,n)}removeInterceptor(i,n){return s(this,t,"f").interceptors[i].eject(n)}addRawResponseReader(i){const n={id:void 0,rawResponse:void 0,headers:void 0};function o(c){return n.rawResponse=c?.data,i?.headers&&(n.headers=c.headers),c}const a=this.addResponseInterceptor(o);return n.id=a,n}removeRawResponseReader(i){const n=typeof i=="number"?i:i?.id;if(n&&n>=0)return this.removeInterceptor("response",n)}}t=new WeakMap,h=new WeakMap;const d=r=>new _(r);
 
 var js_cookie = createCommonjsModule(function (module, exports) {
+/*! js-cookie v3.0.1 | MIT */
+;
 (function (global, factory) {
-  module.exports = factory() ;
-}(commonjsGlobal, (function () {
+  'object' === 'object' && 'object' !== 'undefined' ? module.exports = factory() :
+  typeof undefined === 'function' && undefined.amd ? undefined(factory) :
+  (global = global || self, (function () {
+    var current = global.Cookies;
+    var exports = global.Cookies = factory();
+    exports.noConflict = function () { global.Cookies = current; return exports; };
+  }()));
+}(commonjsGlobal, (function () { 'use strict';
+
   /* eslint-disable no-var */
   function assign (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -4132,158 +4593,514 @@ function getConfig() {
     endpoint });
 }
 
-const copyProperty = (to, from, property, ignoreNonConfigurable) => {
-	// `Function#length` should reflect the parameters of `to` not `from` since we keep its body.
-	// `Function#prototype` is non-writable and non-configurable so can never be modified.
-	if (property === 'length' || property === 'prototype') {
-		return;
-	}
-
-	// `Function#arguments` and `Function#caller` should not be copied. They were reported to be present in `Reflect.ownKeys` for some devices in React Native (#41), so we explicitly ignore them here.
-	if (property === 'arguments' || property === 'caller') {
-		return;
-	}
-
-	const toDescriptor = Object.getOwnPropertyDescriptor(to, property);
-	const fromDescriptor = Object.getOwnPropertyDescriptor(from, property);
-
-	if (!canCopyProperty(toDescriptor, fromDescriptor) && ignoreNonConfigurable) {
-		return;
-	}
-
-	Object.defineProperty(to, property, fromDescriptor);
-};
-
-// `Object.defineProperty()` throws if the property exists, is not configurable and either:
-// - one its descriptors is changed
-// - it is non-writable and its value is changed
-const canCopyProperty = function (toDescriptor, fromDescriptor) {
-	return toDescriptor === undefined || toDescriptor.configurable || (
-		toDescriptor.writable === fromDescriptor.writable &&
-		toDescriptor.enumerable === fromDescriptor.enumerable &&
-		toDescriptor.configurable === fromDescriptor.configurable &&
-		(toDescriptor.writable || toDescriptor.value === fromDescriptor.value)
-	);
-};
-
-const changePrototype = (to, from) => {
-	const fromPrototype = Object.getPrototypeOf(from);
-	if (fromPrototype === Object.getPrototypeOf(to)) {
-		return;
-	}
-
-	Object.setPrototypeOf(to, fromPrototype);
-};
-
-const wrappedToString = (withName, fromBody) => `/* Wrapped ${withName}*/\n${fromBody}`;
-
-const toStringDescriptor = Object.getOwnPropertyDescriptor(Function.prototype, 'toString');
-const toStringName = Object.getOwnPropertyDescriptor(Function.prototype.toString, 'name');
-
-// We call `from.toString()` early (not lazily) to ensure `from` can be garbage collected.
-// We use `bind()` instead of a closure for the same reason.
-// Calling `from.toString()` early also allows caching it in case `to.toString()` is called several times.
-const changeToString = (to, from, name) => {
-	const withName = name === '' ? '' : `with ${name.trim()}() `;
-	const newToString = wrappedToString.bind(null, withName, from.toString());
-	// Ensure `to.toString.toString` is non-enumerable and has the same `same`
-	Object.defineProperty(newToString, 'name', toStringName);
-	Object.defineProperty(to, 'toString', {...toStringDescriptor, value: newToString});
-};
-
-function mimicFunction(to, from, {ignoreNonConfigurable = false} = {}) {
-	const {name} = to;
-
-	for (const property of Reflect.ownKeys(from)) {
-		copyProperty(to, from, property, ignoreNonConfigurable);
-	}
-
-	changePrototype(to, from);
-	changeToString(to, from, name);
-
-	return to;
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
 }
 
-const debounceFn = (inputFunction, options = {}) => {
-	if (typeof inputFunction !== 'function') {
-		throw new TypeError(`Expected the first argument to be a function, got \`${typeof inputFunction}\``);
-	}
+var isObject_1 = isObject;
 
-	const {
-		wait = 0,
-		maxWait = Number.POSITIVE_INFINITY,
-		before = false,
-		after = true,
-	} = options;
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 
-	if (!before && !after) {
-		throw new Error('Both `before` and `after` are false, function wouldn\'t be called.');
-	}
+var _freeGlobal = freeGlobal;
 
-	let timeout;
-	let maxTimeout;
-	let result;
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
 
-	const debouncedFunction = function (...arguments_) {
-		const context = this; // eslint-disable-line unicorn/no-this-assignment
+/** Used as a reference to the global object. */
+var root = _freeGlobal || freeSelf || Function('return this')();
 
-		const later = () => {
-			timeout = undefined;
+var _root = root;
 
-			if (maxTimeout) {
-				clearTimeout(maxTimeout);
-				maxTimeout = undefined;
-			}
-
-			if (after) {
-				result = inputFunction.apply(context, arguments_);
-			}
-		};
-
-		const maxLater = () => {
-			maxTimeout = undefined;
-
-			if (timeout) {
-				clearTimeout(timeout);
-				timeout = undefined;
-			}
-
-			if (after) {
-				result = inputFunction.apply(context, arguments_);
-			}
-		};
-
-		const shouldCallNow = before && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-
-		if (maxWait > 0 && maxWait !== Number.POSITIVE_INFINITY && !maxTimeout) {
-			maxTimeout = setTimeout(maxLater, maxWait);
-		}
-
-		if (shouldCallNow) {
-			result = inputFunction.apply(context, arguments_);
-		}
-
-		return result;
-	};
-
-	mimicFunction(debouncedFunction, inputFunction);
-
-	debouncedFunction.cancel = () => {
-		if (timeout) {
-			clearTimeout(timeout);
-			timeout = undefined;
-		}
-
-		if (maxTimeout) {
-			clearTimeout(maxTimeout);
-			maxTimeout = undefined;
-		}
-	};
-
-	return debouncedFunction;
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */
+var now = function() {
+  return _root.Date.now();
 };
+
+var now_1 = now;
+
+/** Used to match a single whitespace character. */
+var reWhitespace = /\s/;
+
+/**
+ * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
+ * character of `string`.
+ *
+ * @private
+ * @param {string} string The string to inspect.
+ * @returns {number} Returns the index of the last non-whitespace character.
+ */
+function trimmedEndIndex(string) {
+  var index = string.length;
+
+  while (index-- && reWhitespace.test(string.charAt(index))) {}
+  return index;
+}
+
+var _trimmedEndIndex = trimmedEndIndex;
+
+/** Used to match leading whitespace. */
+var reTrimStart = /^\s+/;
+
+/**
+ * The base implementation of `_.trim`.
+ *
+ * @private
+ * @param {string} string The string to trim.
+ * @returns {string} Returns the trimmed string.
+ */
+function baseTrim(string) {
+  return string
+    ? string.slice(0, _trimmedEndIndex(string) + 1).replace(reTrimStart, '')
+    : string;
+}
+
+var _baseTrim = baseTrim;
+
+/** Built-in value references. */
+var Symbol$1 = _root.Symbol;
+
+var _Symbol = Symbol$1;
+
+/** Used for built-in method references. */
+var objectProto$1 = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto$1.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString$1 = objectProto$1.toString;
+
+/** Built-in value references. */
+var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag$1),
+      tag = value[symToStringTag$1];
+
+  try {
+    value[symToStringTag$1] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString$1.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag$1] = tag;
+    } else {
+      delete value[symToStringTag$1];
+    }
+  }
+  return result;
+}
+
+var _getRawTag = getRawTag;
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+
+var _objectToString = objectToString;
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+
+/** Built-in value references. */
+var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (symToStringTag && symToStringTag in Object(value))
+    ? _getRawTag(value)
+    : _objectToString(value);
+}
+
+var _baseGetTag = baseGetTag;
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+var isObjectLike_1 = isObjectLike;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike_1(value) && _baseGetTag(value) == symbolTag);
+}
+
+var isSymbol_1 = isSymbol;
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+
+/** Used to detect bad signed hexadecimal string values. */
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+/** Used to detect binary string values. */
+var reIsBinary = /^0b[01]+$/i;
+
+/** Used to detect octal string values. */
+var reIsOctal = /^0o[0-7]+$/i;
+
+/** Built-in method references without a dependency on `root`. */
+var freeParseInt = parseInt;
+
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (isSymbol_1(value)) {
+    return NAN;
+  }
+  if (isObject_1(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject_1(other) ? (other + '') : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = _baseTrim(value);
+  var isBinary = reIsBinary.test(value);
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
+}
+
+var toNumber_1 = toNumber;
+
+/** Error message constants. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */
+function debounce(func, wait, options) {
+  var lastArgs,
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime,
+      lastInvokeTime = 0,
+      leading = false,
+      maxing = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = toNumber_1(wait) || 0;
+  if (isObject_1(options)) {
+    leading = !!options.leading;
+    maxing = 'maxWait' in options;
+    maxWait = maxing ? nativeMax(toNumber_1(options.maxWait) || 0, wait) : maxWait;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    var args = lastArgs,
+        thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = setTimeout(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime,
+        timeWaiting = wait - timeSinceLastCall;
+
+    return maxing
+      ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
+      : timeWaiting;
+  }
+
+  function shouldInvoke(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+  }
+
+  function timerExpired() {
+    var time = now_1();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now_1());
+  }
+
+  function debounced() {
+    var time = now_1(),
+        isInvoking = shouldInvoke(time);
+
+    lastArgs = arguments;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        clearTimeout(timerId);
+        timerId = setTimeout(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  return debounced;
+}
+
+var debounce_1 = debounce;
 
 const pDebounce = (input, options) => {
   const incrementalArgs = [];
@@ -4296,7 +5113,7 @@ const pDebounce = (input, options) => {
     incrementalResolve.length = 0;
     incrementalArgs.length = 0;
   };
-  const debounced = debounceFn(fn, options);
+  const debounced = debounce_1(fn, options === null || options === void 0 ? void 0 : options.wait, { maxWait: options === null || options === void 0 ? void 0 : options.maxWait });
   return async (item) => {
     if (item !== undefined) {
       incrementalArgs.push(...item);
@@ -4308,3137 +5125,13 @@ const pDebounce = (input, options) => {
   };
 };
 
-/**
- * Create a draft order.
- * @see https://docs.commercelayer.io/core/v/how-tos/shopping-cart/create-a-shopping-cart
- * @returns Returns the created draft order.
- */
-async function createEmptyCart() {
-  const client = await createClient(getConfig());
-  const order = await client.orders.create({});
-  setCartId(order.id);
-  await triggerCartUpdate(order);
-  return order;
-}
-function setCartId(cartId) {
-  js_cookie.set(getKeyForCart(), cartId);
-}
-function getCartId() {
-  var _a;
-  return (_a = js_cookie.get(getKeyForCart())) !== null && _a !== void 0 ? _a : null;
-}
-function isValidUrl(url) {
-  const cartId = getCartId();
-  return cartId !== null && url.includes(`/${cartId}?`);
-}
-/**
- * Get the Hosted Cart url.
- * @param forceCartToExist When true it will create an empty cart if not existing before.
- * @returns Returns the Hosted Cart url.
- */
-async function getCartUrl(forceCartToExist = false) {
-  const config = getConfig();
-  const accessToken = await getAccessToken(config);
-  let cartId = getCartId();
-  if (cartId === null && forceCartToExist) {
-    const cart = await createEmptyCart();
-    cartId = cart.id;
-  }
-  return `https://${config.slug}.commercelayer.app/cart/${cartId !== null && cartId !== void 0 ? cartId : 'null'}?accessToken=${accessToken}`;
-}
-async function _getCart() {
-  const client = await createClient(getConfig());
-  const orderId = getCartId();
-  if (orderId === null) {
-    return null;
-  }
-  const order = await client.orders.retrieve(orderId).catch(() => null);
-  return order;
-}
-const getCart = pDebounce(_getCart, { wait: 50, maxWait: 100 });
-async function triggerCartUpdate(order) {
-  order || (order = await getCart());
-  if (order !== null) {
-    // TODO: manage events in separate file
-    window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }));
-  }
-}
-async function addItem(sku, quantity) {
-  var _a;
-  const client = await createClient(getConfig());
-  const orderId = (_a = getCartId()) !== null && _a !== void 0 ? _a : (await (await createEmptyCart()).id);
-  await client.line_items.create({
-    order: {
-      id: orderId,
-      type: 'orders'
-    },
-    quantity,
-    sku_code: sku,
-    _update_quantity: true
-  });
-  await triggerCartUpdate(null);
-}
-
-/**
- * Outputs a message to the Web console.
- * @param type Type of message.
- * @param messages List of messages.
- */
-const log = (type, ...messages) => {
-  const { debug } = getConfig();
-  if (debug === 'all') {
-    console[type](...messages);
-  }
-};
-/**
- * The `logGroup()` method creates a new inline group in the Web console log,
- * causing any subsequent console messages to be indented by an additional level,
- * until `log.end()` is called.
- * @param label Label for the group.
- * @param collapsed The new block is collapsed and requires clicking a disclosure button to read it.
- * @returns Returns a function that can be invoked to collect logs. To display collected log you should call `.end()` method.
- * @example
- * const log = logGroup('Label for the group', false)
- * log('info', 'Message for the group')
- * log('warn', 'Field should not be empty')
- * log.end()
- */
-function logGroup(label, collapsed = true) {
-  const logs = [];
-  const end = () => {
-    log(collapsed ? 'groupCollapsed' : 'group', label);
-    logs.forEach((messages) => {
-      log(...messages);
-    });
-    log('groupEnd');
-  };
-  const _log = (type, ...messages) => {
-    logs.push([type, ...messages]);
-  };
-  _log.end = end;
-  return _log;
-}
-
-const _getSkuIds = async (skus) => {
-  const client = await createClient(getConfig());
-  const uniqSkus = uniq(skus);
-  const log = logGroup('getSkuIds invoked');
-  log('info', `found`, uniqSkus.length);
-  log('info', 'unique skus', uniqSkus);
-  const pageSize = 25;
-  const chunkedSkus = chunk(uniqSkus, pageSize);
-  const idsResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
-    return await client.skus.list({
-      pageSize,
-      filters: { sku_code_in: skus.join(',') },
-      fields: ['id', 'code']
-    });
-  }))).flat();
-  // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
-  const ids = idsResponse.reduce((ids, sku) => {
-    if (sku.id !== undefined && sku.code !== undefined) {
-      ids[sku.code] = sku.id;
-    }
-    return ids;
-  }, {});
-  log.end();
-  return ids;
-};
-const getSkuIds = pDebounce(_getSkuIds, { wait: 50, maxWait: 100 });
-const getSkuId = memoize(async (sku) => {
-  return await getSkuIds([sku]).then((result) => result[sku]);
-});
-const getSku = memoize(async (sku) => {
-  const id = await getSkuId(sku);
-  if (id === undefined) {
-    return undefined;
-  }
-  const client = await createClient(getConfig());
-  return await client.skus.retrieve(id);
-});
-
-const CLAddToCart = class {
-  constructor(hostRef) {
-    registerInstance(this, hostRef);
-    /**
-     * Quantity
-     */
-    this.quantity = 1;
-  }
-  logSku(sku) {
-    if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not empty string.', this.host);
-    }
-  }
-  logQuantity(quantity) {
-    if (!this.validateQuantity(quantity)) {
-      log('warn', '"quantity" should be a number equal or greater than 0.', this.host);
-    }
-  }
-  validateSku(sku) {
-    return typeof sku === 'string' && sku !== '';
-  }
-  validateQuantity(quantity) {
-    return quantity >= 0;
-  }
-  watchSkuHandler(newValue, _oldValue) {
-    this.logSku(newValue);
-  }
-  watchQuantityHandler(newValue, _oldValue) {
-    if (!this.validateQuantity(newValue)) {
-      this.quantity = 0;
-    }
-  }
-  async componentWillLoad() {
-    if (this.validateSku(this.sku)) {
-      this.skuObject = await getSku(this.sku);
-    }
-    this.logSku(this.sku);
-    this.logQuantity(this.quantity);
-  }
-  handleKeyPress(event) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      this.handleAddItem();
-    }
-  }
-  handleAddItem() {
-    if (this.sku !== undefined && this.canBeSold()) {
-      addItem(this.sku, this.quantity).catch((error) => {
-        throw error;
-      });
-    }
-  }
-  /**
-   * Check whether the sku is soldable.
-   * @returns Returns true when item is soldable.
-   */
-  canBeSold() {
-    var _a, _b;
-    // TODO: check for stock
-    return (this.validateSku(this.sku) &&
-      this.quantity > 0 &&
-      // @ts-expect-error
-      ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true);
-  }
-  render() {
-    const enabled = this.canBeSold();
-    return (h$1(Host, { role: 'button', tabindex: '0', "aria-disabled": enabled ? undefined : 'true', onKeyPress: (event) => this.handleKeyPress(event), onClick: () => this.handleAddItem() }, h$1("slot", null)));
-  }
-  get host() { return getElement(this); }
-  static get watchers() { return {
-    "sku": ["watchSkuHandler"],
-    "quantity": ["watchQuantityHandler"]
-  }; }
-};
-
-var iframeResizer$2 = createCommonjsModule(function (module) {
-(function (undefined$1) {
-  if (typeof window === 'undefined') return // don't run for server side render
-
-  var count = 0,
-    logEnabled = false,
-    hiddenCheckEnabled = false,
-    msgHeader = 'message',
-    msgHeaderLen = msgHeader.length,
-    msgId = '[iFrameSizer]', // Must match iframe msg ID
-    msgIdLen = msgId.length,
-    pagePosition = null,
-    requestAnimationFrame = window.requestAnimationFrame,
-    resetRequiredMethods = {
-      max: 1,
-      scroll: 1,
-      bodyScroll: 1,
-      documentElementScroll: 1
-    },
-    settings = {},
-    timer = null,
-    defaults = {
-      autoResize: true,
-      bodyBackground: null,
-      bodyMargin: null,
-      bodyMarginV1: 8,
-      bodyPadding: null,
-      checkOrigin: true,
-      inPageLinks: false,
-      enablePublicMethods: true,
-      heightCalculationMethod: 'bodyOffset',
-      id: 'iFrameResizer',
-      interval: 32,
-      log: false,
-      maxHeight: Infinity,
-      maxWidth: Infinity,
-      minHeight: 0,
-      minWidth: 0,
-      mouseEvents: true,
-      resizeFrom: 'parent',
-      scrolling: false,
-      sizeHeight: true,
-      sizeWidth: false,
-      warningTimeout: 5000,
-      tolerance: 0,
-      widthCalculationMethod: 'scroll',
-      onClose: function () {
-        return true
-      },
-      onClosed: function () {},
-      onInit: function () {},
-      onMessage: function () {
-        warn('onMessage function not defined');
-      },
-      onMouseEnter: function () {},
-      onMouseLeave: function () {},
-      onResized: function () {},
-      onScroll: function () {
-        return true
-      }
-    };
-
-  function getMutationObserver() {
-    return (
-      window.MutationObserver ||
-      window.WebKitMutationObserver ||
-      window.MozMutationObserver
-    )
-  }
-
-  function addEventListener(el, evt, func) {
-    el.addEventListener(evt, func, false);
-  }
-
-  function removeEventListener(el, evt, func) {
-    el.removeEventListener(evt, func, false);
-  }
-
-  function setupRequestAnimationFrame() {
-    var vendors = ['moz', 'webkit', 'o', 'ms'];
-    var x;
-
-    // Remove vendor prefixing if prefixed and break early if not
-    for (x = 0; x < vendors.length && !requestAnimationFrame; x += 1) {
-      requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-    }
-
-    if (!requestAnimationFrame) {
-      log('setup', 'RequestAnimationFrame not supported');
-    } else {
-      // Firefox extension content-scripts have a globalThis object that is not the same as window.
-      // Binding `requestAnimationFrame` to window allows the function to work and prevents errors
-      // being thrown when run in that context, and should be a no-op in every other context.
-      requestAnimationFrame = requestAnimationFrame.bind(window);
-    }
-  }
-
-  function getMyID(iframeId) {
-    var retStr = 'Host page: ' + iframeId;
-
-    if (window.top !== window.self) {
-      retStr =
-        window.parentIFrame && window.parentIFrame.getId
-          ? window.parentIFrame.getId() + ': ' + iframeId
-          : 'Nested host page: ' + iframeId;
-    }
-
-    return retStr
-  }
-
-  function formatLogHeader(iframeId) {
-    return msgId + '[' + getMyID(iframeId) + ']'
-  }
-
-  function isLogEnabled(iframeId) {
-    return settings[iframeId] ? settings[iframeId].log : logEnabled
-  }
-
-  function log(iframeId, msg) {
-    output('log', iframeId, msg, isLogEnabled(iframeId));
-  }
-
-  function info(iframeId, msg) {
-    output('info', iframeId, msg, isLogEnabled(iframeId));
-  }
-
-  function warn(iframeId, msg) {
-    output('warn', iframeId, msg, true);
-  }
-
-  function output(type, iframeId, msg, enabled) {
-    if (true === enabled && 'object' === typeof window.console) {
-      // eslint-disable-next-line no-console
-      console[type](formatLogHeader(iframeId), msg);
-    }
-  }
-
-  function iFrameListener(event) {
-    function resizeIFrame() {
-      function resize() {
-        setSize(messageData);
-        setPagePosition(iframeId);
-        on('onResized', messageData);
-      }
-
-      ensureInRange('Height');
-      ensureInRange('Width');
-
-      syncResize(resize, messageData, 'init');
-    }
-
-    function processMsg() {
-      var data = msg.substr(msgIdLen).split(':');
-      var height = data[1] ? parseInt(data[1], 10) : 0;
-      var iframe = settings[data[0]] && settings[data[0]].iframe;
-      var compStyle = getComputedStyle(iframe);
-
-      return {
-        iframe: iframe,
-        id: data[0],
-        height: height + getPaddingEnds(compStyle) + getBorderEnds(compStyle),
-        width: data[2],
-        type: data[3]
-      }
-    }
-
-    function getPaddingEnds(compStyle) {
-      if (compStyle.boxSizing !== 'border-box') {
-        return 0
-      }
-      var top = compStyle.paddingTop ? parseInt(compStyle.paddingTop, 10) : 0;
-      var bot = compStyle.paddingBottom
-        ? parseInt(compStyle.paddingBottom, 10)
-        : 0;
-      return top + bot
-    }
-
-    function getBorderEnds(compStyle) {
-      if (compStyle.boxSizing !== 'border-box') {
-        return 0
-      }
-      var top = compStyle.borderTopWidth
-        ? parseInt(compStyle.borderTopWidth, 10)
-        : 0;
-      var bot = compStyle.borderBottomWidth
-        ? parseInt(compStyle.borderBottomWidth, 10)
-        : 0;
-      return top + bot
-    }
-
-    function ensureInRange(Dimension) {
-      var max = Number(settings[iframeId]['max' + Dimension]),
-        min = Number(settings[iframeId]['min' + Dimension]),
-        dimension = Dimension.toLowerCase(),
-        size = Number(messageData[dimension]);
-
-      log(iframeId, 'Checking ' + dimension + ' is in range ' + min + '-' + max);
-
-      if (size < min) {
-        size = min;
-        log(iframeId, 'Set ' + dimension + ' to min value');
-      }
-
-      if (size > max) {
-        size = max;
-        log(iframeId, 'Set ' + dimension + ' to max value');
-      }
-
-      messageData[dimension] = '' + size;
-    }
-
-    function isMessageFromIFrame() {
-      function checkAllowedOrigin() {
-        function checkList() {
-          var i = 0,
-            retCode = false;
-
-          log(
-            iframeId,
-            'Checking connection is from allowed list of origins: ' +
-              checkOrigin
-          );
-
-          for (; i < checkOrigin.length; i++) {
-            if (checkOrigin[i] === origin) {
-              retCode = true;
-              break
-            }
-          }
-          return retCode
-        }
-
-        function checkSingle() {
-          var remoteHost = settings[iframeId] && settings[iframeId].remoteHost;
-          log(iframeId, 'Checking connection is from: ' + remoteHost);
-          return origin === remoteHost
-        }
-
-        return checkOrigin.constructor === Array ? checkList() : checkSingle()
-      }
-
-      var origin = event.origin,
-        checkOrigin = settings[iframeId] && settings[iframeId].checkOrigin;
-
-      if (checkOrigin && '' + origin !== 'null' && !checkAllowedOrigin()) {
-        throw new Error(
-          'Unexpected message received from: ' +
-            origin +
-            ' for ' +
-            messageData.iframe.id +
-            '. Message was: ' +
-            event.data +
-            '. This error can be disabled by setting the checkOrigin: false option or by providing of array of trusted domains.'
-        )
-      }
-
-      return true
-    }
-
-    function isMessageForUs() {
-      return (
-        msgId === ('' + msg).substr(0, msgIdLen) &&
-        msg.substr(msgIdLen).split(':')[0] in settings
-      ) // ''+Protects against non-string msg
-    }
-
-    function isMessageFromMetaParent() {
-      // Test if this message is from a parent above us. This is an ugly test, however, updating
-      // the message format would break backwards compatibity.
-      var retCode = messageData.type in { true: 1, false: 1, undefined: 1 };
-
-      if (retCode) {
-        log(iframeId, 'Ignoring init message from meta parent page');
-      }
-
-      return retCode
-    }
-
-    function getMsgBody(offset) {
-      return msg.substr(msg.indexOf(':') + msgHeaderLen + offset)
-    }
-
-    function forwardMsgFromIFrame(msgBody) {
-      log(
-        iframeId,
-        'onMessage passed: {iframe: ' +
-          messageData.iframe.id +
-          ', message: ' +
-          msgBody +
-          '}'
-      );
-
-      on('onMessage', {
-        iframe: messageData.iframe,
-        message: JSON.parse(msgBody)
-      });
-
-      log(iframeId, '--');
-    }
-
-    function getPageInfo() {
-      var bodyPosition = document.body.getBoundingClientRect(),
-        iFramePosition = messageData.iframe.getBoundingClientRect();
-
-      return JSON.stringify({
-        iframeHeight: iFramePosition.height,
-        iframeWidth: iFramePosition.width,
-        clientHeight: Math.max(
-          document.documentElement.clientHeight,
-          window.innerHeight || 0
-        ),
-        clientWidth: Math.max(
-          document.documentElement.clientWidth,
-          window.innerWidth || 0
-        ),
-        offsetTop: parseInt(iFramePosition.top - bodyPosition.top, 10),
-        offsetLeft: parseInt(iFramePosition.left - bodyPosition.left, 10),
-        scrollTop: window.pageYOffset,
-        scrollLeft: window.pageXOffset,
-        documentHeight: document.documentElement.clientHeight,
-        documentWidth: document.documentElement.clientWidth,
-        windowHeight: window.innerHeight,
-        windowWidth: window.innerWidth
-      })
-    }
-
-    function sendPageInfoToIframe(iframe, iframeId) {
-      function debouncedTrigger() {
-        trigger('Send Page Info', 'pageInfo:' + getPageInfo(), iframe, iframeId);
-      }
-      debounceFrameEvents(debouncedTrigger, 32, iframeId);
-    }
-
-    function startPageInfoMonitor() {
-      function setListener(type, func) {
-        function sendPageInfo() {
-          if (settings[id]) {
-            sendPageInfoToIframe(settings[id].iframe, id);
-          } else {
-            stop();
-          }
-        }
-['scroll', 'resize'].forEach(function (evt) {
-          log(id, type + evt + ' listener for sendPageInfo');
-          func(window, evt, sendPageInfo);
-        });
-      }
-
-      function stop() {
-        setListener('Remove ', removeEventListener);
-      }
-
-      function start() {
-        setListener('Add ', addEventListener);
-      }
-
-      var id = iframeId; // Create locally scoped copy of iFrame ID
-
-      start();
-
-      if (settings[id]) {
-        settings[id].stopPageInfo = stop;
-      }
-    }
-
-    function stopPageInfoMonitor() {
-      if (settings[iframeId] && settings[iframeId].stopPageInfo) {
-        settings[iframeId].stopPageInfo();
-        delete settings[iframeId].stopPageInfo;
-      }
-    }
-
-    function checkIFrameExists() {
-      var retBool = true;
-
-      if (null === messageData.iframe) {
-        warn(iframeId, 'IFrame (' + messageData.id + ') not found');
-        retBool = false;
-      }
-      return retBool
-    }
-
-    function getElementPosition(target) {
-      var iFramePosition = target.getBoundingClientRect();
-
-      getPagePosition(iframeId);
-
-      return {
-        x: Math.floor(Number(iFramePosition.left) + Number(pagePosition.x)),
-        y: Math.floor(Number(iFramePosition.top) + Number(pagePosition.y))
-      }
-    }
-
-    function scrollRequestFromChild(addOffset) {
-      /* istanbul ignore next */ // Not testable in Karma
-      function reposition() {
-        pagePosition = newPosition;
-        scrollTo();
-        log(iframeId, '--');
-      }
-
-      function calcOffset() {
-        return {
-          x: Number(messageData.width) + offset.x,
-          y: Number(messageData.height) + offset.y
-        }
-      }
-
-      function scrollParent() {
-        if (window.parentIFrame) {
-          window.parentIFrame['scrollTo' + (addOffset ? 'Offset' : '')](
-            newPosition.x,
-            newPosition.y
-          );
-        } else {
-          warn(
-            iframeId,
-            'Unable to scroll to requested position, window.parentIFrame not found'
-          );
-        }
-      }
-
-      var offset = addOffset
-          ? getElementPosition(messageData.iframe)
-          : { x: 0, y: 0 },
-        newPosition = calcOffset();
-
-      log(
-        iframeId,
-        'Reposition requested from iFrame (offset x:' +
-          offset.x +
-          ' y:' +
-          offset.y +
-          ')'
-      );
-
-      if (window.top !== window.self) {
-        scrollParent();
-      } else {
-        reposition();
-      }
-    }
-
-    function scrollTo() {
-      if (false !== on('onScroll', pagePosition)) {
-        setPagePosition(iframeId);
-      } else {
-        unsetPagePosition();
-      }
-    }
-
-    function findTarget(location) {
-      function jumpToTarget() {
-        var jumpPosition = getElementPosition(target);
-
-        log(
-          iframeId,
-          'Moving to in page link (#' +
-            hash +
-            ') at x: ' +
-            jumpPosition.x +
-            ' y: ' +
-            jumpPosition.y
-        );
-        pagePosition = {
-          x: jumpPosition.x,
-          y: jumpPosition.y
-        };
-
-        scrollTo();
-        log(iframeId, '--');
-      }
-
-      function jumpToParent() {
-        if (window.parentIFrame) {
-          window.parentIFrame.moveToAnchor(hash);
-        } else {
-          log(
-            iframeId,
-            'In page link #' +
-              hash +
-              ' not found and window.parentIFrame not found'
-          );
-        }
-      }
-
-      var hash = location.split('#')[1] || '',
-        hashData = decodeURIComponent(hash),
-        target =
-          document.getElementById(hashData) ||
-          document.getElementsByName(hashData)[0];
-
-      if (target) {
-        jumpToTarget();
-      } else if (window.top !== window.self) {
-        jumpToParent();
-      } else {
-        log(iframeId, 'In page link #' + hash + ' not found');
-      }
-    }
-
-    function onMouse(event) {
-      var mousePos = {};
-
-      if (Number(messageData.width) === 0 && Number(messageData.height) === 0) {
-        var data = getMsgBody(9).split(':');
-        mousePos = {
-          x: data[1],
-          y: data[0]
-        };
-      } else {
-        mousePos = {
-          x: messageData.width,
-          y: messageData.height
-        };
-      }
-
-      on(event, {
-        iframe: messageData.iframe,
-        screenX: Number(mousePos.x),
-        screenY: Number(mousePos.y),
-        type: messageData.type
-      });
-    }
-
-    function on(funcName, val) {
-      return chkEvent(iframeId, funcName, val)
-    }
-
-    function actionMsg() {
-      if (settings[iframeId] && settings[iframeId].firstRun) firstRun();
-
-      switch (messageData.type) {
-        case 'close':
-          closeIFrame(messageData.iframe);
-          break
-
-        case 'message':
-          forwardMsgFromIFrame(getMsgBody(6));
-          break
-
-        case 'mouseenter':
-          onMouse('onMouseEnter');
-          break
-
-        case 'mouseleave':
-          onMouse('onMouseLeave');
-          break
-
-        case 'autoResize':
-          settings[iframeId].autoResize = JSON.parse(getMsgBody(9));
-          break
-
-        case 'scrollTo':
-          scrollRequestFromChild(false);
-          break
-
-        case 'scrollToOffset':
-          scrollRequestFromChild(true);
-          break
-
-        case 'pageInfo':
-          sendPageInfoToIframe(
-            settings[iframeId] && settings[iframeId].iframe,
-            iframeId
-          );
-          startPageInfoMonitor();
-          break
-
-        case 'pageInfoStop':
-          stopPageInfoMonitor();
-          break
-
-        case 'inPageLink':
-          findTarget(getMsgBody(9));
-          break
-
-        case 'reset':
-          resetIFrame(messageData);
-          break
-
-        case 'init':
-          resizeIFrame();
-          on('onInit', messageData.iframe);
-          break
-
-        default:
-          if (
-            Number(messageData.width) === 0 &&
-            Number(messageData.height) === 0
-          ) {
-            warn(
-              'Unsupported message received (' +
-                messageData.type +
-                '), this is likely due to the iframe containing a later ' +
-                'version of iframe-resizer than the parent page'
-            );
-          } else {
-            resizeIFrame();
-          }
-      }
-    }
-
-    function hasSettings(iframeId) {
-      var retBool = true;
-
-      if (!settings[iframeId]) {
-        retBool = false;
-        warn(
-          messageData.type +
-            ' No settings for ' +
-            iframeId +
-            '. Message was: ' +
-            msg
-        );
-      }
-
-      return retBool
-    }
-
-    function iFrameReadyMsgReceived() {
-      // eslint-disable-next-line no-restricted-syntax, guard-for-in
-      for (var iframeId in settings) {
-        trigger(
-          'iFrame requested init',
-          createOutgoingMsg(iframeId),
-          settings[iframeId].iframe,
-          iframeId
-        );
-      }
-    }
-
-    function firstRun() {
-      if (settings[iframeId]) {
-        settings[iframeId].firstRun = false;
-      }
-    }
-
-    var msg = event.data,
-      messageData = {},
-      iframeId = null;
-
-    if ('[iFrameResizerChild]Ready' === msg) {
-      iFrameReadyMsgReceived();
-    } else if (isMessageForUs()) {
-      messageData = processMsg();
-      iframeId = messageData.id;
-      if (settings[iframeId]) {
-        settings[iframeId].loaded = true;
-      }
-
-      if (!isMessageFromMetaParent() && hasSettings(iframeId)) {
-        log(iframeId, 'Received: ' + msg);
-
-        if (checkIFrameExists() && isMessageFromIFrame()) {
-          actionMsg();
-        }
-      }
-    } else {
-      info(iframeId, 'Ignored: ' + msg);
-    }
-  }
-
-  function chkEvent(iframeId, funcName, val) {
-    var func = null,
-      retVal = null;
-
-    if (settings[iframeId]) {
-      func = settings[iframeId][funcName];
-
-      if ('function' === typeof func) {
-        retVal = func(val);
-      } else {
-        throw new TypeError(
-          funcName + ' on iFrame[' + iframeId + '] is not a function'
-        )
-      }
-    }
-
-    return retVal
-  }
-
-  function removeIframeListeners(iframe) {
-    var iframeId = iframe.id;
-    delete settings[iframeId];
-  }
-
-  function closeIFrame(iframe) {
-    var iframeId = iframe.id;
-    if (chkEvent(iframeId, 'onClose', iframeId) === false) {
-      log(iframeId, 'Close iframe cancelled by onClose event');
-      return
-    }
-    log(iframeId, 'Removing iFrame: ' + iframeId);
-
-    try {
-      // Catch race condition error with React
-      if (iframe.parentNode) {
-        iframe.parentNode.removeChild(iframe);
-      }
-    } catch (error) {
-      warn(error);
-    }
-
-    chkEvent(iframeId, 'onClosed', iframeId);
-    log(iframeId, '--');
-    removeIframeListeners(iframe);
-  }
-
-  function getPagePosition(iframeId) {
-    if (null === pagePosition) {
-      pagePosition = {
-        x:
-          window.pageXOffset !== undefined$1
-            ? window.pageXOffset
-            : document.documentElement.scrollLeft,
-        y:
-          window.pageYOffset !== undefined$1
-            ? window.pageYOffset
-            : document.documentElement.scrollTop
-      };
-      log(
-        iframeId,
-        'Get page position: ' + pagePosition.x + ',' + pagePosition.y
-      );
-    }
-  }
-
-  function setPagePosition(iframeId) {
-    if (null !== pagePosition) {
-      window.scrollTo(pagePosition.x, pagePosition.y);
-      log(
-        iframeId,
-        'Set page position: ' + pagePosition.x + ',' + pagePosition.y
-      );
-      unsetPagePosition();
-    }
-  }
-
-  function unsetPagePosition() {
-    pagePosition = null;
-  }
-
-  function resetIFrame(messageData) {
-    function reset() {
-      setSize(messageData);
-      trigger('reset', 'reset', messageData.iframe, messageData.id);
-    }
-
-    log(
-      messageData.id,
-      'Size reset requested by ' +
-        ('init' === messageData.type ? 'host page' : 'iFrame')
-    );
-    getPagePosition(messageData.id);
-    syncResize(reset, messageData, 'reset');
-  }
-
-  function setSize(messageData) {
-    function setDimension(dimension) {
-      if (!messageData.id) {
-        log('undefined', 'messageData id not set');
-        return
-      }
-      messageData.iframe.style[dimension] = messageData[dimension] + 'px';
-      log(
-        messageData.id,
-        'IFrame (' +
-          iframeId +
-          ') ' +
-          dimension +
-          ' set to ' +
-          messageData[dimension] +
-          'px'
-      );
-    }
-
-    function chkZero(dimension) {
-      // FireFox sets dimension of hidden iFrames to zero.
-      // So if we detect that set up an event to check for
-      // when iFrame becomes visible.
-
-      /* istanbul ignore next */ // Not testable in PhantomJS
-      if (!hiddenCheckEnabled && '0' === messageData[dimension]) {
-        hiddenCheckEnabled = true;
-        log(iframeId, 'Hidden iFrame detected, creating visibility listener');
-        fixHiddenIFrames();
-      }
-    }
-
-    function processDimension(dimension) {
-      setDimension(dimension);
-      chkZero(dimension);
-    }
-
-    var iframeId = messageData.iframe.id;
-
-    if (settings[iframeId]) {
-      if (settings[iframeId].sizeHeight) {
-        processDimension('height');
-      }
-      if (settings[iframeId].sizeWidth) {
-        processDimension('width');
-      }
-    }
-  }
-
-  function syncResize(func, messageData, doNotSync) {
-    /* istanbul ignore if */ // Not testable in PhantomJS
-    if (
-      doNotSync !== messageData.type &&
-      requestAnimationFrame &&
-      // including check for jasmine because had trouble getting spy to work in unit test using requestAnimationFrame
-      !window.jasmine
-    ) {
-      log(messageData.id, 'Requesting animation frame');
-      requestAnimationFrame(func);
-    } else {
-      func();
-    }
-  }
-
-  function trigger(calleeMsg, msg, iframe, id, noResponseWarning) {
-    function postMessageToIFrame() {
-      var target = settings[id] && settings[id].targetOrigin;
-      log(
-        id,
-        '[' +
-          calleeMsg +
-          '] Sending msg to iframe[' +
-          id +
-          '] (' +
-          msg +
-          ') targetOrigin: ' +
-          target
-      );
-      iframe.contentWindow.postMessage(msgId + msg, target);
-    }
-
-    function iFrameNotFound() {
-      warn(id, '[' + calleeMsg + '] IFrame(' + id + ') not found');
-    }
-
-    function chkAndSend() {
-      if (
-        iframe &&
-        'contentWindow' in iframe &&
-        null !== iframe.contentWindow
-      ) {
-        // Null test for PhantomJS
-        postMessageToIFrame();
-      } else {
-        iFrameNotFound();
-      }
-    }
-
-    function warnOnNoResponse() {
-      function warning() {
-        if (settings[id] && !settings[id].loaded && !errorShown) {
-          errorShown = true;
-          warn(
-            id,
-            'IFrame has not responded within ' +
-              settings[id].warningTimeout / 1000 +
-              ' seconds. Check iFrameResizer.contentWindow.js has been loaded in iFrame. This message can be ignored if everything is working, or you can set the warningTimeout option to a higher value or zero to suppress this warning.'
-          );
-        }
-      }
-
-      if (
-        !!noResponseWarning &&
-        settings[id] &&
-        !!settings[id].warningTimeout
-      ) {
-        settings[id].msgTimeout = setTimeout(
-          warning,
-          settings[id].warningTimeout
-        );
-      }
-    }
-
-    var errorShown = false;
-
-    id = id || iframe.id;
-
-    if (settings[id]) {
-      chkAndSend();
-      warnOnNoResponse();
-    }
-  }
-
-  function createOutgoingMsg(iframeId) {
-    return (
-      iframeId +
-      ':' +
-      settings[iframeId].bodyMarginV1 +
-      ':' +
-      settings[iframeId].sizeWidth +
-      ':' +
-      settings[iframeId].log +
-      ':' +
-      settings[iframeId].interval +
-      ':' +
-      settings[iframeId].enablePublicMethods +
-      ':' +
-      settings[iframeId].autoResize +
-      ':' +
-      settings[iframeId].bodyMargin +
-      ':' +
-      settings[iframeId].heightCalculationMethod +
-      ':' +
-      settings[iframeId].bodyBackground +
-      ':' +
-      settings[iframeId].bodyPadding +
-      ':' +
-      settings[iframeId].tolerance +
-      ':' +
-      settings[iframeId].inPageLinks +
-      ':' +
-      settings[iframeId].resizeFrom +
-      ':' +
-      settings[iframeId].widthCalculationMethod +
-      ':' +
-      settings[iframeId].mouseEvents
-    )
-  }
-
-  function isNumber(value) {
-    return typeof value === 'number'
-  }
-
-  function setupIFrame(iframe, options) {
-    function setLimits() {
-      function addStyle(style) {
-        var styleValue = settings[iframeId][style];
-        if (Infinity !== styleValue && 0 !== styleValue) {
-          iframe.style[style] = isNumber(styleValue)
-            ? styleValue + 'px'
-            : styleValue;
-          log(iframeId, 'Set ' + style + ' = ' + iframe.style[style]);
-        }
-      }
-
-      function chkMinMax(dimension) {
-        if (
-          settings[iframeId]['min' + dimension] >
-          settings[iframeId]['max' + dimension]
-        ) {
-          throw new Error(
-            'Value for min' +
-              dimension +
-              ' can not be greater than max' +
-              dimension
-          )
-        }
-      }
-
-      chkMinMax('Height');
-      chkMinMax('Width');
-
-      addStyle('maxHeight');
-      addStyle('minHeight');
-      addStyle('maxWidth');
-      addStyle('minWidth');
-    }
-
-    function newId() {
-      var id = (options && options.id) || defaults.id + count++;
-      if (null !== document.getElementById(id)) {
-        id += count++;
-      }
-      return id
-    }
-
-    function ensureHasId(iframeId) {
-      if ('' === iframeId) {
-        // eslint-disable-next-line no-multi-assign
-        iframe.id = iframeId = newId();
-        logEnabled = (options || {}).log;
-        log(
-          iframeId,
-          'Added missing iframe ID: ' + iframeId + ' (' + iframe.src + ')'
-        );
-      }
-
-      return iframeId
-    }
-
-    function setScrolling() {
-      log(
-        iframeId,
-        'IFrame scrolling ' +
-          (settings[iframeId] && settings[iframeId].scrolling
-            ? 'enabled'
-            : 'disabled') +
-          ' for ' +
-          iframeId
-      );
-      iframe.style.overflow =
-        false === (settings[iframeId] && settings[iframeId].scrolling)
-          ? 'hidden'
-          : 'auto';
-      switch (settings[iframeId] && settings[iframeId].scrolling) {
-        case 'omit':
-          break
-
-        case true:
-          iframe.scrolling = 'yes';
-          break
-
-        case false:
-          iframe.scrolling = 'no';
-          break
-
-        default:
-          iframe.scrolling = settings[iframeId]
-            ? settings[iframeId].scrolling
-            : 'no';
-      }
-    }
-
-    // The V1 iFrame script expects an int, where as in V2 expects a CSS
-    // string value such as '1px 3em', so if we have an int for V2, set V1=V2
-    // and then convert V2 to a string PX value.
-    function setupBodyMarginValues() {
-      if (
-        'number' ===
-          typeof (settings[iframeId] && settings[iframeId].bodyMargin) ||
-        '0' === (settings[iframeId] && settings[iframeId].bodyMargin)
-      ) {
-        settings[iframeId].bodyMarginV1 = settings[iframeId].bodyMargin;
-        settings[iframeId].bodyMargin =
-          '' + settings[iframeId].bodyMargin + 'px';
-      }
-    }
-
-    function checkReset() {
-      // Reduce scope of firstRun to function, because IE8's JS execution
-      // context stack is borked and this value gets externally
-      // changed midway through running this function!!!
-      var firstRun = settings[iframeId] && settings[iframeId].firstRun,
-        resetRequertMethod =
-          settings[iframeId] &&
-          settings[iframeId].heightCalculationMethod in resetRequiredMethods;
-
-      if (!firstRun && resetRequertMethod) {
-        resetIFrame({ iframe: iframe, height: 0, width: 0, type: 'init' });
-      }
-    }
-
-    function setupIFrameObject() {
-      if (settings[iframeId]) {
-        settings[iframeId].iframe.iFrameResizer = {
-          close: closeIFrame.bind(null, settings[iframeId].iframe),
-
-          removeListeners: removeIframeListeners.bind(
-            null,
-            settings[iframeId].iframe
-          ),
-
-          resize: trigger.bind(
-            null,
-            'Window resize',
-            'resize',
-            settings[iframeId].iframe
-          ),
-
-          moveToAnchor: function (anchor) {
-            trigger(
-              'Move to anchor',
-              'moveToAnchor:' + anchor,
-              settings[iframeId].iframe,
-              iframeId
-            );
-          },
-
-          sendMessage: function (message) {
-            message = JSON.stringify(message);
-            trigger(
-              'Send Message',
-              'message:' + message,
-              settings[iframeId].iframe,
-              iframeId
-            );
-          }
-        };
-      }
-    }
-
-    // We have to call trigger twice, as we can not be sure if all
-    // iframes have completed loading when this code runs. The
-    // event listener also catches the page changing in the iFrame.
-    function init(msg) {
-      function iFrameLoaded() {
-        trigger('iFrame.onload', msg, iframe, undefined$1, true);
-        checkReset();
-      }
-
-      function createDestroyObserver(MutationObserver) {
-        if (!iframe.parentNode) {
-          return
-        }
-
-        var destroyObserver = new MutationObserver(function (mutations) {
-          mutations.forEach(function (mutation) {
-            var removedNodes = Array.prototype.slice.call(mutation.removedNodes); // Transform NodeList into an Array
-            removedNodes.forEach(function (removedNode) {
-              if (removedNode === iframe) {
-                closeIFrame(iframe);
-              }
-            });
-          });
-        });
-        destroyObserver.observe(iframe.parentNode, {
-          childList: true
-        });
-      }
-
-      var MutationObserver = getMutationObserver();
-      if (MutationObserver) {
-        createDestroyObserver(MutationObserver);
-      }
-
-      addEventListener(iframe, 'load', iFrameLoaded);
-      trigger('init', msg, iframe, undefined$1, true);
-    }
-
-    function checkOptions(options) {
-      if ('object' !== typeof options) {
-        throw new TypeError('Options is not an object')
-      }
-    }
-
-    function copyOptions(options) {
-      // eslint-disable-next-line no-restricted-syntax
-      for (var option in defaults) {
-        if (Object.prototype.hasOwnProperty.call(defaults, option)) {
-          settings[iframeId][option] = Object.prototype.hasOwnProperty.call(
-            options,
-            option
-          )
-            ? options[option]
-            : defaults[option];
-        }
-      }
-    }
-
-    function getTargetOrigin(remoteHost) {
-      return '' === remoteHost ||
-        null !== remoteHost.match(/^(about:blank|javascript:|file:\/\/)/)
-        ? '*'
-        : remoteHost
-    }
-
-    function depricate(key) {
-      var splitName = key.split('Callback');
-
-      if (splitName.length === 2) {
-        var name =
-          'on' + splitName[0].charAt(0).toUpperCase() + splitName[0].slice(1);
-        this[name] = this[key];
-        delete this[key];
-        warn(
-          iframeId,
-          "Deprecated: '" +
-            key +
-            "' has been renamed '" +
-            name +
-            "'. The old method will be removed in the next major version."
-        );
-      }
-    }
-
-    function processOptions(options) {
-      options = options || {};
-      settings[iframeId] = {
-        firstRun: true,
-        iframe: iframe,
-        remoteHost: iframe.src && iframe.src.split('/').slice(0, 3).join('/')
-      };
-
-      checkOptions(options);
-      Object.keys(options).forEach(depricate, options);
-      copyOptions(options);
-
-      if (settings[iframeId]) {
-        settings[iframeId].targetOrigin =
-          true === settings[iframeId].checkOrigin
-            ? getTargetOrigin(settings[iframeId].remoteHost)
-            : '*';
-      }
-    }
-
-    function beenHere() {
-      return iframeId in settings && 'iFrameResizer' in iframe
-    }
-
-    var iframeId = ensureHasId(iframe.id);
-
-    if (!beenHere()) {
-      processOptions(options);
-      setScrolling();
-      setLimits();
-      setupBodyMarginValues();
-      init(createOutgoingMsg(iframeId));
-      setupIFrameObject();
-    } else {
-      warn(iframeId, 'Ignored iFrame, already setup.');
-    }
-  }
-
-  function debouce(fn, time) {
-    if (null === timer) {
-      timer = setTimeout(function () {
-        timer = null;
-        fn();
-      }, time);
-    }
-  }
-
-  var frameTimer = {};
-  function debounceFrameEvents(fn, time, frameId) {
-    if (!frameTimer[frameId]) {
-      frameTimer[frameId] = setTimeout(function () {
-        frameTimer[frameId] = null;
-        fn();
-      }, time);
-    }
-  }
-
-  // Not testable in PhantomJS
-  /* istanbul ignore next */
-
-  function fixHiddenIFrames() {
-    function checkIFrames() {
-      function checkIFrame(settingId) {
-        function chkDimension(dimension) {
-          return (
-            '0px' ===
-            (settings[settingId] && settings[settingId].iframe.style[dimension])
-          )
-        }
-
-        function isVisible(el) {
-          return null !== el.offsetParent
-        }
-
-        if (
-          settings[settingId] &&
-          isVisible(settings[settingId].iframe) &&
-          (chkDimension('height') || chkDimension('width'))
-        ) {
-          trigger(
-            'Visibility change',
-            'resize',
-            settings[settingId].iframe,
-            settingId
-          );
-        }
-      }
-
-      Object.keys(settings).forEach(function (key) {
-        checkIFrame(key);
-      });
-    }
-
-    function mutationObserved(mutations) {
-      log(
-        'window',
-        'Mutation observed: ' + mutations[0].target + ' ' + mutations[0].type
-      );
-      debouce(checkIFrames, 16);
-    }
-
-    function createMutationObserver() {
-      var target = document.querySelector('body'),
-        config = {
-          attributes: true,
-          attributeOldValue: false,
-          characterData: true,
-          characterDataOldValue: false,
-          childList: true,
-          subtree: true
-        },
-        observer = new MutationObserver(mutationObserved);
-
-      observer.observe(target, config);
-    }
-
-    var MutationObserver = getMutationObserver();
-    if (MutationObserver) {
-      createMutationObserver();
-    }
-  }
-
-  function resizeIFrames(event) {
-    function resize() {
-      sendTriggerMsg('Window ' + event, 'resize');
-    }
-
-    log('window', 'Trigger event: ' + event);
-    debouce(resize, 16);
-  }
-
-  // Not testable in PhantomJS
-  /* istanbul ignore next */
-  function tabVisible() {
-    function resize() {
-      sendTriggerMsg('Tab Visable', 'resize');
-    }
-
-    if ('hidden' !== document.visibilityState) {
-      log('document', 'Trigger event: Visiblity change');
-      debouce(resize, 16);
-    }
-  }
-
-  function sendTriggerMsg(eventName, event) {
-    function isIFrameResizeEnabled(iframeId) {
-      return (
-        settings[iframeId] &&
-        'parent' === settings[iframeId].resizeFrom &&
-        settings[iframeId].autoResize &&
-        !settings[iframeId].firstRun
-      )
-    }
-
-    Object.keys(settings).forEach(function (iframeId) {
-      if (isIFrameResizeEnabled(iframeId)) {
-        trigger(eventName, event, settings[iframeId].iframe, iframeId);
-      }
-    });
-  }
-
-  function setupEventListeners() {
-    addEventListener(window, 'message', iFrameListener);
-
-    addEventListener(window, 'resize', function () {
-      resizeIFrames('resize');
-    });
-
-    addEventListener(document, 'visibilitychange', tabVisible);
-
-    addEventListener(document, '-webkit-visibilitychange', tabVisible);
-  }
-
-  function factory() {
-    function init(options, element) {
-      function chkType() {
-        if (!element.tagName) {
-          throw new TypeError('Object is not a valid DOM element')
-        } else if ('IFRAME' !== element.tagName.toUpperCase()) {
-          throw new TypeError(
-            'Expected <IFRAME> tag, found <' + element.tagName + '>'
-          )
-        }
-      }
-
-      if (element) {
-        chkType();
-        setupIFrame(element, options);
-        iFrames.push(element);
-      }
-    }
-
-    function warnDeprecatedOptions(options) {
-      if (options && options.enablePublicMethods) {
-        warn(
-          'enablePublicMethods option has been removed, public methods are now always available in the iFrame'
-        );
-      }
-    }
-
-    var iFrames;
-
-    setupRequestAnimationFrame();
-    setupEventListeners();
-
-    return function iFrameResizeF(options, target) {
-      iFrames = []; // Only return iFrames past in on this call
-
-      warnDeprecatedOptions(options);
-
-      switch (typeof target) {
-        case 'undefined':
-        case 'string':
-          Array.prototype.forEach.call(
-            document.querySelectorAll(target || 'iframe'),
-            init.bind(undefined$1, options)
-          );
-          break
-
-        case 'object':
-          init(options, target);
-          break
-
-        default:
-          throw new TypeError('Unexpected data type (' + typeof target + ')')
-      }
-
-      return iFrames
-    }
-  }
-
-  function createJQueryPublicMethod($) {
-    if (!$.fn) {
-      info('', 'Unable to bind to jQuery, it is not fully loaded.');
-    } else if (!$.fn.iFrameResize) {
-      $.fn.iFrameResize = function $iFrameResizeF(options) {
-        function init(index, element) {
-          setupIFrame(element, options);
-        }
-
-        return this.filter('iframe').each(init).end()
-      };
-    }
-  }
-
-  if (window.jQuery) {
-    createJQueryPublicMethod(window.jQuery);
-  }
-
-  if (typeof undefined$1 === 'function' && undefined$1.amd) {
-    undefined$1([], factory);
-  } else {
-    // Node for browserfy
-    module.exports = factory();
-  }
-  window.iFrameResize = window.iFrameResize || factory();
-})();
-});
-
-var iframeResizer_contentWindow = createCommonjsModule(function (module) {
-(function (undefined$1) {
-  if (typeof window === 'undefined') return // don't run for server side render
-
-  var autoResize = true,
-    base = 10,
-    bodyBackground = '',
-    bodyMargin = 0,
-    bodyMarginStr = '',
-    bodyObserver = null,
-    bodyPadding = '',
-    calculateWidth = false,
-    doubleEventList = { resize: 1, click: 1 },
-    eventCancelTimer = 128,
-    firstRun = true,
-    height = 1,
-    heightCalcModeDefault = 'bodyOffset',
-    heightCalcMode = heightCalcModeDefault,
-    initLock = true,
-    initMsg = '',
-    inPageLinks = {},
-    interval = 32,
-    intervalTimer = null,
-    logging = false,
-    mouseEvents = false,
-    msgID = '[iFrameSizer]', // Must match host page msg ID
-    msgIdLen = msgID.length,
-    myID = '',
-    resetRequiredMethods = {
-      max: 1,
-      min: 1,
-      bodyScroll: 1,
-      documentElementScroll: 1
-    },
-    resizeFrom = 'child',
-    target = window.parent,
-    targetOriginDefault = '*',
-    tolerance = 0,
-    triggerLocked = false,
-    triggerLockedTimer = null,
-    throttledTimer = 16,
-    width = 1,
-    widthCalcModeDefault = 'scroll',
-    widthCalcMode = widthCalcModeDefault,
-    win = window,
-    onMessage = function () {
-      warn('onMessage function not defined');
-    },
-    onReady = function () {},
-    onPageInfo = function () {},
-    customCalcMethods = {
-      height: function () {
-        warn('Custom height calculation function not defined');
-        return document.documentElement.offsetHeight
-      },
-      width: function () {
-        warn('Custom width calculation function not defined');
-        return document.body.scrollWidth
-      }
-    },
-    eventHandlersByName = {},
-    passiveSupported = false;
-
-  function noop() {}
-
-  try {
-    var options = Object.create(
-      {},
-      {
-        passive: {
-          get: function () {
-            passiveSupported = true;
-          }
-        }
-      }
-    );
-    window.addEventListener('test', noop, options);
-    window.removeEventListener('test', noop, options);
-  } catch (error) {
-    /* */
-  }
-
-  function addEventListener(el, evt, func, options) {
-    el.addEventListener(evt, func, passiveSupported ? options || {} : false);
-  }
-
-  function removeEventListener(el, evt, func) {
-    el.removeEventListener(evt, func, false);
-  }
-
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1)
-  }
-
-  // Based on underscore.js
-  function throttle(func) {
-    var context,
-      args,
-      result,
-      timeout = null,
-      previous = 0,
-      later = function () {
-        previous = Date.now();
-        timeout = null;
-        result = func.apply(context, args);
-        if (!timeout) {
-          // eslint-disable-next-line no-multi-assign
-          context = args = null;
-        }
-      };
-
-    return function () {
-      var now = Date.now();
-
-      if (!previous) {
-        previous = now;
-      }
-
-      var remaining = throttledTimer - (now - previous);
-
-      context = this;
-      args = arguments;
-
-      if (remaining <= 0 || remaining > throttledTimer) {
-        if (timeout) {
-          clearTimeout(timeout);
-          timeout = null;
-        }
-
-        previous = now;
-        result = func.apply(context, args);
-
-        if (!timeout) {
-          // eslint-disable-next-line no-multi-assign
-          context = args = null;
-        }
-      } else if (!timeout) {
-        timeout = setTimeout(later, remaining);
-      }
-
-      return result
-    }
-  }
-
-  function formatLogMsg(msg) {
-    return msgID + '[' + myID + '] ' + msg
-  }
-
-  function log(msg) {
-    if (logging && 'object' === typeof window.console) {
-      // eslint-disable-next-line no-console
-      console.log(formatLogMsg(msg));
-    }
-  }
-
-  function warn(msg) {
-    if ('object' === typeof window.console) {
-      // eslint-disable-next-line no-console
-      console.warn(formatLogMsg(msg));
-    }
-  }
-
-  function init() {
-    readDataFromParent();
-    log('Initialising iFrame (' + window.location.href + ')');
-    readDataFromPage();
-    setMargin();
-    setBodyStyle('background', bodyBackground);
-    setBodyStyle('padding', bodyPadding);
-    injectClearFixIntoBodyElement();
-    checkHeightMode();
-    checkWidthMode();
-    stopInfiniteResizingOfIFrame();
-    setupPublicMethods();
-    setupMouseEvents();
-    startEventListeners();
-    inPageLinks = setupInPageLinks();
-    sendSize('init', 'Init message from host page');
-    onReady();
-  }
-
-  function readDataFromParent() {
-    function strBool(str) {
-      return 'true' === str
-    }
-
-    var data = initMsg.substr(msgIdLen).split(':');
-
-    myID = data[0];
-    bodyMargin = undefined$1 !== data[1] ? Number(data[1]) : bodyMargin; // For V1 compatibility
-    calculateWidth = undefined$1 !== data[2] ? strBool(data[2]) : calculateWidth;
-    logging = undefined$1 !== data[3] ? strBool(data[3]) : logging;
-    interval = undefined$1 !== data[4] ? Number(data[4]) : interval;
-    autoResize = undefined$1 !== data[6] ? strBool(data[6]) : autoResize;
-    bodyMarginStr = data[7];
-    heightCalcMode = undefined$1 !== data[8] ? data[8] : heightCalcMode;
-    bodyBackground = data[9];
-    bodyPadding = data[10];
-    tolerance = undefined$1 !== data[11] ? Number(data[11]) : tolerance;
-    inPageLinks.enable = undefined$1 !== data[12] ? strBool(data[12]) : false;
-    resizeFrom = undefined$1 !== data[13] ? data[13] : resizeFrom;
-    widthCalcMode = undefined$1 !== data[14] ? data[14] : widthCalcMode;
-    mouseEvents = undefined$1 !== data[15] ? Boolean(data[15]) : mouseEvents;
-  }
-
-  function depricate(key) {
-    var splitName = key.split('Callback');
-
-    if (splitName.length === 2) {
-      var name =
-        'on' + splitName[0].charAt(0).toUpperCase() + splitName[0].slice(1);
-      this[name] = this[key];
-      delete this[key];
-      warn(
-        "Deprecated: '" +
-          key +
-          "' has been renamed '" +
-          name +
-          "'. The old method will be removed in the next major version."
-      );
-    }
-  }
-
-  function readDataFromPage() {
-    function readData() {
-      var data = window.iFrameResizer;
-
-      log('Reading data from page: ' + JSON.stringify(data));
-      Object.keys(data).forEach(depricate, data);
-
-      onMessage = 'onMessage' in data ? data.onMessage : onMessage;
-      onReady = 'onReady' in data ? data.onReady : onReady;
-      targetOriginDefault =
-        'targetOrigin' in data ? data.targetOrigin : targetOriginDefault;
-      heightCalcMode =
-        'heightCalculationMethod' in data
-          ? data.heightCalculationMethod
-          : heightCalcMode;
-      widthCalcMode =
-        'widthCalculationMethod' in data
-          ? data.widthCalculationMethod
-          : widthCalcMode;
-    }
-
-    function setupCustomCalcMethods(calcMode, calcFunc) {
-      if ('function' === typeof calcMode) {
-        log('Setup custom ' + calcFunc + 'CalcMethod');
-        customCalcMethods[calcFunc] = calcMode;
-        calcMode = 'custom';
-      }
-
-      return calcMode
-    }
-
-    if (
-      'iFrameResizer' in window &&
-      Object === window.iFrameResizer.constructor
-    ) {
-      readData();
-      heightCalcMode = setupCustomCalcMethods(heightCalcMode, 'height');
-      widthCalcMode = setupCustomCalcMethods(widthCalcMode, 'width');
-    }
-
-    log('TargetOrigin for parent set to: ' + targetOriginDefault);
-  }
-
-  function chkCSS(attr, value) {
-    if (-1 !== value.indexOf('-')) {
-      warn('Negative CSS value ignored for ' + attr);
-      value = '';
-    }
-    return value
-  }
-
-  function setBodyStyle(attr, value) {
-    if (undefined$1 !== value && '' !== value && 'null' !== value) {
-      document.body.style[attr] = value;
-      log('Body ' + attr + ' set to "' + value + '"');
-    }
-  }
-
-  function setMargin() {
-    // If called via V1 script, convert bodyMargin from int to str
-    if (undefined$1 === bodyMarginStr) {
-      bodyMarginStr = bodyMargin + 'px';
-    }
-
-    setBodyStyle('margin', chkCSS('margin', bodyMarginStr));
-  }
-
-  function stopInfiniteResizingOfIFrame() {
-    document.documentElement.style.height = '';
-    document.body.style.height = '';
-    log('HTML & body height set to "auto"');
-  }
-
-  function manageTriggerEvent(options) {
-    var listener = {
-      add: function (eventName) {
-        function handleEvent() {
-          sendSize(options.eventName, options.eventType);
-        }
-
-        eventHandlersByName[eventName] = handleEvent;
-
-        addEventListener(window, eventName, handleEvent, { passive: true });
-      },
-      remove: function (eventName) {
-        var handleEvent = eventHandlersByName[eventName];
-        delete eventHandlersByName[eventName];
-
-        removeEventListener(window, eventName, handleEvent);
-      }
-    };
-
-    if (options.eventNames && Array.prototype.map) {
-      options.eventName = options.eventNames[0];
-      options.eventNames.map(listener[options.method]);
-    } else {
-      listener[options.method](options.eventName);
-    }
-
-    log(
-      capitalizeFirstLetter(options.method) +
-        ' event listener: ' +
-        options.eventType
-    );
-  }
-
-  function manageEventListeners(method) {
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Animation Start',
-      eventNames: ['animationstart', 'webkitAnimationStart']
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Animation Iteration',
-      eventNames: ['animationiteration', 'webkitAnimationIteration']
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Animation End',
-      eventNames: ['animationend', 'webkitAnimationEnd']
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Input',
-      eventName: 'input'
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Mouse Up',
-      eventName: 'mouseup'
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Mouse Down',
-      eventName: 'mousedown'
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Orientation Change',
-      eventName: 'orientationchange'
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Print',
-      eventName: ['afterprint', 'beforeprint']
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Ready State Change',
-      eventName: 'readystatechange'
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Touch Start',
-      eventName: 'touchstart'
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Touch End',
-      eventName: 'touchend'
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Touch Cancel',
-      eventName: 'touchcancel'
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Transition Start',
-      eventNames: [
-        'transitionstart',
-        'webkitTransitionStart',
-        'MSTransitionStart',
-        'oTransitionStart',
-        'otransitionstart'
-      ]
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Transition Iteration',
-      eventNames: [
-        'transitioniteration',
-        'webkitTransitionIteration',
-        'MSTransitionIteration',
-        'oTransitionIteration',
-        'otransitioniteration'
-      ]
-    });
-    manageTriggerEvent({
-      method: method,
-      eventType: 'Transition End',
-      eventNames: [
-        'transitionend',
-        'webkitTransitionEnd',
-        'MSTransitionEnd',
-        'oTransitionEnd',
-        'otransitionend'
-      ]
-    });
-    if ('child' === resizeFrom) {
-      manageTriggerEvent({
-        method: method,
-        eventType: 'IFrame Resized',
-        eventName: 'resize'
-      });
-    }
-  }
-
-  function checkCalcMode(calcMode, calcModeDefault, modes, type) {
-    if (calcModeDefault !== calcMode) {
-      if (!(calcMode in modes)) {
-        warn(
-          calcMode + ' is not a valid option for ' + type + 'CalculationMethod.'
-        );
-        calcMode = calcModeDefault;
-      }
-      log(type + ' calculation method set to "' + calcMode + '"');
-    }
-
-    return calcMode
-  }
-
-  function checkHeightMode() {
-    heightCalcMode = checkCalcMode(
-      heightCalcMode,
-      heightCalcModeDefault,
-      getHeight,
-      'height'
-    );
-  }
-
-  function checkWidthMode() {
-    widthCalcMode = checkCalcMode(
-      widthCalcMode,
-      widthCalcModeDefault,
-      getWidth,
-      'width'
-    );
-  }
-
-  function startEventListeners() {
-    if (true === autoResize) {
-      manageEventListeners('add');
-      setupMutationObserver();
-    } else {
-      log('Auto Resize disabled');
-    }
-  }
-
-  //   function stopMsgsToParent() {
-  //     log('Disable outgoing messages')
-  //     sendPermit = false
-  //   }
-
-  //   function removeMsgListener() {
-  //     log('Remove event listener: Message')
-  //     removeEventListener(window, 'message', receiver)
-  //   }
-
-  function disconnectMutationObserver() {
-    if (null !== bodyObserver) {
-      /* istanbul ignore next */ // Not testable in PhantonJS
-      bodyObserver.disconnect();
-    }
-  }
-
-  function stopEventListeners() {
-    manageEventListeners('remove');
-    disconnectMutationObserver();
-    clearInterval(intervalTimer);
-  }
-
-  //   function teardown() {
-  //     stopMsgsToParent()
-  //     removeMsgListener()
-  //     if (true === autoResize) stopEventListeners()
-  //   }
-
-  function injectClearFixIntoBodyElement() {
-    var clearFix = document.createElement('div');
-    clearFix.style.clear = 'both';
-    // Guard against the following having been globally redefined in CSS.
-    clearFix.style.display = 'block';
-    clearFix.style.height = '0';
-    document.body.appendChild(clearFix);
-  }
-
-  function setupInPageLinks() {
-    function getPagePosition() {
-      return {
-        x:
-          window.pageXOffset !== undefined$1
-            ? window.pageXOffset
-            : document.documentElement.scrollLeft,
-        y:
-          window.pageYOffset !== undefined$1
-            ? window.pageYOffset
-            : document.documentElement.scrollTop
-      }
-    }
-
-    function getElementPosition(el) {
-      var elPosition = el.getBoundingClientRect(),
-        pagePosition = getPagePosition();
-
-      return {
-        x: parseInt(elPosition.left, 10) + parseInt(pagePosition.x, 10),
-        y: parseInt(elPosition.top, 10) + parseInt(pagePosition.y, 10)
-      }
-    }
-
-    function findTarget(location) {
-      function jumpToTarget(target) {
-        var jumpPosition = getElementPosition(target);
-
-        log(
-          'Moving to in page link (#' +
-            hash +
-            ') at x: ' +
-            jumpPosition.x +
-            ' y: ' +
-            jumpPosition.y
-        );
-        sendMsg(jumpPosition.y, jumpPosition.x, 'scrollToOffset'); // X&Y reversed at sendMsg uses height/width
-      }
-
-      var hash = location.split('#')[1] || location, // Remove # if present
-        hashData = decodeURIComponent(hash),
-        target =
-          document.getElementById(hashData) ||
-          document.getElementsByName(hashData)[0];
-
-      if (undefined$1 !== target) {
-        jumpToTarget(target);
-      } else {
-        log(
-          'In page link (#' +
-            hash +
-            ') not found in iFrame, so sending to parent'
-        );
-        sendMsg(0, 0, 'inPageLink', '#' + hash);
-      }
-    }
-
-    function checkLocationHash() {
-      var hash = window.location.hash;
-      var href = window.location.href;
-
-      if ('' !== hash && '#' !== hash) {
-        findTarget(href);
-      }
-    }
-
-    function bindAnchors() {
-      function setupLink(el) {
-        function linkClicked(e) {
-          e.preventDefault();
-
-          /* jshint validthis:true */
-          findTarget(this.getAttribute('href'));
-        }
-
-        if ('#' !== el.getAttribute('href')) {
-          addEventListener(el, 'click', linkClicked);
-        }
-      }
-
-      Array.prototype.forEach.call(
-        document.querySelectorAll('a[href^="#"]'),
-        setupLink
-      );
-    }
-
-    function bindLocationHash() {
-      addEventListener(window, 'hashchange', checkLocationHash);
-    }
-
-    function initCheck() {
-      // Check if page loaded with location hash after init resize
-      setTimeout(checkLocationHash, eventCancelTimer);
-    }
-
-    function enableInPageLinks() {
-      /* istanbul ignore else */ // Not testable in phantonJS
-      if (Array.prototype.forEach && document.querySelectorAll) {
-        log('Setting up location.hash handlers');
-        bindAnchors();
-        bindLocationHash();
-        initCheck();
-      } else {
-        warn(
-          'In page linking not fully supported in this browser! (See README.md for IE8 workaround)'
-        );
-      }
-    }
-
-    if (inPageLinks.enable) {
-      enableInPageLinks();
-    } else {
-      log('In page linking not enabled');
-    }
-
-    return {
-      findTarget: findTarget
-    }
-  }
-
-  function setupMouseEvents() {
-    if (mouseEvents !== true) return
-
-    function sendMouse(e) {
-      sendMsg(0, 0, e.type, e.screenY + ':' + e.screenX);
-    }
-
-    function addMouseListener(evt, name) {
-      log('Add event listener: ' + name);
-      addEventListener(window.document, evt, sendMouse);
-    }
-
-    addMouseListener('mouseenter', 'Mouse Enter');
-    addMouseListener('mouseleave', 'Mouse Leave');
-  }
-
-  function setupPublicMethods() {
-    log('Enable public methods');
-
-    win.parentIFrame = {
-      autoResize: function autoResizeF(resize) {
-        if (true === resize && false === autoResize) {
-          autoResize = true;
-          startEventListeners();
-        } else if (false === resize && true === autoResize) {
-          autoResize = false;
-          stopEventListeners();
-        }
-        sendMsg(0, 0, 'autoResize', JSON.stringify(autoResize));
-        return autoResize
-      },
-
-      close: function closeF() {
-        sendMsg(0, 0, 'close');
-        // teardown()
-      },
-
-      getId: function getIdF() {
-        return myID
-      },
-
-      getPageInfo: function getPageInfoF(callback) {
-        if ('function' === typeof callback) {
-          onPageInfo = callback;
-          sendMsg(0, 0, 'pageInfo');
-        } else {
-          onPageInfo = function () {};
-          sendMsg(0, 0, 'pageInfoStop');
-        }
-      },
-
-      moveToAnchor: function moveToAnchorF(hash) {
-        inPageLinks.findTarget(hash);
-      },
-
-      reset: function resetF() {
-        resetIFrame('parentIFrame.reset');
-      },
-
-      scrollTo: function scrollToF(x, y) {
-        sendMsg(y, x, 'scrollTo'); // X&Y reversed at sendMsg uses height/width
-      },
-
-      scrollToOffset: function scrollToF(x, y) {
-        sendMsg(y, x, 'scrollToOffset'); // X&Y reversed at sendMsg uses height/width
-      },
-
-      sendMessage: function sendMessageF(msg, targetOrigin) {
-        sendMsg(0, 0, 'message', JSON.stringify(msg), targetOrigin);
-      },
-
-      setHeightCalculationMethod: function setHeightCalculationMethodF(
-        heightCalculationMethod
-      ) {
-        heightCalcMode = heightCalculationMethod;
-        checkHeightMode();
-      },
-
-      setWidthCalculationMethod: function setWidthCalculationMethodF(
-        widthCalculationMethod
-      ) {
-        widthCalcMode = widthCalculationMethod;
-        checkWidthMode();
-      },
-
-      setTargetOrigin: function setTargetOriginF(targetOrigin) {
-        log('Set targetOrigin: ' + targetOrigin);
-        targetOriginDefault = targetOrigin;
-      },
-
-      size: function sizeF(customHeight, customWidth) {
-        var valString =
-          '' + (customHeight || '') + (customWidth ? ',' + customWidth : '');
-        sendSize(
-          'size',
-          'parentIFrame.size(' + valString + ')',
-          customHeight,
-          customWidth
-        );
-      }
-    };
-  }
-
-  function initInterval() {
-    if (0 !== interval) {
-      log('setInterval: ' + interval + 'ms');
-      intervalTimer = setInterval(function () {
-        sendSize('interval', 'setInterval: ' + interval);
-      }, Math.abs(interval));
-    }
-  }
-
-  // Not testable in PhantomJS
-  /* istanbul ignore next */
-  function setupBodyMutationObserver() {
-    function addImageLoadListners(mutation) {
-      function addImageLoadListener(element) {
-        if (false === element.complete) {
-          log('Attach listeners to ' + element.src);
-          element.addEventListener('load', imageLoaded, false);
-          element.addEventListener('error', imageError, false);
-          elements.push(element);
-        }
-      }
-
-      if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
-        addImageLoadListener(mutation.target);
-      } else if (mutation.type === 'childList') {
-        Array.prototype.forEach.call(
-          mutation.target.querySelectorAll('img'),
-          addImageLoadListener
-        );
-      }
-    }
-
-    function removeFromArray(element) {
-      elements.splice(elements.indexOf(element), 1);
-    }
-
-    function removeImageLoadListener(element) {
-      log('Remove listeners from ' + element.src);
-      element.removeEventListener('load', imageLoaded, false);
-      element.removeEventListener('error', imageError, false);
-      removeFromArray(element);
-    }
-
-    function imageEventTriggered(event, type, typeDesc) {
-      removeImageLoadListener(event.target);
-      sendSize(type, typeDesc + ': ' + event.target.src);
-    }
-
-    function imageLoaded(event) {
-      imageEventTriggered(event, 'imageLoad', 'Image loaded');
-    }
-
-    function imageError(event) {
-      imageEventTriggered(event, 'imageLoadFailed', 'Image load failed');
-    }
-
-    function mutationObserved(mutations) {
-      sendSize(
-        'mutationObserver',
-        'mutationObserver: ' + mutations[0].target + ' ' + mutations[0].type
-      );
-
-      // Deal with WebKit / Blink asyncing image loading when tags are injected into the page
-      mutations.forEach(addImageLoadListners);
-    }
-
-    function createMutationObserver() {
-      var target = document.querySelector('body'),
-        config = {
-          attributes: true,
-          attributeOldValue: false,
-          characterData: true,
-          characterDataOldValue: false,
-          childList: true,
-          subtree: true
-        };
-
-      observer = new MutationObserver(mutationObserved);
-
-      log('Create body MutationObserver');
-      observer.observe(target, config);
-
-      return observer
-    }
-
-    var elements = [],
-      MutationObserver =
-        window.MutationObserver || window.WebKitMutationObserver,
-      observer = createMutationObserver();
-
-    return {
-      disconnect: function () {
-        if ('disconnect' in observer) {
-          log('Disconnect body MutationObserver');
-          observer.disconnect();
-          elements.forEach(removeImageLoadListener);
-        }
-      }
-    }
-  }
-
-  function setupMutationObserver() {
-    var forceIntervalTimer = 0 > interval;
-
-    // Not testable in PhantomJS
-    /* istanbul ignore if */ if (
-      window.MutationObserver ||
-      window.WebKitMutationObserver
-    ) {
-      if (forceIntervalTimer) {
-        initInterval();
-      } else {
-        bodyObserver = setupBodyMutationObserver();
-      }
-    } else {
-      log('MutationObserver not supported in this browser!');
-      initInterval();
-    }
-  }
-
-  // document.documentElement.offsetHeight is not reliable, so
-  // we have to jump through hoops to get a better value.
-  function getComputedStyle(prop, el) {
-    var retVal = 0;
-    el = el || document.body; // Not testable in phantonJS
-
-    retVal = document.defaultView.getComputedStyle(el, null);
-    retVal = null !== retVal ? retVal[prop] : 0;
-
-    return parseInt(retVal, base)
-  }
-
-  function chkEventThottle(timer) {
-    if (timer > throttledTimer / 2) {
-      throttledTimer = 2 * timer;
-      log('Event throttle increased to ' + throttledTimer + 'ms');
-    }
-  }
-
-  // Idea from https://github.com/guardian/iframe-messenger
-  function getMaxElement(side, elements) {
-    var elementsLength = elements.length,
-      elVal = 0,
-      maxVal = 0,
-      Side = capitalizeFirstLetter(side),
-      timer = Date.now();
-
-    for (var i = 0; i < elementsLength; i++) {
-      elVal =
-        elements[i].getBoundingClientRect()[side] +
-        getComputedStyle('margin' + Side, elements[i]);
-      if (elVal > maxVal) {
-        maxVal = elVal;
-      }
-    }
-
-    timer = Date.now() - timer;
-
-    log('Parsed ' + elementsLength + ' HTML elements');
-    log('Element position calculated in ' + timer + 'ms');
-
-    chkEventThottle(timer);
-
-    return maxVal
-  }
-
-  function getAllMeasurements(dimensions) {
-    return [
-      dimensions.bodyOffset(),
-      dimensions.bodyScroll(),
-      dimensions.documentElementOffset(),
-      dimensions.documentElementScroll()
-    ]
-  }
-
-  function getTaggedElements(side, tag) {
-    function noTaggedElementsFound() {
-      warn('No tagged elements (' + tag + ') found on page');
-      return document.querySelectorAll('body *')
-    }
-
-    var elements = document.querySelectorAll('[' + tag + ']');
-
-    if (elements.length === 0) noTaggedElementsFound();
-
-    return getMaxElement(side, elements)
-  }
-
-  function getAllElements() {
-    return document.querySelectorAll('body *')
-  }
-
-  var getHeight = {
-      bodyOffset: function getBodyOffsetHeight() {
-        return (
-          document.body.offsetHeight +
-          getComputedStyle('marginTop') +
-          getComputedStyle('marginBottom')
-        )
-      },
-
-      offset: function () {
-        return getHeight.bodyOffset() // Backwards compatability
-      },
-
-      bodyScroll: function getBodyScrollHeight() {
-        return document.body.scrollHeight
-      },
-
-      custom: function getCustomWidth() {
-        return customCalcMethods.height()
-      },
-
-      documentElementOffset: function getDEOffsetHeight() {
-        return document.documentElement.offsetHeight
-      },
-
-      documentElementScroll: function getDEScrollHeight() {
-        return document.documentElement.scrollHeight
-      },
-
-      max: function getMaxHeight() {
-        return Math.max.apply(null, getAllMeasurements(getHeight))
-      },
-
-      min: function getMinHeight() {
-        return Math.min.apply(null, getAllMeasurements(getHeight))
-      },
-
-      grow: function growHeight() {
-        return getHeight.max() // Run max without the forced downsizing
-      },
-
-      lowestElement: function getBestHeight() {
-        return Math.max(
-          getHeight.bodyOffset() || getHeight.documentElementOffset(),
-          getMaxElement('bottom', getAllElements())
-        )
-      },
-
-      taggedElement: function getTaggedElementsHeight() {
-        return getTaggedElements('bottom', 'data-iframe-height')
-      }
-    },
-    getWidth = {
-      bodyScroll: function getBodyScrollWidth() {
-        return document.body.scrollWidth
-      },
-
-      bodyOffset: function getBodyOffsetWidth() {
-        return document.body.offsetWidth
-      },
-
-      custom: function getCustomWidth() {
-        return customCalcMethods.width()
-      },
-
-      documentElementScroll: function getDEScrollWidth() {
-        return document.documentElement.scrollWidth
-      },
-
-      documentElementOffset: function getDEOffsetWidth() {
-        return document.documentElement.offsetWidth
-      },
-
-      scroll: function getMaxWidth() {
-        return Math.max(getWidth.bodyScroll(), getWidth.documentElementScroll())
-      },
-
-      max: function getMaxWidth() {
-        return Math.max.apply(null, getAllMeasurements(getWidth))
-      },
-
-      min: function getMinWidth() {
-        return Math.min.apply(null, getAllMeasurements(getWidth))
-      },
-
-      rightMostElement: function rightMostElement() {
-        return getMaxElement('right', getAllElements())
-      },
-
-      taggedElement: function getTaggedElementsWidth() {
-        return getTaggedElements('right', 'data-iframe-width')
-      }
-    };
-
-  function sizeIFrame(
-    triggerEvent,
-    triggerEventDesc,
-    customHeight,
-    customWidth
-  ) {
-    function resizeIFrame() {
-      height = currentHeight;
-      width = currentWidth;
-
-      sendMsg(height, width, triggerEvent);
-    }
-
-    function isSizeChangeDetected() {
-      function checkTolarance(a, b) {
-        var retVal = Math.abs(a - b) <= tolerance;
-        return !retVal
-      }
-
-      currentHeight =
-        undefined$1 !== customHeight ? customHeight : getHeight[heightCalcMode]();
-      currentWidth =
-        undefined$1 !== customWidth ? customWidth : getWidth[widthCalcMode]();
-
-      return (
-        checkTolarance(height, currentHeight) ||
-        (calculateWidth && checkTolarance(width, currentWidth))
-      )
-    }
-
-    function isForceResizableEvent() {
-      return !(triggerEvent in { init: 1, interval: 1, size: 1 })
-    }
-
-    function isForceResizableCalcMode() {
-      return (
-        heightCalcMode in resetRequiredMethods ||
-        (calculateWidth && widthCalcMode in resetRequiredMethods)
-      )
-    }
-
-    function logIgnored() {
-      log('No change in size detected');
-    }
-
-    function checkDownSizing() {
-      if (isForceResizableEvent() && isForceResizableCalcMode()) {
-        resetIFrame(triggerEventDesc);
-      } else if (!(triggerEvent in { interval: 1 })) {
-        logIgnored();
-      }
-    }
-
-    var currentHeight, currentWidth;
-
-    if (isSizeChangeDetected() || 'init' === triggerEvent) {
-      lockTrigger();
-      resizeIFrame();
-    } else {
-      checkDownSizing();
-    }
-  }
-
-  var sizeIFrameThrottled = throttle(sizeIFrame);
-
-  function sendSize(triggerEvent, triggerEventDesc, customHeight, customWidth) {
-    function recordTrigger() {
-      if (!(triggerEvent in { reset: 1, resetPage: 1, init: 1 })) {
-        log('Trigger event: ' + triggerEventDesc);
-      }
-    }
-
-    function isDoubleFiredEvent() {
-      return triggerLocked && triggerEvent in doubleEventList
-    }
-
-    if (!isDoubleFiredEvent()) {
-      recordTrigger();
-      if (triggerEvent === 'init') {
-        sizeIFrame(triggerEvent, triggerEventDesc, customHeight, customWidth);
-      } else {
-        sizeIFrameThrottled(
-          triggerEvent,
-          triggerEventDesc,
-          customHeight,
-          customWidth
-        );
-      }
-    } else {
-      log('Trigger event cancelled: ' + triggerEvent);
-    }
-  }
-
-  function lockTrigger() {
-    if (!triggerLocked) {
-      triggerLocked = true;
-      log('Trigger event lock on');
-    }
-    clearTimeout(triggerLockedTimer);
-    triggerLockedTimer = setTimeout(function () {
-      triggerLocked = false;
-      log('Trigger event lock off');
-      log('--');
-    }, eventCancelTimer);
-  }
-
-  function triggerReset(triggerEvent) {
-    height = getHeight[heightCalcMode]();
-    width = getWidth[widthCalcMode]();
-
-    sendMsg(height, width, triggerEvent);
-  }
-
-  function resetIFrame(triggerEventDesc) {
-    var hcm = heightCalcMode;
-    heightCalcMode = heightCalcModeDefault;
-
-    log('Reset trigger event: ' + triggerEventDesc);
-    lockTrigger();
-    triggerReset('reset');
-
-    heightCalcMode = hcm;
-  }
-
-  function sendMsg(height, width, triggerEvent, msg, targetOrigin) {
-    function setTargetOrigin() {
-      if (undefined$1 === targetOrigin) {
-        targetOrigin = targetOriginDefault;
-      } else {
-        log('Message targetOrigin: ' + targetOrigin);
-      }
-    }
-
-    function sendToParent() {
-      var size = height + ':' + width,
-        message =
-          myID +
-          ':' +
-          size +
-          ':' +
-          triggerEvent +
-          (undefined$1 !== msg ? ':' + msg : '');
-
-      log('Sending message to host page (' + message + ')');
-      target.postMessage(msgID + message, targetOrigin);
-    }
-
-    {
-      setTargetOrigin();
-      sendToParent();
-    }
-  }
-
-  function receiver(event) {
-    var processRequestFromParent = {
-      init: function initFromParent() {
-        initMsg = event.data;
-        target = event.source;
-
-        init();
-        firstRun = false;
-        setTimeout(function () {
-          initLock = false;
-        }, eventCancelTimer);
-      },
-
-      reset: function resetFromParent() {
-        if (!initLock) {
-          log('Page size reset by host page');
-          triggerReset('resetPage');
-        } else {
-          log('Page reset ignored by init');
-        }
-      },
-
-      resize: function resizeFromParent() {
-        sendSize('resizeParent', 'Parent window requested size check');
-      },
-
-      moveToAnchor: function moveToAnchorF() {
-        inPageLinks.findTarget(getData());
-      },
-      inPageLink: function inPageLinkF() {
-        this.moveToAnchor();
-      }, // Backward compatability
-
-      pageInfo: function pageInfoFromParent() {
-        var msgBody = getData();
-        log('PageInfoFromParent called from parent: ' + msgBody);
-        onPageInfo(JSON.parse(msgBody));
-        log(' --');
-      },
-
-      message: function messageFromParent() {
-        var msgBody = getData();
-
-        log('onMessage called from parent: ' + msgBody);
-        // eslint-disable-next-line sonarjs/no-extra-arguments
-        onMessage(JSON.parse(msgBody));
-        log(' --');
-      }
-    };
-
-    function isMessageForUs() {
-      return msgID === ('' + event.data).substr(0, msgIdLen) // ''+ Protects against non-string messages
-    }
-
-    function getMessageType() {
-      return event.data.split(']')[1].split(':')[0]
-    }
-
-    function getData() {
-      return event.data.substr(event.data.indexOf(':') + 1)
-    }
-
-    function isMiddleTier() {
-      return (
-        (!(module.exports) &&
-          'iFrameResize' in window) ||
-        ('jQuery' in window && 'iFrameResize' in window.jQuery.prototype)
-      )
-    }
-
-    function isInitMsg() {
-      // Test if this message is from a child below us. This is an ugly test, however, updating
-      // the message format would break backwards compatibity.
-      return event.data.split(':')[2] in { true: 1, false: 1 }
-    }
-
-    function callFromParent() {
-      var messageType = getMessageType();
-
-      if (messageType in processRequestFromParent) {
-        processRequestFromParent[messageType]();
-      } else if (!isMiddleTier() && !isInitMsg()) {
-        warn('Unexpected message (' + event.data + ')');
-      }
-    }
-
-    function processMessage() {
-      if (false === firstRun) {
-        callFromParent();
-      } else if (isInitMsg()) {
-        processRequestFromParent.init();
-      } else {
-        log(
-          'Ignored message of type "' +
-            getMessageType() +
-            '". Received before initialization.'
-        );
-      }
-    }
-
-    if (isMessageForUs()) {
-      processMessage();
-    }
-  }
-
-  // Normally the parent kicks things off when it detects the iFrame has loaded.
-  // If this script is async-loaded, then tell parent page to retry init.
-  function chkLateLoaded() {
-    if ('loading' !== document.readyState) {
-      window.parent.postMessage('[iFrameResizerChild]Ready', '*');
-    }
-  }
-
-  addEventListener(window, 'message', receiver);
-  addEventListener(window, 'readystatechange', chkLateLoaded);
-  chkLateLoaded();
-
-  
-})();
-});
-
-var iframeResize_1 = iframeResizer$2;
-var iframeResizer$1 = iframeResizer$2; // Backwards compatability
-var iframeResizerContentWindow = iframeResizer_contentWindow;
-
-var js = {
-	iframeResize: iframeResize_1,
-	iframeResizer: iframeResizer$1,
-	iframeResizerContentWindow: iframeResizerContentWindow
-};
-
-var iframeResizer = js;
-
-const ClCart = class {
-  constructor(hostRef) {
-    registerInstance(this, hostRef);
-  }
-  async componentWillLoad() {
-    this.href = await getCartUrl();
-  }
-  componentDidLoad() {
-    iframeResizer.iframeResizer({
-      checkOrigin: false,
-      // 'messageCallback' has been renamed 'onMessage'. The old method will be removed in the next major version.
-      // @ts-expect-error
-      onMessage(data) {
-        if (data.message.type === 'updateCart') {
-          triggerCartUpdate(null).catch((error) => {
-            throw error;
-          });
-        }
-      }
-    }, this.iframe);
-  }
-  render() {
-    return (h$1(Host, null, h$1("iframe", { ref: (el) => (this.iframe = el), src: this.href, frameBorder: 0, style: {
-        width: '1px',
-        'min-width': '100%',
-        'min-height': '100%',
-        overflow: 'hidden'
-      }, scrolling: 'no' })));
-  }
-  get host() { return getElement(this); }
-};
-
-const ClCartCount = class {
-  constructor(hostRef) {
-    registerInstance(this, hostRef);
-  }
-  async componentWillLoad() {
-    await triggerCartUpdate(null);
-  }
-  cartUpdateHandler(event) {
-    if (event.detail.skus_count !== undefined && event.detail.skus_count > 0) {
-      this.count = event.detail.skus_count;
-    }
-    else {
-      this.count = undefined;
-    }
-  }
-  render() {
-    return h$1(Host, { quantity: this.count }, this.count);
-  }
-};
-
-const CLCartLink = class {
-  constructor(hostRef) {
-    registerInstance(this, hostRef);
-    /**
-     * Target
-     */
-    this.target = '_self';
-  }
-  async componentWillLoad() {
-    this.href = await getCartUrl();
-  }
-  async handleClick(event) {
-    if (this.href === undefined || !isValidUrl(this.href)) {
-      event.preventDefault();
-      this.href = await getCartUrl(true);
-      window.open(this.href, this.target);
-    }
-  }
-  async cartUpdateHandler(_event) {
-    if (this.href === undefined || !isValidUrl(this.href)) {
-      this.href = await getCartUrl();
-    }
-  }
-  render() {
-    return (h$1("a", { target: this.target, href: this.href, onClick: (e) => {
-        this.handleClick(e).catch((error) => {
-          throw error;
-        });
-      } }, h$1("slot", null)));
-  }
-  get host() { return getElement(this); }
-};
-
-const _getPrices = async (skus) => {
-  const client = await createClient(getConfig());
-  const uniqSkus = uniq(skus);
-  const log = logGroup('getPrices invoked');
-  log('info', `found`, uniqSkus.length);
-  log('info', 'unique skus', uniqSkus);
-  const pageSize = 25;
-  const chunkedSkus = chunk(uniqSkus, pageSize);
-  const pricesResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
-    return await client.prices.list({
-      pageSize,
-      filters: { sku_code_in: skus.join(',') }
-    });
-  }))).flat();
-  // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
-  const prices = pricesResponse.reduce((prices, price) => {
-    if (price.sku_code !== undefined) {
-      prices[price.sku_code] = price;
-    }
-    return prices;
-  }, {});
-  log.end();
-  return prices;
-};
-const getPrices = pDebounce(_getPrices, { wait: 50, maxWait: 100 });
-const getPrice = memoize(async (sku) => {
-  return await getPrices([sku]).then((result) => result[sku]);
-});
-
-const CLPrice = class {
-  constructor(hostRef) {
-    registerInstance(this, hostRef);
-  }
-  logSku(sku) {
-    if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not string.', this.host);
-    }
-  }
-  validateSku(sku) {
-    return typeof sku === 'string' && sku !== '';
-  }
-  async componentWillLoad() {
-    if (this.validateSku(this.sku)) {
-      const price = await getPrice(this.sku);
-      if (price !== undefined) {
-        this.updatePrice(price);
-      }
-    }
-    this.logSku(this.sku);
-  }
-  watchPropHandler(newValue, _oldValue) {
-    this.logSku(newValue);
-  }
-  updatePrice(price) {
-    this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-      element.dispatchEvent(new CustomEvent('priceUpdate', { detail: price }));
-    });
-  }
-  render() {
-    return h$1("slot", null);
-  }
-  get host() { return getElement(this); }
-  static get watchers() { return {
-    "sku": ["watchPropHandler"]
-  }; }
-};
-
-const CLPriceAmount = class {
-  constructor(hostRef) {
-    registerInstance(this, hostRef);
-    this.type = 'price';
-  }
-  priceUpdateHandler(event) {
-    switch (this.type) {
-      case 'compare-at':
-        this.price = event.detail.formatted_compare_at_amount;
-        break;
-      case 'price':
-        this.price = event.detail.formatted_amount;
-        break;
-    }
-  }
-  render() {
-    return (h$1(Host, null, this.type === 'compare-at' ? (h$1("s", { part: 'strikethrough' }, this.price)) : (this.price)));
-  }
-};
-
-export { CLAddToCart as cl_add_to_cart, ClCart as cl_cart, ClCartCount as cl_cart_count, CLCartLink as cl_cart_link, CLPrice as cl_price, CLPriceAmount as cl_price_amount };
+exports.chunk = chunk;
+exports.createClient = createClient;
+exports.createCommonjsModule = createCommonjsModule;
+exports.getAccessToken = getAccessToken;
+exports.getConfig = getConfig;
+exports.getKeyForCart = getKeyForCart;
+exports.js_cookie = js_cookie;
+exports.memoize = memoize;
+exports.pDebounce = pDebounce;
+exports.uniq = uniq;
