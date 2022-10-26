@@ -1,0 +1,37 @@
+[
+  {
+    "reference": "delivery_lead_time_1",
+    "stock_location": "stock_location_1",
+    "shipping_method": "shipping_method_1",
+    "min_hours": 72,
+    "max_hours": 120
+  },
+  {
+    "reference": "delivery_lead_time_2",
+    "stock_location": "stock_location_1",
+    "shipping_method": "shipping_method_2",
+    "min_hours": 48,
+    "max_hours": 72
+  },
+  {
+    "reference": "delivery_lead_time_3",
+    "stock_location": "stock_location_2",
+    "shipping_method": "shipping_method_2",
+    "min_hours": 72,
+    "max_hours": 96
+  },
+  {
+    "reference": "delivery_lead_time_4",
+    "stock_location": "stock_location_1",
+    "shipping_method": "shipping_method_3",
+    "min_hours": 96,
+    "max_hours": 144
+  },
+  {
+    "reference": "delivery_lead_time_5",
+    "stock_location": "stock_location_2",
+    "shipping_method": "shipping_method_3",
+    "min_hours": 72,
+    "max_hours": 96
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "reference": "inventory_return_location_1",
+    "inventory_model": "inventory_model_1",
+    "stock_location": "stock_location_1",
+    "priority": 1
+  },
+  {
+    "reference": "inventory_return_location_2",
+    "inventory_model": "inventory_model_1",
+    "stock_location": "stock_location_2",
+    "priority": 2
+  },
+  {
+    "reference": "inventory_return_location_3",
+    "inventory_model": "inventory_model_2",
+    "stock_location": "stock_location_1",
+    "priority": 2
+  },
+  {
+    "reference": "inventory_return_location_4",
+    "inventory_model": "inventory_model_2",
+    "stock_location": "stock_location_2",
+    "priority": 1
+  }
+]

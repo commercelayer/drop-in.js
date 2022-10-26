@@ -73,3 +73,20 @@ The first step for all three of these strategies is to [publish to NPM](https://
 - Run `npm install my-component --save`
 - Add an import to the npm packages `import my-component;`
 - Then you can use the element anywhere in your template, JSX, html etc
+
+## Sample Data
+
+```sh
+npm install -g @commercelayer/cli
+
+commercelayer plugins:install seeder
+commercelayer plugins:install imports
+
+commercelayer applications:login \
+  -i Oy5F2TbPYhOZsxy1tQd9ZVZ... \
+  -s 1ZHNJUgn_1lh1mel06gGDqa... \
+  -o my-awesome-organization \
+  -a admin
+
+commercelayer seeder:seed -b custom -n drop_in -u ./packages/drop-in/seed
+```

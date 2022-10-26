@@ -1,0 +1,10 @@
+[
+  {
+    "reference": "inventory_model_1",
+    "name": "Europe's Inventory"
+  },
+  {
+    "reference": "inventory_model_2",
+    "name": "USA's Inventory"
+  }
+]

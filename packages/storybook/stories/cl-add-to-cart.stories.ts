@@ -58,3 +58,8 @@ export const OutOfStock = Template.bind({})
 OutOfStock.args = {
   sku: skus.outOfStock
 }
+
+export const Nonexisting = Template.bind({})
+Nonexisting.args = {
+  sku: skus.nonexisting
+}

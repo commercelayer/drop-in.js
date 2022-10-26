@@ -4,9 +4,9 @@ import type { E2EPage } from '@stencil/core/testing'
 type Cookie = Awaited<ReturnType<E2EPage['cookies']>>[number]
 
 export function getCommerceLayerConfiguration({
-  clientId = 'xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU',
-  slug = 'demo-store-1',
-  scope = 'market:10426'
+  clientId = 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+  slug = 'drop-in-js',
+  scope = 'market:11709'
 }: Partial<CommerceLayerConfig> = {}): string {
   return `
     <script>
@@ -39,7 +39,7 @@ export async function getCartId(page: E2EPage): Promise<string | null> {
 
 export async function getAccessToken(page: E2EPage): Promise<string | null> {
   const cookieName =
-    'commercelayer_token-xOyPGgmYM3DPKyxpC6RoLkx0bgQAZ-FX2T2ogRf9vuU-market:10426'
+    'commercelayer_token-kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8-market:11709'
   const cookie = await getCookie(page, cookieName)
 
   return cookie?.value ?? null

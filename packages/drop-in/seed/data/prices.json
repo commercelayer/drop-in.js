@@ -1,0 +1,317 @@
+[
+  {
+    "reference": "price_1",
+    "sku_code": "5PANECAP000000FFFFFFXXXX",
+    "amount_cents": 2600,
+    "compare_at_amount_cents": 3770,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_251",
+    "sku_code": "5PANECAP000000FFFFFFXXXX",
+    "amount_cents": 3100,
+    "compare_at_amount_cents": 3900,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_501",
+    "sku_code": "5PANECAP000000FFFFFFXXXX",
+    "amount_cents": 2250,
+    "compare_at_amount_cents": 3310,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_2",
+    "sku_code": "5PANECAP9D9CA1FFFFFFXXXX",
+    "amount_cents": 2600,
+    "compare_at_amount_cents": 3770,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_252",
+    "sku_code": "5PANECAP9D9CA1FFFFFFXXXX",
+    "amount_cents": 3100,
+    "compare_at_amount_cents": 3900,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_502",
+    "sku_code": "5PANECAP9D9CA1FFFFFFXXXX",
+    "amount_cents": 2250,
+    "compare_at_amount_cents": 3310,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_6",
+    "sku_code": "BACKPACK000000FFFFFFXXXX",
+    "amount_cents": 8000,
+    "compare_at_amount_cents": 9900,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_256",
+    "sku_code": "BACKPACK000000FFFFFFXXXX",
+    "amount_cents": 9500,
+    "compare_at_amount_cents": 11000,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_506",
+    "sku_code": "BACKPACK000000FFFFFFXXXX",
+    "amount_cents": 7550,
+    "compare_at_amount_cents": 9110,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_7",
+    "sku_code": "BACKPACK818488000000XXXX",
+    "amount_cents": 10900,
+    "compare_at_amount_cents": 12900,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_257",
+    "sku_code": "BACKPACK818488000000XXXX",
+    "amount_cents": 13000,
+    "compare_at_amount_cents": 15200,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_507",
+    "sku_code": "BACKPACK818488000000XXXX",
+    "amount_cents": 10000,
+    "compare_at_amount_cents": 13330,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_8",
+    "sku_code": "BACKPACKFFFFFF000000XXXX",
+    "amount_cents": 8000,
+    "compare_at_amount_cents": 9900,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_258",
+    "sku_code": "BACKPACKFFFFFF000000XXXX",
+    "amount_cents": 9500,
+    "compare_at_amount_cents": 11000,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_508",
+    "sku_code": "BACKPACKFFFFFF000000XXXX",
+    "amount_cents": 7550,
+    "compare_at_amount_cents": 9110,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_21",
+    "sku_code": "BOTT17OZFFFFFF000000XXXX",
+    "amount_cents": 3500,
+    "compare_at_amount_cents": 4490,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_271",
+    "sku_code": "BOTT17OZFFFFFF000000XXXX",
+    "amount_cents": 4000,
+    "compare_at_amount_cents": 4900,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_521",
+    "sku_code": "BOTT17OZFFFFFF000000XXXX",
+    "amount_cents": 3200,
+    "compare_at_amount_cents": 3990,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_41",
+    "sku_code": "DUFFLBAG000000FFFFFFXXXX",
+    "amount_cents": 5000,
+    "compare_at_amount_cents": 5990,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_291",
+    "sku_code": "DUFFLBAG000000FFFFFFXXXX",
+    "amount_cents": 5500,
+    "compare_at_amount_cents": 6390,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_541",
+    "sku_code": "DUFFLBAG000000FFFFFFXXXX",
+    "amount_cents": 4700,
+    "compare_at_amount_cents": 5550,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_60",
+    "sku_code": "GMUG11OZFFFFFF000000XXXX",
+    "amount_cents": 1990,
+    "compare_at_amount_cents": 2500,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_310",
+    "sku_code": "GMUG11OZFFFFFF000000XXXX",
+    "amount_cents": 2330,
+    "compare_at_amount_cents": 2990,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_560",
+    "sku_code": "GMUG11OZFFFFFF000000XXXX",
+    "amount_cents": 1690,
+    "compare_at_amount_cents": 2290,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_107",
+    "sku_code": "POLOMXXX000000FFFFFFLXXX",
+    "amount_cents": 8990,
+    "compare_at_amount_cents": 10000,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_357",
+    "sku_code": "POLOMXXX000000FFFFFFLXXX",
+    "amount_cents": 10700,
+    "compare_at_amount_cents": 11990,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_607",
+    "sku_code": "POLOMXXX000000FFFFFFLXXX",
+    "amount_cents": 8260,
+    "compare_at_amount_cents": 9250,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_108",
+    "sku_code": "POLOMXXX000000FFFFFFMXXX",
+    "amount_cents": 8990,
+    "compare_at_amount_cents": 10000,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_358",
+    "sku_code": "POLOMXXX000000FFFFFFMXXX",
+    "amount_cents": 10700,
+    "compare_at_amount_cents": 11990,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_608",
+    "sku_code": "POLOMXXX000000FFFFFFMXXX",
+    "amount_cents": 8260,
+    "compare_at_amount_cents": 9250,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_109",
+    "sku_code": "POLOMXXX000000FFFFFFSXXX",
+    "amount_cents": 8990,
+    "compare_at_amount_cents": 10000,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_359",
+    "sku_code": "POLOMXXX000000FFFFFFSXXX",
+    "amount_cents": 10700,
+    "compare_at_amount_cents": 11990,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_609",
+    "sku_code": "POLOMXXX000000FFFFFFSXXX",
+    "amount_cents": 8260,
+    "compare_at_amount_cents": 9250,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_223",
+    "sku_code": "TSHIRTMSFFFFFF000000LXXX",
+    "amount_cents": 3470,
+    "compare_at_amount_cents": 4290,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_473",
+    "sku_code": "TSHIRTMSFFFFFF000000LXXX",
+    "amount_cents": 3970,
+    "compare_at_amount_cents": 4440,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_723",
+    "sku_code": "TSHIRTMSFFFFFF000000LXXX",
+    "amount_cents": 3110,
+    "compare_at_amount_cents": 3550,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_224",
+    "sku_code": "TSHIRTMSFFFFFF000000MXXX",
+    "amount_cents": 3470,
+    "compare_at_amount_cents": 4290,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_474",
+    "sku_code": "TSHIRTMSFFFFFF000000MXXX",
+    "amount_cents": 3970,
+    "compare_at_amount_cents": 4440,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_724",
+    "sku_code": "TSHIRTMSFFFFFF000000MXXX",
+    "amount_cents": 3110,
+    "compare_at_amount_cents": 3550,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_225",
+    "sku_code": "TSHIRTMSFFFFFF000000SXXX",
+    "amount_cents": 3470,
+    "compare_at_amount_cents": 4290,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_475",
+    "sku_code": "TSHIRTMSFFFFFF000000SXXX",
+    "amount_cents": 3970,
+    "compare_at_amount_cents": 4440,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_725",
+    "sku_code": "TSHIRTMSFFFFFF000000SXXX",
+    "amount_cents": 3110,
+    "compare_at_amount_cents": 3550,
+    "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_226",
+    "sku_code": "TSHIRTMSFFFFFF000000XLXX",
+    "amount_cents": 3470,
+    "compare_at_amount_cents": 4290,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_476",
+    "sku_code": "TSHIRTMSFFFFFF000000XLXX",
+    "amount_cents": 3970,
+    "compare_at_amount_cents": 4440,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_726",
+    "sku_code": "TSHIRTMSFFFFFF000000XLXX",
+    "amount_cents": 3110,
+    "compare_at_amount_cents": 3550,
+    "price_list": "price_list_3"
+  }
+]

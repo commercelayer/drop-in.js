@@ -1,0 +1,23 @@
+[
+  {
+    "reference": "market_1",
+    "merchant": "merchant_1",
+    "inventory_model": "inventory_model_1",
+    "price_list": "price_list_1",
+    "name": "Europe"
+  },
+  {
+    "reference": "market_2",
+    "merchant": "merchant_1",
+    "inventory_model": "inventory_model_2",
+    "price_list": "price_list_2",
+    "name": "USA"
+  },
+  {
+    "reference": "market_3",
+    "merchant": "merchant_1",
+    "inventory_model": "inventory_model_1",
+    "price_list": "price_list_3",
+    "name": "UK"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "reference": "address_1",
+    "business": true,
+    "company": "The Brand SRL",
+    "line_1": "Via Roma 123",
+    "city": "Firenze",
+    "zip_code": "50123",
+    "state_code": "FI",
+    "country_code": "IT",
+    "phone": "+39 055 1234567890",
+    "email": "touch@example.com"
+  },
+  {
+    "reference": "address_2",
+    "business": true,
+    "company": "The Brand USA Inc.",
+    "line_1": "50 Hartz Way",
+    "city": "Secaucus, New York",
+    "zip_code": "7094",
+    "state_code": "NY",
+    "country_code": "US",
+    "phone": "+1.201.22.33.444",
+    "email": "touch@example.com"
+  }
+]

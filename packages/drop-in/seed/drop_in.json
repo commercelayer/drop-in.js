@@ -1,0 +1,81 @@
+[
+  {
+    "resourceType": "addresses",
+    "referenceKeys": ["address_1", "address_2"]
+  },
+  {
+    "resourceType": "merchants",
+    "referenceKeys": ["merchant_1"]
+  },
+  {
+    "resourceType": "stock_locations",
+    "referenceKeys": ["stock_location_1", "stock_location_2"]
+  },
+  {
+    "resourceType": "inventory_models",
+    "referenceKeys": ["inventory_model_1", "inventory_model_2"]
+  },
+  {
+    "resourceType": "inventory_stock_locations",
+    "referenceKeys": [
+      "inventory_stock_location_1",
+      "inventory_stock_location_2",
+      "inventory_stock_location_3",
+      "inventory_stock_location_4"
+    ]
+  },
+  {
+    "resourceType": "inventory_return_locations",
+    "referenceKeys": [
+      "inventory_return_location_1",
+      "inventory_return_location_2",
+      "inventory_return_location_3",
+      "inventory_return_location_4"
+    ]
+  },
+  {
+    "resourceType": "price_lists",
+    "referenceKeys": ["price_list_1", "price_list_2", "price_list_3"]
+  },
+  {
+    "resourceType": "markets",
+    "referenceKeys": ["market_1", "market_2", "market_3"]
+  },
+  {
+    "resourceType": "shipping_categories",
+    "referenceKeys": ["shipping_category_1"]
+  },
+  {
+    "resourceType": "shipping_zones",
+    "referenceKeys": ["shipping_zone_1", "shipping_zone_2"]
+  },
+  {
+    "resourceType": "shipping_methods",
+    "referenceKeys": [
+      "shipping_method_1",
+      "shipping_method_2",
+      "shipping_method_3",
+      "shipping_method_4"
+    ]
+  },
+  {
+    "resourceType": "payment_gateways",
+    "referenceKeys": ["payment_gateway_1"]
+  },
+  {
+    "resourceType": "payment_methods",
+    "referenceKeys": ["payment_method_1", "payment_method_2", "payment_method_3"]
+  },
+  {
+    "importAll": true,
+    "resourceType": "skus"
+  },
+  {
+    "importAll": true,
+    "resourceType": "stock_items"
+  },
+  {
+    "importAll": true,
+    "resourceType": "prices"
+  }
+]

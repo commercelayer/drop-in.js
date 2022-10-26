@@ -1,0 +1,7 @@
+[
+  {
+    "type": "manual_gateways",
+    "reference": "payment_gateway_1",
+    "name": "Manual Gateway"
+  }
+]

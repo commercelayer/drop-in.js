@@ -1,0 +1,182 @@
+[
+  {
+    "reference": "stock_item_1",
+    "sku_code": "5PANECAP000000FFFFFFXXXX",
+    "quantity": 392,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_2",
+    "sku_code": "5PANECAP9D9CA1FFFFFFXXXX",
+    "quantity": 0,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_6",
+    "sku_code": "BACKPACK000000FFFFFFXXXX",
+    "quantity": 113,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_7",
+    "sku_code": "BACKPACK818488000000XXXX",
+    "quantity": 277,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_8",
+    "sku_code": "BACKPACKFFFFFF000000XXXX",
+    "quantity": 432,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_21",
+    "sku_code": "BOTT17OZFFFFFF000000XXXX",
+    "quantity": 324,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_41",
+    "sku_code": "DUFFLBAG000000FFFFFFXXXX",
+    "quantity": 319,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_60",
+    "sku_code": "GMUG11OZFFFFFF000000XXXX",
+    "quantity": 82,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_107",
+    "sku_code": "POLOMXXX000000FFFFFFLXXX",
+    "quantity": 439,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_108",
+    "sku_code": "POLOMXXX000000FFFFFFMXXX",
+    "quantity": 635,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_109",
+    "sku_code": "POLOMXXX000000FFFFFFSXXX",
+    "quantity": 122,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_223",
+    "sku_code": "TSHIRTMSFFFFFF000000LXXX",
+    "quantity": 524,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_224",
+    "sku_code": "TSHIRTMSFFFFFF000000MXXX",
+    "quantity": 975,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_225",
+    "sku_code": "TSHIRTMSFFFFFF000000SXXX",
+    "quantity": 557,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_226",
+    "sku_code": "TSHIRTMSFFFFFF000000XLXX",
+    "quantity": 658,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_251",
+    "sku_code": "5PANECAP000000FFFFFFXXXX",
+    "quantity": 236,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_252",
+    "sku_code": "5PANECAP9D9CA1FFFFFFXXXX",
+    "quantity": 0,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_256",
+    "sku_code": "BACKPACK000000FFFFFFXXXX",
+    "quantity": 290,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_257",
+    "sku_code": "BACKPACK818488000000XXXX",
+    "quantity": 130,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_258",
+    "sku_code": "BACKPACKFFFFFF000000XXXX",
+    "quantity": 98,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_271",
+    "sku_code": "BOTT17OZFFFFFF000000XXXX",
+    "quantity": 387,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_291",
+    "sku_code": "DUFFLBAG000000FFFFFFXXXX",
+    "quantity": 935,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_310",
+    "sku_code": "GMUG11OZFFFFFF000000XXXX",
+    "quantity": 306,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_357",
+    "sku_code": "POLOMXXX000000FFFFFFLXXX",
+    "quantity": 560,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_358",
+    "sku_code": "POLOMXXX000000FFFFFFMXXX",
+    "quantity": 147,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_359",
+    "sku_code": "POLOMXXX000000FFFFFFSXXX",
+    "quantity": 539,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_473",
+    "sku_code": "TSHIRTMSFFFFFF000000LXXX",
+    "quantity": 728,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_474",
+    "sku_code": "TSHIRTMSFFFFFF000000MXXX",
+    "quantity": 97,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_475",
+    "sku_code": "TSHIRTMSFFFFFF000000SXXX",
+    "quantity": 292,
+    "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_476",
+    "sku_code": "TSHIRTMSFFFFFF000000XLXX",
+    "quantity": 166,
+    "stock_location": "stock_location_2"
+  }
+]
