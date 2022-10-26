@@ -1,6 +1,8 @@
 import type { Price } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { CLPrice } from './cl-price'
+import * as prices from '#apis/commercelayer/prices'
+import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
 
 describe('cl-price.spec', () => {
   it('renders without attributes', async () => {
@@ -32,17 +34,7 @@ describe('cl-price.spec', () => {
   })
 
   it('should pass-throw the "price Update" event to children', async () => {
-    const { root, waitForChanges, doc } = await newSpecPage({
-      components: [CLPrice],
-      html: `
-        <cl-price sku="BACKPACK818488000000XXXX">
-          <cl-price-amount></cl-price-amount>
-          <another-tag></another-tag>
-        </cl-price>
-      `
-    })
-
-    const priceUpdateEvent: Price = {
+    const fakePrice: Price = {
       id: 'ABC123',
       type: 'prices',
       created_at: new Date().toISOString(),
@@ -51,39 +43,30 @@ describe('cl-price.spec', () => {
       formatted_compare_at_amount: '€ 28.50'
     }
 
-    await waitForChanges()
+    jest.spyOn(prices, 'getPrice').mockResolvedValue(fakePrice)
 
-    const clPrice = doc.querySelector('cl-price') ?? null
-    const clPriceAmount = doc.querySelector('cl-price-amount') ?? null
-    const anotherTag = doc.querySelector('another-tag') ?? null
-
-    const clPriceAmountEventHandler = jest.fn()
-    const anotherTagEventHandler = jest.fn()
-
-    clPriceAmount?.addEventListener('priceUpdate', clPriceAmountEventHandler)
-    anotherTag?.addEventListener('priceUpdate', anotherTagEventHandler)
-
-    clPrice?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
-        detail: priceUpdateEvent
-      })
-    )
-
-    expect(clPriceAmountEventHandler).toHaveBeenCalledTimes(1)
-    expect(clPriceAmountEventHandler.mock.calls[0][0]).toMatchObject({
-      detail: priceUpdateEvent
+    const { root } = await newSpecPage({
+      components: [CLPrice, CLPriceAmount],
+      html: `
+        <cl-price sku="BACKPACKFFFFFF000000XXXX">
+          <cl-price-amount></cl-price-amount>
+          <another-tag></another-tag>
+        </cl-price>
+      `
     })
 
-    expect(anotherTagEventHandler).not.toHaveBeenCalled()
-
     expect(root).toEqualHtml(`
-      <cl-price sku="BACKPACK818488000000XXXX">
+      <cl-price sku="BACKPACKFFFFFF000000XXXX">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-        <cl-price-amount></cl-price-amount>
+        <cl-price-amount type="price">
+          <mock:shadow-root>
+            €&nbsp;12.00
+          </mock:shadow-root>
+        </cl-price-amount>
         <another-tag></another-tag>
-      </cl-price>
+    </cl-price>
     `)
   })
 })

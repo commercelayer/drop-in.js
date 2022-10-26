@@ -7,7 +7,7 @@ import {
 } from 'jest.e2e.helpers'
 
 const capSku = '5PANECAP000000FFFFFFXXXX'
-const backpackSku = 'BACKPACK818488000000XXXX'
+const backpackSku = 'BACKPACKFFFFFF000000XXXX'
 
 // eslint-disable-next-line prettier/prettier
 const getCartLink = async (page: E2EPage): Promise<E2EElement> => await page.find('cl-cart-link')
@@ -60,8 +60,8 @@ describe('index.e2e', () => {
           </div>
 
           <div>
-            <cl-add-to-cart sku="BACKPACK818488000000XXXX" quantity="5">Add to cart</cl-add-to-cart>
-            <cl-price sku="BACKPACK818488000000XXXX">
+            <cl-add-to-cart sku="BACKPACKFFFFFF000000XXXX" quantity="5">Add to cart</cl-add-to-cart>
+            <cl-price sku="BACKPACKFFFFFF000000XXXX">
               <cl-price-amount type="price"></cl-price-amount>
               <cl-price-amount type="compare-at"></cl-price-amount>
             </cl-price>
@@ -88,8 +88,8 @@ describe('index.e2e', () => {
         </div>
 
         <div>
-          <cl-add-to-cart sku="BACKPACK818488000000XXXX" quantity="5" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
-          <cl-price sku="BACKPACK818488000000XXXX" class="hydrated">
+          <cl-add-to-cart sku="BACKPACKFFFFFF000000XXXX" quantity="5" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
+          <cl-price sku="BACKPACKFFFFFF000000XXXX" class="hydrated">
             <cl-price-amount type="price" class="hydrated"></cl-price-amount>
             <cl-price-amount type="compare-at" class="hydrated"></cl-price-amount>
           </cl-price>
@@ -118,7 +118,7 @@ describe('index.e2e', () => {
     expect(await getBackpackPriceAmount(page)).toEqualHtml(`
       <cl-price-amount class="hydrated" type="price">
         <mock:shadow-root>
-          $130.00
+          $95.00
         </mock:shadow-root>
       </cl-price-amount>
     `)
@@ -127,7 +127,7 @@ describe('index.e2e', () => {
       <cl-price-amount class="hydrated" type="compare-at">
         <mock:shadow-root>
           <s part="strikethrough">
-            $152.00
+            $110.00
           </s>
         </mock:shadow-root>
       </cl-price-amount>
@@ -145,7 +145,7 @@ describe('index.e2e', () => {
       <cl-cart-link target="_blank" class="hydrated">
         <mock:shadow-root>
           <a
-            href="https://demo-store-1.commercelayer.app/cart/null?accessToken=${accessToken}"
+            href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${accessToken}"
             target="_blank"
           >
             <slot></slot>
@@ -174,7 +174,7 @@ describe('index.e2e', () => {
       <cl-cart-link target="_blank" class="hydrated">
         <mock:shadow-root>
           <a
-            href="https://demo-store-1.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
+            href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
             target="_blank"
           >
             <slot></slot>
@@ -200,7 +200,7 @@ describe('index.e2e', () => {
     await (await getBackpackAddToCart(page)).click()
 
     await waitAndExpectForLineItems(page, {
-      sku: 'BACKPACK818488000000XXXX',
+      sku: 'BACKPACKFFFFFF000000XXXX',
       quantity: 5
     })
 
@@ -210,7 +210,7 @@ describe('index.e2e', () => {
       <cl-cart-link target="_blank" class="hydrated">
         <mock:shadow-root>
           <a
-            href="https://demo-store-1.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
+            href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
             target="_blank"
           >
             <slot></slot>

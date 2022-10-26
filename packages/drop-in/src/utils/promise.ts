@@ -1,6 +1,9 @@
-import debounce, { Options as DebounceFnOptions } from 'debounce-fn'
+import debounce from 'lodash/debounce'
 
-type Options = Pick<DebounceFnOptions, 'wait' | 'maxWait'>
+interface Options {
+  wait: number
+  maxWait: number
+}
 
 type DebouncedFunc<T extends (...args: any[]) => any> = (
   ...args: Parameters<T>
@@ -22,7 +25,7 @@ export const pDebounce = <T extends (arg: any[]) => any>(
     incrementalArgs.length = 0
   }
 
-  const debounced = debounce(fn, options)
+  const debounced = debounce(fn, options?.wait, { maxWait: options?.maxWait })
 
   return async (
     item: Array<Parameters<T>> | undefined

@@ -51,8 +51,7 @@ export async function waitAndExpectForLineItems(
 ): Promise<void> {
   const response = await page.waitForResponse((response) => {
     return (
-      response.url() ===
-        'https://demo-store-1.commercelayer.io/api/line_items' &&
+      response.url() === 'https://drop-in-js.commercelayer.io/api/line_items' &&
       response.request().method() === 'POST' &&
       response.status() === 201
     )
