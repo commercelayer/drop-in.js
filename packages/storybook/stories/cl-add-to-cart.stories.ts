@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../utils'
+import { skus } from './assets/constants'
 
 interface Args {
   sku: string
@@ -48,7 +49,12 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
-  sku: 'BACKPACK818488000000XXXX'
+  sku: skus.bag
 }
 
 export const WithoutAttributes = Template.bind({})
+
+export const OutOfStock = Template.bind({})
+OutOfStock.args = {
+  sku: skus.outOfStock
+}

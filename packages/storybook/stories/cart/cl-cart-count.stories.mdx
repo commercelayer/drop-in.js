@@ -1,5 +1,6 @@
 import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
-import { meta, Basic, WithIcon, WithText } from './cl-cart-count.stories.ts';
+import { meta, Basic, WithIcon, WithText } from './cl-cart-count.stories.ts'
+import { skus } from '../assets/constants.ts'
 
 <Meta
   title={meta.title}
@@ -14,7 +15,7 @@ This component can be used to display the number of items that are in the cart. 
   <Story story={Basic} name="Basic" />
 </Canvas>
 
-Click on this →&nbsp;&nbsp;<cl-add-to-cart sku="BACKPACK818488000000XXXX">Add to cart</cl-add-to-cart> and look at the counter.
+Click on this →&nbsp;&nbsp;<cl-add-to-cart sku={skus.bag}>Add to cart</cl-add-to-cart> and look at the counter.
 
 Here below an example of the same, this time inside a `cl-cart-link` with an svg icon.
 

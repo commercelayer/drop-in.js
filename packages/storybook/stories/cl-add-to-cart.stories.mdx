@@ -1,5 +1,5 @@
 import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
-import { meta, Basic, WithoutAttributes } from './cl-add-to-cart.stories.ts';
+import { meta, Basic, WithoutAttributes, OutOfStock } from './cl-add-to-cart.stories.ts';
 
 <Meta
   title={meta.title}
@@ -24,4 +24,12 @@ The button below is disabled since there's no `sku` nor `quantity`.
 
 <Canvas withSource="open">
   <Story story={WithoutAttributes} name="Without Attributes" />
+</Canvas>
+
+### Out Of Stock
+
+`cl-add-to-cart` checks the inventory for the provided sku. When the product is out of stock the button will be disable.
+
+<Canvas withSource="open">
+  <Story story={OutOfStock} name="Out Of Stock" />
 </Canvas>

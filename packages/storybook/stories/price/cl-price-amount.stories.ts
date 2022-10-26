@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
+import { skus } from '../assets/constants'
 
 interface Args {
   type?: 'price' | 'compare-at'
@@ -31,7 +32,7 @@ export const meta: Meta<Args> = {
 export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-price sku="BACKPACK818488000000XXXX">
+      <cl-price sku=${skus.bag}>
         <cl-price-amount type=${args.type ?? nothing}></cl-price-amount>
       </cl-price>
     `

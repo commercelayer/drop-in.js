@@ -1,0 +1,5 @@
+export const skus = {
+  outOfStock: 'APRONXXX000000FFFFFFXXXX',
+  cap: '5PANECAP000000FFFFFFXXXX',
+  bag: 'BACKPACK818488000000XXXX'
+}
