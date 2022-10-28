@@ -1,7 +1,7 @@
-import { p as promiseResolve, b as bootstrapLazy } from './index-31d6f700.js';
+import { p as promiseResolve, b as bootstrapLazy } from './index-dc67f28a.js';
 
 /*
- Stencil Client Patch Browser v2.18.1 | MIT Licensed | https://stenciljs.com
+ Stencil Client Patch Browser v2.19.1 | MIT Licensed | https://stenciljs.com
  */
 const patchBrowser = () => {
     const importMeta = import.meta.url;
@@ -13,5 +13,5 @@ const patchBrowser = () => {
 };
 
 patchBrowser().then(options => {
-  return bootstrapLazy([["cl-add-to-cart_5",[[1,"cl-add-to-cart",{"sku":[513],"quantity":[1538],"skuObject":[32]}],[1,"cl-cart-count",{"count":[32]},[[8,"cartUpdate","cartUpdateHandler"]]],[1,"cl-cart-link",{"target":[513],"href":[32]},[[8,"cartUpdate","cartUpdateHandler"]]],[1,"cl-price",{"sku":[513]}],[1,"cl-price-amount",{"type":[513],"price":[32]},[[0,"priceUpdate","priceUpdateHandler"]]]]],["cl-cart",[[1,"cl-cart",{"href":[32]}]]]], options);
+  return bootstrapLazy([["cl-add-to-cart_7",[[1,"cl-add-to-cart",{"sku":[513],"quantity":[1538],"skuObject":[32]}],[1,"cl-availability",{"sku":[513]}],[1,"cl-availability-status",{"type":[513],"available":[32]},[[0,"skuUpdate","skuUpdateHandler"]]],[1,"cl-cart-count",{"count":[32]},[[8,"cartUpdate","cartUpdateHandler"]]],[1,"cl-cart-link",{"target":[513],"href":[32]},[[8,"cartUpdate","cartUpdateHandler"]]],[1,"cl-price",{"sku":[513]}],[1,"cl-price-amount",{"type":[513],"price":[32]},[[0,"priceUpdate","priceUpdateHandler"]]]]],["cl-cart",[[1,"cl-cart",{"href":[32]}]]]], options);
 });

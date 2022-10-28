@@ -1,6 +1,6 @@
 import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
 import { g as getCartUrl, t as triggerCartUpdate } from './cart.js';
-import { b as createCommonjsModule } from './promise.js';
+import { c as createCommonjsModule } from './promise.js';
 
 var iframeResizer$2 = createCommonjsModule(function (module) {
 (function (undefined$1) {
@@ -2745,6 +2745,7 @@ const ClCart$1 = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
     super();
     this.__registerHost();
     this.__attachShadow();
+    this.href = undefined;
   }
   async componentWillLoad() {
     this.href = await getCartUrl();

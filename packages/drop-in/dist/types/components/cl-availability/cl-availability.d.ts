@@ -1,9 +1,9 @@
 import { JSX } from '../../stencil-public-runtime';
-export declare class CLPrice {
+export declare class ClAvailability {
   host: HTMLElement;
   sku: string | undefined;
   componentWillLoad(): Promise<void>;
   watchPropHandler(newValue: string, _oldValue: string): void;
-  private updatePrice;
+  private updateAvailability;
   render(): JSX.Element;
 }

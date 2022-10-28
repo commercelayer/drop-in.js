@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-8f2f0854.js');
+const index = require('./index-54981266.js');
 const cart = require('./cart-e3dcfb1f.js');
 
 var iframeResizer$2 = cart.createCommonjsModule(function (module) {
@@ -2746,6 +2746,7 @@ var iframeResizer = js;
 const ClCart = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    this.href = undefined;
   }
   async componentWillLoad() {
     this.href = await cart.getCartUrl();

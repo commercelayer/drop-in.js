@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host, g as getElement } from './index-31d6f700.js';
+import { r as registerInstance, h, H as Host, g as getElement } from './index-dc67f28a.js';
 import { e as createCommonjsModule, d as getCartUrl, t as triggerCartUpdate } from './cart-1518a9d0.js';
 
 var iframeResizer$2 = createCommonjsModule(function (module) {
@@ -2742,6 +2742,7 @@ var iframeResizer = js;
 const ClCart = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
+    this.href = undefined;
   }
   async componentWillLoad() {
     this.href = await getCartUrl();

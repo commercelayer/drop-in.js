@@ -6,10 +6,8 @@ const CLCartLink = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
     super();
     this.__registerHost();
     this.__attachShadow();
-    /**
-     * Target
-     */
     this.target = '_self';
+    this.href = undefined;
   }
   async componentWillLoad() {
     this.href = await getCartUrl();

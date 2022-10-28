@@ -1,6 +1,6 @@
 import { proxyCustomElement, HTMLElement, h } from '@stencil/core/internal/client';
-import { l as logGroup, a as log } from './logger.js';
-import { p as pDebounce, m as memoize, c as createClient, g as getConfig, a as chunk, u as uniq } from './promise.js';
+import { d as logGroup, a as validateSku, l as logSku } from './validation-helpers.js';
+import { p as pDebounce, m as memoize, a as createClient, g as getConfig, b as chunk, u as uniq } from './promise.js';
 
 const _getPrices = async (skus) => {
   const client = await createClient(getConfig());
@@ -36,26 +36,19 @@ const CLPrice = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
     super();
     this.__registerHost();
     this.__attachShadow();
-  }
-  logSku(sku) {
-    if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not string.', this.host);
-    }
-  }
-  validateSku(sku) {
-    return typeof sku === 'string' && sku !== '';
+    this.sku = undefined;
   }
   async componentWillLoad() {
-    if (this.validateSku(this.sku)) {
+    if (validateSku(this.sku)) {
       const price = await getPrice(this.sku);
       if (price !== undefined) {
         this.updatePrice(price);
       }
     }
-    this.logSku(this.sku);
+    logSku(this.host, this.sku);
   }
   watchPropHandler(newValue, _oldValue) {
-    this.logSku(newValue);
+    logSku(this.host, newValue);
   }
   updatePrice(price) {
     this.host.querySelectorAll('cl-price-amount').forEach((element) => {

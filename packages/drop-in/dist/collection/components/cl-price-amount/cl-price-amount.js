@@ -2,6 +2,7 @@ import { h, Host } from '@stencil/core';
 export class CLPriceAmount {
   constructor() {
     this.type = 'price';
+    this.price = undefined;
   }
   priceUpdateHandler(event) {
     switch (this.type) {

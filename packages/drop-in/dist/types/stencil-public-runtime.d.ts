@@ -223,6 +223,7 @@ export declare const setMode: (handler: ResolutionHandler) => void;
 /**
  * `getMode()` is used for libraries which provide multiple "modes" for styles.
  * @param ref a reference to the node to get styles for
+ * @returns the current mode or undefined, if not found
  */
 export declare function getMode<T = string | undefined>(ref: any): T;
 export declare function setPlatformHelpers(helpers: {
@@ -237,6 +238,7 @@ export declare function setPlatformHelpers(helpers: {
  * if the path needs to be customized.
  * @param path the path to use in calculating the asset path. this value will be
  * used in conjunction with the base asset path
+ * @returns the base path
  */
 export declare function getAssetPath(path: string): string;
 /**
@@ -252,11 +254,13 @@ export declare function getAssetPath(path: string): string;
  * bundling, and where your assets can be loaded from. Additionally custom bundling
  * will have to ensure the static assets are copied to its build directory.
  * @param path the asset path to set
+ * @returns the set path
  */
 export declare function setAssetPath(path: string): string;
 /**
  * Retrieve a Stencil element for a given reference
  * @param ref the ref to get the Stencil element for
+ * @returns a reference to the element
  */
 export declare function getElement(ref: any): HTMLStencilElement;
 /**
@@ -269,6 +273,7 @@ export declare function getElement(ref: any): HTMLStencilElement;
 export declare function forceUpdate(ref: any): void;
 /**
  * getRenderingRef
+ * @returns the rendering ref
  */
 export declare function getRenderingRef(): any;
 export interface HTMLStencilElement extends HTMLElement {

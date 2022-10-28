@@ -6,6 +6,7 @@ const ClCartCount$1 = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement
     super();
     this.__registerHost();
     this.__attachShadow();
+    this.count = undefined;
   }
   async componentWillLoad() {
     await triggerCartUpdate(null);

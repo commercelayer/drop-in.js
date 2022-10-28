@@ -1,47 +1,31 @@
 import { addItem } from '#apis/commercelayer/cart';
 import { getSku } from '#apis/commercelayer/skus';
 import { log } from '#utils/logger';
+import { logQuantity, logSku, validateQuantity, validateSku } from '#utils/validation-helpers';
 import { h, Host } from '@stencil/core';
 export class CLAddToCart {
   constructor() {
-    /**
-     * Quantity
-     */
+    this.sku = undefined;
     this.quantity = 1;
-  }
-  logSku(sku) {
-    if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not empty string.', this.host);
-    }
-  }
-  logQuantity(quantity) {
-    if (!this.validateQuantity(quantity)) {
-      log('warn', '"quantity" should be a number equal or greater than 0.', this.host);
-    }
-  }
-  validateSku(sku) {
-    return typeof sku === 'string' && sku !== '';
-  }
-  validateQuantity(quantity) {
-    return quantity >= 0;
+    this.skuObject = undefined;
   }
   watchSkuHandler(newValue, _oldValue) {
-    this.logSku(newValue);
+    logSku(this.host, newValue);
   }
   watchQuantityHandler(newValue, _oldValue) {
-    if (!this.validateQuantity(newValue)) {
+    if (!validateQuantity(newValue)) {
       this.quantity = 0;
     }
   }
   async componentWillLoad() {
-    if (this.validateSku(this.sku)) {
+    if (validateSku(this.sku)) {
       this.skuObject = await getSku(this.sku);
       if (this.skuObject === undefined) {
         log('warn', `Cannot find sku ${this.sku}.`, this.host);
       }
     }
-    this.logSku(this.sku);
-    this.logQuantity(this.quantity);
+    logSku(this.host, this.sku);
+    logQuantity(this.host, this.quantity);
   }
   handleKeyPress(event) {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -62,7 +46,7 @@ export class CLAddToCart {
   canBeSold() {
     var _a, _b, _c, _d;
     // TODO: check for stock
-    return (this.validateSku(this.sku) &&
+    return (validateSku(this.sku) &&
       this.quantity > 0 &&
       // @ts-expect-error
       ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true &&
@@ -89,7 +73,7 @@ export class CLAddToCart {
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "Sku code"
+          "text": ""
         },
         "attribute": "sku",
         "reflect": true
@@ -106,7 +90,7 @@ export class CLAddToCart {
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "Quantity"
+          "text": ""
         },
         "attribute": "quantity",
         "reflect": true,

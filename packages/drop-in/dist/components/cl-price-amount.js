@@ -6,6 +6,7 @@ const CLPriceAmount = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement
     this.__registerHost();
     this.__attachShadow();
     this.type = 'price';
+    this.price = undefined;
   }
   priceUpdateHandler(event) {
     switch (this.type) {

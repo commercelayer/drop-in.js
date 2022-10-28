@@ -1,15 +1,15 @@
-import { getPrice } from '#apis/commercelayer/prices';
+import { getSku } from '#apis/commercelayer/skus';
 import { logSku, validateSku } from '#utils/validation-helpers';
 import { h } from '@stencil/core';
-export class CLPrice {
+export class ClAvailability {
   constructor() {
     this.sku = undefined;
   }
   async componentWillLoad() {
     if (validateSku(this.sku)) {
-      const price = await getPrice(this.sku);
-      if (price !== undefined) {
-        this.updatePrice(price);
+      const sku = await getSku(this.sku);
+      if (sku !== undefined) {
+        this.updateAvailability(sku);
       }
     }
     logSku(this.host, this.sku);
@@ -17,15 +17,15 @@ export class CLPrice {
   watchPropHandler(newValue, _oldValue) {
     logSku(this.host, newValue);
   }
-  updatePrice(price) {
-    this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-      element.dispatchEvent(new CustomEvent('priceUpdate', { detail: price }));
+  updateAvailability(sku) {
+    this.host.querySelectorAll('cl-availability-status').forEach((element) => {
+      element.dispatchEvent(new CustomEvent('skuUpdate', { detail: sku }));
     });
   }
   render() {
     return h("slot", null);
   }
-  static get is() { return "cl-price"; }
+  static get is() { return "cl-availability"; }
   static get encapsulation() { return "shadow"; }
   static get properties() {
     return {

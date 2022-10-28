@@ -1,5 +1,7 @@
 /* DropIn custom elements */
 export { CLAddToCart as ClAddToCart } from '../types/components/cl-add-to-cart/cl-add-to-cart';
+export { ClAvailability as ClAvailability } from '../types/components/cl-availability/cl-availability';
+export { ClAvailabilityStatus as ClAvailabilityStatus } from '../types/components/cl-availability-status/cl-availability-status';
 export { ClCart as ClCart } from '../types/components/cl-cart/cl-cart';
 export { ClCartCount as ClCartCount } from '../types/components/cl-cart-count/cl-cart-count';
 export { CLCartLink as ClCartLink } from '../types/components/cl-cart-link/cl-cart-link';

@@ -2,6 +2,9 @@ import { getCartUrl, triggerCartUpdate } from '#apis/commercelayer/cart';
 import { Host, h } from '@stencil/core';
 import { iframeResizer } from 'iframe-resizer';
 export class ClCart {
+  constructor() {
+    this.href = undefined;
+  }
   async componentWillLoad() {
     this.href = await getCartUrl();
   }

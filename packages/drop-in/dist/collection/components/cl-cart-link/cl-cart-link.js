@@ -2,10 +2,8 @@ import { getCartUrl, isValidUrl } from '#apis/commercelayer/cart';
 import { h } from '@stencil/core';
 export class CLCartLink {
   constructor() {
-    /**
-     * Target
-     */
     this.target = '_self';
+    this.href = undefined;
   }
   async componentWillLoad() {
     this.href = await getCartUrl();
@@ -45,7 +43,7 @@ export class CLCartLink {
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "Target"
+          "text": ""
         },
         "attribute": "target",
         "reflect": true,

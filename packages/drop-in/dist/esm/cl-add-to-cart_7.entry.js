@@ -1,9 +1,5 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-const index = require('./index-8f2f0854.js');
-const cart = require('./cart-e3dcfb1f.js');
+import { r as registerInstance, h, H as Host, g as getElement } from './index-dc67f28a.js';
+import { g as getConfig, p as pDebounce, m as memoize, c as createClient, a as chunk, u as uniq, b as addItem, t as triggerCartUpdate, d as getCartUrl, i as isValidUrl } from './cart-1518a9d0.js';
 
 /**
  * Outputs a message to the Web console.
@@ -11,7 +7,7 @@ const cart = require('./cart-e3dcfb1f.js');
  * @param messages List of messages.
  */
 const log = (type, ...messages) => {
-  const { debug } = cart.getConfig();
+  const { debug } = getConfig();
   if (debug === 'all') {
     console[type](...messages);
   }
@@ -46,17 +42,17 @@ function logGroup(label, collapsed = true) {
 }
 
 const _getSkuIds = async (skus) => {
-  const client = await cart.createClient(cart.getConfig());
-  const uniqSkus = cart.uniq(skus);
+  const client = await createClient(getConfig());
+  const uniqSkus = uniq(skus);
   const log = logGroup('getSkuIds invoked');
   log('info', `found`, uniqSkus.length);
   log('info', 'unique skus', uniqSkus);
   const pageSize = 25;
-  const chunkedSkus = cart.chunk(uniqSkus, pageSize);
+  const chunkedSkus = chunk(uniqSkus, pageSize);
   const idsResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
     return await client.skus.list({
       pageSize,
-      filters: { sku_code_in: skus.join(',') },
+      filters: { code_in: skus.join(',') },
       fields: ['id', 'code']
     });
   }))).flat();
@@ -70,60 +66,60 @@ const _getSkuIds = async (skus) => {
   log.end();
   return ids;
 };
-const getSkuIds = cart.pDebounce(_getSkuIds, { wait: 50, maxWait: 100 });
-const getSkuId = cart.memoize(async (sku) => {
+const getSkuIds = pDebounce(_getSkuIds, { wait: 50, maxWait: 100 });
+const getSkuId = memoize(async (sku) => {
   return await getSkuIds([sku]).then((result) => result[sku]);
 });
-const getSku = cart.memoize(async (sku) => {
+const getSku = memoize(async (sku) => {
   const id = await getSkuId(sku);
   if (id === undefined) {
     return undefined;
   }
-  const client = await cart.createClient(cart.getConfig());
+  const client = await createClient(getConfig());
   return await client.skus.retrieve(id);
 });
 
+function validateSku(sku) {
+  return typeof sku === 'string' && sku !== '';
+}
+function logSku(host, sku) {
+  if (!validateSku(sku)) {
+    log('warn', '"sku" should be a not empty string.', host);
+  }
+}
+function validateQuantity(quantity) {
+  return quantity >= 0;
+}
+function logQuantity(host, quantity) {
+  if (!validateQuantity(quantity)) {
+    log('warn', '"quantity" should be a number equal or greater than 0.', host);
+  }
+}
+
 const CLAddToCart = class {
   constructor(hostRef) {
-    index.registerInstance(this, hostRef);
-    /**
-     * Quantity
-     */
+    registerInstance(this, hostRef);
+    this.sku = undefined;
     this.quantity = 1;
-  }
-  logSku(sku) {
-    if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not empty string.', this.host);
-    }
-  }
-  logQuantity(quantity) {
-    if (!this.validateQuantity(quantity)) {
-      log('warn', '"quantity" should be a number equal or greater than 0.', this.host);
-    }
-  }
-  validateSku(sku) {
-    return typeof sku === 'string' && sku !== '';
-  }
-  validateQuantity(quantity) {
-    return quantity >= 0;
+    this.skuObject = undefined;
   }
   watchSkuHandler(newValue, _oldValue) {
-    this.logSku(newValue);
+    logSku(this.host, newValue);
   }
   watchQuantityHandler(newValue, _oldValue) {
-    if (!this.validateQuantity(newValue)) {
+    if (!validateQuantity(newValue)) {
       this.quantity = 0;
     }
   }
   async componentWillLoad() {
-    if (this.validateSku(this.sku)) {
+    if (validateSku(this.sku)) {
       this.skuObject = await getSku(this.sku);
       if (this.skuObject === undefined) {
         log('warn', `Cannot find sku ${this.sku}.`, this.host);
       }
     }
-    this.logSku(this.sku);
-    this.logQuantity(this.quantity);
+    logSku(this.host, this.sku);
+    logQuantity(this.host, this.quantity);
   }
   handleKeyPress(event) {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -132,7 +128,7 @@ const CLAddToCart = class {
   }
   handleAddItem() {
     if (this.sku !== undefined && this.canBeSold()) {
-      cart.addItem(this.sku, this.quantity).catch((error) => {
+      addItem(this.sku, this.quantity).catch((error) => {
         throw error;
       });
     }
@@ -144,7 +140,7 @@ const CLAddToCart = class {
   canBeSold() {
     var _a, _b, _c, _d;
     // TODO: check for stock
-    return (this.validateSku(this.sku) &&
+    return (validateSku(this.sku) &&
       this.quantity > 0 &&
       // @ts-expect-error
       ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true &&
@@ -153,21 +149,73 @@ const CLAddToCart = class {
   }
   render() {
     const enabled = this.canBeSold();
-    return (index.h(index.Host, { role: 'button', tabindex: '0', "aria-disabled": enabled ? undefined : 'true', onKeyPress: (event) => this.handleKeyPress(event), onClick: () => this.handleAddItem() }, index.h("slot", null)));
+    return (h(Host, { role: 'button', tabindex: '0', "aria-disabled": enabled ? undefined : 'true', onKeyPress: (event) => this.handleKeyPress(event), onClick: () => this.handleAddItem() }, h("slot", null)));
   }
-  get host() { return index.getElement(this); }
+  get host() { return getElement(this); }
   static get watchers() { return {
     "sku": ["watchSkuHandler"],
     "quantity": ["watchQuantityHandler"]
   }; }
 };
 
-const ClCartCount = class {
+const ClAvailability = class {
   constructor(hostRef) {
-    index.registerInstance(this, hostRef);
+    registerInstance(this, hostRef);
+    this.sku = undefined;
   }
   async componentWillLoad() {
-    await cart.triggerCartUpdate(null);
+    if (validateSku(this.sku)) {
+      const sku = await getSku(this.sku);
+      if (sku !== undefined) {
+        this.updateAvailability(sku);
+      }
+    }
+    logSku(this.host, this.sku);
+  }
+  watchPropHandler(newValue, _oldValue) {
+    logSku(this.host, newValue);
+  }
+  updateAvailability(sku) {
+    this.host.querySelectorAll('cl-availability-status').forEach((element) => {
+      element.dispatchEvent(new CustomEvent('skuUpdate', { detail: sku }));
+    });
+  }
+  render() {
+    return h("slot", null);
+  }
+  get host() { return getElement(this); }
+  static get watchers() { return {
+    "sku": ["watchPropHandler"]
+  }; }
+};
+
+const ClAvailabilityStatus = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
+    this.type = undefined;
+    this.available = undefined;
+  }
+  skuUpdateHandler(event) {
+    var _a;
+    // @ts-expect-error
+    this.available = (_a = event.detail.inventory) === null || _a === void 0 ? void 0 : _a.available;
+  }
+  render() {
+    if ((this.type === 'available' && this.available === true) ||
+      (this.type === 'unavailable' && this.available === false)) {
+      return h("slot", null);
+    }
+    return h(Host, { "aria-disabled": 'true' });
+  }
+};
+
+const ClCartCount = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
+    this.count = undefined;
+  }
+  async componentWillLoad() {
+    await triggerCartUpdate(null);
   }
   cartUpdateHandler(event) {
     if (event.detail.skus_count !== undefined && event.detail.skus_count > 0) {
@@ -178,51 +226,49 @@ const ClCartCount = class {
     }
   }
   render() {
-    return index.h(index.Host, { quantity: this.count }, this.count);
+    return h(Host, { quantity: this.count }, this.count);
   }
 };
 
 const CLCartLink = class {
   constructor(hostRef) {
-    index.registerInstance(this, hostRef);
-    /**
-     * Target
-     */
+    registerInstance(this, hostRef);
     this.target = '_self';
+    this.href = undefined;
   }
   async componentWillLoad() {
-    this.href = await cart.getCartUrl();
+    this.href = await getCartUrl();
   }
   async handleClick(event) {
-    if (this.href === undefined || !cart.isValidUrl(this.href)) {
+    if (this.href === undefined || !isValidUrl(this.href)) {
       event.preventDefault();
-      this.href = await cart.getCartUrl(true);
+      this.href = await getCartUrl(true);
       window.open(this.href, this.target);
     }
   }
   async cartUpdateHandler(_event) {
-    if (this.href === undefined || !cart.isValidUrl(this.href)) {
-      this.href = await cart.getCartUrl();
+    if (this.href === undefined || !isValidUrl(this.href)) {
+      this.href = await getCartUrl();
     }
   }
   render() {
-    return (index.h("a", { target: this.target, href: this.href, onClick: (e) => {
+    return (h("a", { target: this.target, href: this.href, onClick: (e) => {
         this.handleClick(e).catch((error) => {
           throw error;
         });
-      } }, index.h("slot", null)));
+      } }, h("slot", null)));
   }
-  get host() { return index.getElement(this); }
+  get host() { return getElement(this); }
 };
 
 const _getPrices = async (skus) => {
-  const client = await cart.createClient(cart.getConfig());
-  const uniqSkus = cart.uniq(skus);
+  const client = await createClient(getConfig());
+  const uniqSkus = uniq(skus);
   const log = logGroup('getPrices invoked');
   log('info', `found`, uniqSkus.length);
   log('info', 'unique skus', uniqSkus);
   const pageSize = 25;
-  const chunkedSkus = cart.chunk(uniqSkus, pageSize);
+  const chunkedSkus = chunk(uniqSkus, pageSize);
   const pricesResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
     return await client.prices.list({
       pageSize,
@@ -239,34 +285,27 @@ const _getPrices = async (skus) => {
   log.end();
   return prices;
 };
-const getPrices = cart.pDebounce(_getPrices, { wait: 50, maxWait: 100 });
-const getPrice = cart.memoize(async (sku) => {
+const getPrices = pDebounce(_getPrices, { wait: 50, maxWait: 100 });
+const getPrice = memoize(async (sku) => {
   return await getPrices([sku]).then((result) => result[sku]);
 });
 
 const CLPrice = class {
   constructor(hostRef) {
-    index.registerInstance(this, hostRef);
-  }
-  logSku(sku) {
-    if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not string.', this.host);
-    }
-  }
-  validateSku(sku) {
-    return typeof sku === 'string' && sku !== '';
+    registerInstance(this, hostRef);
+    this.sku = undefined;
   }
   async componentWillLoad() {
-    if (this.validateSku(this.sku)) {
+    if (validateSku(this.sku)) {
       const price = await getPrice(this.sku);
       if (price !== undefined) {
         this.updatePrice(price);
       }
     }
-    this.logSku(this.sku);
+    logSku(this.host, this.sku);
   }
   watchPropHandler(newValue, _oldValue) {
-    this.logSku(newValue);
+    logSku(this.host, newValue);
   }
   updatePrice(price) {
     this.host.querySelectorAll('cl-price-amount').forEach((element) => {
@@ -274,9 +313,9 @@ const CLPrice = class {
     });
   }
   render() {
-    return index.h("slot", null);
+    return h("slot", null);
   }
-  get host() { return index.getElement(this); }
+  get host() { return getElement(this); }
   static get watchers() { return {
     "sku": ["watchPropHandler"]
   }; }
@@ -284,8 +323,9 @@ const CLPrice = class {
 
 const CLPriceAmount = class {
   constructor(hostRef) {
-    index.registerInstance(this, hostRef);
+    registerInstance(this, hostRef);
     this.type = 'price';
+    this.price = undefined;
   }
   priceUpdateHandler(event) {
     switch (this.type) {
@@ -298,12 +338,8 @@ const CLPriceAmount = class {
     }
   }
   render() {
-    return (index.h(index.Host, null, this.type === 'compare-at' ? (index.h("s", { part: 'strikethrough' }, this.price)) : (this.price)));
+    return (h(Host, null, this.type === 'compare-at' ? (h("s", { part: 'strikethrough' }, this.price)) : (this.price)));
   }
 };
 
-exports.cl_add_to_cart = CLAddToCart;
-exports.cl_cart_count = ClCartCount;
-exports.cl_cart_link = CLCartLink;
-exports.cl_price = CLPrice;
-exports.cl_price_amount = CLPriceAmount;
+export { CLAddToCart as cl_add_to_cart, ClAvailability as cl_availability, ClAvailabilityStatus as cl_availability_status, ClCartCount as cl_cart_count, CLCartLink as cl_cart_link, CLPrice as cl_price, CLPriceAmount as cl_price_amount };

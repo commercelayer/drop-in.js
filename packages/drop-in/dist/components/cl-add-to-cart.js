@@ -1,89 +1,34 @@
 import { proxyCustomElement, HTMLElement, h, Host } from '@stencil/core/internal/client';
 import { a as addItem } from './cart.js';
-import { l as logGroup, a as log } from './logger.js';
-import { p as pDebounce, m as memoize, c as createClient, g as getConfig, a as chunk, u as uniq } from './promise.js';
-
-const _getSkuIds = async (skus) => {
-  const client = await createClient(getConfig());
-  const uniqSkus = uniq(skus);
-  const log = logGroup('getSkuIds invoked');
-  log('info', `found`, uniqSkus.length);
-  log('info', 'unique skus', uniqSkus);
-  const pageSize = 25;
-  const chunkedSkus = chunk(uniqSkus, pageSize);
-  const idsResponse = (await Promise.all(chunkedSkus.map(async (skus) => {
-    return await client.skus.list({
-      pageSize,
-      filters: { sku_code_in: skus.join(',') },
-      fields: ['id', 'code']
-    });
-  }))).flat();
-  // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
-  const ids = idsResponse.reduce((ids, sku) => {
-    if (sku.id !== undefined && sku.code !== undefined) {
-      ids[sku.code] = sku.id;
-    }
-    return ids;
-  }, {});
-  log.end();
-  return ids;
-};
-const getSkuIds = pDebounce(_getSkuIds, { wait: 50, maxWait: 100 });
-const getSkuId = memoize(async (sku) => {
-  return await getSkuIds([sku]).then((result) => result[sku]);
-});
-const getSku = memoize(async (sku) => {
-  const id = await getSkuId(sku);
-  if (id === undefined) {
-    return undefined;
-  }
-  const client = await createClient(getConfig());
-  return await client.skus.retrieve(id);
-});
+import { g as getSku } from './skus.js';
+import { l as logSku, v as validateQuantity, a as validateSku, b as log, c as logQuantity } from './validation-helpers.js';
 
 const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
     this.__attachShadow();
-    /**
-     * Quantity
-     */
+    this.sku = undefined;
     this.quantity = 1;
-  }
-  logSku(sku) {
-    if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not empty string.', this.host);
-    }
-  }
-  logQuantity(quantity) {
-    if (!this.validateQuantity(quantity)) {
-      log('warn', '"quantity" should be a number equal or greater than 0.', this.host);
-    }
-  }
-  validateSku(sku) {
-    return typeof sku === 'string' && sku !== '';
-  }
-  validateQuantity(quantity) {
-    return quantity >= 0;
+    this.skuObject = undefined;
   }
   watchSkuHandler(newValue, _oldValue) {
-    this.logSku(newValue);
+    logSku(this.host, newValue);
   }
   watchQuantityHandler(newValue, _oldValue) {
-    if (!this.validateQuantity(newValue)) {
+    if (!validateQuantity(newValue)) {
       this.quantity = 0;
     }
   }
   async componentWillLoad() {
-    if (this.validateSku(this.sku)) {
+    if (validateSku(this.sku)) {
       this.skuObject = await getSku(this.sku);
       if (this.skuObject === undefined) {
         log('warn', `Cannot find sku ${this.sku}.`, this.host);
       }
     }
-    this.logSku(this.sku);
-    this.logQuantity(this.quantity);
+    logSku(this.host, this.sku);
+    logQuantity(this.host, this.quantity);
   }
   handleKeyPress(event) {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -104,7 +49,7 @@ const CLAddToCart = /*@__PURE__*/ proxyCustomElement(class extends HTMLElement {
   canBeSold() {
     var _a, _b, _c, _d;
     // TODO: check for stock
-    return (this.validateSku(this.sku) &&
+    return (validateSku(this.sku) &&
       this.quantity > 0 &&
       // @ts-expect-error
       ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true &&

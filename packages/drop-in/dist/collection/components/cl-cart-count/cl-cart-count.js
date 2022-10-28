@@ -1,6 +1,9 @@
 import { triggerCartUpdate } from '#apis/commercelayer/cart';
 import { h, Host } from '@stencil/core';
 export class ClCartCount {
+  constructor() {
+    this.count = undefined;
+  }
   async componentWillLoad() {
     await triggerCartUpdate(null);
   }

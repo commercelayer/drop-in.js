@@ -2,19 +2,9 @@ import type { Sku } from '@commercelayer/sdk';
 import { JSX } from '../../stencil-public-runtime';
 export declare class CLAddToCart {
   host: HTMLElement;
-  /**
-   * Sku code
-   */
   sku: string | undefined;
-  /**
-   * Quantity
-   */
   quantity: number;
   skuObject: Sku | undefined;
-  logSku(sku: string | undefined): void;
-  logQuantity(quantity: number): void;
-  validateSku(sku: string | undefined): sku is string;
-  validateQuantity(quantity: number): boolean;
   watchSkuHandler(newValue: string, _oldValue: string): void;
   watchQuantityHandler(newValue: number, _oldValue: number): void;
   componentWillLoad(): Promise<void>;
