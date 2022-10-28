@@ -62,5 +62,6 @@ export const Basic: StoryFn<Args> = (args) => {
 }
 Basic.args = {
   available: true,
-  message: 'ready to be shipped in {min}-{max}'
+  format: 'days',
+  message: `ready to be shipped in {min}-{max}`
 }

@@ -5,7 +5,7 @@ import { skus } from '../assets/constants'
 
 interface Args {
   available: boolean
-  type?: 'price' | 'compare-at'
+  type?: 'available' | 'unavailable'
 }
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
@@ -49,5 +49,6 @@ export const Basic: StoryFn<Args> = (args) => {
   )
 }
 Basic.args = {
-  available: true
+  available: true,
+  type: 'available'
 }
