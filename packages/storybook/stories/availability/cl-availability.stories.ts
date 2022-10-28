@@ -33,6 +33,10 @@ const Template: StoryFn<Args> = (args) => {
         <cl-availability-status type="unavailable">
           • out of stock
         </cl-availability-status>
+        <cl-availability-message
+          format="days"
+          message="ready to be shipped in {min}-{max} days"
+        ></cl-availability-message>
       </cl-availability>
     `
   )

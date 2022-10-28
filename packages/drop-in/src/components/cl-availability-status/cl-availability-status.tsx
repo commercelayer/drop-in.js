@@ -1,4 +1,4 @@
-import type { Sku } from '@commercelayer/sdk'
+import type { Sku } from '#apis/commercelayer/skus'
 import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
 
 @Component({
@@ -12,7 +12,6 @@ export class ClAvailabilityStatus {
 
   @Listen('skuUpdate')
   skuUpdateHandler(event: CustomEvent<Sku>): void {
-    // @ts-expect-error
     this.available = event.detail.inventory?.available
   }
 

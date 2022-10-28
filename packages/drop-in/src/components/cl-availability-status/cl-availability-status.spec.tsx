@@ -1,4 +1,4 @@
-import type { Sku } from '@commercelayer/sdk'
+import type { Sku } from '#apis/commercelayer/skus'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailabilityStatus } from './cl-availability-status'
 
@@ -51,7 +51,8 @@ describe('cl-availability-status.spec', () => {
       updated_at: new Date().toISOString(),
       inventory: {
         available: true,
-        quantity: 98
+        quantity: 98,
+        levels: []
       }
     }
 
@@ -116,7 +117,8 @@ describe('cl-availability-status.spec', () => {
       updated_at: new Date().toISOString(),
       inventory: {
         available: false,
-        quantity: 0
+        quantity: 0,
+        levels: []
       }
     }
 

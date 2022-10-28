@@ -1,9 +1,43 @@
 import { logGroup } from '#utils/logger'
 import { pDebounce } from '#utils/promise'
 import { chunk, memoize, uniq } from '#utils/utils'
-import type { Sku } from '@commercelayer/sdk'
+import type { Sku as SdkSku } from '@commercelayer/sdk'
 import { createClient } from './client'
 import { getConfig } from './config'
+
+interface DeliveryLeadTime {
+  shipping_method: {
+    name: string
+    reference: string
+    price_amount_cents: number
+    free_over_amount_cents: number | null
+    formatted_price_amount: string
+    formatted_free_over_amount: string | null
+  }
+  min: {
+    hours: number
+    days: number
+  }
+  max: {
+    hours: number
+    days: number
+  }
+}
+
+interface Level {
+  quantity: number
+  delivery_lead_times: DeliveryLeadTime[]
+}
+
+interface Inventory {
+  available: boolean
+  quantity: number
+  levels: Level[]
+}
+
+export type Sku = SdkSku & {
+  inventory?: Inventory
+}
 
 interface SkuIdList {
   [sku: string]: string | undefined
@@ -65,5 +99,5 @@ export const getSku = memoize(async (sku: string): Promise<Sku | undefined> => {
 
   const client = await createClient(getConfig())
 
-  return await client.skus.retrieve(id)
+  return (await client.skus.retrieve(id)) as Sku
 })

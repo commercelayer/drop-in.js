@@ -1,6 +1,5 @@
-import { getSku } from '#apis/commercelayer/skus'
+import { getSku, Sku } from '#apis/commercelayer/skus'
 import { logSku, validateSku } from '#utils/validation-helpers'
-import type { Sku } from '@commercelayer/sdk'
 import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
 
 @Component({
@@ -30,9 +29,13 @@ export class ClAvailability {
   }
 
   private updateAvailability(sku: Sku): void {
-    this.host.querySelectorAll('cl-availability-status').forEach((element) => {
-      element.dispatchEvent(new CustomEvent<Sku>('skuUpdate', { detail: sku }))
-    })
+    this.host
+      .querySelectorAll('cl-availability-status, cl-availability-message')
+      .forEach((element) => {
+        element.dispatchEvent(
+          new CustomEvent<Sku>('skuUpdate', { detail: sku })
+        )
+      })
   }
 
   render(): JSX.Element {

@@ -1,5 +1,5 @@
 import { addItem } from '#apis/commercelayer/cart'
-import { getSku } from '#apis/commercelayer/skus'
+import { getSku, Sku } from '#apis/commercelayer/skus'
 import { log } from '#utils/logger'
 import {
   logQuantity,
@@ -7,7 +7,6 @@ import {
   validateQuantity,
   validateSku
 } from '#utils/validation-helpers'
-import type { Sku } from '@commercelayer/sdk'
 import {
   Component,
   Element,
@@ -78,9 +77,7 @@ export class CLAddToCart {
     return (
       validateSku(this.sku) &&
       this.quantity > 0 &&
-      // @ts-expect-error
       this.skuObject?.inventory?.available === true &&
-      // @ts-expect-error
       this.quantity <= this.skuObject?.inventory?.quantity
     )
   }

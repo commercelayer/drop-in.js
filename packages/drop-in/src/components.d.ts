@@ -13,6 +13,10 @@ export namespace Components {
     interface ClAvailability {
         "sku": string | undefined;
     }
+    interface ClAvailabilityMessage {
+        "format": 'days' | 'hours' | undefined;
+        "message": string | undefined;
+    }
     interface ClAvailabilityStatus {
         "type": 'available' | 'unavailable' | undefined;
     }
@@ -42,6 +46,12 @@ declare global {
     var HTMLClAvailabilityElement: {
         prototype: HTMLClAvailabilityElement;
         new (): HTMLClAvailabilityElement;
+    };
+    interface HTMLClAvailabilityMessageElement extends Components.ClAvailabilityMessage, HTMLStencilElement {
+    }
+    var HTMLClAvailabilityMessageElement: {
+        prototype: HTMLClAvailabilityMessageElement;
+        new (): HTMLClAvailabilityMessageElement;
     };
     interface HTMLClAvailabilityStatusElement extends Components.ClAvailabilityStatus, HTMLStencilElement {
     }
@@ -82,6 +92,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "cl-add-to-cart": HTMLClAddToCartElement;
         "cl-availability": HTMLClAvailabilityElement;
+        "cl-availability-message": HTMLClAvailabilityMessageElement;
         "cl-availability-status": HTMLClAvailabilityStatusElement;
         "cl-cart": HTMLClCartElement;
         "cl-cart-count": HTMLClCartCountElement;
@@ -97,6 +108,10 @@ declare namespace LocalJSX {
     }
     interface ClAvailability {
         "sku"?: string | undefined;
+    }
+    interface ClAvailabilityMessage {
+        "format"?: 'days' | 'hours' | undefined;
+        "message"?: string | undefined;
     }
     interface ClAvailabilityStatus {
         "type"?: 'available' | 'unavailable' | undefined;
@@ -117,6 +132,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "cl-add-to-cart": ClAddToCart;
         "cl-availability": ClAvailability;
+        "cl-availability-message": ClAvailabilityMessage;
         "cl-availability-status": ClAvailabilityStatus;
         "cl-cart": ClCart;
         "cl-cart-count": ClCartCount;
@@ -131,6 +147,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "cl-add-to-cart": LocalJSX.ClAddToCart & JSXBase.HTMLAttributes<HTMLClAddToCartElement>;
             "cl-availability": LocalJSX.ClAvailability & JSXBase.HTMLAttributes<HTMLClAvailabilityElement>;
+            "cl-availability-message": LocalJSX.ClAvailabilityMessage & JSXBase.HTMLAttributes<HTMLClAvailabilityMessageElement>;
             "cl-availability-status": LocalJSX.ClAvailabilityStatus & JSXBase.HTMLAttributes<HTMLClAvailabilityStatusElement>;
             "cl-cart": LocalJSX.ClCart & JSXBase.HTMLAttributes<HTMLClCartElement>;
             "cl-cart-count": LocalJSX.ClCartCount & JSXBase.HTMLAttributes<HTMLClCartCountElement>;
