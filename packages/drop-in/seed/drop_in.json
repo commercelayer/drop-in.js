@@ -55,8 +55,13 @@
       "shipping_method_1",
       "shipping_method_2",
       "shipping_method_3",
-      "shipping_method_4"
+      "shipping_method_4",
+      "shipping_method_5"
     ]
+  },
+  {
+    "resourceType": "delivery_lead_times",
+    "importAll": true
   },
   {
     "resourceType": "payment_gateways",

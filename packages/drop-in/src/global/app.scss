@@ -68,3 +68,15 @@ cl-cart-link, .cl-cart-link {
     transform: translate(30%, 0%);
   }
 }
+
+cl-availability {
+  cl-availability-status {
+    &[type="available"] {
+      color: #1FDA8A;
+    }
+
+    &[type="unavailable"] {
+      color: #FF656B;
+    }
+  }
+}

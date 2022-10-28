@@ -1,0 +1,28 @@
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
+import { meta, Basic, WithoutAttributes } from './cl-availability.stories.ts';
+
+<Meta
+  title={meta.title}
+  argTypes={meta.argTypes}
+/>
+
+# `cl-availability`
+
+Display an availability message with localized delivery lead time and cost.
+
+The `cl-availability` component is the owner of the availability information.
+It has the responsibility to fetch the inventory of the provided sku and dispatch this information to its [**cl-availability-status**](?path=/docs/components-availability-cl-availability-status--basic) children.
+
+<Canvas withSource="open">
+  <Story story={Basic} name="Basic" />
+</Canvas>
+
+<ArgsTable story="Basic" />
+
+### No SKU? Empty box
+
+`sku` attribute is mandatory. If you don't set it, the component will be rendered as an empty box without any size.
+
+<Canvas withSource="open">
+  <Story story={WithoutAttributes} name="Without Attributes" />
+</Canvas>

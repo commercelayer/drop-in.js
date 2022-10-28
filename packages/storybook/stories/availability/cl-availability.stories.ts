@@ -1,16 +1,15 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
-import { create } from '../utils'
-import { skus } from './assets/constants'
+import { create } from '../../utils'
+import { skus } from '../assets/constants'
 
 interface Args {
-  sku: string
-  quantity: number
+  sku?: string
 }
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export const meta: Meta<Args> = {
-  title: 'Components/cl-add-to-cart',
+  title: 'Components/Availability/cl-availability',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
     sku: {
@@ -18,16 +17,6 @@ export const meta: Meta<Args> = {
       type: { name: 'string', required: true },
       table: {
         category: 'attributes'
-      }
-    },
-    quantity: {
-      description: 'Number of units when adding to cart.',
-      type: { name: 'number', required: false },
-      table: {
-        category: 'attributes',
-        defaultValue: {
-          summary: '1'
-        }
       }
     }
   }
@@ -37,12 +26,14 @@ export const meta: Meta<Args> = {
 const Template: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-add-to-cart
-        sku=${args.sku ?? nothing}
-        quantity=${args.quantity ?? nothing}
-      >
-        Add to cart
-      </cl-add-to-cart>
+      <cl-availability sku=${args.sku ?? nothing}>
+        <cl-availability-status type="available">
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="unavailable">
+          • out of stock
+        </cl-availability-status>
+      </cl-availability>
     `
   )
 }
@@ -53,19 +44,3 @@ Basic.args = {
 }
 
 export const WithoutAttributes = Template.bind({})
-
-export const OutOfStock = Template.bind({})
-OutOfStock.args = {
-  sku: skus.outOfStock
-}
-
-export const Nonexisting = Template.bind({})
-Nonexisting.args = {
-  sku: skus.nonexisting
-}
-
-export const NoOverselling = Template.bind({})
-NoOverselling.args = {
-  sku: skus.bag,
-  quantity: 100
-}

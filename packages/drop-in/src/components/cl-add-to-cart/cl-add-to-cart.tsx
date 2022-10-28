@@ -1,6 +1,12 @@
 import { addItem } from '#apis/commercelayer/cart'
 import { getSku } from '#apis/commercelayer/skus'
 import { log } from '#utils/logger'
+import {
+  logQuantity,
+  logSku,
+  validateQuantity,
+  validateSku
+} from '#utils/validation-helpers'
 import type { Sku } from '@commercelayer/sdk'
 import {
   Component,
@@ -20,64 +26,33 @@ import {
 export class CLAddToCart {
   @Element() host!: HTMLElement
 
-  /**
-   * Sku code
-   */
   @Prop({ reflect: true }) sku: string | undefined
-
-  /**
-   * Quantity
-   */
   @Prop({ reflect: true, mutable: true }) quantity: number = 1
 
   @State() skuObject: Sku | undefined
 
-  logSku(sku: string | undefined): void {
-    if (!this.validateSku(sku)) {
-      log('warn', '"sku" should be a not empty string.', this.host)
-    }
-  }
-
-  logQuantity(quantity: number): void {
-    if (!this.validateQuantity(quantity)) {
-      log(
-        'warn',
-        '"quantity" should be a number equal or greater than 0.',
-        this.host
-      )
-    }
-  }
-
-  validateSku(sku: string | undefined): sku is string {
-    return typeof sku === 'string' && sku !== ''
-  }
-
-  validateQuantity(quantity: number): boolean {
-    return quantity >= 0
-  }
-
   @Watch('sku')
   watchSkuHandler(newValue: string, _oldValue: string): void {
-    this.logSku(newValue)
+    logSku(this.host, newValue)
   }
 
   @Watch('quantity')
   watchQuantityHandler(newValue: number, _oldValue: number): void {
-    if (!this.validateQuantity(newValue)) {
+    if (!validateQuantity(newValue)) {
       this.quantity = 0
     }
   }
 
   async componentWillLoad(): Promise<void> {
-    if (this.validateSku(this.sku)) {
+    if (validateSku(this.sku)) {
       this.skuObject = await getSku(this.sku)
       if (this.skuObject === undefined) {
         log('warn', `Cannot find sku ${this.sku}.`, this.host)
       }
     }
 
-    this.logSku(this.sku)
-    this.logQuantity(this.quantity)
+    logSku(this.host, this.sku)
+    logQuantity(this.host, this.quantity)
   }
 
   handleKeyPress(event: KeyboardEvent): void {
@@ -101,7 +76,7 @@ export class CLAddToCart {
   canBeSold(): boolean {
     // TODO: check for stock
     return (
-      this.validateSku(this.sku) &&
+      validateSku(this.sku) &&
       this.quantity > 0 &&
       // @ts-expect-error
       this.skuObject?.inventory?.available === true &&

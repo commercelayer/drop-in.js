@@ -9,7 +9,7 @@
 
 | Property | Attribute | Description | Type     | Default   |
 | -------- | --------- | ----------- | -------- | --------- |
-| `target` | `target`  | Target      | `string` | `'_self'` |
+| `target` | `target`  |             | `string` | `'_self'` |
 
 
 ----------------------------------------------

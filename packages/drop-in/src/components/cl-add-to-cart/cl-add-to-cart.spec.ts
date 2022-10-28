@@ -99,7 +99,7 @@ describe('cl-add-to-cart.spec', () => {
   it('renders disabled when item is out of stock', async () => {
     const fakeSku: Sku = {
       id: 'ABC123',
-      type: 'prices',
+      type: 'skus',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       inventory: {
@@ -130,7 +130,7 @@ describe('cl-add-to-cart.spec', () => {
   it('renders disabled when item has less than available quantity', async () => {
     const fakeSku: Sku = {
       id: 'ABC123',
-      type: 'prices',
+      type: 'skus',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       inventory: {

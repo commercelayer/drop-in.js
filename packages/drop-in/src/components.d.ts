@@ -7,29 +7,23 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface ClAddToCart {
-        /**
-          * Quantity
-         */
         "quantity": number;
-        /**
-          * Sku code
-         */
         "sku": string | undefined;
+    }
+    interface ClAvailability {
+        "sku": string | undefined;
+    }
+    interface ClAvailabilityStatus {
+        "type": 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
     }
     interface ClCartCount {
     }
     interface ClCartLink {
-        /**
-          * Target
-         */
         "target": string;
     }
     interface ClPrice {
-        /**
-          * Sku code
-         */
         "sku": string | undefined;
     }
     interface ClPriceAmount {
@@ -42,6 +36,18 @@ declare global {
     var HTMLClAddToCartElement: {
         prototype: HTMLClAddToCartElement;
         new (): HTMLClAddToCartElement;
+    };
+    interface HTMLClAvailabilityElement extends Components.ClAvailability, HTMLStencilElement {
+    }
+    var HTMLClAvailabilityElement: {
+        prototype: HTMLClAvailabilityElement;
+        new (): HTMLClAvailabilityElement;
+    };
+    interface HTMLClAvailabilityStatusElement extends Components.ClAvailabilityStatus, HTMLStencilElement {
+    }
+    var HTMLClAvailabilityStatusElement: {
+        prototype: HTMLClAvailabilityStatusElement;
+        new (): HTMLClAvailabilityStatusElement;
     };
     interface HTMLClCartElement extends Components.ClCart, HTMLStencilElement {
     }
@@ -75,6 +81,8 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "cl-add-to-cart": HTMLClAddToCartElement;
+        "cl-availability": HTMLClAvailabilityElement;
+        "cl-availability-status": HTMLClAvailabilityStatusElement;
         "cl-cart": HTMLClCartElement;
         "cl-cart-count": HTMLClCartCountElement;
         "cl-cart-link": HTMLClCartLinkElement;
@@ -84,29 +92,23 @@ declare global {
 }
 declare namespace LocalJSX {
     interface ClAddToCart {
-        /**
-          * Quantity
-         */
         "quantity"?: number;
-        /**
-          * Sku code
-         */
         "sku"?: string | undefined;
+    }
+    interface ClAvailability {
+        "sku"?: string | undefined;
+    }
+    interface ClAvailabilityStatus {
+        "type"?: 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
     }
     interface ClCartCount {
     }
     interface ClCartLink {
-        /**
-          * Target
-         */
         "target"?: string;
     }
     interface ClPrice {
-        /**
-          * Sku code
-         */
         "sku"?: string | undefined;
     }
     interface ClPriceAmount {
@@ -114,6 +116,8 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "cl-add-to-cart": ClAddToCart;
+        "cl-availability": ClAvailability;
+        "cl-availability-status": ClAvailabilityStatus;
         "cl-cart": ClCart;
         "cl-cart-count": ClCartCount;
         "cl-cart-link": ClCartLink;
@@ -126,6 +130,8 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "cl-add-to-cart": LocalJSX.ClAddToCart & JSXBase.HTMLAttributes<HTMLClAddToCartElement>;
+            "cl-availability": LocalJSX.ClAvailability & JSXBase.HTMLAttributes<HTMLClAvailabilityElement>;
+            "cl-availability-status": LocalJSX.ClAvailabilityStatus & JSXBase.HTMLAttributes<HTMLClAvailabilityStatusElement>;
             "cl-cart": LocalJSX.ClCart & JSXBase.HTMLAttributes<HTMLClCartElement>;
             "cl-cart-count": LocalJSX.ClCartCount & JSXBase.HTMLAttributes<HTMLClCartCountElement>;
             "cl-cart-link": LocalJSX.ClCartLink & JSXBase.HTMLAttributes<HTMLClCartLinkElement>;

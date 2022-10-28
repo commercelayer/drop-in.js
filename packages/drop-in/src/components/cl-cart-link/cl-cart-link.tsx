@@ -9,9 +9,6 @@ import { Component, Element, h, JSX, Listen, Prop, State } from '@stencil/core'
 export class CLCartLink {
   @Element() host!: HTMLElement
 
-  /**
-   * Target
-   */
   @Prop({ reflect: true }) target: string = '_self'
 
   @State() href: string | undefined

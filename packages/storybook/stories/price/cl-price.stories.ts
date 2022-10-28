@@ -14,15 +14,13 @@ export const meta: Meta<Args> = {
   argTypes: {
     sku: {
       description: 'SKU is a unique identifier, meaning Stock Keeping Unit.',
-      type: { name: 'string', required: false },
+      type: { name: 'string', required: true },
       table: {
         category: 'attributes'
       }
     }
   }
 }
-
-// export default meta
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
 const Template: StoryFn<Args> = (args) => {
@@ -38,43 +36,6 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
-  sku: skus.bag
-}
-
-export const PriceAmount: StoryFn<Args & { type: 'compare-at' | 'price' }> = (
-  args
-) => {
-  return create(
-    html`
-      <cl-price sku=${args.sku ?? nothing}>
-        <cl-price-amount type=${args.type ?? nothing}></cl-price-amount>
-      </cl-price>
-    `
-  )
-}
-PriceAmount.argTypes = {
-  sku: {
-    table: {
-      disable: true
-    }
-  },
-  type: {
-    description: 'Type of displayed price.',
-    type: {
-      name: 'enum',
-      value: ['price', 'compare-at'],
-      required: false
-    },
-    control: { type: 'select' },
-    table: {
-      category: 'attributes',
-      defaultValue: {
-        summary: 'price'
-      }
-    }
-  }
-}
-PriceAmount.args = {
   sku: skus.bag
 }
 

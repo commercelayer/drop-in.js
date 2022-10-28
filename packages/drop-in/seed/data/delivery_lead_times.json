@@ -16,19 +16,12 @@
   {
     "reference": "delivery_lead_time_3",
     "stock_location": "stock_location_2",
-    "shipping_method": "shipping_method_2",
-    "min_hours": 72,
-    "max_hours": 96
-  },
-  {
-    "reference": "delivery_lead_time_4",
-    "stock_location": "stock_location_1",
-    "shipping_method": "shipping_method_3",
+    "shipping_method": "shipping_method_5",
     "min_hours": 96,
     "max_hours": 144
   },
   {
-    "reference": "delivery_lead_time_5",
+    "reference": "delivery_lead_time_4",
     "stock_location": "stock_location_2",
     "shipping_method": "shipping_method_3",
     "min_hours": 72,

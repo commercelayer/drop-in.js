@@ -1,23 +1,23 @@
-import { getPrice } from '#apis/commercelayer/prices'
+import { getSku } from '#apis/commercelayer/skus'
 import { logSku, validateSku } from '#utils/validation-helpers'
-import type { Price } from '@commercelayer/sdk'
+import type { Sku } from '@commercelayer/sdk'
 import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
 
 @Component({
-  tag: 'cl-price',
+  tag: 'cl-availability',
   shadow: true
 })
-export class CLPrice {
+export class ClAvailability {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) sku: string | undefined
 
   async componentWillLoad(): Promise<void> {
     if (validateSku(this.sku)) {
-      const price = await getPrice(this.sku)
+      const sku = await getSku(this.sku)
 
-      if (price !== undefined) {
-        this.updatePrice(price)
+      if (sku !== undefined) {
+        this.updateAvailability(sku)
       }
     }
 
@@ -29,11 +29,9 @@ export class CLPrice {
     logSku(this.host, newValue)
   }
 
-  private updatePrice(price: Price): void {
-    this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-      element.dispatchEvent(
-        new CustomEvent<Price>('priceUpdate', { detail: price })
-      )
+  private updateAvailability(sku: Sku): void {
+    this.host.querySelectorAll('cl-availability-status').forEach((element) => {
+      element.dispatchEvent(new CustomEvent<Sku>('skuUpdate', { detail: sku }))
     })
   }
 

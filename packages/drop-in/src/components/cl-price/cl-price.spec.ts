@@ -33,7 +33,7 @@ describe('cl-price.spec', () => {
     `)
   })
 
-  it('should pass-throw the "price Update" event to children', async () => {
+  it('should pass-throw the "priceUpdate" event to children', async () => {
     const fakePrice: Price = {
       id: 'ABC123',
       type: 'prices',

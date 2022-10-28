@@ -8,6 +8,7 @@
     "start:storybook": "concurrently -n drop-in,storybook -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in build:watch' 'pnpm --filter storybook start'",
     "test": "pnpm --filter drop-in test",
     "test:watch": "pnpm --filter drop-in test:watch",
+    "test:unit:watch": "pnpm --filter drop-in test:unit:watch",
     "dep:upgrade:major": "pnpm -r exec npm-check-updates -u",
     "dep:upgrade:minor": "pnpm dep:upgrade:major -t minor",
     "dep:self-upgrade:major": "pnpm exec npm-check-updates -u",

@@ -16,7 +16,7 @@ describe('cl-price-amount.spec', () => {
     `)
   })
 
-  it('renders as compare_at when `type="compare-at"`', async () => {
+  it('renders as formatted_amount when `type="price"`', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [CLPriceAmount],
       html: '<cl-price-amount type="price"></cl-price-amount>'
@@ -54,7 +54,7 @@ describe('cl-price-amount.spec', () => {
     `)
   })
 
-  it('renders as compare_at when `type="compare-at"`', async () => {
+  it('renders as formatted_compare_at_amount when `type="compare-at"`', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [CLPriceAmount],
       html: '<cl-price-amount type="compare-at"></cl-price-amount>'
