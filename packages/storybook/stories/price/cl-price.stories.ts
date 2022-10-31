@@ -36,6 +36,11 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
+  sku: skus.cap
+}
+
+export const NoDiscount = Template.bind({})
+NoDiscount.args = {
   sku: skus.bag
 }
 

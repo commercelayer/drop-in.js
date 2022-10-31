@@ -118,18 +118,14 @@ describe('index.e2e', () => {
     expect(await getBackpackPriceAmount(page)).toEqualHtml(`
       <cl-price-amount class="hydrated" type="price">
         <mock:shadow-root>
-          $95.00
+          $110.00
         </mock:shadow-root>
       </cl-price-amount>
     `)
 
     expect(await getBackpackPriceCompareAtAmount(page)).toEqualHtml(`
       <cl-price-amount class="hydrated" type="compare-at">
-        <mock:shadow-root>
-          <s part="strikethrough">
-            $110.00
-          </s>
-        </mock:shadow-root>
+        <mock:shadow-root></mock:shadow-root>
       </cl-price-amount>
     `)
 

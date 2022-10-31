@@ -62,9 +62,7 @@ describe('cl-price-amount.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-price-amount type="compare-at">
-        <mock:shadow-root>
-          <s part='strikethrough'></s>
-        </mock:shadow-root>
+        <mock:shadow-root></mock:shadow-root>
       </cl-price-amount>
     `)
 
@@ -90,6 +88,42 @@ describe('cl-price-amount.spec', () => {
         <mock:shadow-root>
           <s part='strikethrough'>€ 28.50</s>
         </mock:shadow-root>
+      </cl-price-amount>
+    `)
+  })
+
+  it('renders as empty box when `type="compare-at"` and there is no a compare-at amount', async () => {
+    const { root, waitForChanges } = await newSpecPage({
+      components: [CLPriceAmount],
+      html: '<cl-price-amount type="compare-at"></cl-price-amount>'
+    })
+
+    expect(root).toEqualHtml(`
+      <cl-price-amount type="compare-at">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    const priceUpdateEvent: Price = {
+      id: 'ABC123',
+      type: 'prices',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      formatted_amount: '€ 12.00',
+      formatted_compare_at_amount: '€ 12.00'
+    }
+
+    root?.dispatchEvent(
+      new CustomEvent<Price>('priceUpdate', {
+        detail: priceUpdateEvent
+      })
+    )
+
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-price-amount type="compare-at">
+        <mock:shadow-root></mock:shadow-root>
       </cl-price-amount>
     `)
   })

@@ -86,22 +86,22 @@
   {
     "reference": "price_8",
     "sku_code": "BACKPACKFFFFFF000000XXXX",
-    "amount_cents": 8000,
-    "compare_at_amount_cents": 9900,
+    "amount_cents": 9900,
+    "compare_at_amount_cents": null,
     "price_list": "price_list_1"
   },
   {
     "reference": "price_258",
     "sku_code": "BACKPACKFFFFFF000000XXXX",
-    "amount_cents": 9500,
-    "compare_at_amount_cents": 11000,
+    "amount_cents": 11000,
+    "compare_at_amount_cents": null,
     "price_list": "price_list_2"
   },
   {
     "reference": "price_508",
     "sku_code": "BACKPACKFFFFFF000000XXXX",
-    "amount_cents": 7550,
-    "compare_at_amount_cents": 9110,
+    "amount_cents": 9110,
+    "compare_at_amount_cents": null,
     "price_list": "price_list_3"
   },
   {

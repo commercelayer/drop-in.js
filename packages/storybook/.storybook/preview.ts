@@ -72,18 +72,6 @@ const storyAsHTML = (story: unknown) => {
 };
 
 export const decorators: DecoratorFunction[] = [
-  (story) => {
-    const tale = story()
-
-    return `
-      <style>
-        body {
-          font-family: "Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco",BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif
-        }
-      </style>
-      ${ typeof tale === 'string' ? tale : storyAsHTML(tale) }
-    `
-  },
   (story, options) => {
     const tale = story()
 

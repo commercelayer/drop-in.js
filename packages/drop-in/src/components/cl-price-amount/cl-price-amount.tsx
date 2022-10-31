@@ -8,32 +8,26 @@ import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
 export class CLPriceAmount {
   @Prop({ reflect: true }) type: 'price' | 'compare-at' = 'price'
 
-  @State() price: string | undefined
+  @State() price: Price | undefined
 
   @Listen('priceUpdate')
   priceUpdateHandler(event: CustomEvent<Price>): void {
-    switch (this.type) {
-      case 'compare-at':
-        this.price = event.detail.formatted_compare_at_amount
-        break
-
-      case 'price':
-        this.price = event.detail.formatted_amount
-        break
-
-      default:
-        break
-    }
+    this.price = event.detail
   }
 
   render(): JSX.Element {
+    const hasStrikethrough: boolean =
+      this.price?.formatted_compare_at_amount !== this.price?.formatted_amount
+
     return (
       <Host>
-        {this.type === 'compare-at' ? (
-          <s part='strikethrough'>{this.price}</s>
-        ) : (
-          this.price
-        )}
+        {this.type === 'compare-at'
+          ? hasStrikethrough && (
+              <s part='strikethrough'>
+                {this.price?.formatted_compare_at_amount}
+              </s>
+            )
+          : this.price?.formatted_amount}
       </Host>
     )
   }
