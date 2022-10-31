@@ -1,4 +1,4 @@
-import type { Sku } from '@commercelayer/sdk';
+import type { Sku } from '#apis/commercelayer/skus';
 import { JSX } from '../../stencil-public-runtime';
 export declare class ClAvailabilityStatus {
   type: 'available' | 'unavailable' | undefined;

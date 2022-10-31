@@ -5,19 +5,14 @@ export class CLPriceAmount {
     this.price = undefined;
   }
   priceUpdateHandler(event) {
-    switch (this.type) {
-      case 'compare-at':
-        this.price = event.detail.formatted_compare_at_amount;
-        break;
-      case 'price':
-        this.price = event.detail.formatted_amount;
-        break;
-      default:
-        break;
-    }
+    this.price = event.detail;
   }
   render() {
-    return (h(Host, null, this.type === 'compare-at' ? (h("s", { part: 'strikethrough' }, this.price)) : (this.price)));
+    var _a, _b, _c, _d;
+    const hasStrikethrough = ((_a = this.price) === null || _a === void 0 ? void 0 : _a.formatted_compare_at_amount) !== ((_b = this.price) === null || _b === void 0 ? void 0 : _b.formatted_amount);
+    return (h(Host, null, this.type === 'compare-at'
+      ? hasStrikethrough && (h("s", { part: 'strikethrough' }, (_c = this.price) === null || _c === void 0 ? void 0 : _c.formatted_compare_at_amount))
+      : (_d = this.price) === null || _d === void 0 ? void 0 : _d.formatted_amount));
   }
   static get is() { return "cl-price-amount"; }
   static get encapsulation() { return "shadow"; }

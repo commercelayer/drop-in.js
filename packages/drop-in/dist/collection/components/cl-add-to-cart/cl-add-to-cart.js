@@ -48,9 +48,7 @@ export class CLAddToCart {
     // TODO: check for stock
     return (validateSku(this.sku) &&
       this.quantity > 0 &&
-      // @ts-expect-error
       ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true &&
-      // @ts-expect-error
       this.quantity <= ((_d = (_c = this.skuObject) === null || _c === void 0 ? void 0 : _c.inventory) === null || _d === void 0 ? void 0 : _d.quantity));
   }
   render() {

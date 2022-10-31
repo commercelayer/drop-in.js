@@ -6,7 +6,6 @@ export class ClAvailabilityStatus {
   }
   skuUpdateHandler(event) {
     var _a;
-    // @ts-expect-error
     this.available = (_a = event.detail.inventory) === null || _a === void 0 ? void 0 : _a.available;
   }
   render() {

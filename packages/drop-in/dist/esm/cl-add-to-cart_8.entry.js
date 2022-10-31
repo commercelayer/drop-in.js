@@ -76,7 +76,7 @@ const getSku = memoize(async (sku) => {
     return undefined;
   }
   const client = await createClient(getConfig());
-  return await client.skus.retrieve(id);
+  return (await client.skus.retrieve(id));
 });
 
 function validateSku(sku) {
@@ -142,9 +142,7 @@ const CLAddToCart = class {
     // TODO: check for stock
     return (validateSku(this.sku) &&
       this.quantity > 0 &&
-      // @ts-expect-error
       ((_b = (_a = this.skuObject) === null || _a === void 0 ? void 0 : _a.inventory) === null || _b === void 0 ? void 0 : _b.available) === true &&
-      // @ts-expect-error
       this.quantity <= ((_d = (_c = this.skuObject) === null || _c === void 0 ? void 0 : _c.inventory) === null || _d === void 0 ? void 0 : _d.quantity));
   }
   render() {
@@ -176,7 +174,9 @@ const ClAvailability = class {
     logSku(this.host, newValue);
   }
   updateAvailability(sku) {
-    this.host.querySelectorAll('cl-availability-status').forEach((element) => {
+    this.host
+      .querySelectorAll('cl-availability-status, cl-availability-message')
+      .forEach((element) => {
       element.dispatchEvent(new CustomEvent('skuUpdate', { detail: sku }));
     });
   }
@@ -189,6 +189,35 @@ const ClAvailability = class {
   }; }
 };
 
+const ClAvailabilityMessage = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
+    this.format = undefined;
+    this.message = undefined;
+    this.displayMessage = undefined;
+  }
+  skuUpdateHandler(event) {
+    var _a, _b;
+    if (this.format === undefined || this.message === undefined) {
+      return;
+    }
+    const deliveryLeadTime = (_b = (_a = event.detail.inventory) === null || _a === void 0 ? void 0 : _a.levels[0]) === null || _b === void 0 ? void 0 : _b.delivery_lead_times[0];
+    if (deliveryLeadTime === undefined) {
+      return;
+    }
+    const min = deliveryLeadTime.min[this.format];
+    const max = deliveryLeadTime.max[this.format];
+    if (min !== undefined && max !== undefined) {
+      this.displayMessage = this.message
+        .replace(/\{min\}/g, min.toFixed(0))
+        .replace(/\{max\}/g, max.toFixed(0));
+    }
+  }
+  render() {
+    return h(Host, null, this.displayMessage);
+  }
+};
+
 const ClAvailabilityStatus = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
@@ -197,7 +226,6 @@ const ClAvailabilityStatus = class {
   }
   skuUpdateHandler(event) {
     var _a;
-    // @ts-expect-error
     this.available = (_a = event.detail.inventory) === null || _a === void 0 ? void 0 : _a.available;
   }
   render() {
@@ -328,18 +356,15 @@ const CLPriceAmount = class {
     this.price = undefined;
   }
   priceUpdateHandler(event) {
-    switch (this.type) {
-      case 'compare-at':
-        this.price = event.detail.formatted_compare_at_amount;
-        break;
-      case 'price':
-        this.price = event.detail.formatted_amount;
-        break;
-    }
+    this.price = event.detail;
   }
   render() {
-    return (h(Host, null, this.type === 'compare-at' ? (h("s", { part: 'strikethrough' }, this.price)) : (this.price)));
+    var _a, _b, _c, _d;
+    const hasStrikethrough = ((_a = this.price) === null || _a === void 0 ? void 0 : _a.formatted_compare_at_amount) !== ((_b = this.price) === null || _b === void 0 ? void 0 : _b.formatted_amount);
+    return (h(Host, null, this.type === 'compare-at'
+      ? hasStrikethrough && (h("s", { part: 'strikethrough' }, (_c = this.price) === null || _c === void 0 ? void 0 : _c.formatted_compare_at_amount))
+      : (_d = this.price) === null || _d === void 0 ? void 0 : _d.formatted_amount));
   }
 };
 
-export { CLAddToCart as cl_add_to_cart, ClAvailability as cl_availability, ClAvailabilityStatus as cl_availability_status, ClCartCount as cl_cart_count, CLCartLink as cl_cart_link, CLPrice as cl_price, CLPriceAmount as cl_price_amount };
+export { CLAddToCart as cl_add_to_cart, ClAvailability as cl_availability, ClAvailabilityMessage as cl_availability_message, ClAvailabilityStatus as cl_availability_status, ClCartCount as cl_cart_count, CLCartLink as cl_cart_link, CLPrice as cl_price, CLPriceAmount as cl_price_amount };

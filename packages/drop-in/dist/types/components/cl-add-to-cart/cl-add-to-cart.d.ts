@@ -1,4 +1,4 @@
-import type { Sku } from '@commercelayer/sdk';
+import { Sku } from '#apis/commercelayer/skus';
 import { JSX } from '../../stencil-public-runtime';
 export declare class CLAddToCart {
   host: HTMLElement;

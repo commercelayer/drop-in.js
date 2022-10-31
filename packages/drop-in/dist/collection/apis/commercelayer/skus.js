@@ -38,5 +38,5 @@ export const getSku = memoize(async (sku) => {
     return undefined;
   }
   const client = await createClient(getConfig());
-  return await client.skus.retrieve(id);
+  return (await client.skus.retrieve(id));
 });

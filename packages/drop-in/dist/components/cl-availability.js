@@ -22,7 +22,9 @@ const ClAvailability$1 = /*@__PURE__*/ proxyCustomElement(class extends HTMLElem
     logSku(this.host, newValue);
   }
   updateAvailability(sku) {
-    this.host.querySelectorAll('cl-availability-status').forEach((element) => {
+    this.host
+      .querySelectorAll('cl-availability-status, cl-availability-message')
+      .forEach((element) => {
       element.dispatchEvent(new CustomEvent('skuUpdate', { detail: sku }));
     });
   }
