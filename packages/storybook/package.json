@@ -3,10 +3,11 @@
   "private": true,
   "version": "2.0.0-beta.0",
   "scripts": {
-    "start": "pnpm build:sass && start-storybook -s ./public -p 6006",
+    "start": "pnpm build:sass && pnpm build:copy && start-storybook -s ./public -p 6006",
+    "build:copy": "cp -r ../drop-in/dist public/",
     "build:sass": "sass stories/assets/drop-in.scss public/drop-in.css",
-    "build:full": "pnpm build:sass && build-storybook -s ./public",
-    "build": "pnpm build:sass && build-storybook -s ./public --docs",
+    "build:full": "pnpm build:sass && pnpm build:copy && build-storybook -s ./public",
+    "build": "pnpm build:sass && pnpm build:copy && build-storybook -s ./public --docs",
     "serve": "pnpm build:docs && pnpx http-server storybook-static -o"
   },
   "author": {
