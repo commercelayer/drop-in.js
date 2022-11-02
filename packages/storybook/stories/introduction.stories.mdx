@@ -16,16 +16,14 @@ whatever the CMS, SSG, and tools you use to build your site pages.
 First of all you need to import the `drop-in.js` from the cdn.
 
 ```html dark
-<!-- TODO: use cdn link here -->
-<script type="module" src=".../drop-in.esm.js"></script>
-<script nomodule src=".../drop-in.js"></script>
+<script type="module" src="https://commercelayer.github.io/drop-in.js/dist/drop-in/drop-in.esm.js"></script>
 
 <script>
   (function() {
     window.commercelayerConfig = {
-      clientId: 'kuSKPbeKbUjndzieKWRcfiXFuEfO',
-      slug: 'my-store',
-      scope: 'market:1234',
+      clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+      slug: 'drop-in-js',
+      scope: 'market:11709',
       debug: 'all' // 'none' is the default
     }
   }());
@@ -39,8 +37,7 @@ This library is shipped unstyled, so that you can apply your own styles.
 If you prefer you can add the following `link` tag:
 
 ```html dark
-<!-- TODO: use cdn link here -->
-<link href=".../drop-in.css" rel="stylesheet" />
+<link href="https://commercelayer.github.io/drop-in.js/dist/drop-in/drop-in.css" rel="stylesheet" />
 ```
 
 
