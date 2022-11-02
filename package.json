@@ -5,7 +5,7 @@
     "prepare": "husky install",
     "build": "pnpm -r build",
     "start:drop-in": "pnpm --filter drop-in start",
-    "start:storybook": "concurrently -n drop-in,storybook -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in build:watch' 'pnpm --filter storybook start'",
+    "start:storybook": "pnpm --filter drop-in build && concurrently -n drop-in,storybook -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in build:watch' 'pnpm --filter storybook start'",
     "test": "pnpm --filter drop-in test",
     "test:watch": "pnpm --filter drop-in test:watch",
     "test:unit:watch": "pnpm --filter drop-in test:unit:watch",
