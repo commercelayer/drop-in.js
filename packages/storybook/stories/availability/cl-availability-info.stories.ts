@@ -23,10 +23,17 @@ export const meta: Meta<Args> = {
       }
     },
     type: {
-      description: 'Time format.',
+      description: 'Type of data that you wanna show.',
       type: {
         name: 'enum',
-        value: ['min-days', 'max-days', 'min-hours', 'max-hours'],
+        value: [
+          'min-days',
+          'max-days',
+          'min-hours',
+          'max-hours',
+          'shipping-method-name',
+          'shipping-method-price'
+        ],
         required: true
       },
       control: { type: 'select' },
@@ -61,7 +68,9 @@ export const Message: StoryFn<Args> = (args) => {
         <cl-availability-info type="min-days"></cl-availability-info
         // eslint-disable-next-line prettier/prettier
         >-<cl-availability-info type="max-days"></cl-availability-info>
-        days
+        days with
+        <cl-availability-info type="shipping-method-name"></cl-availability-info>
+        (<cl-availability-info type="shipping-method-price"></cl-availability-info>)
       </cl-availability>
     `
   )

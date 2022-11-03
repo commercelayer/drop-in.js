@@ -6,6 +6,8 @@ export type Type =
   | 'max-days'
   | 'min-hours'
   | 'max-hours'
+  | 'shipping-method-name'
+  | 'shipping-method-price'
   | undefined
 
 @Component({
@@ -38,6 +40,12 @@ export class ClAvailabilityInfo {
         break
       case 'max-hours':
         this.text = deliveryLeadTime?.max.hours.toFixed(0)
+        break
+      case 'shipping-method-name':
+        this.text = deliveryLeadTime?.shipping_method.name
+        break
+      case 'shipping-method-price':
+        this.text = deliveryLeadTime?.shipping_method.formatted_price_amount
         break
     }
   }

@@ -24,6 +24,8 @@ describe('cl-availability-info.spec', () => {
           <cl-availability-info type="max-days"></cl-availability-info>
           <cl-availability-info type="min-hours"></cl-availability-info>
           <cl-availability-info type="max-hours"></cl-availability-info>
+          <cl-availability-info type="shipping-method-name"></cl-availability-info>
+          <cl-availability-info type="shipping-method-price"></cl-availability-info>
         </div>
       `
     })
@@ -40,6 +42,12 @@ describe('cl-availability-info.spec', () => {
           <mock:shadow-root></mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="max-hours">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-name">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-price">
           <mock:shadow-root></mock:shadow-root>
         </cl-availability-info>
       </div>
@@ -68,8 +76,8 @@ describe('cl-availability-info.spec', () => {
                 shipping_method: {
                   name: 'Standard',
                   reference: 'reference-1',
-                  price_amount_cents: 100,
-                  formatted_price_amount: '100$',
+                  price_amount_cents: 700,
+                  formatted_price_amount: '$7.00',
                   formatted_free_over_amount: null,
                   free_over_amount_cents: null
                 }
@@ -105,6 +113,12 @@ describe('cl-availability-info.spec', () => {
         <cl-availability-info type="max-hours">
           <mock:shadow-root>48</mock:shadow-root>
         </cl-availability-info>
+        <cl-availability-info type="shipping-method-name">
+          <mock:shadow-root>Standard</mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-price">
+          <mock:shadow-root>$7.00</mock:shadow-root>
+        </cl-availability-info>
       </div>
     `)
   })
@@ -118,6 +132,8 @@ describe('cl-availability-info.spec', () => {
           <cl-availability-info type="max-days"></cl-availability-info>
           <cl-availability-info type="min-hours"></cl-availability-info>
           <cl-availability-info type="max-hours"></cl-availability-info>
+          <cl-availability-info type="shipping-method-name"></cl-availability-info>
+          <cl-availability-info type="shipping-method-price"></cl-availability-info>
         </div>
       `
     })
@@ -134,6 +150,12 @@ describe('cl-availability-info.spec', () => {
           <mock:shadow-root></mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="max-hours">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-name">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-price">
           <mock:shadow-root></mock:shadow-root>
         </cl-availability-info>
       </div>
@@ -173,6 +195,12 @@ describe('cl-availability-info.spec', () => {
           <mock:shadow-root></mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="max-hours">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-name">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-price">
           <mock:shadow-root></mock:shadow-root>
         </cl-availability-info>
       </div>
