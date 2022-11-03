@@ -1,5 +1,8 @@
 :root {
-  --cl-primary-color: #666EFF;
+  --cl-color-primary: #666EFF;
+  --cl-color-green: #1FDA8A;
+  --cl-color-red: #FF656B;
+  --cl-color-white: #FFF;
 }
 
 cl-price-amount {
@@ -26,18 +29,17 @@ cl-add-to-cart {
   background-image: none;
   border: none;
   font-weight: 600;
-  color: #fff;
+  color: var(--cl-color-white);
   padding: 1em 1.5em 1em 1.5em;
   padding-left: 1.5em;
   padding-right: 1.5em;
   border-radius: 0.375rem;
 
   background-color: #dbdcdc;
-  background-color: #dbdcdc;
   cursor: default;
 
   &.hydrated:not([aria-disabled="true"]) {
-    background-color: var(--cl-primary-color);
+    background-color: var(--cl-color-primary);
     cursor: pointer;
   }
 }
@@ -49,14 +51,14 @@ cl-cart-link, .cl-cart-link {
   cl-cart-count[quantity] {
     font-size: .5rem;
     border-radius: 50%;
-    background-color: var(--cl-primary-color);
+    background-color: var(--cl-color-primary);
     width: 1rem;
     height: 1rem;
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--cl-color-white);
     bottom: 0%;
     right: 0%;
     transform: translate(120%, 0%);
@@ -69,14 +71,14 @@ cl-cart-link, .cl-cart-link {
   }
 }
 
-cl-availability {
-  cl-availability-status {
-    &[type="available"] {
-      color: #1FDA8A;
-    }
+// cl-availability {
+//   cl-availability-status {
+//     &[type="available"] {
+//       color: var(--cl-color-green);
+//     }
 
-    &[type="unavailable"] {
-      color: #FF656B;
-    }
-  }
-}
+//     &[type="unavailable"] {
+//       color: var(--cl-color-red);
+//     }
+//   }
+// }

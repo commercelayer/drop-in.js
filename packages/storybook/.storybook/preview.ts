@@ -42,7 +42,8 @@ export const parameters = {
           ],
           'Availability', [
             'cl-availability',
-            'cl-availability-status'
+            'cl-availability-status',
+            'cl-availability-info'
           ],
           'Cart', [
             'introduction',

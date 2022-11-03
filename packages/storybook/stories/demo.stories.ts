@@ -50,13 +50,15 @@ export const Basic: StoryFn = () => {
             Add to cart
           </cl-add-to-cart>
           <cl-availability sku="5PANECAP000000FFFFFFXXXX" class="my-2">
-            <cl-availability-status type="available">available</cl-availability-status>
-            <cl-availability-status type="unavailable">unavailable</cl-availability-status>
-            <cl-availability-message
-              format="days"
-              message="ready to be shipped in {min}-{max} days"
-              class="block"
-            ></cl-availability-message>
+            <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
+            <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
+            <cl-availability-status type="available" class="block">
+              ready to be shipped in
+              <cl-availability-info type="min-days"></cl-availability-info
+              // eslint-disable-next-line prettier/prettier
+              >-<cl-availability-info type="max-days"></cl-availability-info>
+              days
+            </cl-availability-status>
           </cl-availability>
         </div>
 
@@ -78,13 +80,15 @@ export const Basic: StoryFn = () => {
             Add to cart
           </cl-add-to-cart>
           <cl-availability sku="5PANECAP9D9CA1FFFFFFXXXX" class="my-2">
-            <cl-availability-status type="available">available</cl-availability-status>
-            <cl-availability-status type="unavailable">unavailable</cl-availability-status>
-            <cl-availability-message
-              format="days"
-              message="ready to be shipped in {min}-{max} days"
-              class="block"
-            ></cl-availability-message>
+            <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
+            <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
+            <cl-availability-status type="available" class="block">
+              ready to be shipped in
+              <cl-availability-info type="min-days"></cl-availability-info
+              // eslint-disable-next-line prettier/prettier
+              >-<cl-availability-info type="max-days"></cl-availability-info>
+              days
+            </cl-availability-status>
           </cl-availability>
         </div>
 
@@ -106,13 +110,15 @@ export const Basic: StoryFn = () => {
             Add to cart
           </cl-add-to-cart>
           <cl-availability sku="BACKPACKFFFFFF000000XXXX" class="my-2">
-            <cl-availability-status type="available">available</cl-availability-status>
-            <cl-availability-status type="unavailable">unavailable</cl-availability-status>
-            <cl-availability-message
-              format="days"
-              message="ready to be shipped in {min}-{max} days"
-              class="block"
-            ></cl-availability-message>
+            <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
+            <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
+            <cl-availability-status type="available" class="block">
+              ready to be shipped in
+              <cl-availability-info type="min-days"></cl-availability-info
+              // eslint-disable-next-line prettier/prettier
+              >-<cl-availability-info type="max-days"></cl-availability-info>
+              days
+            </cl-availability-status>
           </cl-availability>
         </div>
 

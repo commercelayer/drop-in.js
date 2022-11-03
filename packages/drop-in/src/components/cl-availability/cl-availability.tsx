@@ -30,7 +30,7 @@ export class ClAvailability {
 
   private updateAvailability(sku: Sku): void {
     this.host
-      .querySelectorAll('cl-availability-status, cl-availability-message')
+      .querySelectorAll('cl-availability-status, cl-availability-info')
       .forEach((element) => {
         element.dispatchEvent(
           new CustomEvent<Sku>('skuUpdate', { detail: sku })

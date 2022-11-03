@@ -28,15 +28,16 @@ const Template: StoryFn<Args> = (args) => {
     html`
       <cl-availability sku=${args.sku ?? nothing}>
         <cl-availability-status type="available">
-          • available
+          <span style="color: green;">• available</span>
+          ready to be shipped in
+          <cl-availability-info type="min-days"></cl-availability-info
+          // eslint-disable-next-line prettier/prettier
+          >-<cl-availability-info type="max-days"></cl-availability-info>
+          days
         </cl-availability-status>
-        <cl-availability-status type="unavailable">
+        <cl-availability-status type="unavailable" style="color: red;">
           • out of stock
         </cl-availability-status>
-        <cl-availability-message
-          format="days"
-          message="ready to be shipped in {min}-{max} days"
-        ></cl-availability-message>
       </cl-availability>
     `
   )
