@@ -10,12 +10,7 @@
 
     <link href="/build/drop-in.css" rel="stylesheet" />
 
-    <style>
-      body {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 14px;
-      }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
       (function() {
@@ -31,150 +26,161 @@
 
   </head>
   <body>
-    <cl-cart-count></cl-cart-count><br /><br />
+    <div class="container mx-auto p-6">
 
-    <cl-cart-link target="_blank">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M27 6H5C4.44772 6 4 6.44772 4 7V25C4 25.5523 4.44772 26 5 26H27C27.5523 26 28 25.5523 28 25V7C28 6.44772 27.5523 6 27 6Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M4 10H28" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M21 14C21 15.3261 20.4732 16.5979 19.5355 17.5355C18.5979 18.4732 17.3261 19 16 19C14.6739 19 13.4021 18.4732 12.4645 17.5355C11.5268 16.5979 11 15.3261 11 14" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <nav class="flex mb-12">
+        <span class="font-semibold text-xl tracking-tight">Store Name</span>
+        <div class="flex items-center flex-grow justify-end">
+          <cl-cart-count></cl-cart-count>
 
-      <cl-cart-count></cl-cart-count>
-    </cl-cart-link><br /><br />
+          <a href="/cart" target="_blank" aria-label="Cart" class="cl-cart-link ml-4">
+            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
+              <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+              <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"/>
+            </svg>
+            <cl-cart-count></cl-cart-count>
+          </a>
 
-    <a class="cl-cart-link" target="_blank" href="/cart">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M27 6H5C4.44772 6 4 6.44772 4 7V25C4 25.5523 4.44772 26 5 26H27C27.5523 26 28 25.5523 28 25V7C28 6.44772 27.5523 6 27 6Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M4 10H28" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M21 14C21 15.3261 20.4732 16.5979 19.5355 17.5355C18.5979 18.4732 17.3261 19 16 19C14.6739 19 13.4021 18.4732 12.4645 17.5355C11.5268 16.5979 11 15.3261 11 14" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+          <cl-cart-link target="_blank" aria-label="Cart" class="ml-4">
+            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
+              <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+              <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"/>
+            </svg>
+            <cl-cart-count></cl-cart-count>
+          </cl-cart-link>
 
-      <cl-cart-count></cl-cart-count>
-    </a><br /><br />
-
-    <!-- <cl-cart></cl-cart> -->
-
-    <cl-cart-link target="_blank">
-      Cart
-      <cl-cart-count></cl-cart-count>
-    </cl-cart-link><br /><br />
-
-
-    <h3>All right!</h3>
-
-    <div>
-      <cl-price sku="5PANECAP000000FFFFFFXXXX">
-        Sku: 5PANECAP000000FFFFFFXXXX<br />
-        The price was: <cl-price-amount type="compare-at"></cl-price-amount><br />
-        Now the price is: <cl-price-amount></cl-price-amount>
-      </cl-price><br />
-      <cl-add-to-cart sku="5PANECAP000000FFFFFFXXXX">Add to cart</cl-add-to-cart>
-      <cl-availability sku="5PANECAP000000FFFFFFXXXX">
-        <cl-availability-status type="available">
-          <span style="color: var(--cl-color-green);">• available</span>
-          ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
-        </cl-availability-status>
-        <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
-      </cl-availability>
-      <br /><br />
-    </div>
-
-    <div>
-      <cl-price sku="BACKPACKFFFFFF000000XXXX">
-        Sku: BACKPACKFFFFFF000000XXXX<br />
-        The price was: <cl-price-amount type="compare-at"></cl-price-amount><br />
-        Now the price is: <cl-price-amount></cl-price-amount>
-      </cl-price><br />
-      <cl-add-to-cart sku="BACKPACKFFFFFF000000XXXX">Add to cart</cl-add-to-cart>
-      <cl-availability sku="BACKPACKFFFFFF000000XXXX">
-        <cl-availability-status type="available">• available</cl-availability-status>
-        <cl-availability-status type="available">
-          ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
-        </cl-availability-status>
-        <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
-      </cl-availability>
-      <br /><br />
-    </div>
+          <cl-cart-link target="_blank" class="ml-4">
+            Cart
+            <cl-cart-count></cl-cart-count>
+          </cl-cart-link>
+        </div>
+      </nav>
 
 
-    <h3>Without attributes</h3>
+      <section id="products">
 
-    <div>
-      <cl-price>
-        The price was: <cl-price-amount type="compare-at"></cl-price-amount><br />
-        Now the price is: <cl-price-amount></cl-price-amount>
-      </cl-price><br />
-      <cl-add-to-cart>Add to cart</cl-add-to-cart>
-      <cl-availability>
-        <cl-availability-status type="available">• available</cl-availability-status>
-        <cl-availability-status type="available">
-          ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
-        </cl-availability-status>
-        <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
-      </cl-availability>
-      <br /><br />
-    </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 text-center gap-6">
+
+          <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
+            <div class="mb-4"><code>ALL RIGHT!</code></div>
+            5PANECAP000000FFFFFFXXXX
+            <cl-price sku="5PANECAP000000FFFFFFXXXX">
+              price is:
+              <cl-price-amount type="compare-at"></cl-price-amount>
+              <cl-price-amount></cl-price-amount>
+            </cl-price>
+            <cl-add-to-cart sku="5PANECAP000000FFFFFFXXXX">Add to cart</cl-add-to-cart>
+            <cl-availability sku="5PANECAP000000FFFFFFXXXX">
+              <cl-availability-status type="available" style="color: var(--cl-color-green);">• available</cl-availability-status>
+              <cl-availability-status type="available">
+                ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
+              </cl-availability-status>
+              <cl-availability-status type="unavailable" style="color: var(--cl-color-red);">• out of stock</cl-availability-status>
+            </cl-availability>
+          </div>
+
+          <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
+            <div class="mb-4"><code>ALL RIGHT!</code></div>
+            BACKPACKFFFFFF000000XXXX
+            <cl-price sku="BACKPACKFFFFFF000000XXXX">
+              price is:
+              <cl-price-amount type="compare-at"></cl-price-amount>
+              <cl-price-amount></cl-price-amount>
+            </cl-price>
+            <cl-add-to-cart sku="BACKPACKFFFFFF000000XXXX" quantity="2">Add to cart</cl-add-to-cart>
+            <cl-availability sku="BACKPACKFFFFFF000000XXXX">
+              <cl-availability-status type="available" style="color: var(--cl-color-green);">• available</cl-availability-status>
+              <cl-availability-status type="available">
+                ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
+              </cl-availability-status>
+              <cl-availability-status type="unavailable" style="color: var(--cl-color-red);">• out of stock</cl-availability-status>
+            </cl-availability>
+          </div>
+
+          <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
+            <div class="mb-4"><code>WITH NEGATIVE QUANTITY</code></div>
+            5PANECAP000000FFFFFFXXXX
+            <cl-price sku="5PANECAP000000FFFFFFXXXX">
+              price is:
+              <cl-price-amount type="compare-at"></cl-price-amount>
+              <cl-price-amount></cl-price-amount>
+            </cl-price>
+            <cl-add-to-cart sku="5PANECAP000000FFFFFFXXXX" quantity="-1">Add to cart</cl-add-to-cart>
+            <cl-availability sku="5PANECAP000000FFFFFFXXXX">
+              <cl-availability-status type="available" style="color: var(--cl-color-green);">• available</cl-availability-status>
+              <cl-availability-status type="available">
+                ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
+              </cl-availability-status>
+              <cl-availability-status type="unavailable" style="color: var(--cl-color-red);">• out of stock</cl-availability-status>
+            </cl-availability>
+          </div>
+
+          <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
+            <div class="mb-4"><code>OUT OF STOCK</code></div>
+            5PANECAP9D9CA1FFFFFFXXXX
+            <cl-price sku="5PANECAP9D9CA1FFFFFFXXXX">
+              price is:
+              <cl-price-amount type="compare-at"></cl-price-amount>
+              <cl-price-amount></cl-price-amount>
+            </cl-price>
+            <cl-add-to-cart sku="5PANECAP9D9CA1FFFFFFXXXX">Add to cart</cl-add-to-cart>
+            <cl-availability sku="5PANECAP9D9CA1FFFFFFXXXX">
+              <cl-availability-status type="available" style="color: var(--cl-color-green);">• available</cl-availability-status>
+              <cl-availability-status type="available">
+                ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
+              </cl-availability-status>
+              <cl-availability-status type="unavailable" style="color: var(--cl-color-red);">• out of stock</cl-availability-status>
+            </cl-availability>
+          </div>
+
+          <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
+            <div class="mb-4"><code>WITHOUT ATTRIBUTES</code></div>
+            -
+            <cl-price>
+              price is:
+              <cl-price-amount type="compare-at"></cl-price-amount>
+              <cl-price-amount></cl-price-amount>
+            </cl-price>
+            <cl-add-to-cart>Add to cart</cl-add-to-cart>
+            <cl-availability>
+              <cl-availability-status type="available" style="color: var(--cl-color-green);">• available</cl-availability-status>
+              <cl-availability-status type="available">
+                ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
+              </cl-availability-status>
+              <cl-availability-status type="unavailable" style="color: var(--cl-color-red);">• out of stock</cl-availability-status>
+            </cl-availability>
+          </div>
+
+          <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
+            <div class="mb-4"><code>NONEXISTING SKU</code></div>
+            APRONXXX000000FFFFFFXXXX
+            <cl-price sku="APRONXXX000000FFFFFFXXXX">
+              price is:
+              <cl-price-amount type="compare-at"></cl-price-amount>
+              <cl-price-amount></cl-price-amount>
+            </cl-price>
+            <cl-add-to-cart sku="APRONXXX000000FFFFFFXXXX">Add to cart</cl-add-to-cart>
+            <cl-availability sku="APRONXXX000000FFFFFFXXXX">
+              <cl-availability-status type="available" style="color: var(--cl-color-green);">• available</cl-availability-status>
+              <cl-availability-status type="available">
+                ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
+              </cl-availability-status>
+              <cl-availability-status type="unavailable" style="color: var(--cl-color-red);">• out of stock</cl-availability-status>
+            </cl-availability>
+          </div>
+
+        </div><!-- grid -->
+
+      </section><!-- products -->
 
 
-    <h3>With negative quantity</h3>
+      <section id="cl-cart">
+        <h2 class="text-xl font-bold mt-10 mb-2">
+          <code>&lt;cl-cart&gt;</code>
+        </h2>
+        <cl-cart></cl-cart>
+      </section>
 
-    <div>
-      <cl-price sku="5PANECAP000000FFFFFFXXXX">
-        Sku: 5PANECAP000000FFFFFFXXXX<br />
-        The price was: <cl-price-amount type="compare-at"></cl-price-amount><br />
-        Now the price is: <cl-price-amount></cl-price-amount>
-      </cl-price><br />
-      <cl-add-to-cart sku="5PANECAP000000FFFFFFXXXX" quantity="-1">Add to cart</cl-add-to-cart>
-      <cl-availability sku="5PANECAP000000FFFFFFXXXX">
-        <cl-availability-status type="available">• available</cl-availability-status>
-        <cl-availability-status type="available">
-          ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
-        </cl-availability-status>
-        <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
-      </cl-availability>
-      <br /><br />
-    </div>
-
-
-    <h3>Nonexisting SKU</h3>
-
-    <div>
-      <cl-price sku="APRONXXX000000FFFFFFXXXX">
-        Sku: APRONXXX000000FFFFFFXXXX<br />
-        The price was: <cl-price-amount type="compare-at"></cl-price-amount><br />
-        Now the price is: <cl-price-amount></cl-price-amount>
-      </cl-price><br />
-      <cl-add-to-cart sku="APRONXXX000000FFFFFFXXXX">Add to cart</cl-add-to-cart>
-      <cl-availability sku="APRONXXX000000FFFFFFXXXX">
-        <cl-availability-status type="available">• available</cl-availability-status>
-        <cl-availability-status type="available">
-          ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
-        </cl-availability-status>
-        <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
-      </cl-availability>
-      <br /><br />
-    </div>
-
-
-    <h3>Out of stock</h3>
-
-    <div>
-      <cl-price sku="5PANECAP9D9CA1FFFFFFXXXX">
-        Sku: 5PANECAP9D9CA1FFFFFFXXXX<br />
-        The price was: <cl-price-amount type="compare-at"></cl-price-amount><br />
-        Now the price is: <cl-price-amount></cl-price-amount>
-      </cl-price><br />
-      <cl-add-to-cart sku="5PANECAP9D9CA1FFFFFFXXXX">Add to cart</cl-add-to-cart>
-      <cl-availability sku="5PANECAP9D9CA1FFFFFFXXXX">
-        <cl-availability-status type="available">• available</cl-availability-status>
-        <cl-availability-status type="available">
-          ready to be shipped in <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info> days
-        </cl-availability-status>
-        <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
-      </cl-availability>
-      <br /><br />
-    </div>
-
+    </div> <!-- container -->
   </body>
 </html>
