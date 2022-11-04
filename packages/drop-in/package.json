@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@commercelayer/js-auth": "^2.3.0",
-    "@commercelayer/sdk": "^4.16.0",
+    "@commercelayer/sdk": "^4.17.0",
     "@types/lodash": "^4.14.187",
     "iframe-resizer": "^4.3.2",
     "js-cookie": "^3.0.1",
@@ -49,5 +49,8 @@
     "ts-jest": "^27",
     "typescript": "^4.8.4"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.13.0"
+  }
 }
