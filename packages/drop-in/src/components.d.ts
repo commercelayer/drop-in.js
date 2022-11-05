@@ -21,6 +21,8 @@ export namespace Components {
         "type": 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
+        "open": boolean;
+        "type": 'mini' | undefined;
     }
     interface ClCartCount {
     }
@@ -116,6 +118,8 @@ declare namespace LocalJSX {
         "type"?: 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
+        "open"?: boolean;
+        "type"?: 'mini' | undefined;
     }
     interface ClCartCount {
     }

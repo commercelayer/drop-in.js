@@ -1,5 +1,15 @@
 import { getCartUrl, triggerCartUpdate } from '#apis/commercelayer/cart'
-import { Component, Host, h, JSX, Element, State } from '@stencil/core'
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  JSX,
+  Listen,
+  Prop,
+  State,
+  Watch
+} from '@stencil/core'
 import { iframeResizer } from 'iframe-resizer'
 
 @Component({
@@ -7,14 +17,28 @@ import { iframeResizer } from 'iframe-resizer'
   shadow: true
 })
 export class ClCart {
-  @Element() host!: HTMLElement
+  @Element() host!: HTMLClCartElement
 
+  @Prop({ reflect: true }) type: 'mini' | undefined
+
+  @Prop({ reflect: true, mutable: true }) open: boolean = false
   @State() href: string | undefined
 
   iframe!: HTMLIFrameElement
 
   async componentWillLoad(): Promise<void> {
     this.href = await getCartUrl()
+  }
+
+  @Watch('open')
+  watchOpenHandler(newValue: boolean): void {
+    document.body.style.overflow = newValue ? 'hidden' : ''
+  }
+
+  @Listen('cartUpdate', { target: 'window' })
+  cartUpdateHandler(): void {
+    // eslint-disable-next-line no-self-assign
+    // this.iframe.src = this.iframe.src
   }
 
   componentDidLoad(): void {
@@ -38,7 +62,13 @@ export class ClCart {
 
   render(): JSX.Element {
     return (
-      <Host>
+      <Host
+        aria-hidden={this.type === 'mini' && !this.open ? 'true' : undefined}
+        onClick={(event: MouseEvent) => {
+          event.stopPropagation()
+          this.open = false
+        }}
+      >
         <iframe
           ref={(el) => (this.iframe = el as HTMLIFrameElement)}
           src={this.href}

@@ -1,6 +1,15 @@
 import { getCartUrl, isValidUrl } from '#apis/commercelayer/cart'
 import type { Order } from '@commercelayer/sdk'
-import { Component, Element, h, JSX, Listen, Prop, State } from '@stencil/core'
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  JSX,
+  Listen,
+  Prop,
+  State
+} from '@stencil/core'
 
 @Component({
   tag: 'cl-cart-link',
@@ -11,10 +20,12 @@ export class CLCartLink {
 
   @Prop({ reflect: true }) target: string = '_self'
 
+  @State() cart: HTMLClCartElement | null = null
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
     this.href = await getCartUrl()
+    this.cart = this.host.querySelector('cl-cart')
   }
 
   async handleClick(event: MouseEvent): Promise<void> {
@@ -33,6 +44,20 @@ export class CLCartLink {
   }
 
   render(): JSX.Element {
+    if (this.cart !== null) {
+      return (
+        <Host
+          onClick={() => {
+            if (this.cart !== null) {
+              this.cart.open = true
+            }
+          }}
+        >
+          <slot></slot>
+        </Host>
+      )
+    }
+
     return (
       <a
         target={this.target}
