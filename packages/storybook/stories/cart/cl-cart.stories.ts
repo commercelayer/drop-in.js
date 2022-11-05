@@ -22,7 +22,7 @@ export const Basic = Template.bind({})
 export const Minicart: StoryFn<Args> = () => {
   return create(
     html`
-      <cl-cart-link target="_blank">
+      <cl-cart-link>
         <svg
           width="32"
           height="32"

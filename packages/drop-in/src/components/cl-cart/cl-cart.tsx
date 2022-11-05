@@ -14,6 +14,11 @@ import { iframeResizer } from 'iframe-resizer'
 
 @Component({
   tag: 'cl-cart',
+  styles: `
+    :host([type="mini"]) {
+      display: none;
+    }
+  `,
   shadow: true
 })
 export class ClCart {
@@ -32,7 +37,9 @@ export class ClCart {
 
   @Watch('open')
   watchOpenHandler(newValue: boolean): void {
-    document.body.style.overflow = newValue ? 'hidden' : ''
+    if (this.type === 'mini') {
+      document.body.classList.toggle('cl-cart--open', newValue)
+    }
   }
 
   @Listen('cartUpdate', { target: 'window' })

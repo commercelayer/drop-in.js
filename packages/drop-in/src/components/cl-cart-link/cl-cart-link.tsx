@@ -20,12 +20,12 @@ export class CLCartLink {
 
   @Prop({ reflect: true }) target: string = '_self'
 
-  @State() cart: HTMLClCartElement | null = null
+  @State() minicart: HTMLClCartElement | null = null
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
     this.href = await getCartUrl()
-    this.cart = this.host.querySelector('cl-cart')
+    this.minicart = this.host.querySelector('cl-cart')
   }
 
   async handleClick(event: MouseEvent): Promise<void> {
@@ -44,12 +44,12 @@ export class CLCartLink {
   }
 
   render(): JSX.Element {
-    if (this.cart !== null) {
+    if (this.minicart !== null) {
       return (
         <Host
           onClick={() => {
-            if (this.cart !== null) {
-              this.cart.open = true
+            if (this.minicart !== null) {
+              this.minicart.open = true
             }
           }}
         >
