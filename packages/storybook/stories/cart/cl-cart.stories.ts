@@ -54,7 +54,7 @@ export const Minicart: StoryFn<Args> = () => {
         </svg>
 
         <cl-cart-count></cl-cart-count>
-        <cl-cart type="mini"></cl-cart>
+        <cl-cart></cl-cart>
       </cl-cart-link>
     `
   )

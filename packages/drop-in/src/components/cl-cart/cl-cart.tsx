@@ -18,6 +18,12 @@ import { iframeResizer } from 'iframe-resizer'
     :host([type="mini"]) {
       display: none;
     }
+
+    :host > div {
+      overflow: auto;
+      width: 100%;
+      display: flex;
+    }
   `,
   shadow: true
 })
@@ -67,27 +73,51 @@ export class ClCart {
     )
   }
 
+  @Listen('keydown', { target: 'window' })
+  handleKeyDown(event: KeyboardEvent): void {
+    if (this.type === 'mini' && event.key === 'Escape' && this.open) {
+      this.handleCloseMinicart(event)
+    }
+  }
+
+  private handleCloseMinicart(event: Event): void {
+    event.stopPropagation()
+    this.open = false
+  }
+
   render(): JSX.Element {
     return (
       <Host
-        aria-hidden={this.type === 'mini' && !this.open ? 'true' : undefined}
-        onClick={(event: MouseEvent) => {
-          event.stopPropagation()
-          this.open = false
-        }}
+        {...(this.type === 'mini'
+          ? {
+              role: 'dialog',
+              'aria-modal': this.open ? 'true' : undefined,
+              'aria-hidden': !this.open ? 'true' : undefined,
+              onClick: (event: MouseEvent) => this.handleCloseMinicart(event)
+            }
+          : {})}
       >
-        <iframe
-          ref={(el) => (this.iframe = el as HTMLIFrameElement)}
-          src={this.href}
-          frameBorder={0}
-          style={{
-            width: '1px',
-            'min-width': '100%',
-            'min-height': '100%',
-            overflow: 'hidden'
-          }}
-          scrolling='no'
-        ></iframe>
+        <div>
+          <iframe
+            part='iframe'
+            title='Cart'
+            ref={(el) => (this.iframe = el as HTMLIFrameElement)}
+            src={this.href}
+            frameBorder={0}
+            scrolling='no'
+            style={{
+              width: '1px',
+              'min-width': '100%',
+              'min-height': '100%'
+            }}
+            {...(this.type === 'mini'
+              ? {
+                  tabindex: !this.open ? '-1' : undefined,
+                  onKeyDown: (event: KeyboardEvent) => this.handleKeyDown(event)
+                }
+              : {})}
+          ></iframe>
+        </div>
       </Host>
     )
   }

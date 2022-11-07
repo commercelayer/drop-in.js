@@ -26,6 +26,10 @@ export class CLCartLink {
   async componentWillLoad(): Promise<void> {
     this.href = await getCartUrl()
     this.minicart = this.host.querySelector('cl-cart')
+
+    if (this.minicart !== null) {
+      this.minicart.type = 'mini'
+    }
   }
 
   async handleClick(event: MouseEvent): Promise<void> {
@@ -43,15 +47,26 @@ export class CLCartLink {
     }
   }
 
+  handleKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.handleOpenMinicart()
+    }
+  }
+
+  private handleOpenMinicart(): void {
+    if (this.minicart !== null) {
+      this.minicart.open = true
+    }
+  }
+
   render(): JSX.Element {
     if (this.minicart !== null) {
       return (
         <Host
-          onClick={() => {
-            if (this.minicart !== null) {
-              this.minicart.open = true
-            }
-          }}
+          role='button'
+          tabindex='0'
+          onKeyDown={(event: KeyboardEvent) => this.handleKeyDown(event)}
+          onClick={() => this.handleOpenMinicart()}
         >
           <slot></slot>
         </Host>

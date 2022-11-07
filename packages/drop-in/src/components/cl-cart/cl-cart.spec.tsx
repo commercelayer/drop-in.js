@@ -20,13 +20,17 @@ describe('cl-cart', () => {
     expect(page.root).toEqualHtml(`
       <cl-cart>
         <mock:shadow-root>
-          <iframe
-            frameborder="0"
-            id="iFrameResizer0"
-            scrolling="no"
-            src="https://example.com/checkout-url"
-            style="width: 1px; min-width: 100%; min-height: 100%; overflow: hidden;"
-          ></iframe>
+          <div>
+            <iframe
+              part="iframe"
+              title="Cart"
+              frameborder="0"
+              id="iFrameResizer0"
+              scrolling="no"
+              src="https://example.com/checkout-url"
+              style="width: 1px; min-width: 100%; min-height: 100%; overflow: hidden;"
+            ></iframe>
+          </div>
         </mock:shadow-root>
       </cl-cart>
     `)

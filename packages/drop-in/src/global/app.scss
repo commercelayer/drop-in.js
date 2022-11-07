@@ -71,62 +71,65 @@ cl-cart-link, .cl-cart-link {
     right: 0%;
     transform: translate(30%, 0%);
   }
-}
 
-cl-cart[type="mini"] {
-  display: flex;
-  cursor: auto;
+  cl-cart {
+    display: flex;
+    cursor: auto;
 
-  $open-padding: 20px;
-  $open-width: 400px;
-  $open-maxWidth: calc(100vw - $open-padding * 2);
+    $open-padding: 20px;
+    $open-width: 400px;
+    $open-maxWidth: calc(100vw - $open-padding * 2);
 
-  position: fixed;
-  z-index: var(--cl-cart-zIndex);
-  top: 0;
-  width: $open-width;
-  max-width: $open-maxWidth;
-  height: 100%;
-  padding: $open-padding;
-  box-shadow: -1px 0px 10px #0003;
-  pointer-events: none;
-  overflow: auto;
-  box-sizing: border-box;
-
-  &::before, &::after {
     position: fixed;
-    content: " ";
-    background: transparent;
-    width: 100%;
-    height: 100%;
+    z-index: var(--cl-cart-zIndex);
     top: 0;
-    right: 0;
-    z-index: -1;
-    transition: .3s background;
-  }
-
-  &::after {
-    position: fixed;
     width: $open-width;
     max-width: $open-maxWidth;
-    background: #fff;
-  }
+    height: 100%;
+    box-shadow: -1px 0px 10px #0003;
+    pointer-events: none;
+    box-sizing: border-box;
 
-  &, &::after {
-    right: -100%;
-    transition: .3s right;
-  }
-
-  &[open] {
-    right: 0;
-    pointer-events: initial;
-
-    &::before {
-      background: rgba($color: #000, $alpha: .3);
+    &::before, &::after {
+      position: fixed;
+      content: " ";
+      background: transparent;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      z-index: -1;
+      transition: .3s background;
     }
 
     &::after {
+      position: fixed;
+      width: $open-width;
+      max-width: $open-maxWidth;
+      background: #fff;
+    }
+
+    &, &::after {
+      right: -100%;
+      transition: .3s right;
+    }
+
+    &[open] {
       right: 0;
+      pointer-events: initial;
+
+      &::before {
+        background: rgba($color: #000, $alpha: .3);
+      }
+
+      &::after {
+        right: 0;
+      }
+    }
+
+    &::part(iframe) {
+      padding: $open-padding;
+      box-sizing: border-box;
     }
   }
 }
