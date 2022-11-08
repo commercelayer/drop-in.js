@@ -23,12 +23,10 @@ describe('cl-cart', () => {
           <div>
             <iframe
               part="iframe"
-              title="Cart"
-              frameborder="0"
+              title="My Cart"
               id="iFrameResizer0"
-              scrolling="no"
               src="https://example.com/checkout-url"
-              style="width: 1px; min-width: 100%; min-height: 100%; overflow: hidden;"
+              style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
             ></iframe>
           </div>
         </mock:shadow-root>

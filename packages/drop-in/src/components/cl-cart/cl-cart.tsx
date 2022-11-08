@@ -12,6 +12,21 @@ import {
 } from '@stencil/core'
 import { iframeResizer } from 'iframe-resizer'
 
+type IframeDataMessage =
+  | {
+      type: 'updateCart'
+    }
+  | {
+      type: 'close'
+    }
+  | {
+      type: 'blur'
+    }
+
+interface IframeData {
+  message: IframeDataMessage
+}
+
 @Component({
   tag: 'cl-cart',
   styles: `
@@ -45,6 +60,10 @@ export class ClCart {
   watchOpenHandler(newValue: boolean): void {
     if (this.type === 'mini') {
       document.body.classList.toggle('cl-cart--open', newValue)
+
+      if (!newValue) {
+        this.host.closest('cl-cart-link')?.focus()
+      }
     }
   }
 
@@ -55,19 +74,35 @@ export class ClCart {
   }
 
   componentDidLoad(): void {
+    const onMessage = (data: IframeData): void => {
+      switch (data.message.type) {
+        case 'updateCart':
+          void triggerCartUpdate(null)
+          break
+
+        case 'close':
+          if (this.type === 'mini') {
+            this.open = false
+          }
+          break
+
+        case 'blur':
+          if (this.type === 'mini' && this.open) {
+            this.iframe.focus()
+          }
+          break
+      }
+    }
+
     iframeResizer(
       {
         checkOrigin: false,
 
+        bodyPadding: '20px',
+
         // 'messageCallback' has been renamed 'onMessage'. The old method will be removed in the next major version.
         // @ts-expect-error
-        onMessage(data) {
-          if (data.message.type === 'updateCart') {
-            triggerCartUpdate(null).catch((error) => {
-              throw error
-            })
-          }
-        }
+        onMessage
       },
       this.iframe
     )
@@ -90,7 +125,8 @@ export class ClCart {
       <Host
         {...(this.type === 'mini'
           ? {
-              role: 'dialog',
+              // tabindex: this.open ? 0 : undefined,
+              role: this.open ? 'alertdialog' : undefined,
               'aria-modal': this.open ? 'true' : undefined,
               'aria-hidden': !this.open ? 'true' : undefined,
               onClick: (event: MouseEvent) => this.handleCloseMinicart(event)
@@ -100,15 +136,14 @@ export class ClCart {
         <div>
           <iframe
             part='iframe'
-            title='Cart'
+            title='My Cart'
             ref={(el) => (this.iframe = el as HTMLIFrameElement)}
             src={this.href}
-            frameBorder={0}
-            scrolling='no'
             style={{
               width: '1px',
               'min-width': '100%',
-              'min-height': '100%'
+              'min-height': '100%',
+              border: 'none'
             }}
             {...(this.type === 'mini'
               ? {

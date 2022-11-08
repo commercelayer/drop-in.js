@@ -126,11 +126,6 @@ cl-cart-link, .cl-cart-link {
         right: 0;
       }
     }
-
-    &::part(iframe) {
-      padding: $open-padding;
-      box-sizing: border-box;
-    }
   }
 }
 
