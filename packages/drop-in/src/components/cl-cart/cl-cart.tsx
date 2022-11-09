@@ -125,10 +125,10 @@ export class ClCart {
       <Host
         {...(this.type === 'mini'
           ? {
-              // tabindex: this.open ? 0 : undefined,
               role: this.open ? 'alertdialog' : undefined,
               'aria-modal': this.open ? 'true' : undefined,
               'aria-hidden': !this.open ? 'true' : undefined,
+              tabindex: !this.open ? '-1' : undefined,
               onClick: (event: MouseEvent) => this.handleCloseMinicart(event)
             }
           : {})}
@@ -145,12 +145,6 @@ export class ClCart {
               'min-height': '100%',
               border: 'none'
             }}
-            {...(this.type === 'mini'
-              ? {
-                  tabindex: !this.open ? '-1' : undefined,
-                  onKeyDown: (event: KeyboardEvent) => this.handleKeyDown(event)
-                }
-              : {})}
           ></iframe>
         </div>
       </Host>
