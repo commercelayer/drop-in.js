@@ -45,7 +45,7 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
-  sku: skus.bag
+  sku: skus.backpack
 }
 
 export const WithoutAttributes = Template.bind({})

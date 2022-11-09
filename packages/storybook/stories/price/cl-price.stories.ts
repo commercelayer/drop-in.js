@@ -41,7 +41,7 @@ Basic.args = {
 
 export const NoDiscount = Template.bind({})
 NoDiscount.args = {
-  sku: skus.bag
+  sku: skus.backpack
 }
 
 export const WithoutAttributes = Template.bind({})

@@ -40,7 +40,7 @@ export const meta: Meta<Args> = {
 export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-availability sku=${args.available ? skus.bag : skus.outOfStock}>
+      <cl-availability sku=${args.available ? skus.backpack : skus.outOfStock}>
         <cl-availability-status type=${args.type ?? nothing}>
           • message
         </cl-availability-status>

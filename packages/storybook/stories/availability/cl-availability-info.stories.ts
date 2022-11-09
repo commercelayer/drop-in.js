@@ -47,7 +47,7 @@ export const meta: Meta<Args> = {
 export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-availability sku=${args.available ? skus.bag : skus.outOfStock}>
+      <cl-availability sku=${args.available ? skus.backpack : skus.outOfStock}>
         <cl-availability-info
           type=${args.type ?? nothing}
         ></cl-availability-info>
@@ -63,7 +63,7 @@ Basic.args = {
 export const Message: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-availability sku=${skus.bag}>
+      <cl-availability sku=${skus.backpack}>
         ready to be shipped in
         <cl-availability-info type="min-days"></cl-availability-info
         // eslint-disable-next-line prettier/prettier

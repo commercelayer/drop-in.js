@@ -9,6 +9,7 @@
     "test": "pnpm --filter drop-in test",
     "test:watch": "pnpm --filter drop-in test:watch",
     "test:unit:watch": "pnpm --filter drop-in test:unit:watch",
+    "test:e2e:watch": "pnpm --filter drop-in test:e2e:watch",
     "dep:upgrade:major": "pnpm -r exec npm-check-updates -u",
     "dep:upgrade:minor": "pnpm dep:upgrade:major -t minor",
     "dep:self-upgrade:major": "pnpm exec npm-check-updates -u",

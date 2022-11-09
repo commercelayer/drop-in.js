@@ -49,7 +49,7 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
-  sku: skus.bag
+  sku: skus.backpack
 }
 
 export const WithoutAttributes = Template.bind({})
@@ -66,6 +66,6 @@ Nonexisting.args = {
 
 export const NoOverselling = Template.bind({})
 NoOverselling.args = {
-  sku: skus.bag,
+  sku: skus.backpack,
   quantity: 100
 }
