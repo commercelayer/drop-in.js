@@ -5,14 +5,16 @@ function injectConfig({
   clientId = '1234',
   slug = 'example',
   scope = 'market:123',
-  debug
+  debug,
+  returnUrl
 }: Partial<Config>): void {
   Object.defineProperty(window, 'commercelayerConfig', {
     value: {
       clientId,
       slug,
       scope,
-      debug
+      debug,
+      returnUrl
     }
   })
 }

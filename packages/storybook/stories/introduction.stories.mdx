@@ -15,6 +15,19 @@ whatever the CMS, SSG, and tools you use to build your site pages.
 
 First of all you need to import the `drop-in.js` from the cdn.
 
+Right after that you just need to declare a global variable called `commercelayerConfig`:
+
+| Attribute       | Description                                                                                                 | Type                | Default  |
+|-----------------|-------------------------------------------------------------------------------------------------------------|---------------------|----------|
+| **`clientId`*** | Client ID is the application unique identifier. You can find it in your dashboard.                          | `string`            |          |
+| **`slug`***     | Slug for your organization. You can find it in your dashboard. Slug is the subdomain of your base endpoint. | `string`            |          |
+| **`scope`***    | Restrict the dataset of your application by specifying allowed scopes. You can find them in your dashboard. | `string`            |          |
+| `debug`         | Define the debug level.                                                                                     | `"none"` \| `"all"` | `"none"` |
+| `returnUrl`     | Url used in the Hosted Cart to point to "Continue Shopping". This is also used in the thank you page.       | `string`            |          |
+
+
+The code snippet below should be similar to the final result.
+
 ```html dark
 <script type="module" src="https://commercelayer.github.io/drop-in.js/dist/drop-in/drop-in.esm.js"></script>
 
@@ -24,7 +37,8 @@ First of all you need to import the `drop-in.js` from the cdn.
       clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
       slug: 'drop-in-js',
       scope: 'market:11709',
-      debug: 'all' // 'none' is the default
+      debug: 'all', // 'none' is the default
+      returnUrl: 'https://example.com' // optional
     }
   }());
 </script>

@@ -11,8 +11,12 @@ import Cookies from 'js-cookie'
  * @returns Returns the created draft order.
  */
 async function createEmptyCart(): Promise<Order> {
-  const client = await createClient(getConfig())
-  const order = await client.orders.create({})
+  const config = getConfig()
+  const client = await createClient(config)
+  const order = await client.orders.create({
+    return_url: config.returnUrl
+  })
+
   setCartId(order.id)
 
   await triggerCartUpdate(order)
