@@ -1,7 +1,7 @@
 import { ArgTypes } from '@storybook/html'
 import { DecoratorFunction } from '@storybook/addons'
 import { defineCustomElements } from '@commercelayer/drop-in/dist/loader'
-import { settings } from '../stories/OrganizationSettings'
+import { clConfig } from '../stories/assets/constants'
 
 type Args = {
   styles: Boolean;
@@ -84,10 +84,10 @@ export const decorators: DecoratorFunction[] = [
   (story) => {
     // @ts-expect-error
     window.commercelayerConfig = {
-      clientId: settings.clientId(),
-      slug: settings.slug(),
-      scope: settings.scope(),
-      debug: settings.debug()
+      clientId: clConfig.clientId,
+      slug: clConfig.slug,
+      scope: clConfig.scope,
+      debug: clConfig.debug
     }
 
     return story()
