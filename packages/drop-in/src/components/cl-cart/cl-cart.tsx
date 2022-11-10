@@ -1,4 +1,9 @@
-import { getCartUrl, triggerCartUpdate } from '#apis/commercelayer/cart'
+import {
+  getCartUrl,
+  triggerCartUpdate,
+  updateCartUrl
+} from '#apis/commercelayer/cart'
+import { getClosestLocationHref } from '#utils/url'
 import {
   Component,
   Element,
@@ -53,6 +58,7 @@ export class ClCart {
   iframe!: HTMLIFrameElement
 
   async componentWillLoad(): Promise<void> {
+    await updateCartUrl(getClosestLocationHref())
     this.href = await getCartUrl()
   }
 

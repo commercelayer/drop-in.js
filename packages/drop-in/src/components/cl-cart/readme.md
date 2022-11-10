@@ -13,6 +13,13 @@
 | `type`   | `type`    |             | `"mini" \| undefined` | `undefined` |
 
 
+## Shadow Parts
+
+| Part       | Description |
+| ---------- | ----------- |
+| `"iframe"` |             |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

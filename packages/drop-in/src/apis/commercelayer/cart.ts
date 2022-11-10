@@ -97,3 +97,20 @@ export async function addItem(sku: string, quantity: number): Promise<void> {
 
   await triggerCartUpdate(null)
 }
+
+/**
+ * Update the `cart_url` property of the cart.
+ * `cart_url` is used in the Hosted Checkout as a link for "< Return to cart".
+ * @param cartUrl new cart_url
+ */
+export async function updateCartUrl(cartUrl: string): Promise<void> {
+  const cartId = getCartId()
+
+  if (cartId !== null) {
+    const client = await createClient(getConfig())
+    await client.orders.update({
+      id: cartId,
+      cart_url: cartUrl
+    })
+  }
+}
