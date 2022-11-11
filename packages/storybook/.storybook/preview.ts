@@ -4,21 +4,33 @@ import { defineCustomElements } from '@commercelayer/drop-in/dist/loader'
 import { clConfig } from '../stories/assets/constants'
 
 type Args = {
-  styles: Boolean;
+  'drop-in.css': Boolean;
+  'minicart.css': Boolean;
 }
 
 // https://storybook.js.org/docs/react/essentials/controls#annotation
 export const argTypes: ArgTypes<Args> = {
-  styles: {
-    description: 'When `true` it loads drop-in.css. Components are shipped unstyled, you can import this css or create your own.',
+  'drop-in.css': {
+    description: 'When `true` it loads `drop-in.css`. Components are shipped unstyled, you can import this css or create your own.',
     control: 'boolean',
     table: {
       category: 'global'
     }
+  },
+  'minicart.css': {
+    description: 'When `true` it loads `minicart.css`. This css contains a minimal set to style the minicart.',
+    control: 'boolean',
+    table: {
+      category: 'global',
+      disable: true
+    }
   }
 }
 
-export const args = { styles: false };
+export const args = {
+  'drop-in.css': false,
+  'minicart.css': false
+};
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -77,7 +89,8 @@ export const decorators: DecoratorFunction[] = [
     const tale = story()
 
     return `
-      ${ options.args.styles ? '<link href="drop-in.css" rel="stylesheet">' : '' }
+      ${ options.args['drop-in.css'] ? '<link href="drop-in.css" rel="stylesheet">' : '' }
+      ${ options.args['minicart.css'] ? '<link href="minicart.css" rel="stylesheet">' : '' }
       ${ typeof tale === 'string' ? tale : storyAsHTML(tale) }
     `
   },

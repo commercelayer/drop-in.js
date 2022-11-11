@@ -128,5 +128,5 @@ export const Basic: StoryFn = () => {
   )
 }
 Basic.args = {
-  styles: true
+  'drop-in.css': true
 }

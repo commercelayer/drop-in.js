@@ -39,6 +39,10 @@ interface IframeData {
       display: none;
     }
 
+    :host([type="mini"]) > div {
+      background: var(--cl-cart-mini-modal-bg);
+    }
+
     :host > div {
       overflow: auto;
       width: 100%;

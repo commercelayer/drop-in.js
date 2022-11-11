@@ -19,6 +19,17 @@ You can use this component to embed the Hosted Cart in your own cart page instea
 
 The `cl-cart` behaves like a minicart when rendered inside a [**cl-cart-link**](?path=/docs/components-cart-cl-cart-link--basic).
 
+This minicart is **unstyled and hidden by default**.
+You'll need to write some css in order to make it work or you can just import the [**drop-in.css**](?path=/docs/drop-in-js--page#drop-incss) file in your website.
+
+If you prefer you can import this specific css just to style the minicart:
+
+```html dark
+<link href="https://commercelayer.github.io/drop-in.js/dist/drop-in/minicart.css" rel="stylesheet" />
+```
+
 <Canvas withSource="open">
   <Story story={Minicart} name="Minicart" />
 </Canvas>
+
+<ArgsTable story='Minicart' />

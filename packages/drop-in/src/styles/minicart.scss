@@ -4,45 +4,57 @@ cl-cart-link, .cl-cart-link {
   cursor: pointer;
 
   cl-cart {
+    $open-padding: 20px;
+
+    --cl-cart-mini-backdrop-bg: #000;
+    --cl-cart-mini-backdrop-opacity: 0.3;
+    --cl-cart-mini-backdrop-shadow: -1px 0px 10px rgba(0, 0, 0, .3);
+
+    --cl-cart-mini-modal-z-index: 100;
+    --cl-cart-mini-modal-bg: #fff;
+    --cl-cart-mini-modal-width: 400px;
+    --cl-cart-mini-modal-max-width: calc(100vw - 40px);
+
+    --cl-cart-mini-transition-duration: .3s;
+    --cl-cart-mini-transition-timing-function: ease-in-out;
+
     display: flex;
     cursor: auto;
 
-    $open-padding: 20px;
-    $open-width: 400px;
-    $open-maxWidth: calc(100vw - $open-padding * 2);
-
     position: fixed;
-    z-index: var(--cl-cart-zIndex);
+    z-index: var(--cl-cart-mini-modal-z-index);
     top: 0;
-    width: $open-width;
-    max-width: $open-maxWidth;
+    width: var(--cl-cart-mini-modal-width);
+    max-width: var(--cl-cart-mini-modal-max-width);
     height: 100%;
-    box-shadow: -1px 0px 10px #0003;
     pointer-events: none;
     box-sizing: border-box;
+    box-shadow: none;
+    transition: box-shadow var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
 
     &::before, &::after {
       position: fixed;
       content: " ";
-      background: transparent;
+      background: var(--cl-cart-mini-backdrop-bg);
+      opacity: 0;
       width: 100%;
       height: 100%;
       top: 0;
       right: 0;
       z-index: -1;
-      transition: .3s background;
+      transition: opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
     }
 
     &::after {
       position: fixed;
-      width: $open-width;
-      max-width: $open-maxWidth;
-      background: #fff;
+      width: var(--cl-cart-mini-modal-width);
+      max-width: var(--cl-cart-mini-modal-width);
+      box-shadow: var(--cl-cart-mini-backdrop-shadow);
     }
 
     &, &::after {
-      right: -100%;
-      transition: .3s right;
+      right: calc(var(--cl-cart-mini-modal-width) * -1);
+      transition: right var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function), opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
     }
 
     &[open] {
@@ -50,11 +62,12 @@ cl-cart-link, .cl-cart-link {
       pointer-events: initial;
 
       &::before {
-        background: rgba($color: #000, $alpha: .3);
+        opacity: var(--cl-cart-mini-backdrop-opacity);
       }
 
       &::after {
         right: 0;
+        opacity: 1;
       }
     }
   }

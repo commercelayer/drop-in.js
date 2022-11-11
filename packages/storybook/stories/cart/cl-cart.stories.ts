@@ -6,7 +6,14 @@ import { create } from '../../utils'
 interface Args {}
 
 export const meta: Meta<Args> = {
-  title: 'Components/Cart/cl-cart'
+  title: 'Components/Cart/cl-cart',
+  argTypes: {
+    'minicart.css': {
+      table: {
+        disable: false
+      }
+    }
+  }
 }
 
 const Template: StoryFn<Args> = () => {
@@ -58,7 +65,4 @@ export const Minicart: StoryFn<Args> = () => {
       </cl-cart-link>
     `
   )
-}
-Minicart.args = {
-  styles: true
 }
