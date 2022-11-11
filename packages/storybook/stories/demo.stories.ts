@@ -127,6 +127,14 @@ export const Basic: StoryFn = () => {
     false
   )
 }
+
 Basic.args = {
   'drop-in.css': true
 }
+
+// Basic.parameters = {
+//   docs: {
+//     inlineStories: false,
+//     iframeHeight: '100vh'
+//   }
+// }
