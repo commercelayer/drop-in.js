@@ -35,7 +35,6 @@ cl-cart-link, .cl-cart-link {
     &::before, &::after {
       position: fixed;
       content: " ";
-      background: var(--cl-cart-mini-backdrop-bg);
       opacity: 0;
       width: 100%;
       height: 100%;
@@ -45,10 +44,14 @@ cl-cart-link, .cl-cart-link {
       transition: opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
     }
 
+    &::before {
+      background: var(--cl-cart-mini-backdrop-bg);
+    }
+
     &::after {
       position: fixed;
       width: var(--cl-cart-mini-modal-width);
-      max-width: var(--cl-cart-mini-modal-width);
+      max-width: var(--cl-cart-mini-modal-max-width);
       box-shadow: var(--cl-cart-mini-backdrop-shadow);
     }
 
