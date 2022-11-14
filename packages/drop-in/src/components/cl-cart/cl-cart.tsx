@@ -59,17 +59,50 @@ export class ClCart {
   @Prop({ reflect: true, mutable: true }) open: boolean = false
   @State() href: string | undefined
 
+  readonly openDirective: string = 'cl-cart--open'
+
   iframe!: HTMLIFrameElement
 
   async componentWillLoad(): Promise<void> {
-    await updateCartUrl(getClosestLocationHref())
+    await updateCartUrl(this.getCartPageUrl())
     this.href = await getCartUrl()
+
+    if (this.checkLocationHrefForOpenDirective()) {
+      this.open = true
+    }
+  }
+
+  getCartPageUrl(): string {
+    const closestLocationHref = getClosestLocationHref()
+
+    if (this.type === 'mini') {
+      const url = new URL(closestLocationHref)
+      if (!url.searchParams.has(this.openDirective)) {
+        url.searchParams.append(this.openDirective, '')
+      }
+
+      return url.href
+    }
+
+    return closestLocationHref
+  }
+
+  checkLocationHrefForOpenDirective(): boolean {
+    const url = new URL(location.href)
+
+    if (this.type === 'mini' && url.searchParams.has(this.openDirective)) {
+      url.searchParams.delete(this.openDirective)
+      history.replaceState({}, '', url.href)
+      return true
+    }
+
+    return false
   }
 
   @Watch('open')
   watchOpenHandler(newValue: boolean): void {
     if (this.type === 'mini') {
-      document.body.classList.toggle('cl-cart--open', newValue)
+      document.body.classList.toggle(this.openDirective, newValue)
 
       if (!newValue) {
         this.host.closest('cl-cart-link')?.focus()
