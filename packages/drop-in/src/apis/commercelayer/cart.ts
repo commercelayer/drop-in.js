@@ -24,6 +24,10 @@ async function createEmptyCart(): Promise<Order> {
   return order
 }
 
+function removeCartId(): void {
+  Cookies.remove(getKeyForCart())
+}
+
 function setCartId(cartId: string): void {
   Cookies.set(getKeyForCart(), cartId)
 }
@@ -48,7 +52,7 @@ export async function getCartUrl(
 ): Promise<string> {
   const config = getConfig()
   const accessToken = await getAccessToken(config)
-  let cartId = getCartId()
+  let cartId = (await getCart())?.id
 
   if (cartId === null && forceCartToExist) {
     const cart = await createEmptyCart()
@@ -71,6 +75,11 @@ export async function _getCart(): Promise<Order | null> {
 
   const order = await client.orders.retrieve(orderId).catch(() => null)
 
+  if (order?.editable === false) {
+    removeCartId()
+    return null
+  }
+
   return order
 }
 
@@ -87,7 +96,7 @@ export async function triggerCartUpdate(order: Order | null): Promise<void> {
 
 export async function addItem(sku: string, quantity: number): Promise<void> {
   const client = await createClient(getConfig())
-  const orderId = getCartId() ?? (await (await createEmptyCart()).id)
+  const orderId = (await getCart())?.id ?? (await (await createEmptyCart()).id)
 
   await client.line_items.create({
     order: {
@@ -108,12 +117,12 @@ export async function addItem(sku: string, quantity: number): Promise<void> {
  * @param cartUrl new cart_url
  */
 export async function updateCartUrl(cartUrl: string): Promise<void> {
-  const cartId = getCartId()
+  const cart = await getCart()
 
-  if (cartId !== null) {
+  if (cart !== null) {
     const client = await createClient(getConfig())
     await client.orders.update({
-      id: cartId,
+      id: cart.id,
       cart_url: cartUrl
     })
   }
