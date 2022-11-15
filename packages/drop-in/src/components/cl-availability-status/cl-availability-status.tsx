@@ -1,11 +1,15 @@
 import type { Sku } from '#apis/commercelayer/skus'
 import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
 
+export interface Props {
+  type: 'available' | 'unavailable' | undefined
+}
+
 @Component({
   tag: 'cl-availability-status',
   shadow: true
 })
-export class ClAvailabilityStatus {
+export class ClAvailabilityStatus implements Props {
   @Prop({ reflect: true }) type: 'available' | 'unavailable' | undefined
 
   @State() available: boolean | undefined

@@ -62,7 +62,8 @@ export const parameters = {
             'introduction',
             'cl-cart-link',
             'cl-cart-count',
-            'cl-cart'
+            'cl-cart',
+            'cl-cart (minicart)',
           ]
         ]
       ]

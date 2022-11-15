@@ -1,12 +1,11 @@
+import { Props } from '@commercelayer/drop-in/dist/types/components/cl-price-amount/cl-price-amount'
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 import { skus } from '../assets/constants'
 
-type Args = GlobalArgs & {
-  type?: 'price' | 'compare-at'
-}
+type Args = GlobalArgs & Props & {}
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export const meta: Meta<Args> = {

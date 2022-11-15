@@ -10,11 +10,15 @@ export type Type =
   | 'shipping-method-price'
   | undefined
 
+export interface Props {
+  type: Type
+}
+
 @Component({
   tag: 'cl-availability-info',
   shadow: true
 })
-export class ClAvailabilityInfo {
+export class ClAvailabilityInfo implements Props {
   @Prop({ reflect: true }) type: Type
 
   @State() text: string | undefined

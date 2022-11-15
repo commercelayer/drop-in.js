@@ -2,11 +2,14 @@ import { getSku, Sku } from '#apis/commercelayer/skus'
 import { logSku, validateSku } from '#utils/validation-helpers'
 import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
 
+export interface Props {
+  sku: string | undefined
+}
 @Component({
   tag: 'cl-availability',
   shadow: true
 })
-export class ClAvailability {
+export class ClAvailability implements Props {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) sku: string | undefined

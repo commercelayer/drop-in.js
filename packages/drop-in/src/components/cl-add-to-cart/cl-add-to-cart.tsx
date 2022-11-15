@@ -18,11 +18,15 @@ import {
   Watch
 } from '@stencil/core'
 
+export interface Props {
+  sku: string | undefined
+  quantity: number
+}
 @Component({
   tag: 'cl-add-to-cart',
   shadow: true
 })
-export class CLAddToCart {
+export class CLAddToCart implements Props {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) sku: string | undefined

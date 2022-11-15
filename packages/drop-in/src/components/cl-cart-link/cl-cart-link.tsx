@@ -11,11 +11,15 @@ import {
   State
 } from '@stencil/core'
 
+export interface Props {
+  target: string
+}
+
 @Component({
   tag: 'cl-cart-link',
   shadow: true
 })
-export class CLCartLink {
+export class CLCartLink implements Props {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) target: string = '_self'

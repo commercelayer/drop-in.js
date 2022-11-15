@@ -1,13 +1,14 @@
+import { Props } from '@commercelayer/drop-in/dist/types/components/cl-cart-link/cl-cart-link'
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-type Args = GlobalArgs & {
-  target: '_self' | '_blank' | '_parent' | '_top' | undefined
-  text: string | undefined
-}
+type Args = GlobalArgs &
+  Props & {
+    text: string | undefined
+  }
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export const meta: Meta<Args> = {
@@ -61,7 +62,7 @@ export const Basic = Template.bind({})
 Basic.args = {
   'drop-in.css': true,
   target: '_blank',
-  text: `Cart`
+  text: 'Cart'
 }
 
 export const WithIcon = Template.bind({})

@@ -1,13 +1,14 @@
+import { Props } from '@commercelayer/drop-in/dist/types/components/cl-availability-status/cl-availability-status'
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 import { skus } from '../assets/constants'
 
-type Args = GlobalArgs & {
-  available: boolean
-  type?: 'available' | 'unavailable'
-}
+type Args = GlobalArgs &
+  Props & {
+    available: boolean
+  }
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export const meta: Meta<Args> = {
@@ -41,9 +42,7 @@ export const meta: Meta<Args> = {
 export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-availability
-        sku=${args.available === true ? skus.backpack : skus.outOfStock}
-      >
+      <cl-availability sku=${args.available ? skus.backpack : skus.outOfStock}>
         <cl-availability-status type=${args.type ?? nothing}>
           • message
         </cl-availability-status>

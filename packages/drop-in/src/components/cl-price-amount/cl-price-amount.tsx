@@ -1,11 +1,15 @@
 import type { Price } from '@commercelayer/sdk'
 import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
 
+export interface Props {
+  type: 'price' | 'compare-at'
+}
+
 @Component({
   tag: 'cl-price-amount',
   shadow: true
 })
-export class CLPriceAmount {
+export class CLPriceAmount implements Props {
   @Prop({ reflect: true }) type: 'price' | 'compare-at' = 'price'
 
   @State() price: Price | undefined

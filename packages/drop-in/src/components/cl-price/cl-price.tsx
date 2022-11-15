@@ -3,11 +3,15 @@ import { logSku, validateSku } from '#utils/validation-helpers'
 import type { Price } from '@commercelayer/sdk'
 import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
 
+export interface Props {
+  sku: string | undefined
+}
+
 @Component({
   tag: 'cl-price',
   shadow: true
 })
-export class CLPrice {
+export class CLPrice implements Props {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) sku: string | undefined
