@@ -1,4 +1,4 @@
-import { triggerCartUpdate } from '#apis/commercelayer/cart'
+import { getCart } from '#apis/commercelayer/cart'
 import type { Order } from '@commercelayer/sdk'
 import { Component, h, Host, JSX, Listen, State } from '@stencil/core'
 
@@ -10,13 +10,18 @@ export class ClCartCount {
   @State() count: number | undefined
 
   async componentWillLoad(): Promise<void> {
-    await triggerCartUpdate(null)
+    await this.updateCart(null)
   }
 
   @Listen('cartUpdate', { target: 'window' })
   cartUpdateHandler(event: CustomEvent<Order>): void {
-    if (event.detail.skus_count !== undefined && event.detail.skus_count > 0) {
-      this.count = event.detail.skus_count
+    void this.updateCart(event.detail)
+  }
+
+  private async updateCart(cart: Order | null): Promise<void> {
+    cart ||= await getCart()
+    if (cart?.skus_count !== undefined && cart.skus_count > 0) {
+      this.count = cart.skus_count
     } else {
       this.count = undefined
     }

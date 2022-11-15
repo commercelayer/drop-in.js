@@ -27,13 +27,17 @@ export class CLCartLink implements Props {
   @State() minicart: HTMLClCartElement | null = null
   @State() href: string | undefined
 
-  async componentWillLoad(): Promise<void> {
-    this.href = await getCartUrl()
+  componentWillLoad(): void {
+    this.host.classList.add('hydrated')
     this.minicart = this.host.querySelector('cl-cart')
 
     if (this.minicart !== null) {
       this.minicart.type = 'mini'
     }
+
+    void getCartUrl().then((cartUrl) => {
+      this.href = cartUrl
+    })
   }
 
   async handleClick(event: MouseEvent): Promise<void> {

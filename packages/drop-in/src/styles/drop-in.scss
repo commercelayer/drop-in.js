@@ -47,20 +47,29 @@ cl-cart-link, .cl-cart-link {
   display: inline-block;
   cursor: pointer;
 
-  cl-cart-count[quantity] {
-    font-size: .5rem;
-    border-radius: 50%;
-    background-color: var(--cl-color-primary);
-    width: 1rem;
-    height: 1rem;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--cl-color-white);
-    bottom: 0%;
-    right: 0%;
-    transform: translate(120%, 0%);
+  cl-cart-count {
+    opacity: 0;
+    transition: opacity .3s;
+
+    &[quantity] {
+      font-size: .5rem;
+      border-radius: 50%;
+      background-color: var(--cl-color-primary);
+      width: 1rem;
+      height: 1rem;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cl-color-white);
+      bottom: 0%;
+      right: 0%;
+      transform: translate(120%, 0%);
+
+      &.hydrated {
+        opacity: 1;
+      }
+    }
   }
 
   svg ~ cl-cart-count[quantity] {
