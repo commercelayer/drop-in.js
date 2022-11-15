@@ -24,6 +24,19 @@ async function createEmptyCart(): Promise<Order> {
   return order
 }
 
+const LINE_ITEMS_SHIPPABLE = ['skus', 'bundles'] as const
+const LINE_ITEMS_SHOPPABLE = [...LINE_ITEMS_SHIPPABLE, 'gift_cards'] as const
+
+export function isValidForCheckout(order: Order): boolean {
+  return (
+    order.line_items?.find((lineItem) => {
+      return LINE_ITEMS_SHOPPABLE.includes(
+        lineItem.item_type as typeof LINE_ITEMS_SHOPPABLE[number]
+      )
+    }) !== undefined
+  )
+}
+
 function removeCartId(): void {
   Cookies.remove(getKeyForCart())
 }
@@ -64,6 +77,20 @@ export async function getCartUrl(
   }?accessToken=${accessToken}`
 }
 
+export async function getCheckoutUrl(): Promise<string | undefined> {
+  const config = getConfig()
+  const accessToken = await getAccessToken(config)
+  const cart = await getCart()
+
+  if (cart === null || !isValidForCheckout(cart)) {
+    return undefined
+  }
+
+  return `https://${config.slug}.checkout.commercelayer.app/${
+    cart.id ?? 'null'
+  }?accessToken=${accessToken}`
+}
+
 export async function _getCart(): Promise<Order | null> {
   const client = await createClient(getConfig())
 
@@ -73,7 +100,11 @@ export async function _getCart(): Promise<Order | null> {
     return null
   }
 
-  const order = await client.orders.retrieve(orderId).catch(() => null)
+  const order = await client.orders
+    .retrieve(orderId, {
+      include: ['line_items.item', 'line_items.line_item_options.sku_option']
+    })
+    .catch(() => null)
 
   if (order?.editable === false) {
     removeCartId()
