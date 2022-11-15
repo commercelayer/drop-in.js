@@ -1,9 +1,10 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
+import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-interface Args {
+type Args = GlobalArgs & {
   target: '_self' | '_blank' | '_parent' | '_top' | undefined
   text: string | undefined
 }
@@ -44,8 +45,6 @@ export const meta: Meta<Args> = {
   }
 }
 
-// export default meta
-
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
 
 const Template: StoryFn<Args> = (args) => {
@@ -60,6 +59,7 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
+  'drop-in.css': true,
   target: '_blank',
   text: `Cart`
 }

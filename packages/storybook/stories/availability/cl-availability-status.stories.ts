@@ -1,9 +1,10 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
+import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 import { skus } from '../assets/constants'
 
-interface Args {
+type Args = GlobalArgs & {
   available: boolean
   type?: 'available' | 'unavailable'
 }
@@ -40,7 +41,9 @@ export const meta: Meta<Args> = {
 export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-availability sku=${args.available ? skus.backpack : skus.outOfStock}>
+      <cl-availability
+        sku=${args.available === true ? skus.backpack : skus.outOfStock}
+      >
         <cl-availability-status type=${args.type ?? nothing}>
           • message
         </cl-availability-status>
@@ -49,6 +52,7 @@ export const Basic: StoryFn<Args> = (args) => {
   )
 }
 Basic.args = {
+  'drop-in.css': true,
   available: true,
   type: 'available'
 }

@@ -1,10 +1,11 @@
 import { Type } from '@commercelayer/drop-in/dist/types/components/cl-availability-info/cl-availability-info'
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
+import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 import { skus } from '../assets/constants'
 
-interface Args {
+type Args = GlobalArgs & {
   available: boolean
   type?: Type
 }
@@ -47,7 +48,9 @@ export const meta: Meta<Args> = {
 export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-availability sku=${args.available ? skus.backpack : skus.outOfStock}>
+      <cl-availability
+        sku=${args.available === true ? skus.backpack : skus.outOfStock}
+      >
         <cl-availability-info
           type=${args.type ?? nothing}
         ></cl-availability-info>
@@ -56,11 +59,12 @@ export const Basic: StoryFn<Args> = (args) => {
   )
 }
 Basic.args = {
+  'drop-in.css': true,
   available: true,
   type: 'min-days'
 }
 
-export const Message: StoryFn<Args> = (args) => {
+export const Message: StoryFn<Args> = () => {
   return create(
     html`
       <cl-availability sku=${skus.backpack}>

@@ -3,9 +3,9 @@ import { DecoratorFunction } from '@storybook/addons'
 import { defineCustomElements } from '@commercelayer/drop-in/dist/loader'
 import { clConfig } from '../stories/assets/constants'
 
-type Args = {
-  'drop-in.css': Boolean;
-  'minicart.css': Boolean;
+export type Args = {
+  'drop-in.css': boolean;
+  'minicart.css': boolean;
 }
 
 // https://storybook.js.org/docs/react/essentials/controls#annotation
@@ -46,6 +46,7 @@ export const parameters = {
     storySort: {
       order: [
         'drop-in.js',
+        'demo',
         'Components', [
           'cl-add-to-cart',
           'Price', [

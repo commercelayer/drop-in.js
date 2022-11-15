@@ -1,9 +1,10 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
+import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 import { skus } from '../assets/constants'
 
-interface Args {
+type Args = GlobalArgs & {
   type?: 'price' | 'compare-at'
 }
 
@@ -37,4 +38,7 @@ export const Basic: StoryFn<Args> = (args) => {
       </cl-price>
     `
   )
+}
+Basic.args = {
+  'drop-in.css': true
 }

@@ -1,9 +1,9 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html } from 'lit-html'
+import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Args {}
+type Args = GlobalArgs & {}
 
 export const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart',
@@ -65,4 +65,8 @@ export const Minicart: StoryFn<Args> = () => {
       </cl-cart-link>
     `
   )
+}
+Minicart.args = {
+  'drop-in.css': true,
+  'minicart.css': true
 }

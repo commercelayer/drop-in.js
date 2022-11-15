@@ -1,9 +1,10 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
+import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 import { skus } from '../assets/constants'
 
-interface Args {
+type Args = GlobalArgs & {
   sku?: string
 }
 
@@ -36,6 +37,7 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
+  'drop-in.css': true,
   sku: skus.cap
 }
 

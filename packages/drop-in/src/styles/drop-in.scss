@@ -1,7 +1,5 @@
 :root {
   --cl-color-primary: #101111;
-  --cl-color-green: #1FDA8A;
-  --cl-color-red: #FF656B;
   --cl-color-white: #FFF;
 }
 
@@ -71,15 +69,3 @@ cl-cart-link, .cl-cart-link {
     transform: translate(30%, 0%);
   }
 }
-
-// cl-availability {
-//   cl-availability-status {
-//     &[type="available"] {
-//       color: var(--cl-color-green);
-//     }
-
-//     &[type="unavailable"] {
-//       color: var(--cl-color-red);
-//     }
-//   }
-// }

@@ -3,12 +3,15 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html } from 'lit-html'
 import { create } from '../utils'
+import type { Args as GlobalArgs } from '../.storybook/preview'
 
-export const meta: Meta = {
+type Args = GlobalArgs & {}
+
+export const meta: Meta<Args> = {
   title: 'demo'
 }
 
-export const Basic: StoryFn = () => {
+export const Basic: StoryFn<Args> = () => {
   return create(
     html`
       <!-- for demonstration purpose only -->

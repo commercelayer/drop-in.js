@@ -1,23 +1,26 @@
 import { Meta, StoryFn } from '@storybook/html'
 import { html } from 'lit-html'
+import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-// // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
-export const meta: Meta = {
+type Args = GlobalArgs & {}
+
+export const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart-count'
 }
 
-// export default meta
-
-export const Basic: StoryFn = () => {
+export const Basic: StoryFn<Args> = () => {
   return create(
     html`
       <cl-cart-count></cl-cart-count>
     `
   )
 }
+Basic.args = {
+  'drop-in.css': true
+}
 
-export const WithIcon: StoryFn = () => {
+export const WithIcon: StoryFn<Args> = () => {
   return create(
     html`
       <cl-cart-link target="_blank">
@@ -57,7 +60,7 @@ export const WithIcon: StoryFn = () => {
   )
 }
 
-export const WithText: StoryFn = () => {
+export const WithText: StoryFn<Args> = () => {
   return create(
     html`
       <cl-cart-link target="_blank">
@@ -68,7 +71,7 @@ export const WithText: StoryFn = () => {
   )
 }
 
-export const LinkWithStyle: StoryFn = () => {
+export const LinkWithStyle: StoryFn<Args> = () => {
   return create(
     html`
       <a class="cl-cart-link" target="_blank" href="#link-to-cart">
