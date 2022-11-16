@@ -48,7 +48,6 @@ export const parameters = {
         'drop-in.js',
         'demo',
         'Components', [
-          'cl-add-to-cart',
           'Price', [
             'cl-price',
             'cl-price-amount'
@@ -57,6 +56,9 @@ export const parameters = {
             'cl-availability',
             'cl-availability-status',
             'cl-availability-info'
+          ],
+          'Add to cart', [
+            'cl-add-to-cart'
           ],
           'Cart', [
             'introduction',
