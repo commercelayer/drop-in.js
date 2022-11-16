@@ -41,8 +41,21 @@
   }
 
   .link-list > a.disabled {
-    opacity: .2;
+    /* opacity: .2; */
     pointer-events: none;
+    position: relative;
+  }
+  
+  .link-list > a.disabled::after {
+    content: "coming soon";
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: #eff8ff;
+    border-radius: 5px;
+    padding: 0px 6px;
+    border: 1px solid #ceeaff;
+    font-size: 0.8rem;
   }
 
   .link-list > a:hover {

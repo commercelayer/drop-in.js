@@ -4,6 +4,7 @@ import { Meta, StoryFn } from '@storybook/html'
 import { html } from 'lit-html'
 import { create } from '../utils'
 import type { Args as GlobalArgs } from '../.storybook/preview'
+import { skus } from './assets/constants'
 
 type Args = GlobalArgs & {}
 
@@ -39,20 +40,20 @@ export const Basic: StoryFn<Args> = () => {
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
-              src="https://data.commercelayer.app/seed/images/skus/5PANECAP000000FFFFFFXXXX_FLAT.png"
+              src="https://data.commercelayer.app/seed/images/skus/${skus.cap}_FLAT.png"
               class="w-full h-full object-center object-contain"
             />
           </div>
           <h3 class="mt-6 font-medium">Black Five-Panel Cap with White Logo</h3>
-          <small class="text-gray-300">5PANECAP000000FFFFFFXXXX</small>
-          <cl-price sku="5PANECAP000000FFFFFFXXXX" class="my-2">
+          <small class="text-gray-300">${skus.cap}</small>
+          <cl-price sku="${skus.cap}" class="my-2">
             <cl-price-amount type="compare-at"></cl-price-amount>
             <cl-price-amount type="price"></cl-price-amount>
           </cl-price>
-          <cl-add-to-cart sku="5PANECAP000000FFFFFFXXXX" class="my-2 mx-auto">
+          <cl-add-to-cart sku="${skus.cap}" class="my-2 mx-auto">
             Add to cart
           </cl-add-to-cart>
-          <cl-availability sku="5PANECAP000000FFFFFFXXXX" class="my-2">
+          <cl-availability sku="${skus.cap}" class="my-2">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
             <cl-availability-status type="available" class="block">
@@ -69,20 +70,20 @@ export const Basic: StoryFn<Args> = () => {
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
-              src="https://data.commercelayer.app/seed/images/skus/5PANECAP9D9CA1FFFFFFXXXX_FLAT.png"
+              src="https://data.commercelayer.app/seed/images/skus/${skus.outOfStock}_FLAT.png"
               class="w-full h-full object-center object-contain"
             />
           </div>
           <h3 class="mt-6 font-medium">Gray Five-Panel Cap with White Logo</h3>
-          <small class="text-gray-300">5PANECAP9D9CA1FFFFFFXXXX</small>
-          <cl-price sku="5PANECAP9D9CA1FFFFFFXXXX" class="my-2">
+          <small class="text-gray-300">${skus.outOfStock}</small>
+          <cl-price sku="${skus.outOfStock}" class="my-2">
             <cl-price-amount type="compare-at"></cl-price-amount>
             <cl-price-amount type="price"></cl-price-amount>
           </cl-price>
-          <cl-add-to-cart sku="5PANECAP9D9CA1FFFFFFXXXX" class="my-2 mx-auto">
+          <cl-add-to-cart sku="${skus.outOfStock}" class="my-2 mx-auto">
             Add to cart
           </cl-add-to-cart>
-          <cl-availability sku="5PANECAP9D9CA1FFFFFFXXXX" class="my-2">
+          <cl-availability sku="${skus.outOfStock}" class="my-2">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
             <cl-availability-status type="available" class="block">
@@ -99,20 +100,20 @@ export const Basic: StoryFn<Args> = () => {
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
-              src="https://data.commercelayer.app/seed/images/skus/BACKPACKFFFFFF000000XXXX_FLAT.png"
+              src="https://data.commercelayer.app/seed/images/skus/${skus.backpack}_FLAT.png"
               class="w-full h-full object-center object-contain"
             />
           </div>
           <h3 class="mt-6 font-medium">White Backpack with Black Logo</h3>
-          <small class="text-gray-300">BACKPACKFFFFFF000000XXXX</small>
-          <cl-price sku="BACKPACKFFFFFF000000XXXX" class="my-2">
+          <small class="text-gray-300">${skus.backpack}</small>
+          <cl-price sku="${skus.backpack}" class="my-2">
             <cl-price-amount type="compare-at"></cl-price-amount>
             <cl-price-amount type="price"></cl-price-amount>
           </cl-price>
-          <cl-add-to-cart sku="BACKPACKFFFFFF000000XXXX" class="my-2 mx-auto">
+          <cl-add-to-cart sku="${skus.backpack}" class="my-2 mx-auto">
             Add to cart
           </cl-add-to-cart>
-          <cl-availability sku="BACKPACKFFFFFF000000XXXX" class="my-2">
+          <cl-availability sku="${skus.backpack}" class="my-2">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
             <cl-availability-status type="available" class="block">

@@ -45,8 +45,9 @@ export const parameters = {
   options: {
     storySort: {
       order: [
-        'drop-in.js',
+        'introduction',
         'demo',
+        'getting started',
         'Components', [
           'Price', [
             'cl-price',
@@ -69,7 +70,10 @@ export const parameters = {
           ],
           'Checkout', [
             'cl-checkout-link'
-          ]
+          ],
+          'My account', [
+            'cl-my-account-link'
+          ],
         ]
       ]
     },

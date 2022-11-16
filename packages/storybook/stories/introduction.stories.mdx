@@ -1,72 +1,16 @@
-import { Meta } from '@storybook/addon-docs'
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
 import { linkTo } from '@storybook/addon-links'
+import { Basic } from './introduction.stories.ts';
 
-<Meta title="drop-in.js" />
+<Meta title="introduction" />
 
-# `drop-in.js`
+# Micro Frontends
 
 Commerce Layer drop-in.js lets you transform any plain HTML page into an enterprise-grade static commerce website, with almost no coding required.
 All you need to do is embed the library and add tags to the HTML page.
 
 Prices, availability messages, shopping bag, and any other commerce functionality are automatically mixed into your own content and styling,
 whatever the CMS, SSG, and tools you use to build your site pages.
-
-## Getting Started
-
-First of all you need to import the `drop-in.js` from the cdn.
-
-Right after that you just need to declare a global variable called `commercelayerConfig`:
-
-| Attribute       | Description                                                                                                 | Type                | Default  |
-|-----------------|-------------------------------------------------------------------------------------------------------------|---------------------|----------|
-| **`clientId`*** | Client ID is the application unique identifier. You can find it in your dashboard.                          | `string`            |          |
-| **`slug`***     | Slug for your organization. You can find it in your dashboard. Slug is the subdomain of your base endpoint. | `string`            |          |
-| **`scope`***    | Restrict the dataset of your application by specifying allowed scopes. You can find them in your dashboard. | `string`            |          |
-| `debug`         | Define the debug level.                                                                                     | `"none"` \| `"all"` | `"none"` |
-| `returnUrl`     | Url used in the Hosted Cart to point to "Continue Shopping". This is also used in the thank you page.       | `string`            |          |
-
-
-The code snippet below should be similar to the final result.
-
-```html dark
-<script type="module" src="https://commercelayer.github.io/drop-in.js/dist/drop-in/drop-in.esm.js"></script>
-
-<script>
-  (function() {
-    window.commercelayerConfig = {
-      clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
-      slug: 'drop-in-js',
-      scope: 'market:11709',
-      debug: 'all', // 'none' is the default
-      returnUrl: 'https://example.com' // optional
-    }
-  }());
-</script>
-```
-
-## Styling
-
-### `drop-in.css`
-
-This library is shipped unstyled, so that you can apply your own styles. 
-
-If you prefer you can add the following `link` tag:
-
-```html dark
-<link href="https://commercelayer.github.io/drop-in.js/dist/drop-in/drop-in.css" rel="stylesheet" />
-```
-
-### `minicart.css`
-
-The [**minicart**](?path=/docs/components-cart-cl-cart--minicart) element works thanks to the css.
-**Minicart is unstyled and hidden by default**, so you have to write your own css to style it.
-
-You can start from scratch, or import a minimal set of styles:
-
-```html dark
-<link href="https://commercelayer.github.io/drop-in.js/dist/drop-in/minicart.css" rel="stylesheet" />
-```
-
 
 ## Components
 
@@ -132,7 +76,7 @@ You can start from scratch, or import a minimal set of styles:
     </span>
   </a>
 
-  <a class="disabled">
+  <a class="disabled" onClick={linkTo('components-my-account-cl-my-account-link--page')}>
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M16 20C20.4183 20 24 16.4183 24 12C24 7.58172 20.4183 4 16 4C11.5817 4 8 7.58172 8 12C8 16.4183 11.5817 20 16 20Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
       <path d="M3.875 26.9999C5.10367 24.8713 6.87104 23.1037 8.99944 21.8747C11.1278 20.6458 13.5423 19.9988 16 19.9988C18.4577 19.9988 20.8722 20.6458 23.0006 21.8747C25.129 23.1037 26.8963 24.8713 28.125 26.9999" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -146,14 +90,14 @@ You can start from scratch, or import a minimal set of styles:
 </div>
 
 
-## Need help?
+## Demo 🚀
 
-- Join [Commerce Layer's Slack community](https://slack.commercelayer.app).
-- Open a new [Q&A discussion](https://github.com/commercelayer/drop-in.js/discussions/categories/q-a)
-- Ping us [on Twitter](https://twitter.com/commercelayer).
-- Is there a bug? Create an [issue](https://github.com/commercelayer/drop-in.js/issues) on this repository.
+This is a demo of most of our `drop-in.js` components. We are using Tailwind to speed up the layout building.
 
+We called it demo, but at the end by switching to [live mode](https://docs.commercelayer.io/core/api-specification#environments) this can be considered a production website 😮.
 
-## License
+<Canvas withSource="close">
+  <Story story={Basic} name="Basic" />
+</Canvas>
 
-This project is published under the [MIT](https://github.com/commercelayer/drop-in.js/blob/main/LICENSE) license.
+<ArgsTable story="Basic" />
