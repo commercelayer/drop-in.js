@@ -73,6 +73,9 @@ const getCartLink = async (page: E2EPage): Promise<E2EElement> => await page.fin
 // eslint-disable-next-line prettier/prettier
 const getCartCount = async (page: E2EPage): Promise<E2EElement> => await page.find('cl-cart-link cl-cart-count')
 
+// eslint-disable-next-line prettier/prettier
+const getCheckoutLink = async (page: E2EPage): Promise<E2EElement> => await page.find('cl-checkout-link')
+
 
 describe('index.e2e', () => {
   it('renders', async () => {
@@ -85,6 +88,10 @@ describe('index.e2e', () => {
             Cart
             <cl-cart-count></cl-cart-count>
           </cl-cart-link>
+
+          <cl-checkout-link target="_blank">
+            Checkout
+          </cl-checkout-link>
 
           <div>
             <cl-add-to-cart sku="${skus.cap}">Add to cart</cl-add-to-cart>
@@ -164,6 +171,10 @@ describe('index.e2e', () => {
           Cart
           <cl-cart-count class="hydrated"></cl-cart-count>
         </cl-cart-link>
+
+        <cl-checkout-link aria-disabled="true" target="_blank" class="hydrated">
+          Checkout
+        </cl-checkout-link>
 
         <div>
           <cl-add-to-cart sku="${skus.cap}" quantity="1" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
@@ -408,6 +419,7 @@ describe('index.e2e', () => {
         <mock:shadow-root>
           <a
             href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${accessToken}"
+            part="a"
             target="_blank"
           >
             <slot></slot>
@@ -418,11 +430,49 @@ describe('index.e2e', () => {
       </cl-cart-link>
     `)
 
+    expect(await getCheckoutLink(page)).toEqualHtml(`
+      <cl-checkout-link aria-disabled="true" target="_blank" class="hydrated">
+        <mock:shadow-root>
+          <a part="a" target="_blank">
+            <slot></slot>
+          </a>
+        </mock:shadow-root>
+        Checkout
+      </cl-checkout-link>
+    `)
+
     /**
      * ADDING "OUT OF STOCK" TO CART
      */
 
     await (await outOfStockElements.addToCart(page)).click()
+
+    expect(await getCartLink(page)).toEqualHtml(`
+      <cl-cart-link target="_blank" class="hydrated">
+        <mock:shadow-root>
+          <a
+            href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${accessToken}"
+            part="a"
+            target="_blank"
+          >
+            <slot></slot>
+          </a>
+        </mock:shadow-root>
+        Cart
+        <cl-cart-count class="hydrated"></cl-cart-count>
+      </cl-cart-link>
+    `)
+
+    expect(await getCheckoutLink(page)).toEqualHtml(`
+      <cl-checkout-link aria-disabled="true" target="_blank" class="hydrated">
+        <mock:shadow-root>
+          <a part="a" target="_blank">
+            <slot></slot>
+          </a>
+        </mock:shadow-root>
+        Checkout
+      </cl-checkout-link>
+    `)
 
     /**
      * ADDING "CAP" TO CART
@@ -438,11 +488,12 @@ describe('index.e2e', () => {
     await page.waitForNetworkIdle()
 
     const cartId = (await getCartId(page)) ?? 'null'
-    expect(await page.find('cl-cart-link')).toEqualHtml(`
+    expect(await getCartLink(page)).toEqualHtml(`
       <cl-cart-link target="_blank" class="hydrated">
         <mock:shadow-root>
           <a
             href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
+            part="a"
             target="_blank"
           >
             <slot></slot>
@@ -453,12 +504,27 @@ describe('index.e2e', () => {
       </cl-cart-link>
     `)
 
-    expect(await page.find('cl-cart-count')).toEqualHtml(`
+    expect(await getCartCount(page)).toEqualHtml(`
       <cl-cart-count quantity="1" class="hydrated">
         <mock:shadow-root>
           1
         </mock:shadow-root>
       </cl-cart-count>
+    `)
+
+    expect(await getCheckoutLink(page)).toEqualHtml(`
+      <cl-checkout-link target="_blank" class="hydrated">
+        <mock:shadow-root>
+          <a
+            href="https://drop-in-js.checkout.commercelayer.app/${cartId}?accessToken=${accessToken}"
+            part="a"
+            target="_blank"
+          >
+            <slot></slot>
+          </a>
+        </mock:shadow-root>
+        Checkout
+      </cl-checkout-link>
     `)
 
     /**
@@ -474,11 +540,12 @@ describe('index.e2e', () => {
 
     await page.waitForNetworkIdle()
 
-    expect(await page.find('cl-cart-link')).toEqualHtml(`
+    expect(await getCartLink(page)).toEqualHtml(`
       <cl-cart-link target="_blank" class="hydrated">
         <mock:shadow-root>
           <a
             href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
+            part="a"
             target="_blank"
           >
             <slot></slot>
@@ -489,12 +556,27 @@ describe('index.e2e', () => {
       </cl-cart-link>
     `)
 
-    expect(await page.find('cl-cart-count')).toEqualHtml(`
+    expect(await getCartCount(page)).toEqualHtml(`
       <cl-cart-count quantity="6" class="hydrated">
         <mock:shadow-root>
           6
         </mock:shadow-root>
       </cl-cart-count>
+    `)
+
+    expect(await getCheckoutLink(page)).toEqualHtml(`
+      <cl-checkout-link target="_blank" class="hydrated">
+        <mock:shadow-root>
+          <a
+            href="https://drop-in-js.checkout.commercelayer.app/${cartId}?accessToken=${accessToken}"
+            part="a"
+            target="_blank"
+          >
+            <slot></slot>
+          </a>
+        </mock:shadow-root>
+        Checkout
+      </cl-checkout-link>
     `)
   })
 })

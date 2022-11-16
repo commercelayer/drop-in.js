@@ -22,8 +22,9 @@ cl-price-amount {
   }
 }
 
-cl-add-to-cart,
-cl-checkout-link {
+// cl-add-to-cart,
+// cl-checkout-link {
+cl-add-to-cart {
   display: inline-block;
   background-image: none;
   border: none;
@@ -40,10 +41,10 @@ cl-checkout-link {
     cursor: pointer;
   }
 
-  &::part(link) {
-    color: var(--cl-color-white);
-    text-decoration: none;
-  }
+  // &::part(link) {
+  //   color: var(--cl-color-white);
+  //   text-decoration: none;
+  // }
 }
 
 cl-cart-link, .cl-cart-link {

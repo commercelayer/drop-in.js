@@ -64,6 +64,9 @@ export const parameters = {
             'cl-cart-count',
             'cl-cart',
             'cl-cart (minicart)',
+          ],
+          'Checkout', [
+            'cl-checkout-link'
           ]
         ]
       ]

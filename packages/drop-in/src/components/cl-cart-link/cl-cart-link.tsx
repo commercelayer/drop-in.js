@@ -82,17 +82,20 @@ export class CLCartLink implements Props {
     }
 
     return (
-      <a
-        target={this.target}
-        href={this.href}
-        onClick={(e) => {
-          this.handleClick(e).catch((error) => {
-            throw error
-          })
-        }}
-      >
-        <slot></slot>
-      </a>
+      <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
+        <a
+          part='a'
+          target={this.target}
+          href={this.href}
+          onClick={(e) => {
+            this.handleClick(e).catch((error) => {
+              throw error
+            })
+          }}
+        >
+          <slot></slot>
+        </a>
+      </Host>
     )
   }
 }

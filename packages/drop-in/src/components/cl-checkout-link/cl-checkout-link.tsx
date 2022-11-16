@@ -11,11 +11,15 @@ import {
   State
 } from '@stencil/core'
 
+export interface Props {
+  target: string
+}
+
 @Component({
   tag: 'cl-checkout-link',
   shadow: true
 })
-export class ClCheckoutLink {
+export class ClCheckoutLink implements Props {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) target: string = '_self'
@@ -34,12 +38,7 @@ export class ClCheckoutLink {
   render(): JSX.Element {
     return (
       <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
-        <a
-          part='link'
-          target={this.target}
-          href={this.href}
-          aria-disabled={this.href !== undefined ? undefined : 'true'}
-        >
+        <a part='a' target={this.target} href={this.href}>
           <slot></slot>
         </a>
       </Host>

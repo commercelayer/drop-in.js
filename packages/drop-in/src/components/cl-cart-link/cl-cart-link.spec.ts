@@ -30,7 +30,7 @@ describe('cl-cart-link.spec', () => {
     expect(root).toEqualHtml(`
       <cl-cart-link class="hydrated" target="_self">
         <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${fakeAccessToken}" target="_self">
+          <a href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${fakeAccessToken}" part="a" target="_self">
             <slot></slot>
           </a>
         </mock:shadow-root>
@@ -52,7 +52,7 @@ describe('cl-cart-link.spec', () => {
     expect(root).toEqualHtml(`
       <cl-cart-link class="hydrated" target="_self">
         <mock:shadow-root>
-          <a href="https://cart.url" target="_self">
+          <a href="https://cart.url" part="a" target="_self">
             <slot></slot>
           </a>
         </mock:shadow-root>

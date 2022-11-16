@@ -1,0 +1,26 @@
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
+import { meta, Basic } from './cl-checkout-link.stories.ts';
+import { skus } from '../assets/constants.ts'
+
+<Meta
+  title={meta.title}
+  argTypes={meta.argTypes}
+/>
+
+# `cl-checkout-link`
+
+Any Commerce Layer account comes with a [hosted version of the Checkout](https://github.com/commercelayer/commercelayer-react-checkout#hosted-version) application that is automatically enabled.
+
+You can use the hosted version of the Checkout application with the following URL format: `https://<your-organization-slug>.checkout.commercelayer.app/<order-id>?accessToken=<your-access-token>`
+
+This component can be used as in-place replacement for an `<a>` tag pointing to that url.
+
+<Canvas withSource="open">
+  <Story story={Basic} name="Basic" />
+</Canvas>
+
+ℹ️ Checkout link is **disabled** when cart does not contain shoppable items.
+
+As soon as you <cl-add-to-cart class="mx-1 px-2 py-1" sku={skus.cap}>add to cart</cl-add-to-cart> a shoppable item, then the checkout link will be cliccable.
+
+<ArgsTable story='Basic' />
