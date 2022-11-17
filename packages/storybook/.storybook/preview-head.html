@@ -190,6 +190,13 @@
     box-shadow: #1ea7fd 0 0 0 1px inset;
     outline: none;
   }
+
+  /* Weird Storybook issue on firefox */
+  [scale="1"] {
+    transform: none !important;
+    transform-origin: initial !important;
+    height: auto !important;
+  }
 </style>
 
 <!-- used for the demo story -->
