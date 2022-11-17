@@ -1,0 +1,11 @@
+[
+  {
+    "resourceType": "stock_items",
+    "referenceKeys": [
+      "stock_item_1",
+      "stock_item_251",
+      "stock_item_8",
+      "stock_item_258"
+    ]
+  }
+]

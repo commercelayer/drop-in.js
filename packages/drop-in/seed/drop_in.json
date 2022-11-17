@@ -72,15 +72,15 @@
     "referenceKeys": ["payment_method_1", "payment_method_2", "payment_method_3"]
   },
   {
-    "importAll": true,
-    "resourceType": "skus"
+    "resourceType": "skus",
+    "importAll": true
   },
   {
-    "importAll": true,
-    "resourceType": "stock_items"
+    "resourceType": "stock_items",
+    "importAll": true
   },
   {
-    "importAll": true,
-    "resourceType": "prices"
+    "resourceType": "prices",
+    "importAll": true
   }
 ]
