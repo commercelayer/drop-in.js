@@ -60,7 +60,7 @@ cl-cart-link, .cl-cart-link {
       font-size: .5rem;
       border-radius: 50%;
       background-color: var(--cl-color-primary);
-      width: 1rem;
+      min-width: 1rem;
       height: 1rem;
       position: absolute;
       display: flex;
@@ -70,6 +70,8 @@ cl-cart-link, .cl-cart-link {
       bottom: 0%;
       right: 0%;
       transform: translate(120%, 0%);
+
+      padding: 0.2rem;
 
       &.hydrated {
         opacity: 1;

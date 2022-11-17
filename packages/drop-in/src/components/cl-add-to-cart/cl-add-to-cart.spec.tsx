@@ -18,6 +18,15 @@ const availableSku: skus.Sku = {
   }
 }
 
+const doNotTrackSku: skus.Sku = {
+  ...baseSku,
+  do_not_track: true,
+  inventory: {
+    levels: [],
+    available: true
+  }
+}
+
 const unavailableSku: skus.Sku = {
   ...baseSku,
   inventory: {
@@ -160,6 +169,26 @@ describe('cl-add-to-cart.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-add-to-cart sku="SKU1234" quantity="99" aria-disabled="true" role="button" tabindex="0">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        Add to cart
+      </cl-add-to-cart>
+    `)
+  })
+
+  it('renders enabled when item has "do_not_track" attribute set to true', async () => {
+    jest.spyOn(skus, 'getSku').mockResolvedValue(doNotTrackSku)
+
+    const { root, waitForChanges } = await newSpecPage({
+      components: [CLAddToCart],
+      html: '<cl-add-to-cart sku="SKU1234" quantity="99">Add to cart</cl-add-to-cart>'
+    })
+
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-add-to-cart sku="SKU1234" quantity="99" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

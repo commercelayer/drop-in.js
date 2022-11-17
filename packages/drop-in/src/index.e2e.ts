@@ -7,10 +7,11 @@ import {
 } from 'jest.e2e.helpers'
 
 const skus = {
-  outOfStock: '5PANECAP9D9CA1FFFFFFXXXX',
   nonexisting: 'NONEXISTINGSKU',
   cap: '5PANECAP000000FFFFFFXXXX',
-  backpack: 'BACKPACKFFFFFF000000XXXX'
+  backpack: 'BACKPACKFFFFFF000000XXXX',
+  outOfStock: '5PANECAP9D9CA1FFFFFFXXXX',
+  doNotTrack: 'BOTT17OZFFFFFF000000XXXX'
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -66,6 +67,7 @@ const getSkuElements = (sku: string) => {
 const capElements = getSkuElements(skus.cap)
 const backpackElements = getSkuElements(skus.backpack)
 const outOfStockElements = getSkuElements(skus.outOfStock)
+const doNotTrackElements = getSkuElements(skus.doNotTrack)
 
 // eslint-disable-next-line prettier/prettier
 const getCartLink = async (page: E2EPage): Promise<E2EElement> => await page.find('cl-cart-link')
@@ -159,6 +161,30 @@ describe('index.e2e', () => {
               <cl-availability-status type="unavailable">Out Of Stock</cl-availability-status>
             </cl-availability>
           </div>
+
+          <div>
+            <cl-add-to-cart
+              sku="${skus.doNotTrack}"
+              quantity="9999"
+            >Add to cart</cl-add-to-cart>
+            <cl-price sku="${skus.doNotTrack}">
+              <cl-price-amount type="price"></cl-price-amount>
+              <cl-price-amount type="compare-at"></cl-price-amount>
+            </cl-price>
+            <cl-availability sku="${skus.doNotTrack}">
+              <cl-availability-status type="available">
+                <span style="color: green;">Available</span>
+                ready to be shipped in
+                <cl-availability-info type="min-days"></cl-availability-info>
+                -
+                <cl-availability-info type="max-days"></cl-availability-info>
+                days with
+                <cl-availability-info type="shipping-method-name"></cl-availability-info>
+                (<cl-availability-info type="shipping-method-price"></cl-availability-info>)
+              </cl-availability-status>
+              <cl-availability-status type="unavailable">Out Of Stock</cl-availability-status>
+            </cl-availability>
+          </div>
         </div>
       `
     })
@@ -236,6 +262,27 @@ describe('index.e2e', () => {
               (<cl-availability-info class="hydrated" type="shipping-method-price"></cl-availability-info>)
             </cl-availability-status>
             <cl-availability-status class="hydrated" type="unavailable">Out Of Stock</cl-availability-status>
+          </cl-availability>
+        </div>
+
+        <div>
+          <cl-add-to-cart sku="${skus.doNotTrack}" quantity="9999" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
+          <cl-price sku="${skus.doNotTrack}" class="hydrated">
+            <cl-price-amount type="price" class="hydrated"></cl-price-amount>
+            <cl-price-amount type="compare-at" class="hydrated"></cl-price-amount>
+          </cl-price>
+          <cl-availability class="hydrated" sku="${skus.doNotTrack}">
+            <cl-availability-status class="hydrated" type="available">
+              <span style="color: green;">Available</span>
+              ready to be shipped in
+              <cl-availability-info class="hydrated" type="min-days"></cl-availability-info>
+              -
+              <cl-availability-info class="hydrated" type="max-days"></cl-availability-info>
+              days with
+              <cl-availability-info class="hydrated" type="shipping-method-name"></cl-availability-info>
+              (<cl-availability-info class="hydrated" type="shipping-method-price"></cl-availability-info>)
+            </cl-availability-status>
+            <cl-availability-status aria-disabled="true" class="hydrated" type="unavailable">Out Of Stock</cl-availability-status>
           </cl-availability>
         </div>
       </div>
@@ -403,6 +450,65 @@ describe('index.e2e', () => {
     `)
 
     /**
+     * EXPECTATIONS FOR "DO NOT TRACK" PRODUCT
+     */
+
+    expect(await doNotTrackElements.getPriceAmount(page)).toEqualHtml(`
+      <cl-price-amount class="hydrated" type="price">
+        <mock:shadow-root>
+          $40.00
+        </mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    expect(await doNotTrackElements.getPriceCompareAtAmount(page)).toEqualHtml(`
+      <cl-price-amount class="hydrated" type="compare-at">
+        <mock:shadow-root>
+          <s part="strikethrough">
+            $49.00
+          </s>
+        </mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    expect(await doNotTrackElements.getAvailabilityInfoMinDays(page))
+      .toEqualHtml(`
+      <cl-availability-info class="hydrated" type="min-days">
+        <mock:shadow-root>
+          3
+        </mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(await doNotTrackElements.getAvailabilityInfoMaxDays(page))
+      .toEqualHtml(`
+      <cl-availability-info class="hydrated" type="max-days">
+        <mock:shadow-root>
+          4
+        </mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(await doNotTrackElements.getAvailabilityInfoShippingMethodName(page))
+      .toEqualHtml(`
+      <cl-availability-info class="hydrated" type="shipping-method-name">
+        <mock:shadow-root>
+          Express Delivery
+        </mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(
+      await doNotTrackElements.getAvailabilityInfoShippingMethodPrice(page)
+    ).toEqualHtml(`
+      <cl-availability-info class="hydrated" type="shipping-method-price">
+        <mock:shadow-root>
+          $7.00
+        </mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    /**
      * ADD TO CART
      */
 
@@ -560,6 +666,58 @@ describe('index.e2e', () => {
       <cl-cart-count quantity="6" class="hydrated">
         <mock:shadow-root>
           6
+        </mock:shadow-root>
+      </cl-cart-count>
+    `)
+
+    expect(await getCheckoutLink(page)).toEqualHtml(`
+      <cl-checkout-link target="_blank" class="hydrated">
+        <mock:shadow-root>
+          <a
+            href="https://drop-in-js.checkout.commercelayer.app/${cartId}?accessToken=${accessToken}"
+            part="a"
+            target="_blank"
+          >
+            <slot></slot>
+          </a>
+        </mock:shadow-root>
+        Checkout
+      </cl-checkout-link>
+    `)
+
+    /**
+     * ADDING "DO NOT TRACK" TO CART
+     */
+
+    await (await doNotTrackElements.addToCart(page)).click()
+
+    await waitAndExpectForLineItems(page, {
+      sku: skus.doNotTrack,
+      quantity: 9999
+    })
+
+    await page.waitForNetworkIdle()
+
+    expect(await getCartLink(page)).toEqualHtml(`
+      <cl-cart-link target="_blank" class="hydrated">
+        <mock:shadow-root>
+          <a
+            href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
+            part="a"
+            target="_blank"
+          >
+            <slot></slot>
+          </a>
+        </mock:shadow-root>
+        Cart
+        <cl-cart-count class="hydrated" quantity="10005"></cl-cart-count>
+      </cl-cart-link>
+    `)
+
+    expect(await getCartCount(page)).toEqualHtml(`
+      <cl-cart-count quantity="10005" class="hydrated">
+        <mock:shadow-root>
+          10005
         </mock:shadow-root>
       </cl-cart-count>
     `)

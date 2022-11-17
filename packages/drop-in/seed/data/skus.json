@@ -45,6 +45,7 @@
     "name": "White Water Bottle with Black Logo (17oz)",
     "description": "Beautifully designed water bottle, made from high-grade stainless steel. Its double-wall construction makes it perfect for storing both hot and cold liquids.",
     "image_url": "https://data.commercelayer.app/seed/images/skus/BOTT17OZFFFFFF000000XXXX_FLAT.png",
+    "do_not_track": true,
     "shipping_category": "shipping_category_1"
   },
   {

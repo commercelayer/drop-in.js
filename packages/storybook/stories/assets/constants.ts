@@ -1,8 +1,9 @@
 export const skus = {
-  outOfStock: '5PANECAP9D9CA1FFFFFFXXXX',
   nonexisting: 'NONEXISTINGSKU',
   cap: '5PANECAP000000FFFFFFXXXX',
-  backpack: 'BACKPACKFFFFFF000000XXXX'
+  backpack: 'BACKPACKFFFFFF000000XXXX',
+  outOfStock: '5PANECAP9D9CA1FFFFFFXXXX',
+  doNotTrack: 'BOTT17OZFFFFFF000000XXXX'
 }
 
 export const clConfig = {

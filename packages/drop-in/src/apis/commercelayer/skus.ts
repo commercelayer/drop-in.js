@@ -31,7 +31,7 @@ interface Level {
 
 interface Inventory {
   available: boolean
-  quantity: number
+  quantity?: number
   levels: Level[]
 }
 

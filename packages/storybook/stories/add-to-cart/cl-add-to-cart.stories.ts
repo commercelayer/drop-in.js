@@ -69,3 +69,9 @@ NoOverselling.args = {
   sku: skus.backpack,
   quantity: 100
 }
+
+export const DoNotTrack = Template.bind({})
+DoNotTrack.args = {
+  sku: skus.doNotTrack,
+  quantity: 9999
+}

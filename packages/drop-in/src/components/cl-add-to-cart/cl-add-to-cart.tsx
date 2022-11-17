@@ -77,23 +77,24 @@ export class CLAddToCart implements Props {
    * @returns Returns true when item is soldable.
    */
   canBeSold(): boolean {
-    // TODO: check for stock
+    const hasQuantity =
+      this.skuObject?.inventory?.quantity === undefined ||
+      this.quantity <= this.skuObject?.inventory?.quantity
+
     return (
       validateSku(this.sku) &&
       this.quantity > 0 &&
       this.skuObject?.inventory?.available === true &&
-      this.quantity <= this.skuObject?.inventory?.quantity
+      hasQuantity
     )
   }
 
   render(): JSX.Element {
-    const enabled = this.canBeSold()
-
     return (
       <Host
         role='button'
         tabindex='0'
-        aria-disabled={enabled ? undefined : 'true'}
+        aria-disabled={this.canBeSold() ? undefined : 'true'}
         onKeyPress={(event: KeyboardEvent) => this.handleKeyPress(event)}
         onClick={() => this.handleAddItem()}
       >

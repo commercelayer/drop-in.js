@@ -30,12 +30,6 @@
     "stock_location": "stock_location_1"
   },
   {
-    "reference": "stock_item_21",
-    "sku_code": "BOTT17OZFFFFFF000000XXXX",
-    "quantity": 324,
-    "stock_location": "stock_location_1"
-  },
-  {
     "reference": "stock_item_41",
     "sku_code": "DUFFLBAG000000FFFFFFXXXX",
     "quantity": 319,
@@ -117,12 +111,6 @@
     "reference": "stock_item_258",
     "sku_code": "BACKPACKFFFFFF000000XXXX",
     "quantity": 98,
-    "stock_location": "stock_location_2"
-  },
-  {
-    "reference": "stock_item_271",
-    "sku_code": "BOTT17OZFFFFFF000000XXXX",
-    "quantity": 387,
     "stock_location": "stock_location_2"
   },
   {
