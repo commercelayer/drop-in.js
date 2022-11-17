@@ -22,10 +22,10 @@ describe('cl-price.spec', () => {
   it('renders with a sku', async () => {
     const { root } = await newSpecPage({
       components: [CLPrice],
-      html: '<cl-price sku="BACKPACK818488000000XXXX"></cl-price>'
+      html: '<cl-price sku="SKU1234"></cl-price>'
     })
     expect(root).toEqualHtml(`
-      <cl-price sku="BACKPACK818488000000XXXX">
+      <cl-price sku="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -48,7 +48,7 @@ describe('cl-price.spec', () => {
     const { root } = await newSpecPage({
       components: [CLPrice, CLPriceAmount],
       html: `
-        <cl-price sku="BACKPACKFFFFFF000000XXXX">
+        <cl-price sku="SKU1234">
           <cl-price-amount></cl-price-amount>
           <another-tag></another-tag>
         </cl-price>
@@ -56,7 +56,7 @@ describe('cl-price.spec', () => {
     })
 
     expect(root).toEqualHtml(`
-      <cl-price sku="BACKPACKFFFFFF000000XXXX">
+      <cl-price sku="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

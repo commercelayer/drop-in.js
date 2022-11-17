@@ -1,8 +1,23 @@
 import * as skus from '#apis/commercelayer/skus'
 import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-availability-status'
-import type { Sku } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailability } from './cl-availability'
+
+const baseSku = {
+  id: 'id1234',
+  type: 'skus',
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString()
+} as const
+
+const availableSku: skus.Sku = {
+  ...baseSku,
+  inventory: {
+    levels: [],
+    available: true,
+    quantity: 98
+  }
+}
 
 describe('cl-availability.spec', () => {
   it('renders without attributes', async () => {
@@ -20,12 +35,14 @@ describe('cl-availability.spec', () => {
   })
 
   it('renders with a sku', async () => {
+    jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
+
     const { root } = await newSpecPage({
       components: [ClAvailability],
-      html: '<cl-availability sku="BACKPACK818488000000XXXX"></cl-availability>'
+      html: '<cl-availability sku="SKU1234"></cl-availability>'
     })
     expect(root).toEqualHtml(`
-      <cl-availability sku="BACKPACK818488000000XXXX">
+      <cl-availability sku="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -34,23 +51,12 @@ describe('cl-availability.spec', () => {
   })
 
   it('should pass-throw the "skuUpdate" event to children', async () => {
-    const fakeSku: Sku = {
-      id: 'ABC123',
-      type: 'skus',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      inventory: {
-        available: true,
-        quantity: 98
-      }
-    }
-
-    jest.spyOn(skus, 'getSku').mockResolvedValue(fakeSku)
+    jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
 
     const { root } = await newSpecPage({
       components: [ClAvailability, ClAvailabilityStatus],
       html: `
-        <cl-availability sku="BACKPACKFFFFFF000000XXXX">
+        <cl-availability sku="SKU1234">
           <cl-availability-status></cl-availability-status>
           <cl-availability-status type="available">• available</cl-availability-status>
           <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
@@ -60,7 +66,7 @@ describe('cl-availability.spec', () => {
     })
 
     expect(root).toEqualHtml(`
-      <cl-availability sku="BACKPACKFFFFFF000000XXXX">
+      <cl-availability sku="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
