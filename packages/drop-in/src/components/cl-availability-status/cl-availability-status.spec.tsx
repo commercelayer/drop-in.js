@@ -44,7 +44,7 @@ describe('cl-availability-status.spec', () => {
       </div>
     `)
 
-    const skuUpdateEvent: Sku = {
+    const availabilityUpdateEvent: Sku = {
       id: 'ABC123',
       type: 'skus',
       created_at: new Date().toISOString(),
@@ -58,8 +58,8 @@ describe('cl-availability-status.spec', () => {
 
     body.querySelectorAll('cl-availability-status').forEach((element) =>
       element.dispatchEvent(
-        new CustomEvent<Sku>('skuUpdate', {
-          detail: skuUpdateEvent
+        new CustomEvent<Sku>('availabilityUpdate', {
+          detail: availabilityUpdateEvent
         })
       )
     )
@@ -110,7 +110,7 @@ describe('cl-availability-status.spec', () => {
       </div>
     `)
 
-    const skuUpdateEvent: Sku = {
+    const availabilityUpdateEvent: Sku = {
       id: 'ABC123',
       type: 'skus',
       created_at: new Date().toISOString(),
@@ -124,8 +124,8 @@ describe('cl-availability-status.spec', () => {
 
     body.querySelectorAll('cl-availability-status').forEach((element) =>
       element.dispatchEvent(
-        new CustomEvent<Sku>('skuUpdate', {
-          detail: skuUpdateEvent
+        new CustomEvent<Sku>('availabilityUpdate', {
+          detail: availabilityUpdateEvent
         })
       )
     )

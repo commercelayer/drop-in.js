@@ -47,7 +47,7 @@ export async function getAccessToken(page: E2EPage): Promise<string | null> {
 
 export async function waitAndExpectForLineItems(
   page: E2EPage,
-  options: { sku: string; quantity: number }
+  options: { code: string; quantity: number }
 ): Promise<void> {
   const response = await page.waitForResponse((response) => {
     return (
@@ -67,7 +67,7 @@ export async function waitAndExpectForLineItems(
     data: {
       attributes: {
         quantity: options.quantity,
-        sku_code: options.sku
+        sku_code: options.code
       },
       relationships: {
         order: {

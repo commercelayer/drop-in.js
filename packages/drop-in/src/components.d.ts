@@ -8,11 +8,11 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Type } from "./components/cl-availability-info/cl-availability-info";
 export namespace Components {
     interface ClAddToCart {
+        "code": string | undefined;
         "quantity": number;
-        "sku": string | undefined;
     }
     interface ClAvailability {
-        "sku": string | undefined;
+        "code": string | undefined;
     }
     interface ClAvailabilityInfo {
         "type": Type;
@@ -33,7 +33,7 @@ export namespace Components {
         "target": string;
     }
     interface ClPrice {
-        "sku": string | undefined;
+        "code": string | undefined;
     }
     interface ClPriceAmount {
         "type": 'price' | 'compare-at';
@@ -115,11 +115,11 @@ declare global {
 }
 declare namespace LocalJSX {
     interface ClAddToCart {
+        "code"?: string | undefined;
         "quantity"?: number;
-        "sku"?: string | undefined;
     }
     interface ClAvailability {
-        "sku"?: string | undefined;
+        "code"?: string | undefined;
     }
     interface ClAvailabilityInfo {
         "type"?: Type;
@@ -140,7 +140,7 @@ declare namespace LocalJSX {
         "target"?: string;
     }
     interface ClPrice {
-        "sku"?: string | undefined;
+        "code"?: string | undefined;
     }
     interface ClPriceAmount {
         "type"?: 'price' | 'compare-at';

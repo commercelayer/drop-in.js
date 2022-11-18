@@ -1,6 +1,6 @@
 import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
 import { meta, Basic, WithoutAttributes, OutOfStock, Nonexisting, NoOverselling, DoNotTrack } from './cl-add-to-cart.stories.ts';
-import { skus } from '../assets/constants.ts'
+import { codes } from '../assets/constants.ts'
 
 <Meta
   title={meta.title}
@@ -19,9 +19,9 @@ Add a buy button to any page with embedded validation rules.
 
 ### Disabled
 
-To enable the **add to cart** button, you'll need to have a `sku` attribute and a `quantity` value greater than 0.
+To enable the **add to cart** button, you'll need to have a `code` attribute and a `quantity` value greater than 0.
 
-The button below is disabled since there's no `sku` nor `quantity`.
+The button below is disabled since there's no `code` nor `quantity`.
 
 <Canvas withSource="open">
   <Story story={WithoutAttributes} name="Without Attributes" />
@@ -29,7 +29,7 @@ The button below is disabled since there's no `sku` nor `quantity`.
 
 ### Out Of Stock
 
-`cl-add-to-cart` checks the inventory for the provided sku. When the product is out of stock the button will be disable.
+`cl-add-to-cart` checks the inventory for the provided code. When the product is out of stock the button will be disable.
 
 <Canvas withSource="open">
   <Story story={OutOfStock} name="Out Of Stock" />
@@ -37,7 +37,7 @@ The button below is disabled since there's no `sku` nor `quantity`.
 
 ### Nonexisting
 
-The provided `sku` must exists. If nonexisting the add to cart button will stay disabled.
+The provided `code` must exists. If nonexisting the add to cart button will stay disabled.
 
 <Canvas withSource="open">
   <Story story={Nonexisting} name="Nonexisting" />
@@ -46,7 +46,7 @@ The provided `sku` must exists. If nonexisting the add to cart button will stay 
 ### No Overselling
 
 <p>
-  The product with sku <i>{skus.backpack}</i> has less than <code>100</code> stock unit, so the button with be disabled.
+  The product with code <i>{codes.backpack}</i> has less than <code>100</code> stock unit, so the button with be disabled.
 </p>
 
 <Canvas withSource="open">
@@ -56,7 +56,7 @@ The provided `sku` must exists. If nonexisting the add to cart button will stay 
 ### Do Not Track
 
 <p>
-  The product with sku <i>{skus.doNotTrack}</i> has the <code>do_not_track</code> flag set to true that assign a virtual infinite stock to that SKU.
+  The product with code <i>{codes.doNotTrack}</i> has the <code>do_not_track</code> flag set to true that assign a virtual infinite stock.
 </p>
 
 <Canvas withSource="open">

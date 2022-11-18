@@ -1,4 +1,4 @@
-import type { Price } from '@commercelayer/sdk'
+import type { Price } from '#apis/commercelayer/prices'
 import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
 
 export interface Props {

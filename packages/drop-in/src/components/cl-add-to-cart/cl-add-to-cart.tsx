@@ -3,9 +3,9 @@ import { getSku, Sku } from '#apis/commercelayer/skus'
 import { log } from '#utils/logger'
 import {
   logQuantity,
-  logSku,
+  logCode,
   validateQuantity,
-  validateSku
+  validateCode
 } from '#utils/validation-helpers'
 import {
   Component,
@@ -19,7 +19,7 @@ import {
 } from '@stencil/core'
 
 export interface Props {
-  sku: string | undefined
+  code: string | undefined
   quantity: number
 }
 @Component({
@@ -29,14 +29,14 @@ export interface Props {
 export class CLAddToCart implements Props {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) sku: string | undefined
+  @Prop({ reflect: true }) code: string | undefined
   @Prop({ reflect: true, mutable: true }) quantity: number = 1
 
   @State() skuObject: Sku | undefined
 
-  @Watch('sku')
-  watchSkuHandler(newValue: string, _oldValue: string): void {
-    logSku(this.host, newValue)
+  @Watch('code')
+  watchCodeHandler(newValue: string, _oldValue: string): void {
+    logCode(this.host, newValue)
   }
 
   @Watch('quantity')
@@ -47,14 +47,14 @@ export class CLAddToCart implements Props {
   }
 
   async componentWillLoad(): Promise<void> {
-    if (validateSku(this.sku)) {
-      this.skuObject = await getSku(this.sku)
+    if (validateCode(this.code)) {
+      this.skuObject = await getSku(this.code)
       if (this.skuObject === undefined) {
-        log('warn', `Cannot find sku ${this.sku}.`, this.host)
+        log('warn', `Cannot find code ${this.code}.`, this.host)
       }
     }
 
-    logSku(this.host, this.sku)
+    logCode(this.host, this.code)
     logQuantity(this.host, this.quantity)
   }
 
@@ -65,8 +65,8 @@ export class CLAddToCart implements Props {
   }
 
   handleAddItem(): void {
-    if (this.sku !== undefined && this.canBeSold()) {
-      addItem(this.sku, this.quantity).catch((error) => {
+    if (this.code !== undefined && this.canBeSold()) {
+      addItem(this.code, this.quantity).catch((error) => {
         throw error
       })
     }
@@ -82,7 +82,7 @@ export class CLAddToCart implements Props {
       this.quantity <= this.skuObject?.inventory?.quantity
 
     return (
-      validateSku(this.sku) &&
+      validateCode(this.code) &&
       this.quantity > 0 &&
       this.skuObject?.inventory?.available === true &&
       hasQuantity

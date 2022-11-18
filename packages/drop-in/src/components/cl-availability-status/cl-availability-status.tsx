@@ -14,8 +14,8 @@ export class ClAvailabilityStatus implements Props {
 
   @State() available: boolean | undefined
 
-  @Listen('skuUpdate')
-  skuUpdateHandler(event: CustomEvent<Sku>): void {
+  @Listen('availabilityUpdate')
+  availabilityUpdateHandler(event: CustomEvent<Sku>): void {
     this.available = event.detail.inventory?.available
   }
 

@@ -23,8 +23,8 @@ export class ClAvailabilityInfo implements Props {
 
   @State() text: string | undefined
 
-  @Listen('skuUpdate')
-  skuUpdateHandler(event: CustomEvent<Sku>): void {
+  @Listen('availabilityUpdate')
+  availabilityUpdateHandler(event: CustomEvent<Sku>): void {
     if (this.type === undefined) {
       return
     }

@@ -3,20 +3,19 @@ import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
-import { skus } from '../assets/constants'
+import { codes } from '../assets/constants'
 
 type Args = GlobalArgs &
   Props & {
-    ['Use an available SKU']: boolean
+    ['Use an available product']: boolean
   }
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export const meta: Meta<Args> = {
   title: 'Components/Availability/cl-availability-info',
   argTypes: {
-    'Use an available SKU': {
-      description:
-        'Use the SKU of an available product for demonstration purpose.',
+    'Use an available product': {
+      description: 'Use an available product for demonstration purpose.',
       type: {
         name: 'boolean'
       },
@@ -50,7 +49,9 @@ export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
       <cl-availability
-        sku=${args['Use an available SKU'] ? skus.backpack : skus.outOfStock}
+        code=${args['Use an available product']
+          ? codes.backpack
+          : codes.outOfStock}
       >
         <cl-availability-info
           type=${args.type ?? nothing}
@@ -61,14 +62,14 @@ export const Basic: StoryFn<Args> = (args) => {
 }
 Basic.args = {
   'drop-in.css': true,
-  'Use an available SKU': true,
+  'Use an available product': true,
   type: 'min-days'
 }
 
 export const Message: StoryFn<Args> = () => {
   return create(
     html`
-      <cl-availability sku=${skus.backpack}>
+      <cl-availability code=${codes.backpack}>
         ready to be shipped in
         <cl-availability-info type="min-days"></cl-availability-info
         // eslint-disable-next-line prettier/prettier

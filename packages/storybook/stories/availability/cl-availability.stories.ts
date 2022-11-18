@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
-import { skus } from '../assets/constants'
+import { codes } from '../assets/constants'
 
 type Args = GlobalArgs & Props & {}
 
@@ -12,7 +12,7 @@ export const meta: Meta<Args> = {
   title: 'Components/Availability/cl-availability',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
-    sku: {
+    code: {
       description: 'SKU is a unique identifier, meaning Stock Keeping Unit.',
       type: { name: 'string', required: true },
       table: {
@@ -26,7 +26,7 @@ export const meta: Meta<Args> = {
 const Template: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-availability sku=${args.sku ?? nothing}>
+      <cl-availability code=${args.code ?? nothing}>
         <cl-availability-status type="available">
           <span style="color: green;">• available</span>
           ready to be shipped in
@@ -46,7 +46,7 @@ const Template: StoryFn<Args> = (args) => {
 export const Basic = Template.bind({})
 Basic.args = {
   'drop-in.css': true,
-  sku: skus.backpack
+  code: codes.backpack
 }
 
 export const WithoutAttributes = Template.bind({})

@@ -34,15 +34,15 @@ describe('cl-availability.spec', () => {
     `)
   })
 
-  it('renders with a sku', async () => {
+  it('renders with a code', async () => {
     jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
 
     const { root } = await newSpecPage({
       components: [ClAvailability],
-      html: '<cl-availability sku="SKU1234"></cl-availability>'
+      html: '<cl-availability code="SKU1234"></cl-availability>'
     })
     expect(root).toEqualHtml(`
-      <cl-availability sku="SKU1234">
+      <cl-availability code="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -50,13 +50,13 @@ describe('cl-availability.spec', () => {
     `)
   })
 
-  it('should pass-throw the "skuUpdate" event to children', async () => {
+  it('should pass-throw the "availabilityUpdate" event to children', async () => {
     jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
 
     const { root } = await newSpecPage({
       components: [ClAvailability, ClAvailabilityStatus],
       html: `
-        <cl-availability sku="SKU1234">
+        <cl-availability code="SKU1234">
           <cl-availability-status></cl-availability-status>
           <cl-availability-status type="available">• available</cl-availability-status>
           <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
@@ -66,7 +66,7 @@ describe('cl-availability.spec', () => {
     })
 
     expect(root).toEqualHtml(`
-      <cl-availability sku="SKU1234">
+      <cl-availability code="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

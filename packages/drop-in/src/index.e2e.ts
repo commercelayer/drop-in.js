@@ -6,7 +6,7 @@ import {
   getCartId
 } from 'jest.e2e.helpers'
 
-const skus = {
+const codes = {
   nonexisting: 'NONEXISTINGSKU',
   cap: '5PANECAP000000FFFFFFXXXX',
   backpack: 'BACKPACKFFFFFF000000XXXX',
@@ -15,12 +15,12 @@ const skus = {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const getSkuElements = (sku: string) => {
+const getCodeElements = (code: string) => {
   // eslint-disable-next-line prettier/prettier
-  const addToCart = async (page: E2EPage): Promise<E2EElement> => await page.find(`cl-add-to-cart[sku="${sku}"]`)
+  const addToCart = async (page: E2EPage): Promise<E2EElement> => await page.find(`cl-add-to-cart[code="${code}"]`)
 
   // eslint-disable-next-line prettier/prettier
-  const getPrice = async (page: E2EPage): Promise<E2EElement> => await page.find(`cl-price[sku="${sku}"]`)
+  const getPrice = async (page: E2EPage): Promise<E2EElement> => await page.find(`cl-price[code="${code}"]`)
 
   // eslint-disable-next-line prettier/prettier
   const getPriceAmount = async (page: E2EPage): Promise<E2EElement> => await (await getPrice(page)).find('cl-price-amount[type="price"]')
@@ -29,7 +29,7 @@ const getSkuElements = (sku: string) => {
   const getPriceCompareAtAmount = async (page: E2EPage): Promise<E2EElement> => await (await getPrice(page)).find('cl-price-amount[type="compare-at"]')
 
   // eslint-disable-next-line prettier/prettier
-  const getAvailability = async (page: E2EPage): Promise<E2EElement> => await page.find(`cl-availability[sku="${sku}"]`)
+  const getAvailability = async (page: E2EPage): Promise<E2EElement> => await page.find(`cl-availability[code="${code}"]`)
 
   // eslint-disable-next-line prettier/prettier
   const getAvailabilityStatusAvailable = async (page: E2EPage): Promise<E2EElement> => await (await getAvailability(page)).find('cl-availability-status[type="available"]')
@@ -64,10 +64,10 @@ const getSkuElements = (sku: string) => {
   }
 }
 
-const capElements = getSkuElements(skus.cap)
-const backpackElements = getSkuElements(skus.backpack)
-const outOfStockElements = getSkuElements(skus.outOfStock)
-const doNotTrackElements = getSkuElements(skus.doNotTrack)
+const capElements = getCodeElements(codes.cap)
+const backpackElements = getCodeElements(codes.backpack)
+const outOfStockElements = getCodeElements(codes.outOfStock)
+const doNotTrackElements = getCodeElements(codes.doNotTrack)
 
 // eslint-disable-next-line prettier/prettier
 const getCartLink = async (page: E2EPage): Promise<E2EElement> => await page.find('cl-cart-link')
@@ -96,12 +96,12 @@ describe('index.e2e', () => {
           </cl-checkout-link>
 
           <div>
-            <cl-add-to-cart sku="${skus.cap}">Add to cart</cl-add-to-cart>
-            <cl-price sku="${skus.cap}">
+            <cl-add-to-cart code="${codes.cap}">Add to cart</cl-add-to-cart>
+            <cl-price code="${codes.cap}">
               <cl-price-amount></cl-price-amount>
               <cl-price-amount type="compare-at"></cl-price-amount>
             </cl-price>
-            <cl-availability sku="${skus.cap}">
+            <cl-availability code="${codes.cap}">
               <cl-availability-status type="available">
                 <span style="color: green;">Available</span>
                 ready to be shipped in
@@ -118,14 +118,14 @@ describe('index.e2e', () => {
 
           <div>
             <cl-add-to-cart
-              sku="${skus.backpack}"
+              code="${codes.backpack}"
               quantity="5"
             >Add to cart</cl-add-to-cart>
-            <cl-price sku="${skus.backpack}">
+            <cl-price code="${codes.backpack}">
               <cl-price-amount type="price"></cl-price-amount>
               <cl-price-amount type="compare-at"></cl-price-amount>
             </cl-price>
-            <cl-availability sku="${skus.backpack}">
+            <cl-availability code="${codes.backpack}">
               <cl-availability-status type="available">
                 <span style="color: green;">Available</span>
                 ready to be shipped in
@@ -142,12 +142,12 @@ describe('index.e2e', () => {
 
           <div>
             <cl-add-to-cart
-              sku="${skus.outOfStock}">Add to cart</cl-add-to-cart>
-            <cl-price sku="${skus.outOfStock}">
+              code="${codes.outOfStock}">Add to cart</cl-add-to-cart>
+            <cl-price code="${codes.outOfStock}">
               <cl-price-amount type="price"></cl-price-amount>
               <cl-price-amount type="compare-at"></cl-price-amount>
             </cl-price>
-            <cl-availability sku="${skus.outOfStock}">
+            <cl-availability code="${codes.outOfStock}">
               <cl-availability-status type="available">
                 <span style="color: green;">Available</span>
                 ready to be shipped in
@@ -164,14 +164,14 @@ describe('index.e2e', () => {
 
           <div>
             <cl-add-to-cart
-              sku="${skus.doNotTrack}"
+              code="${codes.doNotTrack}"
               quantity="9999"
             >Add to cart</cl-add-to-cart>
-            <cl-price sku="${skus.doNotTrack}">
+            <cl-price code="${codes.doNotTrack}">
               <cl-price-amount type="price"></cl-price-amount>
               <cl-price-amount type="compare-at"></cl-price-amount>
             </cl-price>
-            <cl-availability sku="${skus.doNotTrack}">
+            <cl-availability code="${codes.doNotTrack}">
               <cl-availability-status type="available">
                 <span style="color: green;">Available</span>
                 ready to be shipped in
@@ -203,12 +203,12 @@ describe('index.e2e', () => {
         </cl-checkout-link>
 
         <div>
-          <cl-add-to-cart sku="${skus.cap}" quantity="1" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
-          <cl-price sku="${skus.cap}" class="hydrated">
+          <cl-add-to-cart code="${codes.cap}" quantity="1" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
+          <cl-price code="${codes.cap}" class="hydrated">
             <cl-price-amount type="price" class="hydrated"></cl-price-amount>
             <cl-price-amount type="compare-at" class="hydrated"></cl-price-amount>
           </cl-price>
-          <cl-availability class="hydrated" sku="${skus.cap}">
+          <cl-availability class="hydrated" code="${codes.cap}">
             <cl-availability-status class="hydrated" type="available">
               <span style="color: green;">Available</span>
               ready to be shipped in
@@ -224,12 +224,12 @@ describe('index.e2e', () => {
         </div>
 
         <div>
-          <cl-add-to-cart sku="${skus.backpack}" quantity="5" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
-          <cl-price sku="${skus.backpack}" class="hydrated">
+          <cl-add-to-cart code="${codes.backpack}" quantity="5" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
+          <cl-price code="${codes.backpack}" class="hydrated">
             <cl-price-amount type="price" class="hydrated"></cl-price-amount>
             <cl-price-amount type="compare-at" class="hydrated"></cl-price-amount>
           </cl-price>
-          <cl-availability class="hydrated" sku="${skus.backpack}">
+          <cl-availability class="hydrated" code="${codes.backpack}">
             <cl-availability-status class="hydrated" type="available">
               <span style="color: green;">Available</span>
               ready to be shipped in
@@ -245,12 +245,12 @@ describe('index.e2e', () => {
         </div>
 
         <div>
-          <cl-add-to-cart aria-disabled="true" sku="${skus.outOfStock}" quantity="1" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
-          <cl-price sku="${skus.outOfStock}" class="hydrated">
+          <cl-add-to-cart aria-disabled="true" code="${codes.outOfStock}" quantity="1" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
+          <cl-price code="${codes.outOfStock}" class="hydrated">
             <cl-price-amount type="price" class="hydrated"></cl-price-amount>
             <cl-price-amount type="compare-at" class="hydrated"></cl-price-amount>
           </cl-price>
-          <cl-availability class="hydrated" sku="${skus.outOfStock}">
+          <cl-availability class="hydrated" code="${codes.outOfStock}">
             <cl-availability-status aria-disabled="true" class="hydrated" type="available">
               <span style="color: green;">Available</span>
               ready to be shipped in
@@ -266,12 +266,12 @@ describe('index.e2e', () => {
         </div>
 
         <div>
-          <cl-add-to-cart sku="${skus.doNotTrack}" quantity="9999" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
-          <cl-price sku="${skus.doNotTrack}" class="hydrated">
+          <cl-add-to-cart code="${codes.doNotTrack}" quantity="9999" role="button" tabindex="0" class="hydrated">Add to cart</cl-add-to-cart>
+          <cl-price code="${codes.doNotTrack}" class="hydrated">
             <cl-price-amount type="price" class="hydrated"></cl-price-amount>
             <cl-price-amount type="compare-at" class="hydrated"></cl-price-amount>
           </cl-price>
-          <cl-availability class="hydrated" sku="${skus.doNotTrack}">
+          <cl-availability class="hydrated" code="${codes.doNotTrack}">
             <cl-availability-status class="hydrated" type="available">
               <span style="color: green;">Available</span>
               ready to be shipped in
@@ -587,7 +587,7 @@ describe('index.e2e', () => {
     await (await capElements.addToCart(page)).click()
 
     await waitAndExpectForLineItems(page, {
-      sku: skus.cap,
+      code: codes.cap,
       quantity: 1
     })
 
@@ -640,7 +640,7 @@ describe('index.e2e', () => {
     await (await backpackElements.addToCart(page)).click()
 
     await waitAndExpectForLineItems(page, {
-      sku: skus.backpack,
+      code: codes.backpack,
       quantity: 5
     })
 
@@ -692,7 +692,7 @@ describe('index.e2e', () => {
     await (await doNotTrackElements.addToCart(page)).click()
 
     await waitAndExpectForLineItems(page, {
-      sku: skus.doNotTrack,
+      code: codes.doNotTrack,
       quantity: 9999
     })
 

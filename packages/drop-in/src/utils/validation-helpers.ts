@@ -1,12 +1,12 @@
 import { log } from './logger'
 
-export function validateSku(sku: string | undefined): sku is string {
-  return typeof sku === 'string' && sku !== ''
+export function validateCode(code: string | undefined): code is string {
+  return typeof code === 'string' && code !== ''
 }
 
-export function logSku(host: HTMLElement, sku: string | undefined): void {
-  if (!validateSku(sku)) {
-    log('warn', '"sku" should be a not empty string.', host)
+export function logCode(host: HTMLElement, code: string | undefined): void {
+  if (!validateCode(code)) {
+    log('warn', '"code" should be a not empty string.', host)
   }
 }
 

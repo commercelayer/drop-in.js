@@ -1,10 +1,9 @@
-import { getPrice } from '#apis/commercelayer/prices'
-import { logSku, validateSku } from '#utils/validation-helpers'
-import type { Price } from '@commercelayer/sdk'
+import { getPrice, Price } from '#apis/commercelayer/prices'
+import { logCode, validateCode } from '#utils/validation-helpers'
 import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
 
 export interface Props {
-  sku: string | undefined
+  code: string | undefined
 }
 
 @Component({
@@ -14,23 +13,23 @@ export interface Props {
 export class CLPrice implements Props {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) sku: string | undefined
+  @Prop({ reflect: true }) code: string | undefined
 
   async componentWillLoad(): Promise<void> {
-    if (validateSku(this.sku)) {
-      const price = await getPrice(this.sku)
+    if (validateCode(this.code)) {
+      const price = await getPrice(this.code)
 
       if (price !== undefined) {
         this.updatePrice(price)
       }
     }
 
-    logSku(this.host, this.sku)
+    logCode(this.host, this.code)
   }
 
-  @Watch('sku')
+  @Watch('code')
   watchPropHandler(newValue: string, _oldValue: string): void {
-    logSku(this.host, newValue)
+    logCode(this.host, newValue)
   }
 
   private updatePrice(price: Price): void {

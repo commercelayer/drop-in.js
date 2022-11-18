@@ -1,6 +1,6 @@
 import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
 import { meta, Basic } from './cl-checkout-link.stories.ts';
-import { skus } from '../assets/constants.ts'
+import { codes } from '../assets/constants.ts'
 
 <Meta
   title={meta.title}
@@ -26,6 +26,6 @@ This component can be used as in-place replacement for an `<a>` tag pointing to 
 
 ℹ️ Checkout link is **disabled** when cart does not contain shoppable items.
 
-As soon as you <cl-add-to-cart class="mx-1 px-2 py-1" sku={skus.cap}>add to cart</cl-add-to-cart> a shoppable item, then the checkout link will be cliccable.
+As soon as you <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.cap}>add to cart</cl-add-to-cart> a shoppable item, then the checkout link will be cliccable.
 
 <ArgsTable story='Basic' />

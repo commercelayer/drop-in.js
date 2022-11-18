@@ -1,4 +1,4 @@
-export const skus = {
+export const codes = {
   nonexisting: 'NONEXISTINGSKU',
   cap: '5PANECAP000000FFFFFFXXXX',
   backpack: 'BACKPACKFFFFFF000000XXXX',

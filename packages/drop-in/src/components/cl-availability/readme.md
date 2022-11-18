@@ -9,7 +9,7 @@
 
 | Property | Attribute | Description | Type                  | Default     |
 | -------- | --------- | ----------- | --------------------- | ----------- |
-| `sku`    | `sku`     |             | `string \| undefined` | `undefined` |
+| `code`   | `code`    |             | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

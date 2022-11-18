@@ -57,10 +57,10 @@ describe('cl-add-to-cart.spec', () => {
 
     const { root } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart sku="SKU1234">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="SKU1234">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart sku="SKU1234" quantity="1" role="button" tabindex="0">
+      <cl-add-to-cart code="SKU1234" quantity="1" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -74,10 +74,10 @@ describe('cl-add-to-cart.spec', () => {
 
     const { root } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart sku="SKU1234" quantity="-3">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="SKU1234" quantity="-3">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart sku="SKU1234" quantity="-3" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart code="SKU1234" quantity="-3" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -91,10 +91,10 @@ describe('cl-add-to-cart.spec', () => {
 
     const { root } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart sku="SKU1234" quantity="8">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="SKU1234" quantity="8">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart sku="SKU1234" quantity="8" role="button" tabindex="0">
+      <cl-add-to-cart code="SKU1234" quantity="8" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -108,15 +108,15 @@ describe('cl-add-to-cart.spec', () => {
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart sku="SKU1234" quantity="8">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="SKU1234" quantity="8">Add to cart</cl-add-to-cart>'
     })
 
-    root?.setAttribute('sku', 'NEWSKUABCD')
+    root?.setAttribute('code', 'NEWSKUABCD')
     root?.setAttribute('quantity', '4')
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart sku="NEWSKUABCD" quantity="4" role="button" tabindex="0">
+      <cl-add-to-cart code="NEWSKUABCD" quantity="4" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -128,7 +128,7 @@ describe('cl-add-to-cart.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart sku="NEWSKUABCD" quantity="0" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart code="NEWSKUABCD" quantity="0" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -142,13 +142,13 @@ describe('cl-add-to-cart.spec', () => {
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart sku="SKU1234">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="SKU1234">Add to cart</cl-add-to-cart>'
     })
 
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart sku="SKU1234" quantity="1" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart code="SKU1234" quantity="1" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -162,13 +162,13 @@ describe('cl-add-to-cart.spec', () => {
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart sku="SKU1234" quantity="99">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="SKU1234" quantity="99">Add to cart</cl-add-to-cart>'
     })
 
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart sku="SKU1234" quantity="99" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart code="SKU1234" quantity="99" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -182,13 +182,13 @@ describe('cl-add-to-cart.spec', () => {
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart sku="SKU1234" quantity="99">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="SKU1234" quantity="99">Add to cart</cl-add-to-cart>'
     })
 
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart sku="SKU1234" quantity="99" role="button" tabindex="0">
+      <cl-add-to-cart code="SKU1234" quantity="99" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

@@ -1,10 +1,18 @@
 import { logGroup } from '#utils/logger'
 import { pDebounce } from '#utils/promise'
-import type { Price } from '@commercelayer/sdk'
+import type { Price as SdkPrice } from '@commercelayer/sdk'
 import { chunk, memoize, uniq } from '../../utils/utils'
 import { createClient } from './client'
 import { getConfig } from './config'
 
+export type Price = Pick<
+  SdkPrice,
+  | 'amount_cents'
+  | 'compare_at_amount_cents'
+  | 'formatted_amount'
+  | 'formatted_compare_at_amount'
+  | 'currency_code'
+>
 interface PriceList {
   [sku: string]: Price | undefined
 }

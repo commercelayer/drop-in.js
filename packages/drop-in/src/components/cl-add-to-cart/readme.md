@@ -9,8 +9,8 @@
 
 | Property   | Attribute  | Description | Type                  | Default     |
 | ---------- | ---------- | ----------- | --------------------- | ----------- |
+| `code`     | `code`     |             | `string \| undefined` | `undefined` |
 | `quantity` | `quantity` |             | `number`              | `1`         |
-| `sku`      | `sku`      |             | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

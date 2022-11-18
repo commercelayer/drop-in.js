@@ -1,9 +1,9 @@
 import { getSku, Sku } from '#apis/commercelayer/skus'
-import { logSku, validateSku } from '#utils/validation-helpers'
+import { logCode, validateCode } from '#utils/validation-helpers'
 import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
 
 export interface Props {
-  sku: string | undefined
+  code: string | undefined
 }
 @Component({
   tag: 'cl-availability',
@@ -12,31 +12,31 @@ export interface Props {
 export class ClAvailability implements Props {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) sku: string | undefined
+  @Prop({ reflect: true }) code: string | undefined
 
   async componentWillLoad(): Promise<void> {
-    if (validateSku(this.sku)) {
-      const sku = await getSku(this.sku)
+    if (validateCode(this.code)) {
+      const sku = await getSku(this.code)
 
       if (sku !== undefined) {
         this.updateAvailability(sku)
       }
     }
 
-    logSku(this.host, this.sku)
+    logCode(this.host, this.code)
   }
 
-  @Watch('sku')
+  @Watch('code')
   watchPropHandler(newValue: string, _oldValue: string): void {
-    logSku(this.host, newValue)
+    logCode(this.host, newValue)
   }
 
-  private updateAvailability(sku: Sku): void {
+  private updateAvailability(item: Sku): void {
     this.host
       .querySelectorAll('cl-availability-status, cl-availability-info')
       .forEach((element) => {
         element.dispatchEvent(
-          new CustomEvent<Sku>('skuUpdate', { detail: sku })
+          new CustomEvent<Sku>('availabilityUpdate', { detail: item })
         )
       })
   }
