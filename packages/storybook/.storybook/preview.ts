@@ -1,6 +1,6 @@
 import { ArgTypes } from '@storybook/html'
 import { DecoratorFunction } from '@storybook/addons'
-import { defineCustomElements } from '@commercelayer/drop-in/dist/loader'
+import { defineCustomElements } from '@commercelayer/drop-in.js/dist/loader'
 import { clConfig } from '../stories/assets/constants'
 
 export type Args = {

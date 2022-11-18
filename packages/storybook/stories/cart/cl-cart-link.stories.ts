@@ -1,4 +1,4 @@
-import { Props } from '@commercelayer/drop-in/dist/types/components/cl-cart-link/cl-cart-link'
+import { Props } from '@commercelayer/drop-in.js/dist/types/components/cl-cart-link/cl-cart-link'
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'

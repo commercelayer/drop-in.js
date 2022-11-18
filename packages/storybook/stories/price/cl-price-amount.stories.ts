@@ -1,4 +1,4 @@
-import { Props } from '@commercelayer/drop-in/dist/types/components/cl-price-amount/cl-price-amount'
+import { Props } from '@commercelayer/drop-in.js/dist/types/components/cl-price-amount/cl-price-amount'
 import { Meta, StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
