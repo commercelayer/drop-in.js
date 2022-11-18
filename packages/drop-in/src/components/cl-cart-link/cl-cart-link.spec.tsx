@@ -28,7 +28,7 @@ describe('cl-cart-link.spec', () => {
     })
 
     expect(root).toEqualHtml(`
-      <cl-cart-link class="hydrated" target="_self">
+      <cl-cart-link cl-hydrated target="_self">
         <mock:shadow-root>
           <a href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${fakeAccessToken}" part="a" target="_self">
             <slot></slot>
@@ -50,7 +50,7 @@ describe('cl-cart-link.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-cart-link class="hydrated" target="_self">
+      <cl-cart-link cl-hydrated target="_self">
         <mock:shadow-root>
           <a href="https://cart.url" part="a" target="_self">
             <slot></slot>

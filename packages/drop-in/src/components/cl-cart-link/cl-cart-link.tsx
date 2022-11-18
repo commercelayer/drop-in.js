@@ -28,7 +28,7 @@ export class CLCartLink implements Props {
   @State() href: string | undefined
 
   componentWillLoad(): void {
-    this.host.classList.add('hydrated')
+    this.host.setAttribute('cl-hydrated', '')
     this.minicart = this.host.querySelector('cl-cart')
 
     if (this.minicart !== null) {

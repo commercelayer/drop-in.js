@@ -52,7 +52,7 @@ describe('cl-cart.spec', () => {
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <cl-cart-link class="hydrated" role="button" tabindex="0" target="_self">
+      <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -77,7 +77,7 @@ describe('cl-cart.spec', () => {
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <cl-cart-link class="hydrated" role="button" tabindex="0" target="_self">
+      <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

@@ -18,6 +18,11 @@ export const config: Config = {
     sass()
   ],
 
+  hydratedFlag: {
+    selector: 'attribute',
+    name: 'cl-hydrated'
+  },
+
   outputTargets: [
     {
       type: 'dist',

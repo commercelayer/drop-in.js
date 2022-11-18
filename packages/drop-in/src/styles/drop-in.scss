@@ -36,7 +36,7 @@ cl-add-to-cart {
   background-color: #dbdcdc;
   cursor: default;
 
-  &.hydrated:not([aria-disabled="true"]) {
+  &[cl-hydrated]:not([aria-disabled="true"]) {
     background-color: var(--cl-color-primary);
     cursor: pointer;
   }
@@ -73,7 +73,7 @@ cl-cart-link, .cl-cart-link {
 
       padding: 0.2rem;
 
-      &.hydrated {
+      &[cl-hydrated] {
         opacity: 1;
       }
     }
