@@ -5,7 +5,7 @@ changelog:
     labels:
       - ignore-for-release
     authors:
-      - octocat
+      - dependabot
   categories:
     - title: 💥 Breaking Change
       labels:
