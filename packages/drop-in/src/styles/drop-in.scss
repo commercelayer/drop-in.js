@@ -22,8 +22,6 @@ cl-price-amount {
   }
 }
 
-// cl-add-to-cart,
-// cl-checkout-link {
 cl-add-to-cart {
   display: inline-block;
   background-image: none;
@@ -36,7 +34,7 @@ cl-add-to-cart {
   background-color: #dbdcdc;
   cursor: default;
 
-  &[cl-hydrated]:not([aria-disabled="true"]) {
+  &:not([aria-disabled="true"]) {
     background-color: var(--cl-color-primary);
     cursor: pointer;
   }
@@ -72,10 +70,7 @@ cl-cart-link, .cl-cart-link {
       transform: translate(120%, 0%);
 
       padding: 0.2rem;
-
-      &[cl-hydrated] {
-        opacity: 1;
-      }
+      opacity: 1;
     }
   }
 

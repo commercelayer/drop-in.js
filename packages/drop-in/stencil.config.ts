@@ -31,7 +31,8 @@ export const config: Config = {
     {
       type: 'dist-custom-elements',
       dir: 'dist/components',
-      includeGlobalScripts: false
+      includeGlobalScripts: false,
+      autoDefineCustomElements: true
     },
     {
       type: 'docs-readme',
