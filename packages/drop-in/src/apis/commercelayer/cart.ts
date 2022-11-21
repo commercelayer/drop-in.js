@@ -38,15 +38,18 @@ export function isValidForCheckout(order: Order): boolean {
 }
 
 function removeCartId(): void {
-  Cookies.remove(getKeyForCart())
+  const config = getConfig()
+  Cookies.remove(getKeyForCart(config))
 }
 
 function setCartId(cartId: string): void {
-  Cookies.set(getKeyForCart(), cartId)
+  const config = getConfig()
+  Cookies.set(getKeyForCart(config), cartId)
 }
 
 function getCartId(): string | null {
-  return Cookies.get(getKeyForCart()) ?? null
+  const config = getConfig()
+  return Cookies.get(getKeyForCart(config)) ?? null
 }
 
 export function isValidUrl(url: string): boolean {

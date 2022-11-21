@@ -31,7 +31,8 @@ export async function getCookie(
 }
 
 export async function getCartId(page: E2EPage): Promise<string | null> {
-  const cookieName = 'commercelayer_order-id'
+  const cookieName =
+    'commercelayer_order-id-kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8-market:11709'
   const cookie = await getCookie(page, cookieName)
 
   return cookie?.value ?? null
