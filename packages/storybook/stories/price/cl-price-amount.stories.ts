@@ -32,12 +32,12 @@ export const meta: Meta<Args> = {
 export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-price code=${codes.cap}>
+      <cl-price code=${codes.available}>
         <cl-price-amount type=${args.type ?? nothing}></cl-price-amount>
       </cl-price>
     `
   )
 }
 Basic.args = {
-  'drop-in.css': true
+  'Use drop-in.css': true
 }

@@ -36,13 +36,13 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
-  'drop-in.css': true,
-  code: codes.cap
+  'Use drop-in.css': true,
+  code: codes.available
 }
 
 export const NoDiscount = Template.bind({})
 NoDiscount.args = {
-  code: codes.backpack
+  code: codes.noDiscount
 }
 
 export const WithoutAttributes = Template.bind({})

@@ -9,7 +9,7 @@ import { codes } from './assets/constants'
 type Args = GlobalArgs & {}
 
 export const meta: Meta<Args> = {
-  title: 'demo'
+  title: 'introduction'
 }
 
 export const Basic: StoryFn<Args> = () => {
@@ -40,20 +40,20 @@ export const Basic: StoryFn<Args> = () => {
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
-              src="https://data.commercelayer.app/seed/images/skus/${codes.cap}_FLAT.png"
+              src="https://data.commercelayer.app/seed/images/skus/${codes.available}_FLAT.png"
               class="w-full h-full object-center object-contain"
             />
           </div>
           <h3 class="mt-6 font-medium">Black Five-Panel Cap with White Logo</h3>
-          <small class="text-gray-300">${codes.cap}</small>
-          <cl-price code="${codes.cap}" class="my-2">
+          <small class="text-gray-300">${codes.available}</small>
+          <cl-price code="${codes.available}" class="my-2">
             <cl-price-amount type="compare-at"></cl-price-amount>
             <cl-price-amount type="price"></cl-price-amount>
           </cl-price>
-          <cl-add-to-cart code="${codes.cap}" class="my-2 mx-auto">
+          <cl-add-to-cart code="${codes.available}" class="my-2 mx-auto">
             Add to cart
           </cl-add-to-cart>
-          <cl-availability code="${codes.cap}" class="my-2">
+          <cl-availability code="${codes.available}" class="my-2">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
             <cl-availability-status type="available" class="block">
@@ -100,20 +100,20 @@ export const Basic: StoryFn<Args> = () => {
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
-              src="https://data.commercelayer.app/seed/images/skus/${codes.backpack}_FLAT.png"
+              src="https://data.commercelayer.app/seed/images/skus/${codes.noDiscount}_FLAT.png"
               class="w-full h-full object-center object-contain"
             />
           </div>
           <h3 class="mt-6 font-medium">White Backpack with Black Logo</h3>
-          <small class="text-gray-300">${codes.backpack}</small>
-          <cl-price code="${codes.backpack}" class="my-2">
+          <small class="text-gray-300">${codes.noDiscount}</small>
+          <cl-price code="${codes.noDiscount}" class="my-2">
             <cl-price-amount type="compare-at"></cl-price-amount>
             <cl-price-amount type="price"></cl-price-amount>
           </cl-price>
-          <cl-add-to-cart code="${codes.backpack}" class="my-2 mx-auto">
+          <cl-add-to-cart code="${codes.noDiscount}" class="my-2 mx-auto">
             Add to cart
           </cl-add-to-cart>
-          <cl-availability code="${codes.backpack}" class="my-2">
+          <cl-availability code="${codes.noDiscount}" class="my-2">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
             <cl-availability-status type="available" class="block">
@@ -133,7 +133,7 @@ export const Basic: StoryFn<Args> = () => {
 }
 
 Basic.args = {
-  'drop-in.css': true
+  'Use drop-in.css': true
 }
 
 // Basic.parameters = {

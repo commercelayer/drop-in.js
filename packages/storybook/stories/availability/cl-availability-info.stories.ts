@@ -20,7 +20,7 @@ export const meta: Meta<Args> = {
         name: 'boolean'
       },
       table: {
-        category: 'storybook only'
+        category: 'storybook'
       }
     },
     type: {
@@ -50,7 +50,7 @@ export const Basic: StoryFn<Args> = (args) => {
     html`
       <cl-availability
         code=${args['Use an available product']
-          ? codes.backpack
+          ? codes.noDiscount
           : codes.outOfStock}
       >
         <cl-availability-info
@@ -61,7 +61,7 @@ export const Basic: StoryFn<Args> = (args) => {
   )
 }
 Basic.args = {
-  'drop-in.css': true,
+  'Use drop-in.css': true,
   'Use an available product': true,
   type: 'min-days'
 }
@@ -69,7 +69,7 @@ Basic.args = {
 export const Message: StoryFn<Args> = () => {
   return create(
     html`
-      <cl-availability code=${codes.backpack}>
+      <cl-availability code=${codes.noDiscount}>
         ready to be shipped in
         <cl-availability-info type="min-days"></cl-availability-info
         // eslint-disable-next-line prettier/prettier

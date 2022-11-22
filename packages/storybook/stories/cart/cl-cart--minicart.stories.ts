@@ -8,7 +8,7 @@ type Args = GlobalArgs & {}
 export const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart (minicart)',
   argTypes: {
-    'minicart.css': {
+    'Use minicart.css': {
       table: {
         disable: false
       }
@@ -57,6 +57,6 @@ export const Basic: StoryFn<Args> = () => {
   )
 }
 Basic.args = {
-  'drop-in.css': true,
-  'minicart.css': true
+  'Use drop-in.css': true,
+  'Use minicart.css': true
 }

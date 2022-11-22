@@ -17,7 +17,7 @@ export const Basic: StoryFn<Args> = () => {
   )
 }
 Basic.args = {
-  'drop-in.css': true
+  'Use drop-in.css': true
 }
 
 export const WithIcon: StoryFn<Args> = () => {
