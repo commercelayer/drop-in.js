@@ -62,11 +62,9 @@ export const parameters = {
             'cl-add-to-cart'
           ],
           'Cart', [
-            'introduction',
+            'cl-cart',
             'cl-cart-link',
             'cl-cart-count',
-            'cl-cart',
-            'cl-cart (minicart)',
           ],
           'Checkout', [
             'cl-checkout-link'

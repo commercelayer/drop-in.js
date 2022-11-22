@@ -96,7 +96,9 @@ describe('index.e2e', () => {
           </cl-checkout-link>
 
           <div>
-            <cl-add-to-cart code="${codes.available}">Add to cart</cl-add-to-cart>
+            <cl-add-to-cart code="${
+              codes.available
+            }">Add to cart</cl-add-to-cart>
             <cl-price code="${codes.available}">
               <cl-price-amount></cl-price-amount>
               <cl-price-amount type="compare-at"></cl-price-amount>
@@ -310,7 +312,8 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await availableElements.getAvailabilityInfoMinDays(page)).toEqualHtml(`
+    expect(await availableElements.getAvailabilityInfoMinDays(page))
+      .toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root>
           3
@@ -318,7 +321,8 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await availableElements.getAvailabilityInfoMaxDays(page)).toEqualHtml(`
+    expect(await availableElements.getAvailabilityInfoMaxDays(page))
+      .toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root>
           4
@@ -389,8 +393,9 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await noDiscountElements.getAvailabilityInfoShippingMethodPrice(page))
-      .toEqualHtml(`
+    expect(
+      await noDiscountElements.getAvailabilityInfoShippingMethodPrice(page)
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-price">
         <mock:shadow-root>
           $7.00

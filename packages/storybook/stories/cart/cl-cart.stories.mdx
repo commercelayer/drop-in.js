@@ -1,5 +1,5 @@
 import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
-import { meta, Basic } from './cl-cart.stories.ts';
+import { meta, Basic, Minicart } from './cl-cart.stories.ts';
 
 <Meta
   title={meta.title}
@@ -13,3 +13,20 @@ You can use this component to embed the Hosted Cart in your own cart page instea
 <Canvas withSource="open">
   <Story story={Basic} name="Basic" />
 </Canvas>
+
+### `Minicart`
+
+The `cl-cart` behaves like a minicart when rendered inside a [**cl-cart-link**](?path=/docs/components-cart-cl-cart-link--basic).
+
+This minicart is **unstyled and hidden by default**.
+You'll need to write some css in order to make it work or you can just import the [**minicart.css**](?path=/docs/getting-started--page#minicartcss) file in your website.
+
+```html dark
+<link href="https://commercelayer.github.io/drop-in.js/dist/drop-in/minicart.css" rel="stylesheet" />
+```
+
+<Canvas withSource="open">
+  <Story story={Minicart} name="Minicart" />
+</Canvas>
+
+<ArgsTable story="Minicart" />
