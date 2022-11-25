@@ -31,7 +31,9 @@ export class ClCheckoutLink implements Props {
   }
 
   @Listen('cartUpdate', { target: 'window' })
-  async cartUpdateHandler(_event: CustomEvent<Order>): Promise<void> {
+  async cartUpdateHandler(
+    _event: CustomEvent<{ order: Order }>
+  ): Promise<void> {
     this.href = await getCheckoutUrl()
   }
 

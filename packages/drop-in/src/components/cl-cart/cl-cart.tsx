@@ -1,9 +1,10 @@
 import {
   getCartUrl,
-  triggerCartUpdate,
+  triggerHostedCartUpdate,
   updateCartUrl
 } from '#apis/commercelayer/cart'
 import { getClosestLocationHref } from '#utils/url'
+import type { Order } from '@commercelayer/sdk'
 import {
   Component,
   Element,
@@ -15,7 +16,7 @@ import {
   State,
   Watch
 } from '@stencil/core'
-import { iframeResizer } from 'iframe-resizer'
+import { IFrameComponent, iframeResizer } from 'iframe-resizer'
 
 type IframeDataMessage =
   | {
@@ -60,8 +61,9 @@ export class ClCart {
   @State() href: string | undefined
 
   readonly openDirective: string = 'cl-cart--open'
+  private listenForUpdateCartResponse: boolean = true
 
-  iframe!: HTMLIFrameElement
+  iframe!: IFrameComponent
 
   async componentWillLoad(): Promise<void> {
     await updateCartUrl(this.getCartPageUrl())
@@ -111,16 +113,29 @@ export class ClCart {
   }
 
   @Listen('cartUpdate', { target: 'window' })
-  cartUpdateHandler(): void {
-    // eslint-disable-next-line no-self-assign
-    // this.iframe.src = this.iframe.src
+  cartUpdateHandler(_event: CustomEvent<{ order: Order }>): void {
+    this.iframe.iFrameResizer.sendMessage({ type: 'updateCart' })
+  }
+
+  @Listen('hostedCartUpdate', { target: 'window' })
+  hostedCartUpdateHandler(
+    event: CustomEvent<{ fromId: string; order: Order }>
+  ): void {
+    if (this.iframe.id !== event.detail.fromId) {
+      this.listenForUpdateCartResponse = false
+      this.iframe.iFrameResizer.sendMessage({ type: 'updateCart' })
+    }
   }
 
   componentDidLoad(): void {
     const onMessage = (data: IframeData): void => {
       switch (data.message.type) {
         case 'updateCart':
-          void triggerCartUpdate(null)
+          if (this.listenForUpdateCartResponse) {
+            void triggerHostedCartUpdate(this.iframe.id)
+          }
+
+          this.listenForUpdateCartResponse = true
           break
 
         case 'close':
@@ -180,7 +195,7 @@ export class ClCart {
           <iframe
             part='iframe'
             title='My Cart'
-            ref={(el) => (this.iframe = el as HTMLIFrameElement)}
+            ref={(el) => (this.iframe = el as IFrameComponent)}
             src={this.href}
             style={{
               width: '1px',

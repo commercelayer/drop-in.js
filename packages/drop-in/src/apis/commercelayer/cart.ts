@@ -19,7 +19,7 @@ async function createEmptyCart(): Promise<Order> {
 
   setCartId(order.id)
 
-  await triggerCartUpdate(order)
+  await triggerCartUpdate()
 
   return order
 }
@@ -119,12 +119,23 @@ export async function _getCart(): Promise<Order | null> {
 
 export const getCart = pDebounce(_getCart, { wait: 50, maxWait: 100 })
 
-export async function triggerCartUpdate(order: Order | null): Promise<void> {
-  order ||= await getCart()
+export async function triggerCartUpdate(): Promise<void> {
+  const order = await getCart()
 
   if (order !== null) {
     // TODO: manage events in separate file
-    window.dispatchEvent(new CustomEvent('cartUpdate', { detail: order }))
+    window.dispatchEvent(new CustomEvent('cartUpdate', { detail: { order } }))
+  }
+}
+
+export async function triggerHostedCartUpdate(fromId: string): Promise<void> {
+  const order = await getCart()
+
+  if (order !== null) {
+    // TODO: manage events in separate file
+    window.dispatchEvent(
+      new CustomEvent('hostedCartUpdate', { detail: { fromId, order } })
+    )
   }
 }
 
@@ -142,7 +153,7 @@ export async function addItem(sku: string, quantity: number): Promise<void> {
     _update_quantity: true
   })
 
-  await triggerCartUpdate(null)
+  await triggerCartUpdate()
 }
 
 /**

@@ -14,8 +14,13 @@ export class ClCartCount {
   }
 
   @Listen('cartUpdate', { target: 'window' })
-  cartUpdateHandler(event: CustomEvent<Order>): void {
-    void this.updateCart(event.detail)
+  cartUpdateHandler(event: CustomEvent<{ order: Order }>): void {
+    void this.updateCart(event.detail.order)
+  }
+
+  @Listen('hostedCartUpdate', { target: 'window' })
+  hostedCartUpdateHandler(event: CustomEvent<{ order: Order }>): void {
+    void this.updateCart(event.detail.order)
   }
 
   private async updateCart(cart: Order | null): Promise<void> {

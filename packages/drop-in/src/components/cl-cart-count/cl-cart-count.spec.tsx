@@ -23,13 +23,15 @@ describe('cl-cart-count.spec', () => {
     })
 
     win.dispatchEvent(
-      new CustomEvent<Order>('cartUpdate', {
+      new CustomEvent<{ order: Order }>('cartUpdate', {
         detail: {
-          id: 'ABC123',
-          type: 'orders',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          skus_count: 12
+          order: {
+            id: 'ABC123',
+            type: 'orders',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            skus_count: 12
+          }
         }
       })
     )
@@ -52,13 +54,15 @@ describe('cl-cart-count.spec', () => {
     })
 
     win.dispatchEvent(
-      new CustomEvent<Order>('cartUpdate', {
+      new CustomEvent<{ order: Order }>('cartUpdate', {
         detail: {
-          id: 'ABC123',
-          type: 'orders',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          skus_count: 12
+          order: {
+            id: 'ABC123',
+            type: 'orders',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            skus_count: 12
+          }
         }
       })
     )
@@ -66,13 +70,15 @@ describe('cl-cart-count.spec', () => {
     await waitForChanges()
 
     win.dispatchEvent(
-      new CustomEvent<Order>('cartUpdate', {
+      new CustomEvent<{ order: Order }>('cartUpdate', {
         detail: {
-          id: 'ABC123',
-          type: 'orders',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          skus_count: 0
+          order: {
+            id: 'ABC123',
+            type: 'orders',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            skus_count: 0
+          }
         }
       })
     )

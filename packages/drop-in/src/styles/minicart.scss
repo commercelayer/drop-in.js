@@ -56,7 +56,7 @@ cl-cart-link, .cl-cart-link {
     }
 
     &, &::after {
-      right: calc(var(--cl-cart-mini-modal-width) * -1);
+      right: calc(var(--cl-cart-mini-modal-width) * -1 + 1px);
       transition: right var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function), opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
     }
 

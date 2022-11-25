@@ -49,7 +49,9 @@ export class CLCartLink implements Props {
   }
 
   @Listen('cartUpdate', { target: 'window' })
-  async cartUpdateHandler(_event: CustomEvent<Order>): Promise<void> {
+  async cartUpdateHandler(
+    _event: CustomEvent<{ order: Order }>
+  ): Promise<void> {
     if (this.href === undefined || !isValidUrl(this.href)) {
       this.href = await getCartUrl()
     }
