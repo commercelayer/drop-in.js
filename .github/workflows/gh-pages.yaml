@@ -51,7 +51,7 @@ jobs:
       - name: Upload artifact 🚀
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./packages/storybook/storybook-static/
+          path: ./packages/docs/storybook-static/
 
 
   deploy:
