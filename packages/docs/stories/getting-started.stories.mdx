@@ -1,0 +1,69 @@
+import { Meta } from '@storybook/addon-docs'
+import { linkTo } from '@storybook/addon-links'
+
+<Meta title="Getting started" />
+
+# Getting started
+
+Assuming you already have a Commerce Layer account ([sign up](https://dashboard.commercelayer.io/sign_up) if you don't — it's free!) and your organization properly set up and filled with real or sample data (check our [onboarding documentation](https://docs.commercelayer.io/core/welcome) for more information about that), you can get easily started with Commerce Layer `drop-in.js` in two simple steps:
+
+1. Import the library from the [CDN](https://commercelayer.github.io/drop-in.js/dist/drop-in/drop-in.esm.js).
+2. Declare a global variable called `commercelayerConfig` and set the following attributes.
+
+| Attribute       | Type   | Required | Description                                                                                                                                                                                                      |
+|-----------------|--------|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`clientId`**  | String |     ✓    | Your [sales channel](https://docs.commercelayer.io/core/applications#sales-channel) client ID. You can find it in your application details page on your dashboard.                                                                                                                | 
+| **`slug`**      | String |     ✓    | Your organization slug (i.e. the subdomain of your base endpoint, usually the slugified version of your organization's name). You can find the base endpoint in your application details page on your dashboard. |
+| **`scope`**     | String |     ✓    | Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (use it to restrict the dataset of your application). You can find the allowed scopes in your application details page on your dashboard.                                                |
+| `debug`         | String |          | The debug level. Can be one of `none` or `all`. Default is `none`.                                                                                                                                               |
+| `returnUrl`     | String |          | The URL the hosted cart *Continue shopping* button points to. This is also used in the thank you page.                                                                                                           |
+
+
+ The final result should be similar to the code snippet below:
+
+```html dark
+<script type="module" src="https://commercelayer.github.io/drop-in.js/dist/drop-in/drop-in.esm.js"></script>
+
+<script>
+  (function() {
+    window.commercelayerConfig = {
+      clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+      slug: 'drop-in-js',
+      scope: 'market:11709',
+      debug: 'all', // default is 'none'
+      returnUrl: 'https://example.com' // optional
+    }
+  }());
+</script>
+```
+
+## Styling
+
+### `drop-in.css`
+
+The drop-in library is shipped unstyled, so that you can apply your own styles. Anyway, we provide some simple styling. If you're happy with that or you just want to speed up the set up process just add an additional `link` tag to your HTML code as follows:
+
+```html dark
+<link href="https://commercelayer.github.io/drop-in.js/dist/drop-in/drop-in.css" rel="stylesheet" />
+```
+
+### `minicart.css`
+
+The [**minicart**](?path=/docs/components-cart-cl-cart--minicart) version of the cart is unstyled and hidden by default. Since its behavior is achieved mostly via CSS, you have to write your own to style it. You can start from scratch, or import a minimal set of styles and take it from there. To do that, just add an additional `link` tag to your HTML code as follows:
+
+```html dark
+<link href="https://commercelayer.github.io/drop-in.js/dist/drop-in/minicart.css" rel="stylesheet" />
+```
+
+
+## Need help?
+
+- Join [Commerce Layer's Slack community](https://slack.commercelayer.app).
+- Open a new [Q&A discussion](https://github.com/commercelayer/drop-in.js/discussions/categories/q-a)
+- Ping us [on Twitter](https://twitter.com/commercelayer).
+- Is there a bug? Create an [issue](https://github.com/commercelayer/drop-in.js/issues) on this repository.
+
+
+## License
+
+This project is published under the [MIT](https://github.com/commercelayer/drop-in.js/blob/main/LICENSE) license.

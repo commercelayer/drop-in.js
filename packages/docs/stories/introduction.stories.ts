@@ -9,7 +9,7 @@ import { codes } from './assets/constants'
 type Args = GlobalArgs & {}
 
 export const meta: Meta<Args> = {
-  title: 'introduction'
+  title: 'Introduction'
 }
 
 export const Basic: StoryFn<Args> = () => {
