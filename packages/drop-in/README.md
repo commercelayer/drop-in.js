@@ -4,7 +4,7 @@ Commerce Layer `drop-in.js` lets you transform any plain HTML page into an enter
 
 Prices, availability messages, shopping bag, and more are automatically mixed into your own content and styling, whatever the CMS, SSG, and tools you use to build your site pages. All you need to do is embed the library and add tags to the HTML page.
 
-![](components.jpg)
+![Commerce Layer drop-in library](https://user-images.githubusercontent.com/1681269/203999041-980f0dec-4fca-45c9-a558-b14153158106.jpg)
 
 ## Getting started
 
