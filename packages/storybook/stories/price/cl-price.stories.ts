@@ -13,7 +13,8 @@ export const meta: Meta<Args> = {
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
     code: {
-      description: 'The SKU code (i.e. the unique identifier of the product whose price you want to display).',
+      description:
+        'The SKU code (i.e. the unique identifier of the product whose price you want to display).',
       type: { name: 'string', required: true },
       table: {
         category: 'attributes'
