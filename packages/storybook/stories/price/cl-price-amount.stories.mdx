@@ -6,9 +6,11 @@ import { meta, Basic } from './cl-price-amount.stories.ts';
   argTypes={meta.argTypes}
 />
 
-# `cl-price-amount`
+# Compare-at amount
 
-As you saw in the examples above, `cl-price-amout` is a placeholder used to display the price information.
+As you saw in the [**cl-price**](?path=/docs/components-price-cl-price--basic) component examples, `cl-price-amount` is a placeholder used to display the price information.
+
+Each [price](https://docs.commercelayer.io/core/v/api-reference/prices) has an amount (the actual selling price) and an optional *compare-at* amount (the full price that you want to display to the customer — typically with a strikethrough). You can decide which of the two kind of amount to show using the `type` attribute of the component. Give it a try here below: 
 
 <Canvas withSource="open">
   <Story story={Basic} name="Basic" />

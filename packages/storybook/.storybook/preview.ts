@@ -11,14 +11,14 @@ export type Args = {
 // https://storybook.js.org/docs/react/essentials/controls#annotation
 export const argTypes: ArgTypes<Args> = {
   'Use drop-in.css': {
-    description: 'By toggling the switch you can *simulate* how the components will look when importing the `drop-in.css` in your website.',
+    description: 'Toggle this switch to *simulate* how the components would look when importing the `drop-in.css` in your website.',
     control: 'boolean',
     table: {
       category: 'storybook'
     }
   },
   'Use minicart.css': {
-    description: 'By toggling the switch you can *simulate* how the components will look when importing the `minicart.css` in your website.',
+    description: 'Toggle this switch to *simulate* how the components would look when importing the `minicart.css` in your website.',
     control: 'boolean',
     table: {
       category: 'storybook',
@@ -45,9 +45,8 @@ export const parameters = {
   options: {
     storySort: {
       order: [
-        'introduction',
-        'demo',
-        'getting started',
+        'Introduction',
+        'Getting started',
         'Components', [
           'Price', [
             'cl-price',
@@ -68,10 +67,7 @@ export const parameters = {
           ],
           'Checkout', [
             'cl-checkout-link'
-          ],
-          'My account', [
-            'cl-my-account-link'
-          ],
+          ]
         ]
       ]
     },
