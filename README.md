@@ -29,7 +29,7 @@ For a constantly updated list of the available and soon-to-come micro frontends 
 
 ### Coming soon ⏳
 
-- **Hosted myaccount**  
+- **Hosted my account**  
   Link to Commerce Layer hosted customer portal with personal account information and management.
 
 ## Need help?
