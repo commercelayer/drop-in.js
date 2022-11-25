@@ -70,7 +70,7 @@ export async function getCartUrl(
   const accessToken = await getAccessToken(config)
   let cartId = (await getCart())?.id
 
-  if (cartId === null && forceCartToExist) {
+  if (cartId === undefined && forceCartToExist) {
     const cart = await createEmptyCart()
     cartId = cart.id
   }
