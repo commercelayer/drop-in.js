@@ -8,6 +8,7 @@
     "start:drop-in": "pnpm --filter drop-in.js start",
     "start:docs": "pnpm --filter drop-in.js build && concurrently -n drop-in,docs -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in.js build:watch' 'pnpm --filter docs start'",
     "test": "pnpm --filter drop-in.js test",
+    "test:unit": "pnpm --filter drop-in.js test:unit",
     "test:watch": "pnpm --filter drop-in.js test:watch",
     "test:unit:watch": "pnpm --filter drop-in.js test:unit:watch",
     "test:e2e:watch": "pnpm --filter drop-in.js test:e2e:watch",

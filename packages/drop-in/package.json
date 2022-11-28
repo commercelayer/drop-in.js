@@ -26,6 +26,7 @@
     "build:watch": "stencil build --docs --watch",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e --detectOpenHandles --passWithNoTests",
+    "test:unit": "stencil test --spec --detectOpenHandles --passWithNoTests",
     "test:watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --e2e --detectOpenHandles'",
     "test:unit:watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --detectOpenHandles'",
     "test:e2e:watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --e2e --detectOpenHandles'",
