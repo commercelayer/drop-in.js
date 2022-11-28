@@ -1,0 +1,6 @@
+{
+  "*.{js,jsx,ts,tsx}": [
+    "eslint ./ --ext ts,tsx",
+    "pnpm test"
+  ]
+}
