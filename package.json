@@ -17,7 +17,8 @@
     "dep:self-upgrade:major": "pnpm exec npm-check-updates -u",
     "dep:self-upgrade:minor": "pnpm dep:self-upgrade:major -t minor",
     "lint": "pnpm -r exec eslint ./ --ext ts,tsx",
-    "lint:fix": "pnpm lint --fix"
+    "lint:fix": "pnpm lint --fix",
+    "version": "node replace-jsdelivr.js"
   },
   "author": {
     "name": "Marco Montalbano",
@@ -36,6 +37,7 @@
     "lerna": "^6.0.3",
     "lint-staged": "^13.0.4",
     "npm-check-updates": "^16.4.1",
+    "replace-in-file": "^6.3.5",
     "typescript": "^4.9.3"
   }
 }

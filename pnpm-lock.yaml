@@ -11,6 +11,7 @@ importers:
       lerna: ^6.0.3
       lint-staged: ^13.0.4
       npm-check-updates: ^16.4.1
+      replace-in-file: ^6.3.5
       typescript: ^4.9.3
     devDependencies:
       '@commercelayer/eslint-config-ts': 0.1.4_hsf322ms6xhhd4b5ne6lb74y4a
@@ -20,6 +21,7 @@ importers:
       lerna: 6.0.3
       lint-staged: 13.0.4
       npm-check-updates: 16.4.1
+      replace-in-file: 6.3.5
       typescript: 4.9.3
 
   packages/docs:
@@ -14576,6 +14578,16 @@ packages:
       is-finite: 1.1.0
     dev: true
     optional: true
+
+  /replace-in-file/6.3.5:
+    resolution: {integrity: sha512-arB9d3ENdKva2fxRnSjwBEXfK1npgyci7ZZuwysgAp7ORjHSyxz6oqIjTEv8R0Ydl4Ll7uOAZXL4vbkhGIizCg==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      chalk: 4.1.2
+      glob: 7.2.3
+      yargs: 17.6.2
+    dev: true
 
   /require-directory/2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
