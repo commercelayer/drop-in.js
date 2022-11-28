@@ -1,18 +1,34 @@
 import { Meta, StoryFn } from '@storybook/html'
-import { html } from 'lit-html'
+import { html, nothing } from 'lit-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-type Args = GlobalArgs & {}
-
-export const meta: Meta<Args> = {
-  title: 'Components/Cart/cl-cart-count'
+type Args = GlobalArgs & {
+  'hide-when-empty': boolean
 }
 
-export const Basic: StoryFn<Args> = () => {
+export const meta: Meta<Args> = {
+  title: 'Components/Cart/cl-cart-count',
+  argTypes: {
+    'hide-when-empty': {
+      description: 'Hide count when cart is empty instead of showing `0`.',
+      type: { name: 'boolean', required: false },
+      table: {
+        category: 'attributes',
+        defaultValue: {
+          summary: 'false'
+        }
+      }
+    }
+  }
+}
+
+export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-cart-count></cl-cart-count>
+      <cl-cart-count
+        hide-when-empty=${args['hide-when-empty'] ?? nothing}
+      ></cl-cart-count>
     `
   )
 }

@@ -519,7 +519,7 @@ describe('index.e2e', () => {
 
     expect(await getCartCount(page)).toEqualHtml(`
       <cl-cart-count cl-hydrated>
-        <mock:shadow-root></mock:shadow-root>
+        <mock:shadow-root>0</mock:shadow-root>
       </cl-cart-count>
     `)
 

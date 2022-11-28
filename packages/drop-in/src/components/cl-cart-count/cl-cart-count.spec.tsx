@@ -11,6 +11,19 @@ describe('cl-cart-count.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-cart-count>
+        <mock:shadow-root>0</mock:shadow-root>
+      </cl-cart-count>
+    `)
+  })
+
+  it('renders without content when "hide-when-empty" attribute is set to `true`', async () => {
+    const { root } = await newSpecPage({
+      components: [ClCartCount],
+      html: `<cl-cart-count hide-when-empty="true"></cl-cart-count>`
+    })
+
+    expect(root).toEqualHtml(`
+      <cl-cart-count hide-when-empty>
         <mock:shadow-root></mock:shadow-root>
       </cl-cart-count>
     `)
@@ -87,7 +100,7 @@ describe('cl-cart-count.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-cart-count>
-        <mock:shadow-root></mock:shadow-root>
+        <mock:shadow-root>0</mock:shadow-root>
       </cl-cart-count>
     `)
   })

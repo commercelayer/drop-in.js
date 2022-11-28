@@ -54,27 +54,30 @@ cl-cart-link, .cl-cart-link {
     opacity: 0;
     transition: opacity .3s;
 
-    &[quantity] {
-      font-size: .5rem;
-      border-radius: 50%;
-      background-color: var(--cl-color-primary);
-      min-width: 1rem;
-      height: 1rem;
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--cl-color-white);
-      bottom: 0%;
-      right: 0%;
-      transform: translate(120%, 0%);
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
-      padding: 0.2rem;
+    font-size: .5rem;
+
+    border-radius: 50%;
+    background-color: var(--cl-color-primary);
+    min-width: 1rem;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cl-color-white);
+    transform: translate(120%, 0%);
+
+    padding: 0.2rem;
+
+    &[quantity] {
       opacity: 1;
     }
   }
 
-  svg ~ cl-cart-count[quantity] {
+  svg ~ cl-cart-count {
     bottom: 0%;
     right: 0%;
     transform: translate(30%, 0%);
