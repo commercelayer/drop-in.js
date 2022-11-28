@@ -20,6 +20,7 @@
   },
   "keywords": ["ecommerce", "custom-elements", "mfe", "micro-frontend", "composable-commerce"],
   "scripts": {
+    "postinstall": "pnpm build",
     "build": "stencil build --docs && pnpm build:sass",
     "build:sass": "sass --style compressed ./src/styles/:./dist/drop-in/",
     "build:watch": "stencil build --docs --watch",

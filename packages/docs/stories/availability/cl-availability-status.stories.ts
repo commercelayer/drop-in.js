@@ -39,7 +39,7 @@ export const meta: Meta<Args> = {
   }
 }
 
-export const Basic: StoryFn<Args> = (args: Args) => {
+export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
       <cl-availability
