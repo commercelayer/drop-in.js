@@ -25,6 +25,7 @@ export namespace Components {
         "type": 'mini' | undefined;
     }
     interface ClCartCount {
+        "hideWhenEmpty": boolean;
     }
     interface ClCartLink {
         "target": string;
@@ -132,6 +133,7 @@ declare namespace LocalJSX {
         "type"?: 'mini' | undefined;
     }
     interface ClCartCount {
+        "hideWhenEmpty"?: boolean;
     }
     interface ClCartLink {
         "target"?: string;

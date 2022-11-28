@@ -17,6 +17,8 @@ This component can be used to display the number of items that are in the cart. 
 
 Click on <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> and look at the counter.
 
+<ArgsTable story='Basic' exclude={['Use drop-in.css']} />
+
 Here below an example of the same, this time inside a `cl-cart-link` with an svg icon.
 
 <Canvas withSource="open">
@@ -31,7 +33,7 @@ And another one with simply a text.
 
 The `cl-cart-count` is shipped without any props, you can preview the styles from [drop-in.css](drop-in.css) by toggling on/off the `styles` property below.
 
-<ArgsTable story='Basic' />
+<ArgsTable story='Basic' include={['Use drop-in.css']} />
 
 ### Styling with `<a>`
 

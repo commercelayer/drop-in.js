@@ -1,12 +1,14 @@
 import { getCart } from '#apis/commercelayer/cart'
 import type { Order } from '@commercelayer/sdk'
-import { Component, h, Host, JSX, Listen, State } from '@stencil/core'
+import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
 
 @Component({
   tag: 'cl-cart-count',
   shadow: true
 })
 export class ClCartCount {
+  @Prop({ reflect: true }) hideWhenEmpty: boolean = false
+
   @State() count: number | undefined
 
   async componentWillLoad(): Promise<void> {
@@ -33,6 +35,8 @@ export class ClCartCount {
   }
 
   render(): JSX.Element {
-    return <Host quantity={this.count}>{this.count}</Host>
+    const value =
+      this.count !== undefined ? this.count : this.hideWhenEmpty ? undefined : 0
+    return <Host quantity={this.count}>{value}</Host>
   }
 }
