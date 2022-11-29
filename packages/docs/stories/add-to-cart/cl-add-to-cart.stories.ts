@@ -13,14 +13,16 @@ export const meta: Meta<Args> = {
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
     code: {
-      description: 'SKU is a unique identifier, meaning Stock Keeping Unit.',
+      description:
+        'The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).',
       type: { name: 'string', required: true },
       table: {
         category: 'attributes'
       }
     },
     quantity: {
-      description: 'Number of units when adding to cart.',
+      description:
+        'The number of units of the selected product you want to add to the shopping cart.',
       type: { name: 'number', required: false },
       table: {
         category: 'attributes',
