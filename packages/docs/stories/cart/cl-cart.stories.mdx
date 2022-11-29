@@ -1,5 +1,6 @@
 import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
 import { meta, Basic, Minicart } from './cl-cart.stories.ts';
+import { codes } from '../assets/constants.ts'
 
 <Meta
   title={meta.title}
@@ -13,6 +14,10 @@ You can use this component to embed the Hosted Cart in your own cart page instea
 <Canvas withSource="open">
   <Story story={Basic} name="Basic" />
 </Canvas>
+
+<p>
+  Click on <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> and look at the cart.
+</p>
 
 ### `Minicart`
 

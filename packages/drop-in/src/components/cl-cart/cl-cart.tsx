@@ -1,5 +1,6 @@
 import {
   getCartUrl,
+  isValidUrl,
   triggerHostedCartUpdate,
   updateCartUrl
 } from '#apis/commercelayer/cart'
@@ -18,19 +19,17 @@ import {
 } from '@stencil/core'
 import { IFrameComponent, iframeResizer } from 'iframe-resizer'
 
-type IframeDataMessage =
-  | {
-      type: 'updateCart'
-    }
-  | {
-      type: 'close'
-    }
-  | {
-      type: 'blur'
-    }
-
 interface IframeData {
-  message: IframeDataMessage
+  message:
+    | {
+        type: 'updateCart'
+      }
+    | {
+        type: 'close'
+      }
+    | {
+        type: 'blur'
+      }
 }
 
 @Component({
@@ -55,15 +54,34 @@ interface IframeData {
 export class ClCart {
   @Element() host!: HTMLClCartElement
 
+  private iframe!: IFrameComponent
+
+  /**
+   * By default the `cl-cart` is directly displayed in-place.
+   * Setting the `type` to `mini` will change the behavior to be a minicart.
+   */
   @Prop({ reflect: true }) type: 'mini' | undefined
 
+  /**
+   * Automatically open the minicart as soon as an item is added to the cart.
+   * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+   */
+  @Prop({ reflect: true }) openOnAdd: boolean = false
+
+  /**
+   * Indicate whether the minicart is open or not.
+   * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+   */
   @Prop({ reflect: true, mutable: true }) open: boolean = false
+
+  /** Current hosted cart url */
   @State() href: string | undefined
 
   readonly openDirective: string = 'cl-cart--open'
-  private listenForUpdateCartResponse: boolean = true
 
-  iframe!: IFrameComponent
+  /**  */
+  private listenForUpdateCartResponse: boolean = true
+  private justAddedToCart: boolean = false
 
   async componentWillLoad(): Promise<void> {
     await updateCartUrl(this.getCartPageUrl())
@@ -113,8 +131,15 @@ export class ClCart {
   }
 
   @Listen('cartUpdate', { target: 'window' })
-  cartUpdateHandler(_event: CustomEvent<{ order: Order }>): void {
+  async cartUpdateHandler(
+    _event: CustomEvent<{ order: Order }>
+  ): Promise<void> {
+    this.justAddedToCart = true
     this.iframe.iFrameResizer.sendMessage({ type: 'updateCart' })
+
+    if (this.href === undefined || !isValidUrl(this.href)) {
+      this.href = await getCartUrl()
+    }
   }
 
   @Listen('hostedCartUpdate', { target: 'window' })
@@ -135,6 +160,11 @@ export class ClCart {
             void triggerHostedCartUpdate(this.iframe.id)
           }
 
+          if (this.type === 'mini' && this.openOnAdd && this.justAddedToCart) {
+            this.open = true
+          }
+
+          this.justAddedToCart = false
           this.listenForUpdateCartResponse = true
           break
 
