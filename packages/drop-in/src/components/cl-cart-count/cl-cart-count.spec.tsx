@@ -1,4 +1,4 @@
-import type { Order } from '@commercelayer/sdk'
+import type { TriggerCartUpdateEvent } from '#apis/commercelayer/cart'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClCartCount } from './cl-cart-count'
 
@@ -36,7 +36,7 @@ describe('cl-cart-count.spec', () => {
     })
 
     win.dispatchEvent(
-      new CustomEvent<{ order: Order }>('cartUpdate', {
+      new CustomEvent<TriggerCartUpdateEvent>('cartUpdate', {
         detail: {
           order: {
             id: 'ABC123',
@@ -67,7 +67,7 @@ describe('cl-cart-count.spec', () => {
     })
 
     win.dispatchEvent(
-      new CustomEvent<{ order: Order }>('cartUpdate', {
+      new CustomEvent<TriggerCartUpdateEvent>('cartUpdate', {
         detail: {
           order: {
             id: 'ABC123',
@@ -83,7 +83,7 @@ describe('cl-cart-count.spec', () => {
     await waitForChanges()
 
     win.dispatchEvent(
-      new CustomEvent<{ order: Order }>('cartUpdate', {
+      new CustomEvent<TriggerCartUpdateEvent>('cartUpdate', {
         detail: {
           order: {
             id: 'ABC123',

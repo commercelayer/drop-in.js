@@ -1,5 +1,7 @@
-import { getCheckoutUrl } from '#apis/commercelayer/cart'
-import type { Order } from '@commercelayer/sdk'
+import {
+  getCheckoutUrl,
+  TriggerCartUpdateEvent
+} from '#apis/commercelayer/cart'
 import {
   Component,
   Element,
@@ -32,7 +34,7 @@ export class ClCheckoutLink implements Props {
 
   @Listen('cartUpdate', { target: 'window' })
   async cartUpdateHandler(
-    _event: CustomEvent<{ order: Order }>
+    _event: CustomEvent<TriggerCartUpdateEvent>
   ): Promise<void> {
     this.href = await getCheckoutUrl()
   }

@@ -1,11 +1,12 @@
 import {
   getCartUrl,
   isValidUrl,
+  TriggerCartUpdateEvent,
   triggerHostedCartUpdate,
+  TriggerHostedCartUpdateEvent,
   updateCartUrl
 } from '#apis/commercelayer/cart'
 import { getClosestLocationHref } from '#utils/url'
-import type { Order } from '@commercelayer/sdk'
 import {
   Component,
   Element,
@@ -22,7 +23,7 @@ import { IFrameComponent, iframeResizer } from 'iframe-resizer'
 interface IframeData {
   message:
     | {
-        type: 'updateCart'
+        type: 'update'
       }
     | {
         type: 'close'
@@ -31,6 +32,8 @@ interface IframeData {
         type: 'blur'
       }
 }
+
+const hostedCartIframeUpdateEvent = { type: 'update' } as const
 
 @Component({
   tag: 'cl-cart',
@@ -77,11 +80,15 @@ export class ClCart {
   /** Current hosted cart url */
   @State() href: string | undefined
 
-  readonly openDirective: string = 'cl-cart--open'
+  /**
+   * Used for:
+   * 1. As query parameter that re-open the minicart when clicking on `< Return to cart` (Hosted Cart link).
+   * 2. As body class when the minicart is open to disable page scrolling.
+   */
+  readonly openDirective = 'cl-cart--open' as const
 
-  /**  */
-  private listenForUpdateCartResponse: boolean = true
-  private justAddedToCart: boolean = false
+  private flag_listenForHostedCartUpdateResponse: boolean = true
+  private flag_justAddedToCart: boolean = false
 
   async componentWillLoad(): Promise<void> {
     await updateCartUrl(this.getCartPageUrl())
@@ -92,6 +99,11 @@ export class ClCart {
     }
   }
 
+  /**
+   * Get the current page url.
+   * When the component is rendered as `minicart` the cart page url will be the current page url, plus a dedicated query parameter.
+   * @returns Current page url ( + query parameter when rendered as `minicart` )
+   */
   getCartPageUrl(): string {
     const closestLocationHref = getClosestLocationHref()
 
@@ -107,6 +119,10 @@ export class ClCart {
     return closestLocationHref
   }
 
+  /**
+   * Check whether the current url has the `openDirective` query parameter.
+   * @returns Whether the current url has the `openDirective`
+   */
   checkLocationHrefForOpenDirective(): boolean {
     const url = new URL(location.href)
 
@@ -120,11 +136,11 @@ export class ClCart {
   }
 
   @Watch('open')
-  watchOpenHandler(newValue: boolean): void {
+  watchOpenHandler(opened: boolean): void {
     if (this.type === 'mini') {
-      document.body.classList.toggle(this.openDirective, newValue)
+      document.body.classList.toggle(this.openDirective, opened)
 
-      if (!newValue) {
+      if (!opened) {
         this.host.closest('cl-cart-link')?.focus()
       }
     }
@@ -132,10 +148,10 @@ export class ClCart {
 
   @Listen('cartUpdate', { target: 'window' })
   async cartUpdateHandler(
-    _event: CustomEvent<{ order: Order }>
+    _event: CustomEvent<TriggerCartUpdateEvent>
   ): Promise<void> {
-    this.justAddedToCart = true
-    this.iframe.iFrameResizer.sendMessage({ type: 'updateCart' })
+    this.flag_justAddedToCart = true
+    this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
 
     if (this.href === undefined || !isValidUrl(this.href)) {
       this.href = await getCartUrl()
@@ -144,28 +160,32 @@ export class ClCart {
 
   @Listen('hostedCartUpdate', { target: 'window' })
   hostedCartUpdateHandler(
-    event: CustomEvent<{ fromId: string; order: Order }>
+    event: CustomEvent<TriggerHostedCartUpdateEvent>
   ): void {
-    if (this.iframe.id !== event.detail.fromId) {
-      this.listenForUpdateCartResponse = false
-      this.iframe.iFrameResizer.sendMessage({ type: 'updateCart' })
+    if (this.iframe.id !== event.detail.iframeId) {
+      this.flag_listenForHostedCartUpdateResponse = false
+      this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
     }
   }
 
   componentDidLoad(): void {
     const onMessage = (data: IframeData): void => {
       switch (data.message.type) {
-        case 'updateCart':
-          if (this.listenForUpdateCartResponse) {
+        case 'update':
+          if (this.flag_listenForHostedCartUpdateResponse) {
             void triggerHostedCartUpdate(this.iframe.id)
           }
 
-          if (this.type === 'mini' && this.openOnAdd && this.justAddedToCart) {
+          if (
+            this.type === 'mini' &&
+            this.openOnAdd &&
+            this.flag_justAddedToCart
+          ) {
             this.open = true
           }
 
-          this.justAddedToCart = false
-          this.listenForUpdateCartResponse = true
+          this.flag_justAddedToCart = false
+          this.flag_listenForHostedCartUpdateResponse = true
           break
 
         case 'close':
