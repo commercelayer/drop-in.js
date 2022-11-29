@@ -12,7 +12,7 @@ export const meta: Meta<Args> = {
   title: 'Components/Price/cl-price-amount',
   argTypes: {
     type: {
-      description: 'Type of displayed price.',
+      description: 'The type of price amount to be displayed.',
       type: {
         name: 'enum',
         value: ['price', 'compare-at'],

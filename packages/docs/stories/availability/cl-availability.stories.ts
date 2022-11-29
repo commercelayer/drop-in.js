@@ -13,7 +13,7 @@ export const meta: Meta<Args> = {
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
     code: {
-      description: 'SKU is a unique identifier, meaning Stock Keeping Unit.',
+      description: `The SKU code (i.e. the unique identifier of the product whose availability you want to display). The pre-filled code refers to an available product, try to change it with an out-of-stock one (e.g. <code>${codes.outOfStock}</code>) and see how the component behaves.`,
       type: { name: 'string', required: true },
       table: {
         category: 'attributes'

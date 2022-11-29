@@ -10,6 +10,8 @@ import { meta, Basic, NoDiscount, WithoutAttributes } from './cl-price.stories.t
 
 Once you have correctly set up your organization in Commerce Layer and imported the drop-in library as described [here](?path=/docs/getting-started--page), you can use the `cl-price` component to display the [price](https://docs.commercelayer.io/core/v/api-reference/prices) of your products with localized currency, discounts, and personalization rules, as shown in the code snippets below.
 
+Each price has an amount (the actual selling price) and an optional *compare-at* amount (the full price that you want to display to the customer — typically with a strikethrough).
+
 This component is the owner of the price information. It fetches the price of the specified SKU and dispatches it to the [**cl-price-amount**](?path=/docs/components-price-cl-price-amount--basic) children.
 
 <Canvas withSource="open">
@@ -20,7 +22,7 @@ This component is the owner of the price information. It fetches the price of th
 
 ### No discount
 
-Each price has an amount (the actual selling price) and an optional *compare-at* amount (the full price that you want to display to the customer — typically with a strikethrough). If the latter is not set (i.e. the produce isn't discounted) it won't be displayed, as shown in the example below:
+If the *compare-at* amount of the price is not set (i.e. the product isn't discounted) it won't be displayed, as shown in the example below:
 
 <Canvas withSource="open">
   <Story story={NoDiscount} name="No Discount" />

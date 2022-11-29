@@ -15,7 +15,8 @@ export const meta: Meta<Args> = {
   title: 'Components/Availability/cl-availability-info',
   argTypes: {
     'Use an available product': {
-      description: 'Use an available product for demonstration purpose.',
+      description:
+        'Toggle this switch to swap from an out-of-stock to an available product.',
       type: {
         name: 'boolean'
       },
@@ -24,7 +25,7 @@ export const meta: Meta<Args> = {
       }
     },
     type: {
-      description: 'Type of data that you wanna show.',
+      description: 'The type of information to be displayed.',
       type: {
         name: 'enum',
         value: [
