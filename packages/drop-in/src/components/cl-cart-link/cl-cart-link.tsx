@@ -1,5 +1,8 @@
-import { getCartUrl, isValidUrl } from '#apis/commercelayer/cart'
-import type { Order } from '@commercelayer/sdk'
+import {
+  getCartUrl,
+  isValidUrl,
+  TriggerCartUpdateEvent
+} from '#apis/commercelayer/cart'
 import {
   Component,
   Element,
@@ -50,7 +53,7 @@ export class CLCartLink implements Props {
 
   @Listen('cartUpdate', { target: 'window' })
   async cartUpdateHandler(
-    _event: CustomEvent<{ order: Order }>
+    _event: CustomEvent<TriggerCartUpdateEvent>
   ): Promise<void> {
     if (this.href === undefined || !isValidUrl(this.href)) {
       this.href = await getCartUrl()

@@ -1,4 +1,8 @@
-import { getCart } from '#apis/commercelayer/cart'
+import {
+  getCart,
+  TriggerCartUpdateEvent,
+  TriggerHostedCartUpdateEvent
+} from '#apis/commercelayer/cart'
 import type { Order } from '@commercelayer/sdk'
 import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
 
@@ -16,12 +20,14 @@ export class ClCartCount {
   }
 
   @Listen('cartUpdate', { target: 'window' })
-  cartUpdateHandler(event: CustomEvent<{ order: Order }>): void {
+  cartUpdateHandler(event: CustomEvent<TriggerCartUpdateEvent>): void {
     void this.updateCart(event.detail.order)
   }
 
   @Listen('hostedCartUpdate', { target: 'window' })
-  hostedCartUpdateHandler(event: CustomEvent<{ order: Order }>): void {
+  hostedCartUpdateHandler(
+    event: CustomEvent<TriggerHostedCartUpdateEvent>
+  ): void {
     void this.updateCart(event.detail.order)
   }
 

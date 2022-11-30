@@ -21,7 +21,19 @@ export namespace Components {
         "type": 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
+        /**
+          * Indicate whether the minicart is open or not.
+          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+         */
         "open": boolean;
+        /**
+          * Automatically open the minicart as soon as an item is added to the cart.
+          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+         */
+        "openOnAdd": boolean;
+        /**
+          * By default the `cl-cart` is directly displayed in-place. Setting the `type` to `mini` will change the behavior to be a minicart.
+         */
         "type": 'mini' | undefined;
     }
     interface ClCartCount {
@@ -129,7 +141,19 @@ declare namespace LocalJSX {
         "type"?: 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
+        /**
+          * Indicate whether the minicart is open or not.
+          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+         */
         "open"?: boolean;
+        /**
+          * Automatically open the minicart as soon as an item is added to the cart.
+          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+         */
+        "openOnAdd"?: boolean;
+        /**
+          * By default the `cl-cart` is directly displayed in-place. Setting the `type` to `mini` will change the behavior to be a minicart.
+         */
         "type"?: 'mini' | undefined;
     }
     interface ClCartCount {

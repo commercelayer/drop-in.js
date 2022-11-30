@@ -119,22 +119,45 @@ export async function _getCart(): Promise<Order | null> {
 
 export const getCart = pDebounce(_getCart, { wait: 50, maxWait: 100 })
 
+export interface TriggerCartUpdateEvent {
+  /** Order */
+  order: Order
+}
+
 export async function triggerCartUpdate(): Promise<void> {
   const order = await getCart()
 
   if (order !== null) {
     // TODO: manage events in separate file
-    window.dispatchEvent(new CustomEvent('cartUpdate', { detail: { order } }))
+    window.dispatchEvent(
+      new CustomEvent<TriggerCartUpdateEvent>('cartUpdate', {
+        detail: { order }
+      })
+    )
   }
 }
 
-export async function triggerHostedCartUpdate(fromId: string): Promise<void> {
+export interface TriggerHostedCartUpdateEvent {
+  /** `iframe` ID who triggered the event. */
+  iframeId: string
+
+  /** Order */
+  order: Order
+}
+
+/**
+ * Trigger the `hostedCartUpdate` event.
+ * @param iframeId iFrame ID who triggered the event
+ */
+export async function triggerHostedCartUpdate(iframeId: string): Promise<void> {
   const order = await getCart()
 
   if (order !== null) {
     // TODO: manage events in separate file
     window.dispatchEvent(
-      new CustomEvent('hostedCartUpdate', { detail: { fromId, order } })
+      new CustomEvent<TriggerHostedCartUpdateEvent>('hostedCartUpdate', {
+        detail: { iframeId, order }
+      })
     )
   }
 }
@@ -157,7 +180,7 @@ export async function addItem(sku: string, quantity: number): Promise<void> {
 }
 
 /**
- * Update the `cart_url` property of the cart.
+ * Update the `cart_url` property of the cart on Commerce Layer.
  * `cart_url` is used in the Hosted Checkout as a link for "< Return to cart".
  * @param cartUrl new cart_url
  */

@@ -1,77 +1,71 @@
-cl-cart-link, .cl-cart-link {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
+cl-cart[type="mini"] {
+  $open-padding: 20px;
 
-  cl-cart {
-    $open-padding: 20px;
+  --cl-cart-mini-backdrop-bg: #000;
+  --cl-cart-mini-backdrop-opacity: 0.3;
+  --cl-cart-mini-backdrop-shadow: -1px 0px 10px rgba(0, 0, 0, .3);
 
-    --cl-cart-mini-backdrop-bg: #000;
-    --cl-cart-mini-backdrop-opacity: 0.3;
-    --cl-cart-mini-backdrop-shadow: -1px 0px 10px rgba(0, 0, 0, .3);
+  --cl-cart-mini-modal-z-index: 100;
+  --cl-cart-mini-modal-bg: #fff;
+  --cl-cart-mini-modal-width: 400px;
+  --cl-cart-mini-modal-max-width: calc(100vw - 40px);
 
-    --cl-cart-mini-modal-z-index: 100;
-    --cl-cart-mini-modal-bg: #fff;
-    --cl-cart-mini-modal-width: 400px;
-    --cl-cart-mini-modal-max-width: calc(100vw - 40px);
+  --cl-cart-mini-transition-duration: .3s;
+  --cl-cart-mini-transition-timing-function: ease-in-out;
 
-    --cl-cart-mini-transition-duration: .3s;
-    --cl-cart-mini-transition-timing-function: ease-in-out;
+  display: flex;
+  cursor: auto;
 
-    display: flex;
-    cursor: auto;
+  position: fixed;
+  z-index: var(--cl-cart-mini-modal-z-index);
+  top: 0;
+  width: var(--cl-cart-mini-modal-width);
+  max-width: var(--cl-cart-mini-modal-max-width);
+  height: 100%;
+  pointer-events: none;
+  box-sizing: border-box;
+  box-shadow: none;
+  transition: box-shadow var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
 
+  &::before, &::after {
     position: fixed;
-    z-index: var(--cl-cart-mini-modal-z-index);
+    content: " ";
+    opacity: 0;
+    width: 100%;
+    height: 100%;
     top: 0;
+    right: 0;
+    z-index: -1;
+    transition: opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
+  }
+
+  &::before {
+    background: var(--cl-cart-mini-backdrop-bg);
+  }
+
+  &::after {
+    position: fixed;
     width: var(--cl-cart-mini-modal-width);
     max-width: var(--cl-cart-mini-modal-max-width);
-    height: 100%;
-    pointer-events: none;
-    box-sizing: border-box;
-    box-shadow: none;
-    transition: box-shadow var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
+    box-shadow: var(--cl-cart-mini-backdrop-shadow);
+  }
 
-    &::before, &::after {
-      position: fixed;
-      content: " ";
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      right: 0;
-      z-index: -1;
-      transition: opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
-    }
+  &, &::after {
+    right: calc(var(--cl-cart-mini-modal-width) * -1 + 1px);
+    transition: right var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function), opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
+  }
+
+  &[open] {
+    right: 0;
+    pointer-events: initial;
 
     &::before {
-      background: var(--cl-cart-mini-backdrop-bg);
+      opacity: var(--cl-cart-mini-backdrop-opacity);
     }
 
     &::after {
-      position: fixed;
-      width: var(--cl-cart-mini-modal-width);
-      max-width: var(--cl-cart-mini-modal-max-width);
-      box-shadow: var(--cl-cart-mini-backdrop-shadow);
-    }
-
-    &, &::after {
-      right: calc(var(--cl-cart-mini-modal-width) * -1 + 1px);
-      transition: right var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function), opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
-    }
-
-    &[open] {
       right: 0;
-      pointer-events: initial;
-
-      &::before {
-        opacity: var(--cl-cart-mini-backdrop-opacity);
-      }
-
-      &::after {
-        right: 0;
-        opacity: 1;
-      }
+      opacity: 1;
     }
   }
 }
