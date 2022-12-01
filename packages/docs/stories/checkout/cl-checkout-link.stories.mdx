@@ -7,25 +7,18 @@ import { codes } from '../assets/constants.ts'
   argTypes={meta.argTypes}
 />
 
-# `cl-checkout-link`
+# Checkout
 
-Any Commerce Layer account comes with a [hosted version of the Checkout](https://github.com/commercelayer/commercelayer-react-checkout#hosted-version) application that is automatically enabled.
+Any Commerce Layer account comes with a hosted version of the [open-source checkout application](https://github.com/commercelayer/commercelayer-react-checkout) that is automatically enabled. It’s a React‑based, PCI & PSD2‑compliant, production‑ready implementation that developers can integrate with just a single URL link as explained in detail [here](https://github.com/commercelayer/commercelayer-react-checkout#hosted-version).
 
-<p>
-  You can use the hosted version of the Checkout application with the following URL format:
-  <span class="px-2 py-1 border border-[#EEEEEE] bg-[#F8F8F8] rounded text-[#464646] !text-[13px] !font-mono whitespace-nowrap inline-block">
-    https://<b>&lt;your-organization-slug&gt;</b>.checkout.commercelayer.app/<b>&lt;order-id&gt;</b>?accessToken=<b>&lt;your-access-token&gt;</b>
-  </span>
-</p>
-
-This component can be used as in-place replacement for an `<a>` tag pointing to that url.
+Once you have [imported](?path=/docs/getting-started--page) the drop-in library, you can use the `cl-checkout-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
 
 <Canvas withSource="open">
   <Story story={Basic} name="Basic" />
 </Canvas>
 
-ℹ️ Checkout link is **disabled** when cart does not contain shoppable items.
-
-As soon as you <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> a shoppable item, then the checkout link will be cliccable.
-
 <ArgsTable story='Basic' />
+
+### Empty cart
+
+The checkout link rendered by the component is disabled when the cart is empty (or does not contain any shoppable item). As soon as you <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> a product, the link becomes clickable (feel free to try it out by emptying your cart first and then clicking on the in-line button — which by the way was *dropped-in* this sentence using the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--basic) component). 😉
