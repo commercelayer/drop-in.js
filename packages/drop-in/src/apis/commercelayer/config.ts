@@ -34,13 +34,16 @@ export interface CommerceLayerConfig {
 export type Config = CommerceLayerConfig & {
   debug: Exclude<CommerceLayerConfig['debug'], undefined>
   endpoint: string
+  domain: string
 }
 
-// TODO: update all error messages with a proper link to documentation
+const documentationLink =
+  'Read more here: https://commercelayer.github.io/drop-in.js/?path=/docs/getting-started--page'
+
 export function getConfig(): Config {
   if (!('commercelayerConfig' in window)) {
     throw new Error(
-      `"window.commercelayerConfig" is required.\nLink to doc here.`
+      `"window.commercelayerConfig" is required.\n${documentationLink}\n`
     )
   }
 
@@ -49,25 +52,25 @@ export function getConfig(): Config {
 
   if (typeof commercelayerConfig.clientId !== 'string') {
     throw new Error(
-      `"window.commercelayerConfig.clientId" is required.\nLink to doc here.`
+      `"window.commercelayerConfig.clientId" is required.\n${documentationLink}\n`
     )
   }
 
   if (typeof commercelayerConfig.slug !== 'string') {
     throw new Error(
-      `"window.commercelayerConfig.slug" is required.\nLink to doc here.`
+      `"window.commercelayerConfig.slug" is required.\n${documentationLink}\n`
     )
   }
 
   if (typeof commercelayerConfig.scope !== 'string') {
     throw new Error(
-      `"window.commercelayerConfig.scope" is required.\nLink to doc here.`
+      `"window.commercelayerConfig.scope" is required.\n${documentationLink}\n`
     )
   }
 
   if (![undefined, 'none', 'all'].includes(commercelayerConfig.debug)) {
     throw new Error(
-      `"window.commercelayerConfig.debug" should one of 'none' (default) or 'all'.\nLink to doc here.`
+      `"window.commercelayerConfig.debug" should one of 'none' (default) or 'all'.\n${documentationLink}\n`
     )
   }
 
@@ -76,16 +79,18 @@ export function getConfig(): Config {
     typeof commercelayerConfig.returnUrl !== 'string'
   ) {
     throw new Error(
-      `"window.commercelayerConfig.returnUrl" is set but not a string.\nLink to doc here.`
+      `"window.commercelayerConfig.returnUrl" is set but not a string.\n${documentationLink}\n`
     )
   }
 
   const debug: Config['debug'] = commercelayerConfig.debug ?? 'none'
-  const endpoint: Config['endpoint'] = `https://${commercelayerConfig.slug}.commercelayer.io`
+  const domain = 'commercelayer.io'
+  const endpoint: Config['endpoint'] = `https://${commercelayerConfig.slug}.${domain}`
 
   return {
     ...commercelayerConfig,
     debug,
-    endpoint
+    endpoint,
+    domain
   }
 }

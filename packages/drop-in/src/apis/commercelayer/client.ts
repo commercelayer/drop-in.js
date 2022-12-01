@@ -1,8 +1,9 @@
 import { getKeyForAccessToken } from '#apis/storage'
 import { memoize } from '#utils/utils'
-import { getSalesChannelToken, ClientCredentials } from '@commercelayer/js-auth'
+import { ClientCredentials, getSalesChannelToken } from '@commercelayer/js-auth'
 import CommerceLayer, { CommerceLayerClient } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
+import type { Config } from './config'
 
 export const getAccessToken = memoize(async function (
   clientCredentials: ClientCredentials
@@ -14,11 +15,17 @@ export const getAccessToken = memoize(async function (
     return value
   }
 
-  const salesChannelToken = await getSalesChannelToken(clientCredentials)
+  const salesChannelToken = await getSalesChannelToken(clientCredentials).catch(
+    (error) => {
+      throw new Error(
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        `Cannot get a sales channel token. ${error.body.error}. ${error.body.error_description}`
+      )
+    }
+  )
 
   if (salesChannelToken == null) {
-    // TODO: define a proper error message
-    throw new Error('Cannot get a token')
+    throw new Error('Unable to get a valid sales channel token.')
   }
 
   const { accessToken, expires } = salesChannelToken
@@ -30,18 +37,13 @@ export const getAccessToken = memoize(async function (
 })
 
 export async function createClient(
-  clientCredentials: ClientCredentials
+  config: Config
 ): Promise<CommerceLayerClient> {
-  const accessToken = await getAccessToken(clientCredentials)
+  const accessToken = await getAccessToken(config)
 
-  const { hostname } = new URL(clientCredentials.endpoint)
-  const [, organization, domain] =
-    hostname.match(/^(.*).(commercelayer.(co|io))$/) ?? []
-
-  if (organization === undefined) {
-    // TODO: define a proper error message
-    throw new Error('Organization is missing')
-  }
-
-  return CommerceLayer({ accessToken, organization, domain })
+  return CommerceLayer({
+    accessToken,
+    organization: config.slug,
+    domain: config.domain
+  })
 }
