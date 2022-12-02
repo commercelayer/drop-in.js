@@ -52,7 +52,6 @@ cl-cart-link, .cl-cart-link {
 
   cl-cart-count {
     opacity: 0;
-    transition: opacity .3s;
 
     position: absolute;
     bottom: 0;
@@ -73,6 +72,7 @@ cl-cart-link, .cl-cart-link {
     padding: 0.2rem;
 
     &[quantity] {
+      transition: opacity .3s;
       opacity: 1;
     }
   }
