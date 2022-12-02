@@ -43,5 +43,6 @@ const Template: StoryFn<Args> = (args) => {
 export const Basic = Template.bind({})
 Basic.args = {
   'Use drop-in.css': true,
+  'Use minicart.css': true,
   target: '_blank'
 }
