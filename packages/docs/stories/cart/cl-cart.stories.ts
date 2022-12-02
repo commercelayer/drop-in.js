@@ -17,7 +17,7 @@ export const meta: Meta<Args> = {
     },
     'open-on-add': {
       description:
-        '⚠️ <i>only available when `cl-cart` is used as minicart</i><br />Automatically open the minicart as soon as an item is added to the cart.',
+        'Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart (available <i>only</i> when the `cl-cart` component is used inside the `cl-cart-link` one).',
       type: { name: 'boolean', required: false },
       table: {
         category: 'attributes',

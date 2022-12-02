@@ -11,7 +11,8 @@ export const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart-count',
   argTypes: {
     'hide-when-empty': {
-      description: 'Hide count when cart is empty instead of showing `0`.',
+      description:
+        'Toggle this switch to hide the counter when the cart is empty instead of showing `0`.',
       type: { name: 'boolean', required: false },
       table: {
         category: 'attributes',
@@ -80,7 +81,7 @@ export const WithText: StoryFn<Args> = () => {
   return create(
     html`
       <cl-cart-link target="_blank">
-        Cart
+        View cart
         <cl-cart-count></cl-cart-count>
       </cl-cart-link>
     `
@@ -90,8 +91,12 @@ export const WithText: StoryFn<Args> = () => {
 export const LinkWithStyle: StoryFn<Args> = () => {
   return create(
     html`
-      <a class="cl-cart-link" target="_blank" href="#link-to-cart">
-        Cart
+      <a
+        class="cl-cart-link"
+        target="_blank"
+        href="https://example.com/my-cart"
+      >
+        View cart
         <cl-cart-count></cl-cart-count>
       </a>
     `
