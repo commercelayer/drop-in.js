@@ -1,0 +1,40 @@
+name: Reset organization
+
+on:
+  workflow_dispatch:
+
+jobs:
+  reset_stock_items:
+    name: Reset stock_items
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Node 🧰
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Install 📦
+        run: |
+          npm install -g @commercelayer/cli
+          commercelayer plugins:install seeder && exit 0
+          exit 0
+
+      - name: Login 🔑
+        run: |
+          commercelayer applications:login \
+            --clientId ${{ secrets.CL_CLIENT_ID }} \
+            --clientSecret ${{ secrets.CL_CLIENT_SECRET }} \
+            --organization ${{ secrets.CL_ORGANIZATION }} \
+            --alias cli-admin
+
+      - name: Log 🔎
+        run: |
+          commercelayer plugins
+          commercelayer applications:info
+
+      - name: Seed 🌱
+        run: commercelayer seeder:seed -b custom -n reset_stock_items -u ./packages/drop-in/seed
