@@ -37,7 +37,7 @@ Basic.args = {
   'Use drop-in.css': true
 }
 
-export const WithIcon: StoryFn<Args> = () => {
+export const WithIcon: StoryFn<Args> = (args) => {
   return create(
     html`
       <cl-cart-link target="_blank">
@@ -71,24 +71,28 @@ export const WithIcon: StoryFn<Args> = () => {
           ></path>
         </svg>
 
-        <cl-cart-count></cl-cart-count>
+        <cl-cart-count
+          hide-when-empty=${args['hide-when-empty'] ?? nothing}
+        ></cl-cart-count>
       </cl-cart-link>
     `
   )
 }
 
-export const WithText: StoryFn<Args> = () => {
+export const WithText: StoryFn<Args> = (args) => {
   return create(
     html`
       <cl-cart-link target="_blank">
         View cart
-        <cl-cart-count></cl-cart-count>
+        <cl-cart-count
+          hide-when-empty=${args['hide-when-empty'] ?? nothing}
+        ></cl-cart-count>
       </cl-cart-link>
     `
   )
 }
 
-export const LinkWithStyle: StoryFn<Args> = () => {
+export const LinkWithStyle: StoryFn<Args> = (args) => {
   return create(
     html`
       <a
@@ -97,7 +101,9 @@ export const LinkWithStyle: StoryFn<Args> = () => {
         href="https://example.com/my-cart"
       >
         View cart
-        <cl-cart-count></cl-cart-count>
+        <cl-cart-count
+          hide-when-empty=${args['hide-when-empty'] ?? nothing}
+        ></cl-cart-count>
       </a>
     `
   )

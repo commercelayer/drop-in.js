@@ -51,8 +51,6 @@ cl-cart-link, .cl-cart-link {
   cursor: pointer;
 
   cl-cart-count {
-    opacity: 0;
-
     position: absolute;
     bottom: 0;
     right: 0;
@@ -70,6 +68,10 @@ cl-cart-link, .cl-cart-link {
     transform: translate(120%, 0%);
 
     padding: 0.2rem;
+
+    &[hide-when-empty=""], &[hide-when-empty="true"] {
+      opacity: 0;
+    }
 
     &[quantity] {
       transition: opacity .3s;
