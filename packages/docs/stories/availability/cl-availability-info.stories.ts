@@ -51,7 +51,7 @@ export const Basic: StoryFn<Args> = (args) => {
     html`
       <cl-availability
         code=${args['Use an available product']
-          ? codes.noDiscount
+          ? codes.available
           : codes.outOfStock}
       >
         <cl-availability-info
@@ -70,7 +70,7 @@ Basic.args = {
 export const Message: StoryFn<Args> = () => {
   return create(
     html`
-      <cl-availability code=${codes.noDiscount}>
+      <cl-availability code=${codes.available}>
         ready to be shipped in
         <cl-availability-info type="min-days"></cl-availability-info
         // eslint-disable-next-line prettier/prettier

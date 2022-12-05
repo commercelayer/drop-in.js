@@ -45,7 +45,7 @@ export const Basic: StoryFn<Args> = (args) => {
     html`
       <cl-availability
         code=${args['Use an available product']
-          ? codes.noDiscount
+          ? codes.available
           : codes.outOfStock}
       >
         <cl-availability-status type=${args.type ?? nothing}>

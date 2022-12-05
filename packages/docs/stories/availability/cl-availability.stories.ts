@@ -46,7 +46,7 @@ const Template: StoryFn<Args> = (args) => {
 export const Basic = Template.bind({})
 Basic.args = {
   'Use drop-in.css': true,
-  code: codes.noDiscount
+  code: codes.available
 }
 
 export const WithoutAttributes = Template.bind({})

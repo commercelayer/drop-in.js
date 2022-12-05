@@ -1,11 +1,5 @@
 [
   {
-    "reference": "stock_item_1",
-    "sku_code": "5PANECAP000000FFFFFFXXXX",
-    "quantity": 392,
-    "stock_location": "stock_location_1"
-  },
-  {
     "reference": "stock_item_2",
     "sku_code": "5PANECAP9D9CA1FFFFFFXXXX",
     "quantity": 0,
@@ -24,12 +18,6 @@
     "stock_location": "stock_location_1"
   },
   {
-    "reference": "stock_item_8",
-    "sku_code": "BACKPACKFFFFFF000000XXXX",
-    "quantity": 98,
-    "stock_location": "stock_location_1"
-  },
-  {
     "reference": "stock_item_41",
     "sku_code": "DUFFLBAG000000FFFFFFXXXX",
     "quantity": 319,
@@ -38,7 +26,7 @@
   {
     "reference": "stock_item_60",
     "sku_code": "GMUG11OZFFFFFF000000XXXX",
-    "quantity": 82,
+    "quantity": 98,
     "stock_location": "stock_location_1"
   },
   {
@@ -84,12 +72,6 @@
     "stock_location": "stock_location_1"
   },
   {
-    "reference": "stock_item_251",
-    "sku_code": "5PANECAP000000FFFFFFXXXX",
-    "quantity": 236,
-    "stock_location": "stock_location_2"
-  },
-  {
     "reference": "stock_item_252",
     "sku_code": "5PANECAP9D9CA1FFFFFFXXXX",
     "quantity": 0,
@@ -108,12 +90,6 @@
     "stock_location": "stock_location_2"
   },
   {
-    "reference": "stock_item_258",
-    "sku_code": "BACKPACKFFFFFF000000XXXX",
-    "quantity": 98,
-    "stock_location": "stock_location_2"
-  },
-  {
     "reference": "stock_item_291",
     "sku_code": "DUFFLBAG000000FFFFFFXXXX",
     "quantity": 935,
@@ -122,7 +98,7 @@
   {
     "reference": "stock_item_310",
     "sku_code": "GMUG11OZFFFFFF000000XXXX",
-    "quantity": 306,
+    "quantity": 98,
     "stock_location": "stock_location_2"
   },
   {

@@ -5,6 +5,7 @@
     "name": "Black Five-Panel Cap with White Logo",
     "description": "Soft-structured, five-panel, low-profile cap. 100% cotton, metal eyelets, nylon strap clip closure.",
     "image_url": "https://data.commercelayer.app/seed/images/skus/5PANECAP000000FFFFFFXXXX_FLAT.png",
+    "do_not_track": true,
     "shipping_category": "shipping_category_1"
   },
   {
@@ -37,6 +38,7 @@
     "name": "White Backpack with Black Logo",
     "description": "Medium size backpack with plenty of room plus a big inner pocket, a separate section for a 15'' laptop, a front pocket, and a hidden pocket at the back. Made of a water-resistant material. The soft, padded mesh material on the back and the black handles make it perfect for daily use or sports activities.",
     "image_url": "https://data.commercelayer.app/seed/images/skus/BACKPACKFFFFFF000000XXXX_FLAT.png",
+    "do_not_track": true,
     "shipping_category": "shipping_category_1"
   },
   {
