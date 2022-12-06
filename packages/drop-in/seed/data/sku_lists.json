@@ -1,0 +1,8 @@
+[
+  {
+    "reference": "sku_list_1",
+    "name": "SKUs with promo",
+    "description": "List of skus with a promo",
+    "manual": true
+  }
+]

@@ -206,7 +206,7 @@ describe('index.e2e', () => {
 
         <div>
           <cl-add-to-cart code="${codes.available}" quantity="1" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price code="${codes.available}" cl-hydrated>
+          <cl-price kind="sku" code="${codes.available}" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
@@ -227,7 +227,7 @@ describe('index.e2e', () => {
 
         <div>
           <cl-add-to-cart code="${codes.noDiscount}" quantity="5" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price code="${codes.noDiscount}" cl-hydrated>
+          <cl-price kind="sku" code="${codes.noDiscount}" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
@@ -248,7 +248,7 @@ describe('index.e2e', () => {
 
         <div>
           <cl-add-to-cart aria-disabled="true" code="${codes.outOfStock}" quantity="1" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price code="${codes.outOfStock}" cl-hydrated>
+          <cl-price kind="sku" code="${codes.outOfStock}" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
@@ -269,7 +269,7 @@ describe('index.e2e', () => {
 
         <div>
           <cl-add-to-cart code="${codes.doNotTrack}" quantity="9999" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price code="${codes.doNotTrack}" cl-hydrated>
+          <cl-price kind="sku" code="${codes.doNotTrack}" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>

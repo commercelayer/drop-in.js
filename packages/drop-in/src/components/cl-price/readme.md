@@ -10,6 +10,7 @@
 | Property | Attribute | Description | Type                  | Default     |
 | -------- | --------- | ----------- | --------------------- | ----------- |
 | `code`   | `code`    |             | `string \| undefined` | `undefined` |
+| `kind`   | `kind`    |             | `"bundle" \| "sku"`   | `'sku'`     |
 
 
 ----------------------------------------------

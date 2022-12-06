@@ -47,6 +47,7 @@ export namespace Components {
     }
     interface ClPrice {
         "code": string | undefined;
+        "kind": 'sku' | 'bundle';
     }
     interface ClPriceAmount {
         "type": 'price' | 'compare-at';
@@ -167,6 +168,7 @@ declare namespace LocalJSX {
     }
     interface ClPrice {
         "code"?: string | undefined;
+        "kind"?: 'sku' | 'bundle';
     }
     interface ClPriceAmount {
         "type"?: 'price' | 'compare-at';

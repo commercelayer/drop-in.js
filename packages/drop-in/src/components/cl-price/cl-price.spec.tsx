@@ -11,7 +11,7 @@ describe('cl-price.spec', () => {
       html: '<cl-price></cl-price>'
     })
     expect(root).toEqualHtml(`
-      <cl-price>
+      <cl-price kind="sku">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -25,7 +25,7 @@ describe('cl-price.spec', () => {
       html: '<cl-price code="SKU1234"></cl-price>'
     })
     expect(root).toEqualHtml(`
-      <cl-price code="SKU1234">
+      <cl-price kind="sku" code="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -56,7 +56,7 @@ describe('cl-price.spec', () => {
     })
 
     expect(root).toEqualHtml(`
-      <cl-price code="SKU1234">
+      <cl-price kind="sku" code="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

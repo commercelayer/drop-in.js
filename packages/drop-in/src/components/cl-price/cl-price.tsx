@@ -1,4 +1,5 @@
-import { getPrice, Price } from '#apis/commercelayer/prices'
+import { getPrice as getBundlePrice } from '#apis/commercelayer/bundles'
+import { getPrice as getSkuPrice, Price } from '#apis/commercelayer/prices'
 import { logCode, validateCode } from '#utils/validation-helpers'
 import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
 
@@ -13,11 +14,25 @@ export interface Props {
 export class CLPrice implements Props {
   @Element() host!: HTMLElement
 
+  @Prop({ reflect: true }) kind: 'sku' | 'bundle' = 'sku'
   @Prop({ reflect: true }) code: string | undefined
 
   async componentWillLoad(): Promise<void> {
     if (validateCode(this.code)) {
-      const price = await getPrice(this.code)
+      let price
+
+      switch (this.kind) {
+        case 'sku':
+          price = await getSkuPrice(this.code)
+          break
+
+        case 'bundle':
+          price = await getBundlePrice(this.code)
+          break
+
+        default:
+          break
+      }
 
       if (price !== undefined) {
         this.updatePrice(price)
