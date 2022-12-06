@@ -7,7 +7,8 @@
     "build:copy": "cp -r ../drop-in/dist public/",
     "build:sass": "sass ./stories/assets/styles/:./public/",
     "build:sass:watch": "pnpx nodemon --watch ./node_modules/@commercelayer/drop-in -e scss --exec 'pnpm build:sass'",
-    "build": "pnpm build:sass && pnpm build:copy && build-storybook -s ./public --docs",
+    "build": "pnpm build:sass && pnpm build:copy && build-storybook -s ./public --docs && pnpm replace:title",
+    "replace:title": "sed -i -e 's/Webpack App/Commerce Layer drop-in library/g' ./storybook-static/index.html",
     "serve": "pnpx http-server storybook-static -o"
   },
   "author": {
