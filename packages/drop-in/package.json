@@ -1,6 +1,6 @@
 {
   "name": "@commercelayer/drop-in.js",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Transform any plain HTML page into an enterprise-grade static commerce website, with almost no coding required.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
