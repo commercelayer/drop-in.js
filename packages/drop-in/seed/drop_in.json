@@ -118,5 +118,9 @@
   {
     "resourceType": "prices",
     "importAll": true
+  },
+  {
+    "resourceType": "sku_lists",
+    "importAll": true
   }
 ]

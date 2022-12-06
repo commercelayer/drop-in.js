@@ -107,6 +107,10 @@ export namespace Components {
           * The SKU code (i.e. the unique identifier of the product whose price you want to display).
          */
         "code": string | undefined;
+        /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.
+         */
+        "kind": 'sku' | 'bundle' | undefined;
     }
     interface ClPriceAmount {
         /**
@@ -312,6 +316,10 @@ declare namespace LocalJSX {
           * The SKU code (i.e. the unique identifier of the product whose price you want to display).
          */
         "code": string | undefined;
+        /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.
+         */
+        "kind"?: 'sku' | 'bundle' | undefined;
     }
     interface ClPriceAmount {
         /**

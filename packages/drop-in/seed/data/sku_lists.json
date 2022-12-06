@@ -1,0 +1,9 @@
+[
+  {
+    "reference": "sku_list_1",
+    "name": "SKUs with promo",
+    "description": "List of skus with a promo",
+    "image_url": "https://res.cloudinary.com/commercelayer/image/upload/v1681465805/demo-store/assets/white-glossy-mug-15oz-valentines-day.png",
+    "manual": true
+  }
+]

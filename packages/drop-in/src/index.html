@@ -135,6 +135,7 @@
               <code>
                 <select>
                   <option value="5PANECAP000000FFFFFFXXXX">Available</option>
+                  <option value="CLGETTINGSTARTED" data-kind="bundle">Bundle</option>
                   <option value="5PANECAP000000FFFFFFXXXX" data-quantity="-1">With Negative Quantity</option>
                   <option value="BACKPACKFFFFFF000000XXXX" data-quantity="5">No Discount</option>
                   <option value="5PANECAP9D9CA1FFFFFFXXXX">Out Of Stock</option>
@@ -192,6 +193,7 @@
                   sku: option.value,
                   quantity: parseInt(option.dataset.quantity),
                   frequency: option.dataset.frequency,
+                  kind: option.dataset.kind,
                 }
               ]]
             ))
@@ -201,12 +203,15 @@
             console.groupEnd()
 
             /**
-             * @type {(productCard: Element, options: { sku: string; quantity?: number; frequency?: string; description?: string; }) => void}
+             * @type {(productCard: Element, options: { sku: string; quantity?: number; frequency?: string; kind?: 'bundle' | 'sku'; description?: string; }) => void}
              */
-            function updateProductCard(productCard, { sku, quantity, description, frequency }) {
+            function updateProductCard(productCard, { sku, quantity, description, frequency, kind }) {
               productCard.querySelector('[data-id="pc--sku"]').innerText = sku;
-              productCard.querySelector('[data-id="pc--img"]').src = `https://data.commercelayer.app/seed/images/skus/${sku}_FLAT.png`
+              productCard.querySelector('[data-id="pc--img"]').src = kind === 'bundle'
+                ? 'https://res.cloudinary.com/commercelayer/image/upload/v1681465805/demo-store/assets/white-glossy-mug-15oz-valentines-day.png'
+                : `https://data.commercelayer.app/seed/images/skus/${sku}_FLAT.png`
               productCard.querySelector('cl-price').code = sku;
+              productCard.querySelector('cl-price').kind = kind;
               productCard.querySelector('cl-add-to-cart').code = sku;
               productCard.querySelector('cl-add-to-cart').quantity = isNaN(quantity) || quantity == null ? 1 : quantity;
               productCard.querySelector('cl-add-to-cart').frequency = frequency;
@@ -220,8 +225,9 @@
               const sku = event.currentTarget.value;
               const quantity = parseInt(event.currentTarget.selectedOptions[0].dataset.quantity)
               const frequency = event.currentTarget.selectedOptions[0].dataset.frequency
+              const kind = event.currentTarget.selectedOptions[0].dataset.kind
 
-              updateProductCard(productCard, { sku, quantity, frequency })
+              updateProductCard(productCard, { sku, quantity, frequency, kind })
             })
           </script>
         </div>
@@ -231,9 +237,9 @@
         </div>
 
         <script>
-          skus.forEach(([description, {sku, quantity, frequency}]) => {
+          skus.forEach(([description, {sku, quantity, frequency, kind}]) => {
             const newProductCard = productCard.cloneNode(true)
-            updateProductCard(newProductCard, { sku, quantity, description, frequency })
+            updateProductCard(newProductCard, { sku, quantity, description, frequency, kind })
             document.getElementById('product-list').append(newProductCard)
           })
         </script>
