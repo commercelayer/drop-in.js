@@ -15,7 +15,8 @@ export const meta: Meta<Args> = {
   title: 'Components/Availability/cl-availability-info',
   argTypes: {
     'Use an available product': {
-      description: 'Use an available product for demonstration purpose.',
+      description:
+        'Toggle this switch to swap from an out-of-stock to an available product in the example above.',
       type: {
         name: 'boolean'
       },
@@ -24,7 +25,7 @@ export const meta: Meta<Args> = {
       }
     },
     type: {
-      description: 'Type of data that you wanna show.',
+      description: 'The type of information to be displayed.',
       type: {
         name: 'enum',
         value: [
@@ -50,7 +51,7 @@ export const Basic: StoryFn<Args> = (args) => {
     html`
       <cl-availability
         code=${args['Use an available product']
-          ? codes.noDiscount
+          ? codes.available
           : codes.outOfStock}
       >
         <cl-availability-info
@@ -69,7 +70,7 @@ Basic.args = {
 export const Message: StoryFn<Args> = () => {
   return create(
     html`
-      <cl-availability code=${codes.noDiscount}>
+      <cl-availability code=${codes.available}>
         ready to be shipped in
         <cl-availability-info type="min-days"></cl-availability-info
         // eslint-disable-next-line prettier/prettier

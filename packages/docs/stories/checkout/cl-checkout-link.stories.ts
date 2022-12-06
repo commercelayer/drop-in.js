@@ -11,7 +11,7 @@ export const meta: Meta<Args> = {
   argTypes: {
     target: {
       description:
-        'Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).',
+        'The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).',
       type: {
         name: 'enum',
         value: ['_self', '_blank', '_parent', '_top'],
@@ -34,7 +34,7 @@ const Template: StoryFn<Args> = (args) => {
   return create(
     html`
       <cl-checkout-link target=${args.target ?? nothing}>
-        Checkout
+        Proceed to checkout
       </cl-checkout-link>
     `
   )
@@ -43,5 +43,6 @@ const Template: StoryFn<Args> = (args) => {
 export const Basic = Template.bind({})
 Basic.args = {
   'Use drop-in.css': true,
+  'Use minicart.css': true,
   target: '_blank'
 }

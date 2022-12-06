@@ -7,12 +7,11 @@ import { codes } from '../assets/constants'
   argTypes={meta.argTypes}
 />
 
-# `cl-availability`
+# Availability message
 
-Display an availability message with localized delivery lead time and cost.
+Once you have correctly set up your organization in Commerce Layer and imported the drop-in library as described [here](?path=/docs/getting-started--page), you can use the `cl-availability` component to display an availability message for your products (either available or out-of-stock) with localized delivery lead time and cost, as shown in the code snippets below.
 
-The `cl-availability` component is the owner of the availability information.
-It has the responsibility to fetch the inventory of the provided code and dispatch this information to its [**cl-availability-status**](?path=/docs/components-availability-cl-availability-status--basic) and [**cl-availability-info**](?path=/docs/components-availability-cl-availability-info--basic) children.
+This component is the owner of the availability information. It fetches the inventory of the specified SKU and dispatches it to the [**cl-availability-status**](?path=/docs/components-availability-cl-availability-status--basic) and [**cl-availability-info**](?path=/docs/components-availability-cl-availability-info--basic) children.
 
 <Canvas withSource="open">
   <Story story={Basic} name="Basic" />
@@ -20,14 +19,10 @@ It has the responsibility to fetch the inventory of the provided code and dispat
 
 <ArgsTable story="Basic" />
 
-<p>
-  The above code is an available one, you can change it with an out of stock code <code>{codes.outOfStock}</code>.
-</p>
+### No code
 
-### No attribute? No content
-
-`code` attribute is mandatory. If you don't set it, the component will be rendered as an empty box without any size.
+Any availability message is related to a product. That's why the `code` attribute is mandatory. If you don't set it, the component will be rendered as an empty box without any size, as shown in the example below:
 
 <Canvas withSource="open">
-  <Story story={WithoutAttributes} name="Without Attributes" />
+  <Story story={WithoutAttributes} name="No code" />
 </Canvas>

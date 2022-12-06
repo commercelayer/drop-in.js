@@ -17,7 +17,7 @@ export const meta: Meta<Args> = {
   argTypes: {
     target: {
       description:
-        'Where to display the linked URL, as the name for a browsing context (a tab, window, or &lt;iframe&gt;).',
+        'The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).',
       type: {
         name: 'enum',
         value: ['_self', '_blank', '_parent', '_top'],
@@ -62,7 +62,7 @@ export const Basic = Template.bind({})
 Basic.args = {
   'Use drop-in.css': true,
   target: '_blank',
-  text: 'Cart'
+  text: 'View cart'
 }
 
 export const WithIcon = Template.bind({})

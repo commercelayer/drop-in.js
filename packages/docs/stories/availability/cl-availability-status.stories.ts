@@ -15,7 +15,8 @@ export const meta: Meta<Args> = {
   title: 'Components/Availability/cl-availability-status',
   argTypes: {
     'Use an available product': {
-      description: 'Use an available product for demonstration purpose.',
+      description:
+        'Toggle this switch to swap from an out-of-stock to an available product in the example above.',
       type: {
         name: 'boolean'
       },
@@ -25,7 +26,7 @@ export const meta: Meta<Args> = {
     },
     type: {
       description:
-        'The inner message will be displayed based on the status type. If the type is set to "available", the inner message will be visible only if the product is available.',
+        'The product availability status. It determines the visibility of the inner message.',
       type: {
         name: 'enum',
         value: ['available', 'unavailable'],
@@ -44,7 +45,7 @@ export const Basic: StoryFn<Args> = (args) => {
     html`
       <cl-availability
         code=${args['Use an available product']
-          ? codes.noDiscount
+          ? codes.available
           : codes.outOfStock}
       >
         <cl-availability-status type=${args.type ?? nothing}>

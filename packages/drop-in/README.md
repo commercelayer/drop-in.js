@@ -21,16 +21,16 @@ For a constantly updated list of the available and soon-to-come micro frontends 
 - **Add to cart**  
   Add a buy button to any page with embedded validation rules.
 
-- **Hosted cart**  
-  Link or embed Commerce Layer [hosted cart](https://github.com/commercelayer/commercelayer-cart) with line items preview and edit actions.
+- **Cart**  
+  Link or embed the hosted version of the Commerce Layer [Cart](https://github.com/commercelayer/commercelayer-cart) application, with line items preview and edit actions.
 
-- **Hosted checkout**  
-  Link to Commerce Layer PCI-compliant [hosted checkout](https://github.com/commercelayer/commercelayer-react-checkout) with integrated payments.
+- **Checkout**  
+  Link to the hosted version of the Commerce Layer PCI-compliant [Checkout](https://github.com/commercelayer/commercelayer-react-checkout) application, with integrated payments.
 
 ### Coming soon ⏳
 
-- **Hosted my account**  
-  Link to Commerce Layer hosted customer portal with personal account information and management.
+- **My account**  
+  Link to the hosted version of the Commerce Layer My account application, a customer portal with personal account information and management.
 
 ## Need help?
 
