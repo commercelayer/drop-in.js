@@ -18,7 +18,7 @@
     "dep:self-upgrade:minor": "pnpm dep:self-upgrade:major -t minor",
     "lint": "pnpm -r exec eslint ./ --ext ts,tsx",
     "lint:fix": "pnpm lint --fix",
-    "version": "node replace-jsdelivr.js"
+    "version": "node replace-jsdelivr.js && git add ."
   },
   "author": {
     "name": "Marco Montalbano",
