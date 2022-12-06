@@ -11,6 +11,8 @@ import { codes } from '../assets/constants.ts'
 
 Once you have correctly set up your organization in Commerce Layer and imported the drop-in library as described [here](?path=/docs/getting-started--page), you can use the `cl-cart-count` component to display the number of items that are in your [shopping cart](?path=/docs/components-cart-cl-cart--basic), with the option to hide it in case the cart is empty. 
 
+<ArgsTable story='Basic' include={['Use drop-in.css']} />
+
 The component works in the most straightforward way, as shown in the code snippet below. Just click on <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> and check the counter:
 
 <Canvas withSource="open">
@@ -31,21 +33,17 @@ Although it works perfectly standalone, the most common use case of the `cl-cart
   <Story story={WithIcon} name="Icon with counter" />
 </Canvas>
 
-<ArgsTable story='Icon with counter' exclude={['Use drop-in.css']} />
-
 #### Text with counter
 
 <Canvas withSource="open">
   <Story story={WithText} name="Text with counter" />
 </Canvas>
 
-<ArgsTable story='Basic' include={['Use drop-in.css']} />
+###  Pointing to a custom shopping cart URL
 
-###  Pointing to a custom cart URL
+As explained [here](?path=/docs/components-cart-cl-cart-link--basic), the `cl-cart-link` component automatically generates the URL pointing to the hosted version of the Commerce Layer Cart application.
 
-As explained [here](?path=/docs/components-cart-cl-cart-link--basic), the `cl-cart-link` component automatically generates the URL pointing to the hosted cart.
-
-If you prefer to point to a different URL (e.g. your internal cart page) you can simply use a standard HTML `<a>` tag with the `cl-cart-link`, as shown in the example below:
+If you prefer to point to a different URL (e.g. your internal shopping cart page) you can simply use a standard HTML `<a>` tag with the `cl-cart-link` class, as shown in the example below:
 
 <Canvas withSource="open">
   <Story story={LinkWithStyle} name="Custom URL" />

@@ -12,7 +12,7 @@ export const meta: Meta<Args> = {
   argTypes: {
     'hide-when-empty': {
       description:
-        'Toggle this switch to hide the counter when the cart is empty instead of showing `0`.',
+        'Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example above.',
       type: { name: 'boolean', required: false },
       table: {
         category: 'attributes',

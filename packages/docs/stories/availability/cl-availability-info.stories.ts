@@ -16,7 +16,7 @@ export const meta: Meta<Args> = {
   argTypes: {
     'Use an available product': {
       description:
-        'Toggle this switch to swap from an out-of-stock to an available product.',
+        'Toggle this switch to swap from an out-of-stock to an available product in the example above.',
       type: {
         name: 'boolean'
       },
