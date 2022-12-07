@@ -1,6 +1,7 @@
 import {
   getCheckoutUrl,
-  TriggerCartUpdateEvent
+  TriggerCartUpdateEvent,
+  TriggerHostedCartUpdateEvent
 } from '#apis/commercelayer/cart'
 import {
   Component,
@@ -34,9 +35,27 @@ export class ClCheckoutLink implements Props {
 
   @Listen('cartUpdate', { target: 'window' })
   async cartUpdateHandler(
-    _event: CustomEvent<TriggerCartUpdateEvent>
+    event: CustomEvent<TriggerCartUpdateEvent>
   ): Promise<void> {
-    this.href = await getCheckoutUrl()
+    if (
+      this.href === undefined &&
+      event.detail.order.skus_count !== undefined &&
+      event.detail.order.skus_count > 0
+    ) {
+      this.href = await getCheckoutUrl()
+    }
+  }
+
+  @Listen('hostedCartUpdate', { target: 'window' })
+  async hostedCartUpdateHandler(
+    event: CustomEvent<TriggerHostedCartUpdateEvent>
+  ): Promise<void> {
+    if (
+      event.detail.order.skus_count === undefined ||
+      event.detail.order.skus_count === 0
+    ) {
+      this.href = undefined
+    }
   }
 
   render(): JSX.Element {

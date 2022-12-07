@@ -58,7 +58,7 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
   return prices
 }
 
-const getPrices = pDebounce(_getPrices, { wait: 50, maxWait: 100 })
+const getPrices = pDebounce(_getPrices, { wait: 10, maxWait: 50 })
 
 export const getPrice = memoize(
   async (sku: string): Promise<Price | undefined> => {
