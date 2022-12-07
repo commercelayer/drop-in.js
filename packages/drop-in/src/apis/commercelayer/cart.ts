@@ -4,6 +4,7 @@ import { getKeyForCart } from '#apis/storage'
 import { pDebounce } from '#utils/promise'
 import type { Order } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
+import memoize from 'lodash/memoize'
 
 /**
  * Create a draft order.
@@ -117,7 +118,7 @@ export async function _getCart(): Promise<Order | null> {
   return order
 }
 
-export const getCart = pDebounce(_getCart, { wait: 50, maxWait: 100 })
+export const getCart = memoize(pDebounce(_getCart, { wait: 10, maxWait: 50 }))
 
 export interface TriggerCartUpdateEvent {
   /** Order */
@@ -150,6 +151,10 @@ export interface TriggerHostedCartUpdateEvent {
  * @param iframeId iFrame ID who triggered the event
  */
 export async function triggerHostedCartUpdate(iframeId: string): Promise<void> {
+  if (getCart.cache.clear !== undefined) {
+    getCart.cache.clear()
+  }
+
   const order = await getCart()
 
   if (order !== null) {
@@ -175,6 +180,10 @@ export async function addItem(sku: string, quantity: number): Promise<void> {
     sku_code: sku,
     _update_quantity: true
   })
+
+  if (getCart.cache.clear !== undefined) {
+    getCart.cache.clear()
+  }
 
   await triggerCartUpdate()
 }

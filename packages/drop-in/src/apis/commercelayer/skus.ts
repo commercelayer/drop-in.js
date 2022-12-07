@@ -82,7 +82,7 @@ const _getSkuIds = async (skus: string[]): Promise<SkuIdList> => {
   return ids
 }
 
-const getSkuIds = pDebounce(_getSkuIds, { wait: 50, maxWait: 100 })
+const getSkuIds = pDebounce(_getSkuIds, { wait: 10, maxWait: 50 })
 
 export const getSkuId = memoize(
   async (sku: string): Promise<string | undefined> => {

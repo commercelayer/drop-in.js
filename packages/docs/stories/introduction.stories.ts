@@ -9,7 +9,14 @@ import { codes } from './assets/constants'
 type Args = GlobalArgs & {}
 
 export const meta: Meta<Args> = {
-  title: 'Introduction'
+  title: 'Introduction',
+  argTypes: {
+    'Use minicart.css': {
+      table: {
+        disable: false
+      }
+    }
+  }
 }
 
 export const Basic: StoryFn<Args> = () => {
@@ -27,7 +34,8 @@ export const Basic: StoryFn<Args> = () => {
               <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
               <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"/>
             </svg>
-            <cl-cart-count></cl-cart-count>
+            <cl-cart-count hide-when-empty></cl-cart-count>
+            <cl-cart open-on-add></cl-cart>
           </cl-cart-link>
         </div>
       </nav>
@@ -133,7 +141,8 @@ export const Basic: StoryFn<Args> = () => {
 }
 
 Basic.args = {
-  'Use drop-in.css': true
+  'Use drop-in.css': true,
+  'Use minicart.css': true
 }
 
 // Basic.parameters = {
