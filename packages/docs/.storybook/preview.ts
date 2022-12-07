@@ -44,6 +44,9 @@ const preview: Preview = {
             ],
             'Checkout', [
               'cl-checkout-link'
+            ],
+            'My account', [
+              'cl-my-account-link'
             ]
           ]
         ]

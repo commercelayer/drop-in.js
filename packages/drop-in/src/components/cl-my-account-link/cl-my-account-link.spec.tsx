@@ -22,7 +22,7 @@ describe('cl-my-account-link.spec', () => {
     expect(root).toEqualHtml(`
       <cl-my-account-link target="_self">
         <mock:shadow-root>
-          <a part="a" href="https://drop-in-js.commercelayer.app/myaccount?accessToken=token-123" target="_self">
+          <a part="a" href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123" target="_self">
             <slot></slot>
           </a>
         </mock:shadow-root>
@@ -46,7 +46,7 @@ describe('cl-my-account-link.spec', () => {
     expect(root).toEqualHtml(`
       <cl-my-account-link target="_blank">
         <mock:shadow-root>
-          <a part="a" href="https://drop-in-js.commercelayer.app/myaccount?accessToken=token-123" target="_blank">
+          <a part="a" href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123" target="_blank">
             <slot></slot>
           </a>
         </mock:shadow-root>
