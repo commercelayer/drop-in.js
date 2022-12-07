@@ -67,6 +67,9 @@ export const parameters = {
           ],
           'Checkout', [
             'cl-checkout-link'
+          ],
+          'My account', [
+            'cl-my-account-link'
           ]
         ]
       ]
