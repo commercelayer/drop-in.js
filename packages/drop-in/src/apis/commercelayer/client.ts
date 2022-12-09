@@ -1,9 +1,50 @@
 import { getKeyForAccessToken } from '#apis/storage'
 import { memoize } from '#utils/utils'
-import { ClientCredentials, getSalesChannelToken } from '@commercelayer/js-auth'
 import CommerceLayer, { CommerceLayerClient } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 import type { Config } from './config'
+
+export interface ClientCredentials {
+  clientId: string
+  endpoint: string
+  scope: string
+}
+
+interface SalesChannelToken {
+  accessToken: string
+  tokenType: string
+  expires: number
+  scope: string
+  createdAt: string
+}
+
+async function getSalesChannelToken(
+  clientCredentials: ClientCredentials
+): Promise<SalesChannelToken | null> {
+  const response = await fetch(`${clientCredentials.endpoint}/oauth/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      grant_type: 'client_credentials',
+      client_id: clientCredentials.clientId,
+      scope: clientCredentials.scope
+    })
+  })
+
+  const token = await response.json()
+
+  return token !== undefined
+    ? {
+        accessToken: token.access_token,
+        createdAt: token.create_at,
+        expires: token.expires_in,
+        scope: token.scope,
+        tokenType: token.token_type
+      }
+    : null
+}
 
 export const getAccessToken = memoize(async function (
   clientCredentials: ClientCredentials
@@ -11,7 +52,7 @@ export const getAccessToken = memoize(async function (
   const name = getKeyForAccessToken(clientCredentials)
   const value = Cookies.get(name)
 
-  if (value !== undefined) {
+  if (value !== undefined && value !== 'undefined') {
     return value
   }
 

@@ -3,29 +3,18 @@ import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
 import type { Price } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { CLPrice } from './cl-price'
+import * as client from '#apis/commercelayer/client'
 
 describe('cl-price.spec', () => {
   it('renders without attributes', async () => {
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+
     const { root } = await newSpecPage({
       components: [CLPrice],
       html: '<cl-price></cl-price>'
     })
     expect(root).toEqualHtml(`
       <cl-price>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </cl-price>
-    `)
-  })
-
-  it('renders with a code', async () => {
-    const { root } = await newSpecPage({
-      components: [CLPrice],
-      html: '<cl-price code="SKU1234"></cl-price>'
-    })
-    expect(root).toEqualHtml(`
-      <cl-price code="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
