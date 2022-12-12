@@ -13,7 +13,8 @@ export interface ClientCredentials {
 interface SalesChannelToken {
   accessToken: string
   tokenType: string
-  expires: number
+  expires: Date
+  expiresIn: number
   scope: string
   createdAt: string
 }
@@ -38,8 +39,9 @@ async function getSalesChannelToken(
   return token !== undefined
     ? {
         accessToken: token.access_token,
-        createdAt: token.create_at,
-        expires: token.expires_in,
+        createdAt: token.created_at,
+        expires: new Date(Date.now() + parseInt(token.expires_in) * 1000),
+        expiresIn: token.expires_in,
         scope: token.scope,
         tokenType: token.token_type
       }
