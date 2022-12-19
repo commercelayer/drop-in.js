@@ -1,9 +1,12 @@
 import type { TriggerCartUpdateEvent } from '#apis/commercelayer/cart'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClCartCount } from './cl-cart-count'
+import * as client from '#apis/commercelayer/client'
 
 describe('cl-cart-count.spec', () => {
   it('renders', async () => {
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+
     const { root } = await newSpecPage({
       components: [ClCartCount],
       html: `<cl-cart-count></cl-cart-count>`
@@ -17,6 +20,8 @@ describe('cl-cart-count.spec', () => {
   })
 
   it('renders without content when "hide-when-empty" attribute is set to `true`', async () => {
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+
     const { root } = await newSpecPage({
       components: [ClCartCount],
       html: `<cl-cart-count hide-when-empty="true"></cl-cart-count>`

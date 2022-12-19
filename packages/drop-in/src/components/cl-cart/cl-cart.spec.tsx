@@ -2,6 +2,7 @@ import * as cart from '#apis/commercelayer/cart'
 import { CLCartLink } from '#components/cl-cart-link/cl-cart-link'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClCart } from './cl-cart'
+import * as client from '#apis/commercelayer/client'
 
 beforeEach(() => {
   jest.resetAllMocks()
@@ -9,6 +10,8 @@ beforeEach(() => {
 
 describe('cl-cart.spec', () => {
   it('renders', async () => {
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+
     jest
       .spyOn(cart, 'getCartUrl')
       .mockResolvedValue('https://example.com/checkout-url')

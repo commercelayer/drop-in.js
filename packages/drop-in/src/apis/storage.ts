@@ -1,4 +1,4 @@
-import type { ClientCredentials } from '@commercelayer/js-auth'
+import type { ClientCredentials } from './commercelayer/client'
 
 const prefix = 'commercelayer_'
 
