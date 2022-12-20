@@ -7,11 +7,11 @@ import { meta, Basic } from './introduction.stories.ts';
   argTypes={meta.argTypes}
 />
 
-# Drop-in library
+# Commerce Layer micro frontends
 
-Commerce Layer [drop-in.js](https://github.com/commercelayer/drop-in.js) lets you transform any plain HTML page into an enterprise-grade static commerce website, with almost no coding required, thanks to a set of [micro frontends](https://micro-frontends.org/) (MFEs) that handle the main ecommerce functionalities.
+Commerce Layer [drop-in.js](https://github.com/commercelayer/drop-in.js) lets you transform any plain HTML page into an enterprise-grade static commerce website, with almost no coding required, thanks to a set of [micro frontends](https://micro-frontends.org/) (MFEs) that handle the main ecommerce functionalities. Commerce Layer micro frontends are framework-agnostic, standard [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components): a collection of reusable micro experiences that you can embed in multiple websites and share across different projects.
 
-Prices, availability messages, shopping bag, and more are automatically mixed into your own content and styling, whatever the CMS, SSG, and tools you use to build your site pages. All you need to do is embed the library as explained [here](?path=/docs/getting-started--page) and add tags to the HTML page. The available and soon-to-come web components provided by the library are listed here below.
+Prices, availability messages, shopping cart, and more are automatically mixed into your own content and styling, whatever the CMS, SSG, and tools you use to build your site pages. All you need to do is embed the library as explained [here](?path=/docs/getting-started--page) and add tags to the HTML page. The available and soon-to-come web components provided by the library are listed below.
 
 ## Components
 
@@ -37,7 +37,7 @@ Prices, availability messages, shopping bag, and more are automatically mixed in
     </svg>
     <span>
       <strong>Cart</strong>
-      Link or embed Commerce Layer hosted cart with line items preview and edit actions.
+      Link or embed a Commerce Layer-hosted cart with line items preview and edit actions.
     </span>
   </a>
 
@@ -63,7 +63,7 @@ Prices, availability messages, shopping bag, and more are automatically mixed in
     </svg>
     <span>
       <strong>Checkout</strong>
-      Link to Commerce Layer PCI-compliant hosted checkout with integrated payments.
+      Link to a PCI-compliant Commerce Layer-hosted checkout with integrated payments.
     </span>
   </a>
 
@@ -84,7 +84,7 @@ Prices, availability messages, shopping bag, and more are automatically mixed in
     </svg>
     <span>
       <strong>My account</strong>
-      Link to Commerce Layer hosted customer portal with personal account information and management.
+      Link to a Commerce Layer-hosted customer portal with personal account information and management.
     </span>
   </a>
 
@@ -93,9 +93,9 @@ Prices, availability messages, shopping bag, and more are automatically mixed in
 
 ## Demo 🚀
 
-If you want to see most of the reusable components above in action before digging into the details, check this simple product landing page. Feel free to take a look at the code by clicking on the *Show code* button and see how straightforward it is. Toggle the related switch to activate/deactivate the components [styling](?path=/docs/getting-started--page#styling) (we are using [Tailwind](https://tailwindcss.com/) to speed up the layout building).
+If you want to see most of the reusable components above in action before digging into the details, check this simple product landing page. Feel free to take a look at the code by clicking on the *Show code* button to see how straightforward it is. Toggle the related switch to activate/deactivate the components [styling](?path=/docs/getting-started--page#styling) (we are using [Tailwind](https://tailwindcss.com/) to speed up the layout building).
 
-We called it a demo, but the truth is that by switching the linked organization [from test to live mode](https://docs.commercelayer.io/core/api-specification#environments) on the Commerce Layer admin dashboard this can be considered a full-fledged, up and running production website 😮 — and it took a snap to build it!
+We've called it a demo, but the truth is that by switching the linked organization [from test to live mode](https://docs.commercelayer.io/core/api-specification#environments) on the Commerce Layer Admin Dashboard, this can be considered a full-fledged, up and running production website 😮 — and it took a snap to build it!
 
 <Canvas withSource="close">
   <Story story={Basic} name="Basic" />
