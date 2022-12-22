@@ -4,7 +4,7 @@
  * This script will replace all "version number" occurrences from jsDelivr urls so that it will point to the latest version.
  * This script runs on "version lifecycle" - https://github.com/lerna/lerna/blob/main/commands/version/README.md#lifecycle-scripts
  * 
- * @example https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@1.0.0-beta.4/dist/drop-in/drop-in.esm.js
+ * @example https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@1.0.0/dist/drop-in/drop-in.esm.js
  */
 
 const { sync } = require('replace-in-file')
