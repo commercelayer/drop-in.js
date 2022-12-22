@@ -27,7 +27,7 @@ jobs:
         run: pnpm install
 
       - name: Build 🛠
-        run: pnpm build
+        run: pnpm build:drop-in
 
       - name: Publish 🚀 PRERELEASE
         if: 'github.event.release.prerelease'
