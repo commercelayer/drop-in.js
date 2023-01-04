@@ -3,19 +3,28 @@ import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-avai
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailability } from './cl-availability'
 
-const baseSku = {
-  id: 'id1234',
-  type: 'skus',
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString()
-} as const
-
-const availableSku: skus.Sku = {
-  ...baseSku,
-  inventory: {
-    levels: [],
-    available: true,
-    quantity: 98
+const skuList: { [code: string]: skus.Sku } = {
+  AVAILABLE123: {
+    id: 'AVAILABLE123',
+    type: 'skus',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    inventory: {
+      levels: [],
+      available: true,
+      quantity: 98
+    }
+  },
+  NOTAVAILABLE456: {
+    id: 'NOTAVAILABLE456',
+    type: 'skus',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    inventory: {
+      levels: [],
+      available: false,
+      quantity: 0
+    }
   }
 }
 
@@ -35,14 +44,18 @@ describe('cl-availability.spec', () => {
   })
 
   it('renders with a code', async () => {
-    jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
 
     const { root } = await newSpecPage({
       components: [ClAvailability],
-      html: '<cl-availability code="SKU1234"></cl-availability>'
+      html: '<cl-availability code="AVAILABLE123"></cl-availability>'
     })
     expect(root).toEqualHtml(`
-      <cl-availability code="SKU1234">
+      <cl-availability code="AVAILABLE123">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -51,12 +64,16 @@ describe('cl-availability.spec', () => {
   })
 
   it('should pass-throw the "availabilityUpdate" event to children', async () => {
-    jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
 
     const { root } = await newSpecPage({
       components: [ClAvailability, ClAvailabilityStatus],
       html: `
-        <cl-availability code="SKU1234">
+        <cl-availability code="AVAILABLE123">
           <cl-availability-status></cl-availability-status>
           <cl-availability-status type="available">• available</cl-availability-status>
           <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
@@ -66,7 +83,7 @@ describe('cl-availability.spec', () => {
     })
 
     expect(root).toEqualHtml(`
-      <cl-availability code="SKU1234">
+      <cl-availability code="AVAILABLE123">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -81,6 +98,52 @@ describe('cl-availability.spec', () => {
         </cl-availability-status>
         <cl-availability-status type="unavailable" aria-disabled="true">
           <mock:shadow-root></mock:shadow-root>
+          • out of stock
+        </cl-availability-status>
+        <another-tag></another-tag>
+    </cl-availability>
+    `)
+  })
+
+  it('should fetch the new availability when "code" changes', async () => {
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
+
+    const { root, waitForChanges } = await newSpecPage({
+      components: [ClAvailability, ClAvailabilityStatus],
+      html: `
+        <cl-availability code="AVAILABLE123">
+          <cl-availability-status></cl-availability-status>
+          <cl-availability-status type="available">• available</cl-availability-status>
+          <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
+          <another-tag></another-tag>
+        </cl-availability>
+      `
+    })
+
+    root?.setAttribute('code', 'NOTAVAILABLE456')
+
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-availability code="NOTAVAILABLE456">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        <cl-availability-status aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-status>
+        <cl-availability-status type="available" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="unavailable">
+          <mock:shadow-root>
+            <slot></slot>
+          </mock:shadow-root>
           • out of stock
         </cl-availability-status>
         <another-tag></another-tag>

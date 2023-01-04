@@ -15,30 +15,30 @@ export class ClAvailability implements Props {
   @Prop({ reflect: true }) code: string | undefined
 
   async componentWillLoad(): Promise<void> {
-    if (validateCode(this.code)) {
-      const sku = await getSku(this.code)
-
-      if (sku !== undefined) {
-        this.updateAvailability(sku)
-      }
-    }
-
     logCode(this.host, this.code)
+    await this.updateAvailability(this.code)
   }
 
   @Watch('code')
-  watchPropHandler(newValue: string, _oldValue: string): void {
+  async watchPropHandler(newValue: string, _oldValue: string): Promise<void> {
     logCode(this.host, newValue)
+    await this.updateAvailability(newValue)
   }
 
-  private updateAvailability(item: Sku): void {
-    this.host
-      .querySelectorAll('cl-availability-status, cl-availability-info')
-      .forEach((element) => {
-        element.dispatchEvent(
-          new CustomEvent<Sku>('availabilityUpdate', { detail: item })
-        )
-      })
+  private async updateAvailability(code: string | undefined): Promise<void> {
+    if (validateCode(code)) {
+      const sku = await getSku(code)
+
+      if (sku !== undefined) {
+        this.host
+          .querySelectorAll('cl-availability-status, cl-availability-info')
+          .forEach((element) => {
+            element.dispatchEvent(
+              new CustomEvent<Sku>('availabilityUpdate', { detail: sku })
+            )
+          })
+      }
+    }
   }
 
   render(): JSX.Element {
