@@ -16,28 +16,28 @@ export class CLPrice implements Props {
   @Prop({ reflect: true }) code: string | undefined
 
   async componentWillLoad(): Promise<void> {
-    if (validateCode(this.code)) {
-      const price = await getPrice(this.code)
-
-      if (price !== undefined) {
-        this.updatePrice(price)
-      }
-    }
-
     logCode(this.host, this.code)
+    await this.updatePrice(this.code)
   }
 
   @Watch('code')
-  watchPropHandler(newValue: string, _oldValue: string): void {
+  async watchPropHandler(newValue: string, _oldValue: string): Promise<void> {
     logCode(this.host, newValue)
+    await this.updatePrice(newValue)
   }
 
-  private updatePrice(price: Price): void {
-    this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-      element.dispatchEvent(
-        new CustomEvent<Price>('priceUpdate', { detail: price })
-      )
-    })
+  private async updatePrice(code: string | undefined): Promise<void> {
+    if (validateCode(code)) {
+      const price = await getPrice(code)
+
+      if (price !== undefined) {
+        this.host.querySelectorAll('cl-price-amount').forEach((element) => {
+          element.dispatchEvent(
+            new CustomEvent<Price>('priceUpdate', { detail: price })
+          )
+        })
+      }
+    }
   }
 
   render(): JSX.Element {
