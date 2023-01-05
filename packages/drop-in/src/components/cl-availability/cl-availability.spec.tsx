@@ -3,12 +3,20 @@ import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-avai
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailability } from './cl-availability'
 
-const skuList: { [code: string]: skus.Sku } = {
-  AVAILABLE123: {
-    id: 'AVAILABLE123',
+const baseSku = (
+  id: string
+): Pick<skus.Sku, 'id' | 'type' | 'created_at' | 'updated_at'> => {
+  return {
+    id,
     type: 'skus',
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  } as const
+}
+
+const skuList: { [code: string]: skus.Sku } = {
+  AVAILABLE123: {
+    ...baseSku('AVAILABLE123'),
     inventory: {
       levels: [],
       available: true,
@@ -16,10 +24,7 @@ const skuList: { [code: string]: skus.Sku } = {
     }
   },
   NOTAVAILABLE456: {
-    id: 'NOTAVAILABLE456',
-    type: 'skus',
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    ...baseSku('NOTAVAILABLE456'),
     inventory: {
       levels: [],
       available: false,
