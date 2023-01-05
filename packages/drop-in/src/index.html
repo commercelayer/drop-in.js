@@ -42,6 +42,20 @@
   <body>
     <div class="container mx-auto p-6">
 
+      <cl-storage></cl-storage>
+
+      <script>
+        window.addEventListener("message", (event) => {
+          // if (event.origin !== "http://example.org:8080")
+          //   return;
+          switch (event.data.type) {
+            case 'get':
+              console.info(`orderId is "${event.data.value}"`)
+              break;
+          }
+        }, false);
+      </script>
+
       <nav class="flex mb-12">
         <span class="font-semibold text-xl tracking-tight">Store Name</span>
         <div class="flex items-center flex-grow justify-end">

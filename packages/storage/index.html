@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      src="https://cdn.jsdelivr.net/npm/iframe-resizer@4.3.2/js/iframeResizer.contentWindow.min.js"
+      integrity="sha256-rbC2imHDJIBYUIXvf+XiYY+2cXmiSlctlHgI+rrezQo="
+      crossorigin="anonymous" ></script>
+    <script>
+      // cl-storage
+      window.addEventListener("message", (event) => {
+        // if (event.origin !== "http://example.org:8080")
+        //   return;
+        switch (event.data.type) {
+          case 'set':
+            localStorage.setItem('orderId', event.data.value)
+            break;
+
+          case 'get':
+            window.parent.postMessage({
+              type: 'get',
+              value: localStorage.getItem('orderId')
+            }, '*')
+            break;
+        }
+      }, false);
+    </script>
+  </head>
+  <body>
+    
+  </body>
+</html>

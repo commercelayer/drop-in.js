@@ -1,0 +1,16 @@
+{
+  "name": "storage",
+  "private": true,
+  "version": "1.0.1",
+  "scripts": {
+    "start": "serve"
+  },
+  "author": {
+    "name": "Marco Montalbano",
+    "email": "marco.montalbano@commercelayer.io"
+  },
+  "dependencies": {
+    "iframe-resizer": "^4.3.2",
+    "serve": "^14.1.2"
+  }
+}

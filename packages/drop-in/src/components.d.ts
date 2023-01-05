@@ -51,6 +51,8 @@ export namespace Components {
     interface ClPriceAmount {
         "type": 'price' | 'compare-at';
     }
+    interface ClStorage {
+    }
 }
 declare global {
     interface HTMLClAddToCartElement extends Components.ClAddToCart, HTMLStencilElement {
@@ -113,6 +115,12 @@ declare global {
         prototype: HTMLClPriceAmountElement;
         new (): HTMLClPriceAmountElement;
     };
+    interface HTMLClStorageElement extends Components.ClStorage, HTMLStencilElement {
+    }
+    var HTMLClStorageElement: {
+        prototype: HTMLClStorageElement;
+        new (): HTMLClStorageElement;
+    };
     interface HTMLElementTagNameMap {
         "cl-add-to-cart": HTMLClAddToCartElement;
         "cl-availability": HTMLClAvailabilityElement;
@@ -124,6 +132,7 @@ declare global {
         "cl-checkout-link": HTMLClCheckoutLinkElement;
         "cl-price": HTMLClPriceElement;
         "cl-price-amount": HTMLClPriceAmountElement;
+        "cl-storage": HTMLClStorageElement;
     }
 }
 declare namespace LocalJSX {
@@ -171,6 +180,8 @@ declare namespace LocalJSX {
     interface ClPriceAmount {
         "type"?: 'price' | 'compare-at';
     }
+    interface ClStorage {
+    }
     interface IntrinsicElements {
         "cl-add-to-cart": ClAddToCart;
         "cl-availability": ClAvailability;
@@ -182,6 +193,7 @@ declare namespace LocalJSX {
         "cl-checkout-link": ClCheckoutLink;
         "cl-price": ClPrice;
         "cl-price-amount": ClPriceAmount;
+        "cl-storage": ClStorage;
     }
 }
 export { LocalJSX as JSX };
@@ -198,6 +210,7 @@ declare module "@stencil/core" {
             "cl-checkout-link": LocalJSX.ClCheckoutLink & JSXBase.HTMLAttributes<HTMLClCheckoutLinkElement>;
             "cl-price": LocalJSX.ClPrice & JSXBase.HTMLAttributes<HTMLClPriceElement>;
             "cl-price-amount": LocalJSX.ClPriceAmount & JSXBase.HTMLAttributes<HTMLClPriceAmountElement>;
+            "cl-storage": LocalJSX.ClStorage & JSXBase.HTMLAttributes<HTMLClStorageElement>;
         }
     }
 }
