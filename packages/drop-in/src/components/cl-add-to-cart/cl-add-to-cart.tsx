@@ -35,8 +35,9 @@ export class CLAddToCart implements Props {
   @State() skuObject: Sku | undefined
 
   @Watch('code')
-  watchCodeHandler(newValue: string, _oldValue: string): void {
+  async watchCodeHandler(newValue: string, _oldValue: string): Promise<void> {
     logCode(this.host, newValue)
+    await this.updateSku(newValue)
   }
 
   @Watch('quantity')
@@ -46,16 +47,19 @@ export class CLAddToCart implements Props {
     }
   }
 
-  async componentWillLoad(): Promise<void> {
-    if (validateCode(this.code)) {
-      this.skuObject = await getSku(this.code)
+  private async updateSku(code: string | undefined): Promise<void> {
+    if (validateCode(code)) {
+      this.skuObject = await getSku(code)
       if (this.skuObject === undefined) {
-        log('warn', `Cannot find code ${this.code}.`, this.host)
+        log('warn', `Cannot find code ${code}.`, this.host)
       }
     }
+  }
 
+  async componentWillLoad(): Promise<void> {
     logCode(this.host, this.code)
     logQuantity(this.host, this.quantity)
+    await this.updateSku(this.code)
   }
 
   handleKeyPress(event: KeyboardEvent): void {
