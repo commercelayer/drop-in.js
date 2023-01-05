@@ -2,37 +2,41 @@ import { newSpecPage } from '@stencil/core/testing'
 import { CLAddToCart } from './cl-add-to-cart'
 import * as skus from '#apis/commercelayer/skus'
 
-const baseSku = {
-  id: 'id1234',
-  type: 'skus',
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString()
-} as const
-
-const availableSku: skus.Sku = {
-  ...baseSku,
-  inventory: {
-    levels: [],
-    available: true,
-    quantity: 98
-  }
+const baseSku = (
+  id: string
+): Pick<skus.Sku, 'id' | 'type' | 'created_at' | 'updated_at'> => {
+  return {
+    id,
+    type: 'skus',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  } as const
 }
 
-const doNotTrackSku: skus.Sku = {
-  ...baseSku,
-  do_not_track: true,
-  inventory: {
-    levels: [],
-    available: true
-  }
-}
-
-const unavailableSku: skus.Sku = {
-  ...baseSku,
-  inventory: {
-    levels: [],
-    available: false,
-    quantity: 0
+const skuList: { [code: string]: skus.Sku } = {
+  AVAILABLE123: {
+    ...baseSku('AVAILABLE123'),
+    inventory: {
+      levels: [],
+      available: true,
+      quantity: 98
+    }
+  },
+  DONOTTRACK456: {
+    ...baseSku('DONOTTRACK456'),
+    do_not_track: true,
+    inventory: {
+      levels: [],
+      available: true
+    }
+  },
+  UNAVAILABLE789: {
+    ...baseSku('UNAVAILABLE789'),
+    inventory: {
+      levels: [],
+      available: false,
+      quantity: 0
+    }
   }
 }
 
@@ -53,14 +57,18 @@ describe('cl-add-to-cart.spec', () => {
   })
 
   it('renders with the default quantity set to 1', async () => {
-    jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
 
     const { root } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart code="SKU1234">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="AVAILABLE123">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="SKU1234" quantity="1" role="button" tabindex="0">
+      <cl-add-to-cart code="AVAILABLE123" quantity="1" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -70,14 +78,18 @@ describe('cl-add-to-cart.spec', () => {
   })
 
   it('renders as disabled when providing an invalid quantity', async () => {
-    jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
 
     const { root } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart code="SKU1234" quantity="-3">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="AVAILABLE123" quantity="-3">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="SKU1234" quantity="-3" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart code="AVAILABLE123" quantity="-3" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -87,14 +99,18 @@ describe('cl-add-to-cart.spec', () => {
   })
 
   it('renders with a provided quantity', async () => {
-    jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
 
     const { root } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart code="SKU1234" quantity="8">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="AVAILABLE123" quantity="8">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="SKU1234" quantity="8" role="button" tabindex="0">
+      <cl-add-to-cart code="AVAILABLE123" quantity="8" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -103,32 +119,49 @@ describe('cl-add-to-cart.spec', () => {
     `)
   })
 
-  it('renders properly when attributes change', async () => {
-    jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
+  it('renders properly when "code" attribute changes', async () => {
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart code="SKU1234" quantity="8">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="AVAILABLE123" quantity="8">Add to cart</cl-add-to-cart>'
     })
 
-    root?.setAttribute('code', 'NEWSKUABCD')
+    root?.setAttribute('code', 'UNAVAILABLE789')
     root?.setAttribute('quantity', '4')
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="NEWSKUABCD" quantity="4" role="button" tabindex="0">
+      <cl-add-to-cart code="UNAVAILABLE789" quantity="4" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
         Add to cart
       </cl-add-to-cart>
     `)
+  })
+
+  it('renders properly when "quantity" attribute changes', async () => {
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
+
+    const { root, waitForChanges } = await newSpecPage({
+      components: [CLAddToCart],
+      html: '<cl-add-to-cart code="AVAILABLE123" quantity="8">Add to cart</cl-add-to-cart>'
+    })
 
     root?.setAttribute('quantity', '-3')
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="NEWSKUABCD" quantity="0" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart code="AVAILABLE123" quantity="0" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -138,17 +171,21 @@ describe('cl-add-to-cart.spec', () => {
   })
 
   it('renders disabled when item is out of stock', async () => {
-    jest.spyOn(skus, 'getSku').mockResolvedValue(unavailableSku)
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart code="SKU1234">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="UNAVAILABLE789">Add to cart</cl-add-to-cart>'
     })
 
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="SKU1234" quantity="1" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart code="UNAVAILABLE789" quantity="1" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -158,17 +195,21 @@ describe('cl-add-to-cart.spec', () => {
   })
 
   it('renders disabled when item has less than available quantity', async () => {
-    jest.spyOn(skus, 'getSku').mockResolvedValue(availableSku)
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart code="SKU1234" quantity="99">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="AVAILABLE123" quantity="99">Add to cart</cl-add-to-cart>'
     })
 
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="SKU1234" quantity="99" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart code="AVAILABLE123" quantity="99" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -178,17 +219,21 @@ describe('cl-add-to-cart.spec', () => {
   })
 
   it('renders enabled when item has "do_not_track" attribute set to true', async () => {
-    jest.spyOn(skus, 'getSku').mockResolvedValue(doNotTrackSku)
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLAddToCart],
-      html: '<cl-add-to-cart code="SKU1234" quantity="99">Add to cart</cl-add-to-cart>'
+      html: '<cl-add-to-cart code="DONOTTRACK456" quantity="99">Add to cart</cl-add-to-cart>'
     })
 
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="SKU1234" quantity="99" role="button" tabindex="0">
+      <cl-add-to-cart code="DONOTTRACK456" quantity="99" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
