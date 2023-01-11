@@ -1,11 +1,12 @@
 import * as skus from '#apis/commercelayer/skus'
+import type { Sku } from '#apis/types'
 import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-availability-status'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailability } from './cl-availability'
 
 const baseSku = (
   id: string
-): Pick<skus.Sku, 'id' | 'type' | 'created_at' | 'updated_at'> => {
+): Pick<Sku, 'id' | 'type' | 'created_at' | 'updated_at'> => {
   return {
     id,
     type: 'skus',
@@ -14,7 +15,7 @@ const baseSku = (
   } as const
 }
 
-const skuList: { [code: string]: skus.Sku } = {
+const skuList: { [code: string]: Sku } = {
   AVAILABLE123: {
     ...baseSku('AVAILABLE123'),
     inventory: {

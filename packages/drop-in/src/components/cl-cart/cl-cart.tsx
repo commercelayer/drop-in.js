@@ -1,11 +1,10 @@
 import {
   getCartUrl,
   isValidUrl,
-  TriggerCartUpdateEvent,
   triggerHostedCartUpdate,
-  TriggerHostedCartUpdateEvent,
   updateCartUrl
 } from '#apis/commercelayer/cart'
+import { listenTo } from '#apis/event'
 import { getClosestLocationHref } from '#utils/url'
 import {
   Component,
@@ -91,6 +90,23 @@ export class ClCart {
   private flag_justAddedToCart: boolean = false
 
   async componentWillLoad(): Promise<void> {
+    listenTo('cl.cart.hostedCartUpdate', (event) => {
+      const [iframeId] = event.detail.request.args
+      if (this.iframe.id !== iframeId) {
+        this.flag_listenForHostedCartUpdateResponse = false
+        this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
+      }
+    })
+
+    listenTo('cl.cart.update', async () => {
+      this.flag_justAddedToCart = true
+      this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
+
+      if (this.href === undefined || !isValidUrl(this.href)) {
+        this.href = await getCartUrl()
+      }
+    })
+
     await updateCartUrl(this.getCartPageUrl())
     this.href = await getCartUrl()
 
@@ -143,28 +159,6 @@ export class ClCart {
       if (!opened) {
         this.host.closest('cl-cart-link')?.focus()
       }
-    }
-  }
-
-  @Listen('cartUpdate', { target: 'window' })
-  async cartUpdateHandler(
-    _event: CustomEvent<TriggerCartUpdateEvent>
-  ): Promise<void> {
-    this.flag_justAddedToCart = true
-    this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
-
-    if (this.href === undefined || !isValidUrl(this.href)) {
-      this.href = await getCartUrl()
-    }
-  }
-
-  @Listen('hostedCartUpdate', { target: 'window' })
-  hostedCartUpdateHandler(
-    event: CustomEvent<TriggerHostedCartUpdateEvent>
-  ): void {
-    if (this.iframe.id !== event.detail.iframeId) {
-      this.flag_listenForHostedCartUpdateResponse = false
-      this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
     }
   }
 

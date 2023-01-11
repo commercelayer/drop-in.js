@@ -1,7 +1,13 @@
 import { createClient, getAccessToken } from '#apis/commercelayer/client'
 import { getConfig } from '#apis/commercelayer/config'
+import { dispatchEvent } from '#apis/event'
 import { getKeyForCart } from '#apis/storage'
-import { pDebounce } from '#utils/promise'
+import type {
+  AddItem,
+  TriggerCartUpdate,
+  TriggerHostedCartUpdate
+} from '#apis/types'
+import { pDebounce } from '#utils/debounce'
 import type { Order } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 import memoize from 'lodash/memoize'
@@ -120,37 +126,26 @@ export async function _getCart(): Promise<Order | null> {
 
 export const getCart = memoize(pDebounce(_getCart, { wait: 10, maxWait: 50 }))
 
-export interface TriggerCartUpdateEvent {
-  /** Order */
-  order: Order
-}
-
-export async function triggerCartUpdate(): Promise<void> {
+/**
+ * Trigger the `cartUpdate` event.
+ */
+export const triggerCartUpdate: TriggerCartUpdate = async () => {
   const order = await getCart()
 
   if (order !== null) {
-    // TODO: manage events in separate file
-    window.dispatchEvent(
-      new CustomEvent<TriggerCartUpdateEvent>('cartUpdate', {
-        detail: { order }
-      })
-    )
+    dispatchEvent('cl.cart.update', [], order)
   }
-}
 
-export interface TriggerHostedCartUpdateEvent {
-  /** `iframe` ID who triggered the event. */
-  iframeId: string
-
-  /** Order */
-  order: Order
+  return order
 }
 
 /**
  * Trigger the `hostedCartUpdate` event.
  * @param iframeId iFrame ID who triggered the event
  */
-export async function triggerHostedCartUpdate(iframeId: string): Promise<void> {
+export const triggerHostedCartUpdate: TriggerHostedCartUpdate = async (
+  iframeId
+) => {
   if (getCart.cache.clear !== undefined) {
     getCart.cache.clear()
   }
@@ -158,20 +153,17 @@ export async function triggerHostedCartUpdate(iframeId: string): Promise<void> {
   const order = await getCart()
 
   if (order !== null) {
-    // TODO: manage events in separate file
-    window.dispatchEvent(
-      new CustomEvent<TriggerHostedCartUpdateEvent>('hostedCartUpdate', {
-        detail: { iframeId, order }
-      })
-    )
+    dispatchEvent('cl.cart.hostedCartUpdate', [iframeId], order)
   }
+
+  return order
 }
 
-export async function addItem(sku: string, quantity: number): Promise<void> {
+export const addItem: AddItem = async (sku, quantity) => {
   const client = await createClient(getConfig())
   const orderId = (await getCart())?.id ?? (await (await createEmptyCart()).id)
 
-  await client.line_items.create({
+  const lineItem = await client.line_items.create({
     order: {
       id: orderId,
       type: 'orders'
@@ -181,11 +173,15 @@ export async function addItem(sku: string, quantity: number): Promise<void> {
     _update_quantity: true
   })
 
+  dispatchEvent('cl.cart.addItem', [sku, quantity], lineItem)
+
   if (getCart.cache.clear !== undefined) {
     getCart.cache.clear()
   }
 
   await triggerCartUpdate()
+
+  return lineItem
 }
 
 /**

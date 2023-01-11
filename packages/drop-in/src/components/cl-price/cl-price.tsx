@@ -1,5 +1,6 @@
-import { getPrice, Price } from '#apis/commercelayer/prices'
+import { getPrice } from '#apis/commercelayer/prices'
 import { logCode, validateCode } from '#utils/validation-helpers'
+import type { Price } from '@commercelayer/sdk'
 import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
 
 export interface Props {

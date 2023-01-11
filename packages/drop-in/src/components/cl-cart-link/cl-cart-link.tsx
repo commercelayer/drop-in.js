@@ -1,18 +1,6 @@
-import {
-  getCartUrl,
-  isValidUrl,
-  TriggerCartUpdateEvent
-} from '#apis/commercelayer/cart'
-import {
-  Component,
-  Element,
-  h,
-  Host,
-  JSX,
-  Listen,
-  Prop,
-  State
-} from '@stencil/core'
+import { getCartUrl, isValidUrl } from '#apis/commercelayer/cart'
+import { listenTo } from '#apis/event'
+import { Component, Element, h, Host, JSX, Prop, State } from '@stencil/core'
 
 export interface Props {
   target: string
@@ -38,6 +26,12 @@ export class CLCartLink implements Props {
       this.minicart.type = 'mini'
     }
 
+    listenTo('cl.cart.update', async () => {
+      if (this.href === undefined || !isValidUrl(this.href)) {
+        this.href = await getCartUrl()
+      }
+    })
+
     void getCartUrl().then((cartUrl) => {
       this.href = cartUrl
     })
@@ -48,15 +42,6 @@ export class CLCartLink implements Props {
       event.preventDefault()
       this.href = await getCartUrl(true)
       window.open(this.href, this.target)
-    }
-  }
-
-  @Listen('cartUpdate', { target: 'window' })
-  async cartUpdateHandler(
-    _event: CustomEvent<TriggerCartUpdateEvent>
-  ): Promise<void> {
-    if (this.href === undefined || !isValidUrl(this.href)) {
-      this.href = await getCartUrl()
     }
   }
 

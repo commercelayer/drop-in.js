@@ -1,43 +1,10 @@
+import { dispatchEvent } from '#apis/event'
+import type { GetSku, Sku } from '#apis/types'
+import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
-import { pDebounce } from '#utils/promise'
 import { chunk, memoize, uniq } from '#utils/utils'
-import type { Sku as SdkSku } from '@commercelayer/sdk'
 import { createClient } from './client'
 import { getConfig } from './config'
-
-interface DeliveryLeadTime {
-  shipping_method: {
-    name: string
-    reference: string
-    price_amount_cents: number
-    free_over_amount_cents: number | null
-    formatted_price_amount: string
-    formatted_free_over_amount: string | null
-  }
-  min: {
-    hours: number
-    days: number
-  }
-  max: {
-    hours: number
-    days: number
-  }
-}
-
-interface Level {
-  quantity: number
-  delivery_lead_times: DeliveryLeadTime[]
-}
-
-interface Inventory {
-  available: boolean
-  quantity?: number
-  levels: Level[]
-}
-
-export type Sku = SdkSku & {
-  inventory?: Inventory
-}
 
 interface SkuIdList {
   [sku: string]: string | undefined
@@ -85,13 +52,13 @@ const _getSkuIds = async (skus: string[]): Promise<SkuIdList> => {
 const getSkuIds = pDebounce(_getSkuIds, { wait: 10, maxWait: 50 })
 
 export const getSkuId = memoize(
-  async (sku: string): Promise<string | undefined> => {
-    return await getSkuIds([sku]).then((result) => result[sku])
+  async (code: string): Promise<string | undefined> => {
+    return await getSkuIds([code]).then((result) => result[code])
   }
 )
 
-export const getSku = memoize(async (sku: string): Promise<Sku | undefined> => {
-  const id = await getSkuId(sku)
+const getMemoizedSku = memoize<GetSku>(async (code) => {
+  const id = await getSkuId(code)
 
   if (id === undefined) {
     return undefined
@@ -101,3 +68,11 @@ export const getSku = memoize(async (sku: string): Promise<Sku | undefined> => {
 
   return (await client.skus.retrieve(id)) as Sku
 })
+
+export const getSku: GetSku = async (code) => {
+  const sku = await getMemoizedSku(code)
+
+  dispatchEvent('cl.skus.getSku', [code], sku)
+
+  return sku
+}

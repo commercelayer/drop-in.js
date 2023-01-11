@@ -42,7 +42,8 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "allowUnusedLabels": true
+    "allowUnusedLabels": true,
+    "noErrorTruncation": true
   },
   "include": [
     "src"

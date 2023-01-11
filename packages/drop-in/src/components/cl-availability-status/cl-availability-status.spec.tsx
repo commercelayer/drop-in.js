@@ -1,4 +1,4 @@
-import type { Sku } from '#apis/commercelayer/skus'
+import type { Sku } from '#apis/types'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailabilityStatus } from './cl-availability-status'
 

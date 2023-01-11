@@ -1,11 +1,12 @@
 import { addItem } from '#apis/commercelayer/cart'
-import { getSku, Sku } from '#apis/commercelayer/skus'
+import { getSku } from '#apis/commercelayer/skus'
+import type { Sku } from '#apis/types'
 import { log } from '#utils/logger'
 import {
-  logQuantity,
   logCode,
-  validateQuantity,
-  validateCode
+  logQuantity,
+  validateCode,
+  validateQuantity
 } from '#utils/validation-helpers'
 import {
   Component,
