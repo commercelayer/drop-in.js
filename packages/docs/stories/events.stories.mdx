@@ -1,0 +1,60 @@
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
+import { linkTo } from '@storybook/addon-links'
+
+<Meta title="Events" />
+
+# Events
+
+Commerce Layer [drop-in.js](https://github.com/commercelayer/drop-in.js) dispatches the following custom events to the [document](https://developer.mozilla.org/en-US/docs/Web/API/Document) object:
+
+All custom events implement the same interface; `request.args` and `response` vary from one event to another.
+
+```ts dark
+interface CLCustomEvent {
+  request: {
+    args: [ arg1: any, arg2: any, ... ]
+  }
+  response: Response
+}
+```
+
+## Event types
+
+### `cl.cart.addItem`
+
+This event is dispatched when an item is added to cart.
+
+- **`request.args`** `[sku: string, quantity: number]`
+- **`response`** [`LineItem`](https://docs.commercelayer.io/core/v/api-reference/line_items/object)
+
+```js dark
+document.addEventListener('cl.cart.addItem', (event) => {
+  console.info(event.detail)
+})
+```
+
+### `cl.prices.getPrice`
+
+This event is dispatched whenever a price is fetched.
+
+- **`request.args`** `[code: string]`
+- **`response`** [`Price`](https://docs.commercelayer.io/core/v/api-reference/prices/object)
+
+```js dark
+document.addEventListener('cl.prices.getPrice', (event) => {
+  console.info(event.detail)
+})
+```
+
+### `cl.skus.getSku`
+
+This event is dispatched whenever a SKU is fetched.
+
+- **`request.args`** `[code: string]`
+- **`response`** [`Sku`](https://docs.commercelayer.io/core/v/api-reference/skus/object)
+
+```js dark
+document.addEventListener('cl.skus.getSku', (event) => {
+  console.info(event.detail)
+})
+```

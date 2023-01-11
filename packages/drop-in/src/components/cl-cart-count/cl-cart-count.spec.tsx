@@ -1,7 +1,7 @@
-import type { TriggerCartUpdateEvent } from '#apis/commercelayer/cart'
+import * as client from '#apis/commercelayer/client'
+import type { CLCustomEventDetailMap } from '#apis/event'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClCartCount } from './cl-cart-count'
-import * as client from '#apis/commercelayer/client'
 
 describe('cl-cart-count.spec', () => {
   it('renders', async () => {
@@ -34,24 +34,30 @@ describe('cl-cart-count.spec', () => {
     `)
   })
 
-  it('renders with updated quantity when "cartUpdate" is triggered with order details', async () => {
-    const { root, waitForChanges, win } = await newSpecPage({
+  it('renders with updated quantity when "cl.cart.update" is triggered with order details', async () => {
+    const { root, waitForChanges, doc } = await newSpecPage({
       components: [ClCartCount],
       html: `<cl-cart-count></cl-cart-count>`
     })
 
-    win.dispatchEvent(
-      new CustomEvent<TriggerCartUpdateEvent>('cartUpdate', {
-        detail: {
-          order: {
-            id: 'ABC123',
-            type: 'orders',
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-            skus_count: 12
+    doc.dispatchEvent(
+      new CustomEvent<CLCustomEventDetailMap['cl.cart.update']>(
+        'cl.cart.update',
+        {
+          detail: {
+            request: {
+              args: []
+            },
+            response: {
+              id: 'ABC123',
+              type: 'orders',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              skus_count: 12
+            }
           }
         }
-      })
+      )
     )
 
     await waitForChanges()
@@ -65,40 +71,52 @@ describe('cl-cart-count.spec', () => {
     `)
   })
 
-  it('renders as empty when "cartUpdate" is triggered with empty order', async () => {
-    const { root, waitForChanges, win } = await newSpecPage({
+  it('renders as empty when "cl.cart.update" is triggered with empty order', async () => {
+    const { root, waitForChanges, doc } = await newSpecPage({
       components: [ClCartCount],
       html: `<cl-cart-count></cl-cart-count>`
     })
 
-    win.dispatchEvent(
-      new CustomEvent<TriggerCartUpdateEvent>('cartUpdate', {
-        detail: {
-          order: {
-            id: 'ABC123',
-            type: 'orders',
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-            skus_count: 12
+    doc.dispatchEvent(
+      new CustomEvent<CLCustomEventDetailMap['cl.cart.update']>(
+        'cl.cart.update',
+        {
+          detail: {
+            request: {
+              args: []
+            },
+            response: {
+              id: 'ABC123',
+              type: 'orders',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              skus_count: 12
+            }
           }
         }
-      })
+      )
     )
 
     await waitForChanges()
 
-    win.dispatchEvent(
-      new CustomEvent<TriggerCartUpdateEvent>('cartUpdate', {
-        detail: {
-          order: {
-            id: 'ABC123',
-            type: 'orders',
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-            skus_count: 0
+    doc.dispatchEvent(
+      new CustomEvent<CLCustomEventDetailMap['cl.cart.update']>(
+        'cl.cart.update',
+        {
+          detail: {
+            request: {
+              args: []
+            },
+            response: {
+              id: 'ABC123',
+              type: 'orders',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              skus_count: 0
+            }
           }
         }
-      })
+      )
     )
 
     await waitForChanges()

@@ -1,10 +1,7 @@
-import {
-  getCart,
-  TriggerCartUpdateEvent,
-  TriggerHostedCartUpdateEvent
-} from '#apis/commercelayer/cart'
+import { getCart } from '#apis/commercelayer/cart'
+import { listenTo } from '#apis/event'
 import type { Order } from '@commercelayer/sdk'
-import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
+import { Component, h, Host, JSX, Prop, State } from '@stencil/core'
 
 @Component({
   tag: 'cl-cart-count',
@@ -16,19 +13,15 @@ export class ClCartCount {
   @State() count: number | undefined
 
   async componentWillLoad(): Promise<void> {
+    listenTo('cl.cart.update', (event) => {
+      void this.updateCart(event.detail.response)
+    })
+
+    listenTo('cl.cart.hostedCartUpdate', (event) => {
+      void this.updateCart(event.detail.response)
+    })
+
     await this.updateCart(null)
-  }
-
-  @Listen('cartUpdate', { target: 'window' })
-  cartUpdateHandler(event: CustomEvent<TriggerCartUpdateEvent>): void {
-    void this.updateCart(event.detail.order)
-  }
-
-  @Listen('hostedCartUpdate', { target: 'window' })
-  hostedCartUpdateHandler(
-    event: CustomEvent<TriggerHostedCartUpdateEvent>
-  ): void {
-    void this.updateCart(event.detail.order)
   }
 
   private async updateCart(cart: Order | null): Promise<void> {

@@ -1,18 +1,12 @@
+import { dispatchEvent } from '#apis/event'
+import type { GetPrice } from '#apis/types'
+import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
-import { pDebounce } from '#utils/promise'
-import type { Price as SdkPrice } from '@commercelayer/sdk'
+import type { Price } from '@commercelayer/sdk'
 import { chunk, memoize, uniq } from '../../utils/utils'
 import { createClient } from './client'
 import { getConfig } from './config'
 
-export type Price = Pick<
-  SdkPrice,
-  | 'amount_cents'
-  | 'compare_at_amount_cents'
-  | 'formatted_amount'
-  | 'formatted_compare_at_amount'
-  | 'currency_code'
->
 interface PriceList {
   [sku: string]: Price | undefined
 }
@@ -60,8 +54,14 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
 
 const getPrices = pDebounce(_getPrices, { wait: 10, maxWait: 50 })
 
-export const getPrice = memoize(
-  async (sku: string): Promise<Price | undefined> => {
-    return await getPrices([sku]).then((result) => result[sku])
-  }
-)
+const getMemoizedPrice = memoize<GetPrice>(async (sku) => {
+  return await getPrices([sku]).then((result) => result[sku])
+})
+
+export const getPrice: GetPrice = async (sku) => {
+  const price = await getMemoizedPrice(sku)
+
+  dispatchEvent('cl.prices.getPrice', [sku], price)
+
+  return price
+}

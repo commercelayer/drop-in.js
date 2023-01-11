@@ -1,4 +1,4 @@
-import type { Sku } from '#apis/commercelayer/skus'
+import type { Sku } from '#apis/types'
 import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
 
 export type Type =

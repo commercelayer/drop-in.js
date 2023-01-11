@@ -1,18 +1,6 @@
-import {
-  getCheckoutUrl,
-  TriggerCartUpdateEvent,
-  TriggerHostedCartUpdateEvent
-} from '#apis/commercelayer/cart'
-import {
-  Component,
-  Element,
-  h,
-  Host,
-  JSX,
-  Listen,
-  Prop,
-  State
-} from '@stencil/core'
+import { getCheckoutUrl } from '#apis/commercelayer/cart'
+import { listenTo } from '#apis/event'
+import { Component, Element, h, Host, JSX, Prop, State } from '@stencil/core'
 
 export interface Props {
   target: string
@@ -30,32 +18,26 @@ export class ClCheckoutLink implements Props {
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
+    listenTo('cl.cart.update', async (event) => {
+      if (
+        this.href === undefined &&
+        event.detail.response.skus_count !== undefined &&
+        event.detail.response.skus_count > 0
+      ) {
+        this.href = await getCheckoutUrl()
+      }
+    })
+
+    listenTo('cl.cart.hostedCartUpdate', (event) => {
+      if (
+        event.detail.response.skus_count === undefined ||
+        event.detail.response.skus_count === 0
+      ) {
+        this.href = undefined
+      }
+    })
+
     this.href = await getCheckoutUrl()
-  }
-
-  @Listen('cartUpdate', { target: 'window' })
-  async cartUpdateHandler(
-    event: CustomEvent<TriggerCartUpdateEvent>
-  ): Promise<void> {
-    if (
-      this.href === undefined &&
-      event.detail.order.skus_count !== undefined &&
-      event.detail.order.skus_count > 0
-    ) {
-      this.href = await getCheckoutUrl()
-    }
-  }
-
-  @Listen('hostedCartUpdate', { target: 'window' })
-  async hostedCartUpdateHandler(
-    event: CustomEvent<TriggerHostedCartUpdateEvent>
-  ): Promise<void> {
-    if (
-      event.detail.order.skus_count === undefined ||
-      event.detail.order.skus_count === 0
-    ) {
-      this.href = undefined
-    }
   }
 
   render(): JSX.Element {
