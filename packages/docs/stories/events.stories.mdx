@@ -5,9 +5,16 @@ import { linkTo } from '@storybook/addon-links'
 
 # Events
 
-Commerce Layer [drop-in.js](https://github.com/commercelayer/drop-in.js) dispatches the following custom events to the [document](https://developer.mozilla.org/en-US/docs/Web/API/Document) object:
+Commerce Layer [drop-in.js](https://github.com/commercelayer/drop-in.js) dispatches some custom events to the [document](https://developer.mozilla.org/en-US/docs/Web/API/Document) object. If needed, you can intercept them and trigger specific actions on your side accordingly.
 
-All custom events implement the same interface; `request.args` and `response` vary from one event to another.
+## Interface
+
+All custom events implement the same `interface`, where:
+
+| Attribute       | Type   | Description                |
+|-----------------|--------|----------------------------|
+| **`request.args`**   | Array | The list of arguments used to send the request to the Commerce Layer API endpoint. | 
+| **`response`**  | Object | The JSON object corresponding to the returned [Commerce Layer resource](https://docs.commercelayer.io/core/v/api-reference/). |
 
 ```ts dark
 interface CLCustomEvent {
@@ -18,43 +25,63 @@ interface CLCustomEvent {
 }
 ```
 
+`request.args` and `response` vary based on the specific event, as detailed here below.
+
 ## Event types
 
-### `cl.cart.addItem`
+These are the custom events currently dispatched by the [drop-in.js](https://github.com/commercelayer/drop-in.js) web components:
 
-This event is dispatched when an item is added to cart.
+### `cl-cart-additem`
 
-- **`request.args`** `[sku: string, quantity: number]`
-- **`response`** [`LineItem`](https://docs.commercelayer.io/core/v/api-reference/line_items/object)
+This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--basic) component when an item is added to cart.
+
+The returned `event.detail` contains the SKU code and quantity of the added item as the `request` arguments and the added line item object as the `response`:
+
+| Attribute          | Type   | Value                      |
+|--------------------|--------|----------------------------|
+| **`request.args`** | Array  | `[sku: string, quantity: number]` | 
+| **`response`**     | Object | [`LineItem`](https://docs.commercelayer.io/core/v/api-reference/line_items/object) |
 
 ```js dark
-document.addEventListener('cl.cart.addItem', (event) => {
+document.addEventListener('cl-cart-additem', (event) => {
   console.info(event.detail)
 })
 ```
 
-### `cl.prices.getPrice`
+### `cl-prices-getprice`
 
-This event is dispatched whenever a price is fetched.
+This event is dispatched by the [**cl-price**](?path=/docs/components-price-cl-price--basic) component when a price is fetched.
 
-- **`request.args`** `[code: string]`
-- **`response`** [`Price`](https://docs.commercelayer.io/core/v/api-reference/prices/object)
+The returned `event.detail` contains the SKU code associated with the price as the `request` argument and the fetched price object as the `response`:
+
+| Attribute          | Type   | Value                      |
+|--------------------|--------|----------------------------|
+| **`request.args`** | Array  | `[code: string]` | 
+| **`response`**     | Object | [`Price`](https://docs.commercelayer.io/core/v/api-reference/prices/object) |
 
 ```js dark
-document.addEventListener('cl.prices.getPrice', (event) => {
+document.addEventListener('cl-prices-getprice', (event) => {
   console.info(event.detail)
 })
 ```
 
-### `cl.skus.getSku`
+### `cl-skus-getsku`
 
-This event is dispatched whenever a SKU is fetched.
+This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--basic) and [**cl-availability**](?path=/docs/components-availability-cl-availability--basic) components when an SKU is fetched.
 
-- **`request.args`** `[code: string]`
-- **`response`** [`Sku`](https://docs.commercelayer.io/core/v/api-reference/skus/object)
+The returned `event.detail` contains the SKU code as the `request` argument and the fetched SKU object as the `response`:
+
+| Attribute          | Type   | Value                      |
+|--------------------|--------|----------------------------|
+| **`request.args`** | Array  | `[code: string]` | 
+| **`response`**     | Object | [`Sku`](https://docs.commercelayer.io/core/v/api-reference/skus/object) |
 
 ```js dark
-document.addEventListener('cl.skus.getSku', (event) => {
+document.addEventListener('cl-skus-getsku', (event) => {
   console.info(event.detail)
 })
 ```
+
+### Event debouncing
+
+To avoid the same event being fired too often, the [drop-in.js](https://github.com/commercelayer/drop-in.js) implements a basic debouncing practice on the custom events management: multiple identical events (i.e. with the same `request.args` and `response`) triggered less than **10ms** one from the other are fired only once (the first time).
