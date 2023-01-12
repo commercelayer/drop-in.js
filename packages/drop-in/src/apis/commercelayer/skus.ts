@@ -72,7 +72,7 @@ const getMemoizedSku = memoize<GetSku>(async (code) => {
 export const getSku: GetSku = async (code) => {
   const sku = await getMemoizedSku(code)
 
-  dispatchEvent('cl.skus.getSku', [code], sku)
+  dispatchEvent('cl-skus-getsku', [code], sku)
 
   return sku
 }

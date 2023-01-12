@@ -13,11 +13,11 @@ export class ClCartCount {
   @State() count: number | undefined
 
   async componentWillLoad(): Promise<void> {
-    listenTo('cl.cart.update', (event) => {
+    listenTo('cl-cart-update', (event) => {
       void this.updateCart(event.detail.response)
     })
 
-    listenTo('cl.cart.hostedCartUpdate', (event) => {
+    listenTo('cl-cart-hostedcartupdate', (event) => {
       void this.updateCart(event.detail.response)
     })
 

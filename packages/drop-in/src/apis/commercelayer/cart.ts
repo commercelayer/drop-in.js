@@ -133,7 +133,7 @@ export const triggerCartUpdate: TriggerCartUpdate = async () => {
   const order = await getCart()
 
   if (order !== null) {
-    dispatchEvent('cl.cart.update', [], order)
+    dispatchEvent('cl-cart-update', [], order)
   }
 
   return order
@@ -153,7 +153,7 @@ export const triggerHostedCartUpdate: TriggerHostedCartUpdate = async (
   const order = await getCart()
 
   if (order !== null) {
-    dispatchEvent('cl.cart.hostedCartUpdate', [iframeId], order)
+    dispatchEvent('cl-cart-hostedcartupdate', [iframeId], order)
   }
 
   return order
@@ -173,7 +173,7 @@ export const addItem: AddItem = async (sku, quantity) => {
     _update_quantity: true
   })
 
-  dispatchEvent('cl.cart.addItem', [sku, quantity], lineItem)
+  dispatchEvent('cl-cart-additem', [sku, quantity], lineItem)
 
   if (getCart.cache.clear !== undefined) {
     getCart.cache.clear()

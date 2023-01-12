@@ -61,7 +61,7 @@ const getMemoizedPrice = memoize<GetPrice>(async (sku) => {
 export const getPrice: GetPrice = async (sku) => {
   const price = await getMemoizedPrice(sku)
 
-  dispatchEvent('cl.prices.getPrice', [sku], price)
+  dispatchEvent('cl-prices-getprice', [sku], price)
 
   return price
 }

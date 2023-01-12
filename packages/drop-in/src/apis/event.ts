@@ -9,11 +9,11 @@ import type {
 } from './types'
 
 export interface EventTypes {
-  'cl.prices.getPrice': GetPrice
-  'cl.skus.getSku': GetSku
-  'cl.cart.addItem': AddItem
-  'cl.cart.hostedCartUpdate': NonNullableReturnType<TriggerHostedCartUpdate>
-  'cl.cart.update': NonNullableReturnType<TriggerCartUpdate>
+  'cl-prices-getprice': GetPrice
+  'cl-skus-getsku': GetSku
+  'cl-cart-additem': AddItem
+  'cl-cart-hostedcartupdate': NonNullableReturnType<TriggerHostedCartUpdate>
+  'cl-cart-update': NonNullableReturnType<TriggerCartUpdate>
 }
 
 export type CLCustomEventDetailMap = {

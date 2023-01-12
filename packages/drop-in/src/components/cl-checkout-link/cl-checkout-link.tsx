@@ -18,7 +18,7 @@ export class ClCheckoutLink implements Props {
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
-    listenTo('cl.cart.update', async (event) => {
+    listenTo('cl-cart-update', async (event) => {
       if (
         this.href === undefined &&
         event.detail.response.skus_count !== undefined &&
@@ -28,7 +28,7 @@ export class ClCheckoutLink implements Props {
       }
     })
 
-    listenTo('cl.cart.hostedCartUpdate', (event) => {
+    listenTo('cl-cart-hostedcartupdate', (event) => {
       if (
         event.detail.response.skus_count === undefined ||
         event.detail.response.skus_count === 0
