@@ -1,4 +1,4 @@
-import { dispatchEvent } from '#apis/event'
+import { fireEvent } from '#apis/event'
 import type { GetSku, Sku } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
@@ -72,7 +72,7 @@ const getMemoizedSku = memoize<GetSku>(async (code) => {
 export const getSku: GetSku = async (code) => {
   const sku = await getMemoizedSku(code)
 
-  dispatchEvent('cl.skus.getSku', [code], sku)
+  fireEvent('cl-skus-getsku', [code], sku)
 
   return sku
 }

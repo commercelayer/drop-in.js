@@ -34,15 +34,15 @@ describe('cl-cart-count.spec', () => {
     `)
   })
 
-  it('renders with updated quantity when "cl.cart.update" is triggered with order details', async () => {
+  it('renders with updated quantity when "cl-cart-update" is triggered with order details', async () => {
     const { root, waitForChanges, doc } = await newSpecPage({
       components: [ClCartCount],
       html: `<cl-cart-count></cl-cart-count>`
     })
 
     doc.dispatchEvent(
-      new CustomEvent<CLCustomEventDetailMap['cl.cart.update']>(
-        'cl.cart.update',
+      new CustomEvent<CLCustomEventDetailMap['cl-cart-update']>(
+        'cl-cart-update',
         {
           detail: {
             request: {
@@ -71,15 +71,15 @@ describe('cl-cart-count.spec', () => {
     `)
   })
 
-  it('renders as empty when "cl.cart.update" is triggered with empty order', async () => {
+  it('renders as empty when "cl-cart-update" is triggered with empty order', async () => {
     const { root, waitForChanges, doc } = await newSpecPage({
       components: [ClCartCount],
       html: `<cl-cart-count></cl-cart-count>`
     })
 
     doc.dispatchEvent(
-      new CustomEvent<CLCustomEventDetailMap['cl.cart.update']>(
-        'cl.cart.update',
+      new CustomEvent<CLCustomEventDetailMap['cl-cart-update']>(
+        'cl-cart-update',
         {
           detail: {
             request: {
@@ -100,8 +100,8 @@ describe('cl-cart-count.spec', () => {
     await waitForChanges()
 
     doc.dispatchEvent(
-      new CustomEvent<CLCustomEventDetailMap['cl.cart.update']>(
-        'cl.cart.update',
+      new CustomEvent<CLCustomEventDetailMap['cl-cart-update']>(
+        'cl-cart-update',
         {
           detail: {
             request: {

@@ -90,7 +90,7 @@ export class ClCart {
   private flag_justAddedToCart: boolean = false
 
   async componentWillLoad(): Promise<void> {
-    listenTo('cl.cart.hostedCartUpdate', (event) => {
+    listenTo('cl-cart-hostedcartupdate', (event) => {
       const [iframeId] = event.detail.request.args
       if (this.iframe.id !== iframeId) {
         this.flag_listenForHostedCartUpdateResponse = false
@@ -98,7 +98,7 @@ export class ClCart {
       }
     })
 
-    listenTo('cl.cart.update', async () => {
+    listenTo('cl-cart-update', async () => {
       this.flag_justAddedToCart = true
       this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
 

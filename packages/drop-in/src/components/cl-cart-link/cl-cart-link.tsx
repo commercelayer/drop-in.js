@@ -26,7 +26,7 @@ export class CLCartLink implements Props {
       this.minicart.type = 'mini'
     }
 
-    listenTo('cl.cart.update', async () => {
+    listenTo('cl-cart-update', async () => {
       if (this.href === undefined || !isValidUrl(this.href)) {
         this.href = await getCartUrl()
       }
