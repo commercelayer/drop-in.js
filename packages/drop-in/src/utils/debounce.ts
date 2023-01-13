@@ -42,6 +42,18 @@ export const pDebounce = <T extends (arg: any[]) => any>(
   }
 }
 
+/**
+ * Creates a memoized-debounced function that delays invoking `func` until after `wait` milliseconds
+ * have elapsed since the last time the memoized-debounced function was invoked.
+ *
+ * The function is also **memoized** using all arguments as the map cache key. You can override this
+ * default by providing a `resolver` function.
+ * @param func The function to debounce.
+ * @param wait The number of milliseconds to delay.
+ * @param options The options object.
+ * @param resolver The function to resolve the cache key (for memoized function).
+ * @returns Returns the new memoized function debounced.
+ */
 export function memoDebounce<F extends (...args: any[]) => any>(
   func: F,
   wait = 0,
