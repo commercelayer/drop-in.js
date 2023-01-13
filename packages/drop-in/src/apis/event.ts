@@ -31,27 +31,41 @@ interface CLCustomEventDetail<Func extends (...args: any) => any> {
   response: Awaited<ReturnType<Func>>
 }
 
-export const dispatchEvent = memoDebounce(
-  <Type extends keyof EventTypes, Func extends EventTypes[Type]>(
-    type: Type,
-    args: Parameters<Func>,
-    response: Awaited<ReturnType<Func>>
-  ): void => {
-    document.dispatchEvent(
-      new CustomEvent<CLCustomEventDetail<Func>>(type, {
-        detail: {
-          request: {
-            args
-          },
-          response
-        }
-      })
-    )
-  },
-  10,
-  { maxWait: 50 }
-)
+/**
+ * Dispatch a custom event `type`, providing an array of `args` and a `response`.
+ *
+ * > **To avoid the same event being fired too often**, it implements a basic debouncing practice:
+ * multiple identical events (i.e. with the same `args` and `response`) triggered
+ * less than **10ms** one from the other are fired only once (the first time).
+ */
+const _fireEvent = <
+  Type extends keyof EventTypes,
+  Func extends EventTypes[Type]
+>(
+  type: Type,
+  args: Parameters<Func>,
+  response: Awaited<ReturnType<Func>>
+): void => {
+  document.dispatchEvent(
+    new CustomEvent<CLCustomEventDetail<Func>>(type, {
+      detail: {
+        request: {
+          args
+        },
+        response
+      }
+    })
+  )
+}
 
+export const fireEvent = memoDebounce(_fireEvent, 10, {
+  leading: true,
+  trailing: false
+}) as unknown as typeof _fireEvent
+
+/**
+ * Listen to a custom event `type`.
+ */
 export function listenTo<Type extends keyof CLCustomEventDetailMap>(
   type: Type,
   listener: (

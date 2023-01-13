@@ -1,4 +1,4 @@
-import { dispatchEvent } from '#apis/event'
+import { fireEvent } from '#apis/event'
 import type { GetPrice } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
@@ -61,7 +61,7 @@ const getMemoizedPrice = memoize<GetPrice>(async (sku) => {
 export const getPrice: GetPrice = async (sku) => {
   const price = await getMemoizedPrice(sku)
 
-  dispatchEvent('cl-prices-getprice', [sku], price)
+  fireEvent('cl-prices-getprice', [sku], price)
 
   return price
 }

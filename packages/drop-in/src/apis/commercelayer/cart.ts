@@ -1,6 +1,6 @@
 import { createClient, getAccessToken } from '#apis/commercelayer/client'
 import { getConfig } from '#apis/commercelayer/config'
-import { dispatchEvent } from '#apis/event'
+import { fireEvent } from '#apis/event'
 import { getKeyForCart } from '#apis/storage'
 import type {
   AddItem,
@@ -133,7 +133,7 @@ export const triggerCartUpdate: TriggerCartUpdate = async () => {
   const order = await getCart()
 
   if (order !== null) {
-    dispatchEvent('cl-cart-update', [], order)
+    fireEvent('cl-cart-update', [], order)
   }
 
   return order
@@ -153,7 +153,7 @@ export const triggerHostedCartUpdate: TriggerHostedCartUpdate = async (
   const order = await getCart()
 
   if (order !== null) {
-    dispatchEvent('cl-cart-hostedcartupdate', [iframeId], order)
+    fireEvent('cl-cart-hostedcartupdate', [iframeId], order)
   }
 
   return order
@@ -173,7 +173,7 @@ export const addItem: AddItem = async (sku, quantity) => {
     _update_quantity: true
   })
 
-  dispatchEvent('cl-cart-additem', [sku, quantity], lineItem)
+  fireEvent('cl-cart-additem', [sku, quantity], lineItem)
 
   if (getCart.cache.clear !== undefined) {
     getCart.cache.clear()
