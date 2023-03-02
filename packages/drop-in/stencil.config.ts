@@ -14,6 +14,8 @@ export const config: Config = {
   minifyJs: true,
   minifyCss: true,
 
+  sourceMap: false,
+
   plugins: [
     sass()
   ],
@@ -32,7 +34,7 @@ export const config: Config = {
       type: 'dist-custom-elements',
       dir: 'dist/components',
       includeGlobalScripts: false,
-      autoDefineCustomElements: true
+      customElementsExportBehavior: 'auto-define-custom-elements'
     },
     {
       type: 'docs-readme',

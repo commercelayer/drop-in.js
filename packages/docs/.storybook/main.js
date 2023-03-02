@@ -1,3 +1,6 @@
+// @ts-check
+
+/** @type import('@storybook/core-common').StorybookConfig */
 module.exports = {
   stories: [
     '../stories/**/*.stories.mdx',
@@ -9,6 +12,10 @@ module.exports = {
     '@storybook/addon-interactions'
   ],
   framework: '@storybook/html',
+  features: {
+    postcss: false
+  },
+  staticDirs: ['../public'],
   core: {
     disableTelemetry: true, // 👈 Disables telemetry
   }
