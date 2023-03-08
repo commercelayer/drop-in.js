@@ -27,7 +27,7 @@ importers:
   packages/docs:
     specifiers:
       '@babel/core': ^7.21.0
-      '@commercelayer/drop-in.js': workspace:^1.1.0
+      '@commercelayer/drop-in.js': workspace:^1.2.0
       '@storybook/addon-actions': ^6.5.16
       '@storybook/addon-docs': ^6.5.16
       '@storybook/addon-essentials': ^6.5.16
