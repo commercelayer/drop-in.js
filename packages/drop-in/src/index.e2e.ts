@@ -317,7 +317,7 @@ describe('index.e2e', () => {
       .toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root>
-          3
+          4
         </mock:shadow-root>
       </cl-availability-info>
     `)
@@ -326,7 +326,7 @@ describe('index.e2e', () => {
       .toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root>
-          4
+          6
         </mock:shadow-root>
       </cl-availability-info>
     `)
@@ -335,7 +335,7 @@ describe('index.e2e', () => {
       .toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root>
-          Express Delivery
+          Standard Shipping
         </mock:shadow-root>
       </cl-availability-info>
     `)
@@ -371,7 +371,7 @@ describe('index.e2e', () => {
       .toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root>
-          3
+          4
         </mock:shadow-root>
       </cl-availability-info>
     `)
@@ -380,7 +380,7 @@ describe('index.e2e', () => {
       .toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root>
-          4
+          6
         </mock:shadow-root>
       </cl-availability-info>
     `)
@@ -389,7 +389,7 @@ describe('index.e2e', () => {
       .toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root>
-          Express Delivery
+          Standard Shipping
         </mock:shadow-root>
       </cl-availability-info>
     `)
@@ -481,7 +481,7 @@ describe('index.e2e', () => {
       .toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root>
-          3
+          4
         </mock:shadow-root>
       </cl-availability-info>
     `)
@@ -490,7 +490,7 @@ describe('index.e2e', () => {
       .toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root>
-          4
+          6
         </mock:shadow-root>
       </cl-availability-info>
     `)
@@ -499,7 +499,7 @@ describe('index.e2e', () => {
       .toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root>
-          Express Delivery
+          Standard Shipping
         </mock:shadow-root>
       </cl-availability-info>
     `)

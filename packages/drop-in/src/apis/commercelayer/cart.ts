@@ -38,7 +38,7 @@ export function isValidForCheckout(order: Order): boolean {
   return (
     order.line_items?.find((lineItem) => {
       return LINE_ITEMS_SHOPPABLE.includes(
-        lineItem.item_type as typeof LINE_ITEMS_SHOPPABLE[number]
+        lineItem.item_type as (typeof LINE_ITEMS_SHOPPABLE)[number]
       )
     }) !== undefined
   )

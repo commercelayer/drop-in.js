@@ -1,5 +1,5 @@
 import { ArgTypes } from '@storybook/html'
-import { DecoratorFunction } from '@storybook/addons'
+import { DecoratorFunction, Parameters } from '@storybook/addons'
 import { defineCustomElements } from '@commercelayer/drop-in.js/dist/loader'
 import { clConfig } from '../stories/assets/constants'
 
@@ -27,12 +27,12 @@ export const argTypes: ArgTypes<Args> = {
   }
 }
 
-export const args = {
+export const args: Args = {
   'Use drop-in.css': false,
   'Use minicart.css': false
 };
 
-export const parameters = {
+export const parameters: Parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   previewTabs: { 'storybook/docs/panel': { index: -1 } },
   // viewMode: 'docs',

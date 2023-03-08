@@ -25,7 +25,7 @@
     "shipping_category": "shipping_category_1",
     "stock_location": "stock_location_2",
     "name": "Express Delivery",
-    "price_amount_cents": 700
+    "price_amount_cents": 1200
   },
   {
     "reference": "shipping_method_4",

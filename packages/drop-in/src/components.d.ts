@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Type } from "./components/cl-availability-info/cl-availability-info";
+export { Type } from "./components/cl-availability-info/cl-availability-info";
 export namespace Components {
     interface ClAddToCart {
         "code": string | undefined;
