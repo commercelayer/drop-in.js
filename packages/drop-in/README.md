@@ -6,6 +6,8 @@ Prices, availability messages, shopping bag, and more are automatically mixed in
 
 ![Commerce Layer drop-in library](https://user-images.githubusercontent.com/1681269/203999041-980f0dec-4fca-45c9-a558-b14153158106.jpg)
 
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/@commercelayer/drop-in.js)
+
 ## Getting started
 
 For a constantly updated list of the available and soon-to-come micro frontends provided by Commerce Layer's drop-in library, please refer to [this interactive documentation](https://commercelayer.github.io/drop-in.js) that will provide you with all the necessary information about the involved web components and help you get started in a snap.
