@@ -39,6 +39,7 @@ jobs:
 
       - name: Log 🔎
         run: |
+          commercelayer version
           commercelayer plugins
           commercelayer applications:current
 
