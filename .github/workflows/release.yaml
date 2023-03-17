@@ -13,9 +13,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create a draft GitHub release 🎁
-        uses: ncipollo/release-action@v1
+        uses: softprops/action-gh-release@v1
         with:
+          token: ${{ secrets.COMMERCELAYER_CI_TOKEN }}
           draft: true
           prerelease: ${{ contains(github.ref, 'beta.') }}
-          generateReleaseNotes: true
-          discussionCategory: Announcements
+          generate_release_notes: true
+          discussion_category_name: Announcements
