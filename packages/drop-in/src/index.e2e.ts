@@ -628,7 +628,7 @@ describe('index.e2e', () => {
       <cl-checkout-link target="_blank" cl-hydrated>
         <mock:shadow-root>
           <a
-            href="https://drop-in-js.checkout.commercelayer.app/${cartId}?accessToken=${accessToken}"
+            href="https://drop-in-js.commercelayer.app/checkout/${cartId}?accessToken=${accessToken}"
             part="a"
             target="_blank"
           >
@@ -680,7 +680,7 @@ describe('index.e2e', () => {
       <cl-checkout-link target="_blank" cl-hydrated>
         <mock:shadow-root>
           <a
-            href="https://drop-in-js.checkout.commercelayer.app/${cartId}?accessToken=${accessToken}"
+            href="https://drop-in-js.commercelayer.app/checkout/${cartId}?accessToken=${accessToken}"
             part="a"
             target="_blank"
           >
@@ -732,7 +732,7 @@ describe('index.e2e', () => {
       <cl-checkout-link target="_blank" cl-hydrated>
         <mock:shadow-root>
           <a
-            href="https://drop-in-js.checkout.commercelayer.app/${cartId}?accessToken=${accessToken}"
+            href="https://drop-in-js.commercelayer.app/checkout/${cartId}?accessToken=${accessToken}"
             part="a"
             target="_blank"
           >
