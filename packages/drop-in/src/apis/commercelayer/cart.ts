@@ -96,7 +96,7 @@ export async function getCheckoutUrl(): Promise<string | undefined> {
     return undefined
   }
 
-  return `https://${config.slug}.checkout.commercelayer.app/${
+  return `https://${config.slug}.commercelayer.app/checkout/${
     cart.id ?? 'null'
   }?accessToken=${accessToken}`
 }

@@ -37,7 +37,7 @@
     "husky": "^8.0.3",
     "lerna": "^6.5.1",
     "lint-staged": "^13.2.0",
-    "npm-check-updates": "^16.7.12",
+    "npm-check-updates": "^16.7.13",
     "replace-in-file": "^6.3.5",
     "typescript": "^5.0.2"
   }

@@ -44,7 +44,7 @@
     "email": "marco.montalbano@commercelayer.io"
   },
   "dependencies": {
-    "@commercelayer/sdk": "^4.25.0",
+    "@commercelayer/sdk": "^4.26.0",
     "@types/lodash": "^4.14.191",
     "iframe-resizer": "4.3.6",
     "js-cookie": "^3.0.1",

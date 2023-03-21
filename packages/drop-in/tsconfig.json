@@ -26,8 +26,6 @@
       "jest.spec.helpers": ["jest.spec.helpers"]
     },
 
-    "importsNotUsedAsValues": "error",
-
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
