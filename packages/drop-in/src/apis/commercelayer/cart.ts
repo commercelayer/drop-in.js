@@ -192,7 +192,7 @@ export const addItem: AddItem = async (sku, quantity) => {
 export async function updateCartUrl(cartUrl: string): Promise<void> {
   const cart = await getCart()
 
-  if (cart !== null) {
+  if (cart !== null && cart.cart_url !== cartUrl) {
     const client = await createClient(getConfig())
     await client.orders.update({
       id: cart.id,
