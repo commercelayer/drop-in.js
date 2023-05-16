@@ -1,7 +1,7 @@
 {
   "name": "docs",
   "private": true,
-  "version": "1.3.1",
+  "version": "1.3.2",
   "scripts": {
     "start": "concurrently -n sass,app -c 'bgMagenta,bgMagenta' 'pnpm build:sass:watch' 'start-storybook -p 6006'",
     "build:copy": "cp -r ../drop-in/dist public/",
@@ -38,7 +38,7 @@
     "webpack": "^5.76.2"
   },
   "dependencies": {
-    "@commercelayer/drop-in.js": "workspace:^1.3.1",
+    "@commercelayer/drop-in.js": "workspace:^1.3.2",
     "lit-html": "^2.6.1"
   }
 }
