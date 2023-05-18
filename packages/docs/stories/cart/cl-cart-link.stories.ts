@@ -1,5 +1,5 @@
-import { Props } from '@commercelayer/drop-in.js/dist/types/components/cl-cart-link/cl-cart-link'
-import { Meta, StoryFn } from '@storybook/html'
+import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-cart-link/cl-cart-link'
+import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'

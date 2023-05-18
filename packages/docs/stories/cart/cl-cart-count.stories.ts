@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/html'
+import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'

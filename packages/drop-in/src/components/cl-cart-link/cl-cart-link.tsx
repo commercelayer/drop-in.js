@@ -1,6 +1,14 @@
 import { getCartUrl, isValidUrl } from '#apis/commercelayer/cart'
 import { listenTo } from '#apis/event'
-import { Component, Element, h, Host, JSX, Prop, State } from '@stencil/core'
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  type JSX,
+  Prop,
+  State
+} from '@stencil/core'
 
 export interface Props {
   target: string
@@ -63,8 +71,12 @@ export class CLCartLink implements Props {
         <Host
           role='button'
           tabindex='0'
-          onKeyDown={(event: KeyboardEvent) => this.handleKeyDown(event)}
-          onClick={() => this.handleOpenMinicart()}
+          onKeyDown={(event: KeyboardEvent) => {
+            this.handleKeyDown(event)
+          }}
+          onClick={() => {
+            this.handleOpenMinicart()
+          }}
         >
           <slot></slot>
         </Host>

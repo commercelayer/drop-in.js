@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 
-import { Meta, StoryFn } from '@storybook/html'
+import { type Meta, type StoryFn } from '@storybook/html'
 import { html } from 'lit-html'
 import { create } from '../utils'
 import type { Args as GlobalArgs } from '../.storybook/preview'
 import { codes } from './assets/constants'
 
-type Args = GlobalArgs & {}
+type Args = GlobalArgs
 
 export const meta: Meta<Args> = {
   title: 'Introduction',

@@ -1,7 +1,7 @@
 import { getCart } from '#apis/commercelayer/cart'
 import { listenTo } from '#apis/event'
 import type { Order } from '@commercelayer/sdk'
-import { Component, h, Host, JSX, Prop, State } from '@stencil/core'
+import { Component, h, Host, type JSX, Prop, State } from '@stencil/core'
 
 @Component({
   tag: 'cl-cart-count',

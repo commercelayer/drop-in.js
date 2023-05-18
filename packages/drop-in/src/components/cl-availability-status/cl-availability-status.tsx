@@ -1,5 +1,13 @@
 import type { Sku } from '#apis/types'
-import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
+import {
+  Component,
+  h,
+  Host,
+  type JSX,
+  Listen,
+  Prop,
+  State
+} from '@stencil/core'
 
 export interface Props {
   type: 'available' | 'unavailable' | undefined

@@ -13,7 +13,7 @@ import {
   Element,
   h,
   Host,
-  JSX,
+  type JSX,
   Prop,
   State,
   Watch
@@ -100,8 +100,12 @@ export class CLAddToCart implements Props {
         role='button'
         tabindex='0'
         aria-disabled={this.canBeSold() ? undefined : 'true'}
-        onKeyPress={(event: KeyboardEvent) => this.handleKeyPress(event)}
-        onClick={() => this.handleAddItem()}
+        onKeyPress={(event: KeyboardEvent) => {
+          this.handleKeyPress(event)
+        }}
+        onClick={() => {
+          this.handleAddItem()
+        }}
       >
         <slot></slot>
       </Host>

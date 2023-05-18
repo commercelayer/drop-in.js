@@ -47,7 +47,7 @@ export function getConfig(): Config {
     )
   }
 
-  // @ts-expect-error
+  // @ts-expect-error We are accessing an unknown window object
   const commercelayerConfig: CommerceLayerConfig = window.commercelayerConfig
 
   if (typeof commercelayerConfig.clientId !== 'string') {

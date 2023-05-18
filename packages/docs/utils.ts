@@ -1,4 +1,5 @@
-import litHtml, { render } from 'lit-html'
+import type litHtml from 'lit-html'
+import { render } from 'lit-html'
 
 export const create = (
   value: litHtml.TemplateResult,

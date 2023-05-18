@@ -1,5 +1,5 @@
-import { Props } from '@commercelayer/drop-in.js/dist/types/components/cl-availability-status/cl-availability-status'
-import { Meta, StoryFn } from '@storybook/html'
+import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-availability-status/cl-availability-status'
+import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'

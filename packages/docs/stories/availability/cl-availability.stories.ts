@@ -1,11 +1,11 @@
-import { Props } from '@commercelayer/drop-in.js/dist/types/components/cl-availability/cl-availability'
-import { Meta, StoryFn } from '@storybook/html'
+import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-availability/cl-availability'
+import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 import { codes } from '../assets/constants'
 
-type Args = GlobalArgs & Props & {}
+type Args = GlobalArgs & Props
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export const meta: Meta<Args> = {

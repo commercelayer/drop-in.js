@@ -1,5 +1,13 @@
 import type { Price } from '@commercelayer/sdk'
-import { Component, h, Host, JSX, Listen, Prop, State } from '@stencil/core'
+import {
+  Component,
+  h,
+  Host,
+  type JSX,
+  Listen,
+  Prop,
+  State
+} from '@stencil/core'
 
 export interface Props {
   type: 'price' | 'compare-at'
