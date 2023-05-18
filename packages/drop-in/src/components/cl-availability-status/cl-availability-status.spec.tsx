@@ -46,6 +46,8 @@ describe('cl-availability-status.spec', () => {
 
     const availabilityUpdateEvent: Sku = {
       id: 'ABC123',
+      code: 'ABC123',
+      name: 'ABC123',
       type: 'skus',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -112,6 +114,8 @@ describe('cl-availability-status.spec', () => {
 
     const availabilityUpdateEvent: Sku = {
       id: 'ABC123',
+      code: 'ABC123',
+      name: 'ABC123',
       type: 'skus',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),

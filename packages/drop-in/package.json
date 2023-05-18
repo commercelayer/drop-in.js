@@ -34,37 +34,39 @@
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e --detectOpenHandles --passWithNoTests",
     "test:unit": "stencil test --spec --detectOpenHandles --passWithNoTests",
-    "test:watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --e2e --detectOpenHandles'",
-    "test:unit:watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --detectOpenHandles'",
-    "test:e2e:watch": "pnpx nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --e2e --detectOpenHandles'",
-    "generate": "stencil generate"
+    "test:watch": "nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --e2e --detectOpenHandles'",
+    "test:unit:watch": "nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --spec --detectOpenHandles'",
+    "test:e2e:watch": "nodemon --watch src -e ts,tsx,js,jsx --exec 'stencil test --e2e --detectOpenHandles'",
+    "generate": "stencil generate",
+    "ts:check": "tsc --noEmit"
   },
   "author": {
     "name": "Marco Montalbano",
     "email": "marco.montalbano@commercelayer.io"
   },
   "dependencies": {
-    "@commercelayer/sdk": "^4.26.0",
-    "@types/lodash": "^4.14.191",
+    "@commercelayer/sdk": "^5.2.0",
+    "@types/lodash": "^4.14.194",
     "iframe-resizer": "4.3.6",
-    "js-cookie": "^3.0.1",
+    "js-cookie": "^3.0.5",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@stencil/core": "^2.20.0"
+    "@stencil/core": "^3.0.0"
   },
   "devDependencies": {
-    "@stencil/core": "^3.2.0",
-    "@stencil/sass": "^3.0.0",
+    "@stencil/core": "^3.2.2",
+    "@stencil/sass": "^3.0.2",
     "@types/iframe-resizer": "^3.5.9",
     "@types/jest": "^27",
     "@types/js-cookie": "^3.0.3",
     "jest": "^27",
     "jest-cli": "^27",
-    "puppeteer": "^19.7.5",
-    "sass": "^1.59.3",
+    "nodemon": "^2.0.22",
+    "puppeteer": "^20.2.1",
+    "sass": "^1.62.1",
     "ts-jest": "^27",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.4"
   },
   "license": "MIT",
   "engines": {

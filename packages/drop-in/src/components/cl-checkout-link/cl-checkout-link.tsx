@@ -21,7 +21,7 @@ export class ClCheckoutLink implements Props {
     listenTo('cl-cart-update', async (event) => {
       if (
         this.href === undefined &&
-        event.detail.response.skus_count !== undefined &&
+        event.detail.response.skus_count != null &&
         event.detail.response.skus_count > 0
       ) {
         this.href = await getCheckoutUrl()

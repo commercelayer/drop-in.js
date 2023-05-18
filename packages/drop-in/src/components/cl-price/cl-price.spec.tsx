@@ -9,6 +9,10 @@ const fakePrices: { [sku: string]: Price } = {
   ABC123: {
     id: 'ABC123',
     type: 'prices',
+    amount_cents: 1200,
+    amount_float: 12,
+    compare_at_amount_cents: 2850,
+    compare_at_amount_float: 28.5,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     formatted_amount: '€ 12.00',
@@ -17,6 +21,10 @@ const fakePrices: { [sku: string]: Price } = {
   DEF456: {
     id: 'DEF456',
     type: 'prices',
+    amount_cents: 3100,
+    amount_float: 31,
+    compare_at_amount_cents: 4300,
+    compare_at_amount_float: 43,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     formatted_amount: '€ 31.00',

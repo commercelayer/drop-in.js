@@ -4,11 +4,11 @@ import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-avai
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailability } from './cl-availability'
 
-const baseSku = (
-  id: string
-): Pick<Sku, 'id' | 'type' | 'created_at' | 'updated_at'> => {
+const baseSku = (id: string): Sku => {
   return {
     id,
+    code: id,
+    name: id,
     type: 'skus',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()

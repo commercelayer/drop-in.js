@@ -30,6 +30,9 @@ jobs:
       - name: Install 📦
         run: pnpm install
 
+      - name: TS Check 🔎
+        run: pnpm ts:check
+
       - name: Lint 🔎
         run: pnpm lint
 

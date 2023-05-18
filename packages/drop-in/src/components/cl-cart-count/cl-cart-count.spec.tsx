@@ -53,6 +53,9 @@ describe('cl-cart-count.spec', () => {
               type: 'orders',
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
+              status: 'approved',
+              fulfillment_status: 'fulfilled',
+              payment_status: 'paid',
               skus_count: 12
             }
           }
@@ -90,6 +93,9 @@ describe('cl-cart-count.spec', () => {
               type: 'orders',
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
+              status: 'approved',
+              fulfillment_status: 'fulfilled',
+              payment_status: 'paid',
               skus_count: 12
             }
           }
@@ -112,6 +118,9 @@ describe('cl-cart-count.spec', () => {
               type: 'orders',
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
+              status: 'approved',
+              fulfillment_status: 'fulfilled',
+              payment_status: 'paid',
               skus_count: 0
             }
           }

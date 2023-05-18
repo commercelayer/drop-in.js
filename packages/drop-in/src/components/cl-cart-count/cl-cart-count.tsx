@@ -26,7 +26,7 @@ export class ClCartCount {
 
   private async updateCart(cart: Order | null): Promise<void> {
     cart ||= await getCart()
-    if (cart?.skus_count !== undefined && cart.skus_count > 0) {
+    if (cart?.skus_count != null && cart.skus_count > 0) {
       this.count = cart.skus_count
     } else {
       this.count = undefined

@@ -44,7 +44,10 @@ describe('cl-cart-link.spec', () => {
       type: 'orders',
       id: 'order-123',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      status: 'approved',
+      fulfillment_status: 'fulfilled',
+      payment_status: 'paid'
     })
 
     const { root, waitForChanges } = await newSpecPage({
