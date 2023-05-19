@@ -9,6 +9,7 @@ import {
   Prop,
   State
 } from '@stencil/core'
+import type { CamelCasedProperties } from 'type-fest'
 
 export interface Props {
   target: string
@@ -18,7 +19,7 @@ export interface Props {
   tag: 'cl-checkout-link',
   shadow: true
 })
-export class ClCheckoutLink implements Props {
+export class ClCheckoutLink implements CamelCasedProperties<Props> {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) target: string = '_self'

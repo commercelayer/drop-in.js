@@ -8,6 +8,7 @@ import {
   Prop,
   State
 } from '@stencil/core'
+import type { CamelCasedProperties } from 'type-fest'
 
 export type Type =
   | 'min-days'
@@ -26,7 +27,7 @@ export interface Props {
   tag: 'cl-availability-info',
   shadow: true
 })
-export class ClAvailabilityInfo implements Props {
+export class ClAvailabilityInfo implements CamelCasedProperties<Props> {
   @Prop({ reflect: true }) type: Type
 
   @State() text: string | undefined

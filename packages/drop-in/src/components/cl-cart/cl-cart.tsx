@@ -18,6 +18,7 @@ import {
   Watch
 } from '@stencil/core'
 import { type IFrameComponent, iframeResizer } from 'iframe-resizer'
+import type { CamelCasedProperties } from 'type-fest'
 
 interface IframeData {
   message:
@@ -33,6 +34,12 @@ interface IframeData {
 }
 
 const hostedCartIframeUpdateEvent = { type: 'update' } as const
+
+export interface Props {
+  type: 'mini' | undefined
+  'open-on-add': boolean
+  open: boolean
+}
 
 @Component({
   tag: 'cl-cart',
@@ -53,7 +60,7 @@ const hostedCartIframeUpdateEvent = { type: 'update' } as const
   `,
   shadow: true
 })
-export class ClCart {
+export class ClCart implements CamelCasedProperties<Props> {
   @Element() host!: HTMLClCartElement
 
   private iframe!: IFrameComponent

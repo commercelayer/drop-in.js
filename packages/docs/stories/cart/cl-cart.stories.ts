@@ -1,10 +1,9 @@
+import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-cart/cl-cart'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
 
-type Args = {
-  'open-on-add': boolean
-}
+type Args = Props
 
 const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart',

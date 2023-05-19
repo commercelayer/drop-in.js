@@ -8,6 +8,7 @@ import {
   Prop,
   State
 } from '@stencil/core'
+import type { CamelCasedProperties } from 'type-fest'
 
 export interface Props {
   type: 'available' | 'unavailable' | undefined
@@ -17,7 +18,7 @@ export interface Props {
   tag: 'cl-availability-status',
   shadow: true
 })
-export class ClAvailabilityStatus implements Props {
+export class ClAvailabilityStatus implements CamelCasedProperties<Props> {
   @Prop({ reflect: true }) type: 'available' | 'unavailable' | undefined
 
   @State() available: boolean | undefined

@@ -2,12 +2,17 @@ import { getCart } from '#apis/commercelayer/cart'
 import { listenTo } from '#apis/event'
 import type { Order } from '@commercelayer/sdk'
 import { Component, h, Host, type JSX, Prop, State } from '@stencil/core'
+import type { CamelCasedProperties } from 'type-fest'
+
+export interface Props {
+  'hide-when-empty': boolean
+}
 
 @Component({
   tag: 'cl-cart-count',
   shadow: true
 })
-export class ClCartCount {
+export class ClCartCount implements CamelCasedProperties<Props> {
   @Prop({ reflect: true }) hideWhenEmpty: boolean = false
 
   @State() count: number | undefined

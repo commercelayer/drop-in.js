@@ -18,6 +18,7 @@ import {
   State,
   Watch
 } from '@stencil/core'
+import type { CamelCasedProperties } from 'type-fest'
 
 export interface Props {
   code: string | undefined
@@ -27,7 +28,7 @@ export interface Props {
   tag: 'cl-add-to-cart',
   shadow: true
 })
-export class CLAddToCart implements Props {
+export class CLAddToCart implements CamelCasedProperties<Props> {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) code: string | undefined
