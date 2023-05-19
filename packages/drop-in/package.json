@@ -45,12 +45,12 @@
     "email": "marco.montalbano@commercelayer.io"
   },
   "dependencies": {
-    "@commercelayer/sdk": "^5.2.0",
+    "@commercelayer/sdk": "^5.2.1",
     "@types/lodash": "^4.14.194",
     "iframe-resizer": "4.3.6",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
-    "type-fest": "^3.10.0"
+    "type-fest": "^3.11.0"
   },
   "peerDependencies": {
     "@stencil/core": "^3.0.0"

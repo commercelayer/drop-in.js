@@ -34,7 +34,7 @@
   "devDependencies": {
     "@commercelayer/eslint-config-ts": "^1.0.0",
     "concurrently": "^8.0.1",
-    "eslint": "^8.40.0",
+    "eslint": "^8.41.0",
     "husky": "^8.0.3",
     "lerna": "^6.6.2",
     "lint-staged": "^13.2.2",

@@ -20,7 +20,8 @@ const storybookConfig: StorybookConfig = {
     disableTelemetry: true // 👈 Disables telemetry
   },
   docs: {
-    autodocs: true
+    autodocs: true,
+    docsMode: true
   }
 }
 
