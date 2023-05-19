@@ -1,35 +1,15 @@
-import { HtmlRenderer } from '@storybook/html'
-import { BaseAnnotations } from '@storybook/types'
+import { Preview } from '@storybook/html'
 import { defineCustomElements } from '@commercelayer/drop-in.js/dist/loader'
 import { clConfig } from '../stories/assets/constants'
+import { PARAM_KEY as DROP_IN_CSS_PARAM_KEY, FILENAME as DROP_IN_CSS_FILENAME } from './addon-drop-in-css/constants'
+import { PARAM_KEY as MINICART_CSS_PARAM_KEY, FILENAME as MINICART_CSS_FILENAME } from './addon-minicart-css/constants'
 
-export type Args = {
-  'Use drop-in.css': boolean;
-  'Use minicart.css': boolean;
+export const globals = {
+  [DROP_IN_CSS_PARAM_KEY]: true,
+  [MINICART_CSS_PARAM_KEY]: true,
 }
 
-const preview: BaseAnnotations<HtmlRenderer, Args> = {
-  args: {
-    'Use drop-in.css': false,
-    'Use minicart.css': false
-  },
-  argTypes: {
-    'Use drop-in.css': {
-      description: 'Toggle this switch to *simulate* in this page how the components would look when importing the `drop-in.css` into your website.',
-      control: 'boolean',
-      table: {
-        category: 'storybook'
-      }
-    },
-    'Use minicart.css': {
-      description: 'Toggle this switch to *simulate* in this page how the components would look when importing the `minicart.css` into your website.',
-      control: 'boolean',
-      table: {
-        category: 'storybook',
-        disable: true
-      }
-    }
-  },
+const preview: Preview = {
   parameters: {
     docs: {
       canvas: { sourceState: 'shown' },
@@ -66,14 +46,31 @@ const preview: BaseAnnotations<HtmlRenderer, Args> = {
     }
   },
   decorators: [
-    (story, options) => {
-      const tale = story()
+    (story, context) => {
+      const dropInCssEnabled = context.globals[DROP_IN_CSS_PARAM_KEY]
+      const minicartCssEnabled = context.globals[MINICART_CSS_PARAM_KEY]
 
-      return `
-      ${options.args['Use drop-in.css'] ? '<link href="drop-in.css" rel="stylesheet">' : ''}
-      ${options.args['Use minicart.css'] ? '<link href="minicart.css" rel="stylesheet">' : ''}
-      ${typeof tale === 'string' ? tale : storyAsHTML(tale)}
-    `
+      if (dropInCssEnabled) {
+        const link = document.createElement('link')
+        link.href = DROP_IN_CSS_FILENAME
+        link.rel = 'stylesheet'
+        document.head.appendChild(link)
+      } else {
+        const links = document.querySelectorAll(`[href="${DROP_IN_CSS_FILENAME}"]`)
+        links.forEach(link => link.remove())
+      }
+
+      if (minicartCssEnabled) {
+        const link = document.createElement('link')
+        link.href = MINICART_CSS_FILENAME
+        link.rel = 'stylesheet'
+        document.head.appendChild(link)
+      } else {
+        const links = document.querySelectorAll(`[href="${MINICART_CSS_FILENAME}"]`)
+        links.forEach(link => link.remove())
+      }
+
+      return story()
     },
     (story) => {
       // @ts-expect-error

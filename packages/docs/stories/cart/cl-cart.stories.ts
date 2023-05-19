@@ -1,20 +1,14 @@
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
-import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-type Args = GlobalArgs & {
+type Args = {
   'open-on-add': boolean
 }
 
 const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart',
   argTypes: {
-    'Use minicart.css': {
-      table: {
-        disable: false
-      }
-    },
     'open-on-add': {
       description:
         'Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart (available <i>only</i> when the `cl-cart` component is used inside the `cl-cart-link` one).',
@@ -79,7 +73,4 @@ export const Minicart: StoryFn<Args> = (args) => {
     `
   )
 }
-Minicart.args = {
-  'Use drop-in.css': true,
-  'Use minicart.css': true
-}
+Minicart.args = {}

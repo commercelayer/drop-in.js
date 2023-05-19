@@ -71,7 +71,13 @@ importers:
       '@storybook/addons':
         specifier: ^7.0.12
         version: 7.0.12(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/api':
+        specifier: ^7.0.12
+        version: 7.0.12(react-dom@18.2.0)(react@18.2.0)
       '@storybook/blocks':
+        specifier: ^7.0.12
+        version: 7.0.12(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/components':
         specifier: ^7.0.12
         version: 7.0.12(react-dom@18.2.0)(react@18.2.0)
       '@storybook/core-common':
@@ -92,12 +98,18 @@ importers:
       '@storybook/types':
         specifier: ^7.0.12
         version: 7.0.12
+      '@types/common-tags':
+        specifier: ^1.8.1
+        version: 1.8.1
       '@types/react':
         specifier: ^18
         version: 18.2.6
       babel-loader:
         specifier: ^9.1.2
         version: 9.1.2(@babel/core@7.21.8)(webpack@5.83.1)
+      common-tags:
+        specifier: ^1.8.2
+        version: 1.8.2
       http-server:
         specifier: ^14.1.1
         version: 14.1.1
@@ -3925,6 +3937,10 @@ packages:
       '@types/node': 18.14.2
     dev: true
 
+  /@types/common-tags@1.8.1:
+    resolution: {integrity: sha512-20R/mDpKSPWdJs5TOpz3e7zqbeCNuMCPhV7Yndk9KU2Rbij2r5W4RzwDPkzC+2lzUqXYu9rFzTktCBnDjHuNQg==}
+    dev: true
+
   /@types/connect@3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
@@ -5641,6 +5657,11 @@ packages:
 
   /common-ancestor-path@1.0.1:
     resolution: {integrity: sha512-L3sHRo1pXXEqX8VU28kfgUY+YGsk09hPqZiZmLacNib6XNTCM8ubYeT7ryXQw8asB1sKgcU5lkB7ONug08aB8w==}
+    dev: true
+
+  /common-tags@1.8.2:
+    resolution: {integrity: sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==}
+    engines: {node: '>=4.0.0'}
     dev: true
 
   /commondir@1.0.1:

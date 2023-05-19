@@ -1,10 +1,9 @@
 import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-checkout-link/cl-checkout-link'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
-import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-type Args = GlobalArgs & Props
+type Args = Props
 
 const meta: Meta<Args> = {
   title: 'Components/Checkout/cl-checkout-link',
@@ -44,7 +43,5 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
-  'Use drop-in.css': true,
-  'Use minicart.css': true,
   target: '_blank'
 }

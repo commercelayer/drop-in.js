@@ -3,25 +3,15 @@
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html } from 'lit-html'
 import { create } from '../utils'
-import type { Args as GlobalArgs } from '../.storybook/preview'
 import { codes } from './assets/constants'
 
-type Args = GlobalArgs
-
-const meta: Meta<Args> = {
-  title: 'Introduction',
-  argTypes: {
-    'Use minicart.css': {
-      table: {
-        disable: false
-      }
-    }
-  }
+const meta: Meta = {
+  title: 'Introduction'
 }
 
 export default meta
 
-export const Basic: StoryFn<Args> = () => {
+export const Basic: StoryFn = () => {
   return create(
     html`
       <!-- for demonstration purpose only -->
@@ -137,19 +127,6 @@ export const Basic: StoryFn<Args> = () => {
         </div>
 
       </section>
-    `,
-    false
+    `
   )
 }
-
-Basic.args = {
-  'Use drop-in.css': true,
-  'Use minicart.css': true
-}
-
-// Basic.parameters = {
-//   docs: {
-//     inlineStories: false,
-//     iframeHeight: '100vh'
-//   }
-// }

@@ -1,14 +1,12 @@
 import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-availability-info/cl-availability-info'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
-import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 import { codes } from '../assets/constants'
 
-type Args = GlobalArgs &
-  Props & {
-    ['Use an available product']: boolean
-  }
+type Args = Props & {
+  ['Use an available product']: boolean
+}
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta: Meta<Args> = {
@@ -64,7 +62,6 @@ export const Basic: StoryFn<Args> = (args) => {
   )
 }
 Basic.args = {
-  'Use drop-in.css': true,
   'Use an available product': true,
   type: 'min-days'
 }

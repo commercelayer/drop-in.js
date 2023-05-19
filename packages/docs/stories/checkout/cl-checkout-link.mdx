@@ -10,11 +10,11 @@ Any Commerce Layer account comes with a hosted version of the [open-source Check
 
 Once you have [imported](?path=/docs/getting-started--page) the drop-in library, you can use the `cl-checkout-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
 
-<Canvas sourceState="shown" of={Stories.Basic} />
+<Canvas of={Stories.Basic} />
 
 <ArgsTable story='Basic' />
 
 ### Empty cart
 
 The checkout link rendered by the component is disabled when the cart is empty (or does not contain any shoppable item).
-As soon as you <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> a product, the link becomes clickable (feel free to try it out by emptying your <cl-cart-link class="font-bold text-[#1EA7FD]">cart<cl-cart></cl-cart></cl-cart-link> first and then clicking on the in-line button — which by the way was *dropped in* this sentence using the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--basic) component). 😉
+As soon as you <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> a product, the link becomes clickable (feel free to try it out by emptying your <cl-cart-link class="font-bold text-[#1EA7FD]">cart<cl-cart></cl-cart></cl-cart-link> first and then clicking on the in-line button — which by the way was *dropped in* this sentence using the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component). 😉

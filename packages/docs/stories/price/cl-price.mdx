@@ -9,9 +9,9 @@ Once you have correctly set up your organization in Commerce Layer and imported 
 
 Each price has an amount (the actual selling price) and an optional *compare-at* amount (the full price that you want to display to the customer — typically with a strikethrough).
 
-This component is the owner of the price information. It fetches the price of the specified SKU and dispatches it to the [**cl-price-amount**](?path=/docs/components-price-cl-price-amount--basic) children.
+This component is the owner of the price information. It fetches the price of the specified SKU and dispatches it to the [**cl-price-amount**](?path=/docs/components-price-cl-price-amount--docs) children.
 
-<Canvas sourceState="shown" of={Stories.Basic} />
+<Canvas of={Stories.Basic} />
 
 <ArgsTable story="Basic" />
 
@@ -19,13 +19,13 @@ This component is the owner of the price information. It fetches the price of th
 
 If the *compare-at* amount of the price is not set (i.e. the product isn't discounted) it won't be displayed, as shown in the example below:
 
-<Canvas sourceState="shown" of={Stories.NoDiscount} />
+<Canvas of={Stories.NoDiscount} />
 
 ### No code
 
 A price must be associated with a product. That's why the `code` attribute is mandatory. If you don't set it, the component will be rendered as an empty box without any size, as shown in the example below:
 
-<Canvas sourceState="shown" of={Stories.WithoutAttributes} />
+<Canvas of={Stories.WithoutAttributes} />
 
 ## Events
 

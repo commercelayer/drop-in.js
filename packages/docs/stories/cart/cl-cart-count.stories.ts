@@ -1,9 +1,8 @@
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
-import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-type Args = GlobalArgs & {
+type Args = {
   'hide-when-empty': boolean
 }
 
@@ -35,9 +34,7 @@ export const Basic: StoryFn<Args> = (args) => {
     `
   )
 }
-Basic.args = {
-  'Use drop-in.css': true
-}
+Basic.args = {}
 
 export const WithIcon: StoryFn<Args> = (args) => {
   return create(
