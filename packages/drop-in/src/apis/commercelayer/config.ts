@@ -38,7 +38,7 @@ export type Config = CommerceLayerConfig & {
 }
 
 const documentationLink =
-  'Read more here: https://commercelayer.github.io/drop-in.js/?path=/docs/getting-started--page'
+  'Read more here: https://commercelayer.github.io/drop-in.js/?path=/docs/getting-started--docs'
 
 export function getConfig(): Config {
   if (!('commercelayerConfig' in window)) {
