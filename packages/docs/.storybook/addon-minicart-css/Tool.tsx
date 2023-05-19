@@ -33,7 +33,7 @@ export const Tool = () => {
       title={ADDON_NAME}
       onClick={toggle}
     >
-      <Icons icon="document" />
+      <Icons icon="markup" />
       &nbsp;&nbsp;{FILENAME}
     </IconButton>
   )

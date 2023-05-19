@@ -14,6 +14,10 @@ const preview: Preview = {
     docs: {
       canvas: { sourceState: 'shown' },
     },
+    backgrounds: {
+      disable: true,
+      grid: { disable: true }
+    },
     options: {
       storySort: {
         order: [
