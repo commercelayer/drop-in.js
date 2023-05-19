@@ -8,7 +8,7 @@ import { codes } from '../assets/constants'
 type Args = GlobalArgs & Props
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Price/cl-price-amount',
   argTypes: {
     type: {
@@ -28,6 +28,8 @@ export const meta: Meta<Args> = {
     }
   }
 }
+
+export default meta
 
 export const Basic: StoryFn<Args> = (args) => {
   return create(

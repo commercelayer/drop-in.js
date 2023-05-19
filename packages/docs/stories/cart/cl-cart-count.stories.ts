@@ -7,7 +7,7 @@ type Args = GlobalArgs & {
   'hide-when-empty': boolean
 }
 
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart-count',
   argTypes: {
     'hide-when-empty': {
@@ -23,6 +23,8 @@ export const meta: Meta<Args> = {
     }
   }
 }
+
+export default meta
 
 export const Basic: StoryFn<Args> = (args) => {
   return create(

@@ -1,10 +1,7 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
-import { meta, Basic } from './cl-availability-status.stories.ts';
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import * as Stories from './cl-availability-status.stories.ts';
 
-<Meta
-  title={meta.title}
-  argTypes={meta.argTypes}
-/>
+<Meta of={Stories} />
 
 # Availability status
 
@@ -12,8 +9,6 @@ As you saw in the [**cl-availability**](?path=/docs/components-availability-cl-a
 
 The inner message will be displayed based on the status type. If the `type` attribute is set to `available`, the message will be visible only if the product is available. Vice versa, if it is set to `unavailable`, the message will be visible only if the product is out of stock. Give it a try here below by playing with different combinations of the *Use an available product toggle* and the `type` attribute selector:
 
-<Canvas withSource="open">
-  <Story story={Basic} name="Basic" />
-</Canvas>
+<Canvas sourceState="shown" of={Stories.Basic} />
 
 <ArgsTable story="Basic" />

@@ -6,7 +6,7 @@ import { create } from '../../utils'
 
 type Args = GlobalArgs & Props
 
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Checkout/cl-checkout-link',
   argTypes: {
     target: {
@@ -27,6 +27,8 @@ export const meta: Meta<Args> = {
     }
   }
 }
+
+export default meta
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
 

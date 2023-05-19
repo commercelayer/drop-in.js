@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
 import { linkTo } from '@storybook/addon-links'
 
 <Meta title="Events" />
@@ -33,7 +33,7 @@ These are the custom events currently dispatched by the [drop-in.js](https://git
 
 ### `cl-cart-additem`
 
-This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--basic) component when an item is added to cart.
+This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component when an item is added to cart.
 
 The returned `event.detail` contains the SKU code and quantity of the added item as the `request` arguments and the added line item object as the `response`:
 
@@ -50,7 +50,7 @@ document.addEventListener('cl-cart-additem', (event) => {
 
 ### `cl-prices-getprice`
 
-This event is dispatched by the [**cl-price**](?path=/docs/components-price-cl-price--basic) component when a price is fetched.
+This event is dispatched by the [**cl-price**](?path=/docs/components-price-cl-price--docs) component when a price is fetched.
 
 The returned `event.detail` contains the SKU code associated with the price as the `request` argument and the fetched price object as the `response`:
 
@@ -67,7 +67,7 @@ document.addEventListener('cl-prices-getprice', (event) => {
 
 ### `cl-skus-getsku`
 
-This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--basic) and [**cl-availability**](?path=/docs/components-availability-cl-availability--basic) components when an SKU is fetched.
+This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) and [**cl-availability**](?path=/docs/components-availability-cl-availability--docs) components when an SKU is fetched.
 
 The returned `event.detail` contains the SKU code as the `request` argument and the fetched SKU object as the `response`:
 

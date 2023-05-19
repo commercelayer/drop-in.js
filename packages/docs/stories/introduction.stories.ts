@@ -8,7 +8,7 @@ import { codes } from './assets/constants'
 
 type Args = GlobalArgs
 
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Introduction',
   argTypes: {
     'Use minicart.css': {
@@ -18,6 +18,8 @@ export const meta: Meta<Args> = {
     }
   }
 }
+
+export default meta
 
 export const Basic: StoryFn<Args> = () => {
   return create(

@@ -1,11 +1,8 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
-import { meta, Basic, WithoutAttributes } from './cl-availability.stories.ts';
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import * as Stories from './cl-availability.stories.ts';
 import { codes } from '../assets/constants'
 
-<Meta
-  title={meta.title}
-  argTypes={meta.argTypes}
-/>
+<Meta of={Stories} />
 
 # Availability message
 
@@ -15,9 +12,7 @@ This component is the owner of the availability information. It fetches the inve
 
 Please note that, if different delivery lead times are available, only the one associated with the lower shipping method cost is displayed.
 
-<Canvas withSource="open">
-  <Story story={Basic} name="Basic" />
-</Canvas>
+<Canvas sourceState="shown" of={Stories.Basic} />
 
 <ArgsTable story="Basic" />
 
@@ -25,10 +20,8 @@ Please note that, if different delivery lead times are available, only the one a
 
 Any availability message is related to a product. That's why the `code` attribute is mandatory. If you don't set it, the component will be rendered as an empty box without any size, as shown in the example below:
 
-<Canvas withSource="open">
-  <Story story={WithoutAttributes} name="No code" />
-</Canvas>
+<Canvas sourceState="shown" of={Stories.WithoutAttributes} />
 
 ## Events
 
-The `cl-availability` component triggers the [**cl-skus-getsku**](?path=/docs/events--page#cl-skus-getsku) custom event when an SKU is fetched.
+The `cl-availability` component triggers the [**cl-skus-getsku**](?path=/docs/events--docs#cl-skus-getsku) custom event when an SKU is fetched.

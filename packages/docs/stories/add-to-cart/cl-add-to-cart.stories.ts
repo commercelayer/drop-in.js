@@ -8,7 +8,7 @@ import { codes } from '../assets/constants'
 type Args = GlobalArgs & Props
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Add to cart/cl-add-to-cart',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
@@ -33,6 +33,8 @@ export const meta: Meta<Args> = {
     }
   }
 }
+
+export default meta
 
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
 const Template: StoryFn<Args> = (args) => {
@@ -66,8 +68,8 @@ Nonexisting.args = {
   code: codes.nonexisting
 }
 
-export const NoOverselling = Template.bind({})
-NoOverselling.args = {
+export const OversellingPrevention = Template.bind({})
+OversellingPrevention.args = {
   code: codes.noOverselling,
   quantity: 100
 }

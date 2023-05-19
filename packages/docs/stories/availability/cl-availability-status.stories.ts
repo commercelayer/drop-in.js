@@ -11,7 +11,7 @@ type Args = GlobalArgs &
   }
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Availability/cl-availability-status',
   argTypes: {
     'Use an available product': {
@@ -39,6 +39,8 @@ export const meta: Meta<Args> = {
     }
   }
 }
+
+export default meta
 
 export const Basic: StoryFn<Args> = (args) => {
   return create(

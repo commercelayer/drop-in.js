@@ -7,7 +7,7 @@ type Args = GlobalArgs & {
   'open-on-add': boolean
 }
 
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart',
   argTypes: {
     'Use minicart.css': {
@@ -28,6 +28,8 @@ export const meta: Meta<Args> = {
     }
   }
 }
+
+export default meta
 
 export const Basic: StoryFn<Args> = () => {
   return create(

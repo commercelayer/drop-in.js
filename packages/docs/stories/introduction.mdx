@@ -1,11 +1,8 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
 import { linkTo } from '@storybook/addon-links'
-import { meta, Basic } from './introduction.stories.ts';
+import * as Stories from './introduction.stories.ts';
 
-<Meta
-  title={meta.title}
-  argTypes={meta.argTypes}
-/>
+<Meta of={Stories} />
 
 # Commerce Layer micro frontends
 
@@ -97,8 +94,6 @@ If you want to see most of the reusable components above in action before diggin
 
 We've called it a demo, but the truth is that by switching the linked organization [from test to live mode](https://docs.commercelayer.io/core/api-specification#environments) on the Commerce Layer Admin Dashboard, this can be considered a full-fledged, up and running production website 😮 — and it took a snap to build it!
 
-<Canvas withSource="close">
-  <Story story={Basic} name="Basic" />
-</Canvas>
+<Canvas sourceState="hidden" of={Stories.Basic} />
 
 <ArgsTable story="Basic" />

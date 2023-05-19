@@ -1,11 +1,8 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
-import { meta, Basic } from './cl-checkout-link.stories.ts';
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import * as Stories from './cl-checkout-link.stories.ts';
 import { codes } from '../assets/constants.ts'
 
-<Meta
-  title={meta.title}
-  argTypes={meta.argTypes}
-/>
+<Meta of={Stories} />
 
 # Checkout
 
@@ -13,9 +10,7 @@ Any Commerce Layer account comes with a hosted version of the [open-source Check
 
 Once you have [imported](?path=/docs/getting-started--page) the drop-in library, you can use the `cl-checkout-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
 
-<Canvas withSource="open">
-  <Story story={Basic} name="Basic" />
-</Canvas>
+<Canvas sourceState="shown" of={Stories.Basic} />
 
 <ArgsTable story='Basic' />
 

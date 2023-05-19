@@ -1,7 +1,7 @@
 import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-cart-link/cl-cart-link'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
-import { unsafeHTML } from 'lit-html/directives/unsafe-html'
+// import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
@@ -11,7 +11,7 @@ type Args = GlobalArgs &
   }
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart-link',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
@@ -46,13 +46,15 @@ export const meta: Meta<Args> = {
   }
 }
 
+export default meta
+
 // More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
 
 const Template: StoryFn<Args> = (args) => {
   return create(
     html`
       <cl-cart-link target=${args.target ?? nothing}>
-        ${unsafeHTML(args.text)}
+        asd
       </cl-cart-link>
     `
   )
