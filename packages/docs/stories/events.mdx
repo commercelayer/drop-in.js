@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, ArgsTable, Source } from '@storybook/blocks'
 import { linkTo } from '@storybook/addon-links'
 
 <Meta title="Events" />
@@ -16,14 +16,14 @@ All custom events implement the same `interface`, where:
 | **`request.args`**   | Array | The list of arguments used to send the request to the Commerce Layer API endpoint. | 
 | **`response`**  | Object | The JSON object corresponding to the returned [Commerce Layer resource](https://docs.commercelayer.io/core/v/api-reference/). |
 
-```ts dark
+<Source language='ts' dark code={`
 interface CLCustomEvent {
   request: {
     args: [ arg1: any, arg2: any, ... ]
   }
   response: Response
 }
-```
+`} />
 
 `request.args` and `response` vary based on the specific event, as detailed here below.
 
@@ -42,11 +42,12 @@ The returned `event.detail` contains the SKU code and quantity of the added item
 | **`request.args`** | Array  | `[sku: string, quantity: number]` | 
 | **`response`**     | Object | [`LineItem`](https://docs.commercelayer.io/core/v/api-reference/line_items/object) |
 
-```js dark
+
+<Source language='ts' dark code={`
 document.addEventListener('cl-cart-additem', (event) => {
   console.info(event.detail)
 })
-```
+`} />
 
 ### `cl-prices-getprice`
 
@@ -59,11 +60,11 @@ The returned `event.detail` contains the SKU code associated with the price as t
 | **`request.args`** | Array  | `[code: string]` | 
 | **`response`**     | Object | [`Price`](https://docs.commercelayer.io/core/v/api-reference/prices/object) |
 
-```js dark
+<Source language='ts' dark code={`
 document.addEventListener('cl-prices-getprice', (event) => {
   console.info(event.detail)
 })
-```
+`} />
 
 ### `cl-skus-getsku`
 
@@ -76,11 +77,11 @@ The returned `event.detail` contains the SKU code as the `request` argument and 
 | **`request.args`** | Array  | `[code: string]` | 
 | **`response`**     | Object | [`Sku`](https://docs.commercelayer.io/core/v/api-reference/skus/object) |
 
-```js dark
+<Source language='ts' dark code={`
 document.addEventListener('cl-skus-getsku', (event) => {
   console.info(event.detail)
 })
-```
+`} />
 
 ### Event debouncing
 

@@ -87,15 +87,16 @@ const preview: Preview = {
       defineCustomElements()
       return story()
     },
-  ]
-};
 
-const storyAsHTML = (story: unknown) => {
-  const wrapper = document.createElement('div')
-  if (story instanceof HTMLElement) {
-    wrapper.appendChild(story)
-  }
-  return wrapper.innerHTML
+    // TODO: temporary fix for - https://github.com/storybookjs/storybook/issues/22645
+    (story) => {
+      const tale = story()
+      return `
+        <div class="hidden">${Math.random()}</div>
+        ${typeof tale === 'string' ? tale : story()}
+      `
+    },
+  ]
 };
 
 export default preview
