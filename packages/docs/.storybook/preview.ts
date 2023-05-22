@@ -38,6 +38,7 @@ const preview: Preview = {
             ],
             'Cart', [
               'cl-cart',
+              'cl-cart (minicart)',
               'cl-cart-link',
               'cl-cart-count',
             ],
