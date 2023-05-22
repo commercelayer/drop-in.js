@@ -1,20 +1,13 @@
-import { Meta, StoryFn } from '@storybook/html'
+import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-cart/cl-cart'
+import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
-import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-type Args = GlobalArgs & {
-  'open-on-add': boolean
-}
+type Args = Props
 
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart',
   argTypes: {
-    'Use minicart.css': {
-      table: {
-        disable: false
-      }
-    },
     'open-on-add': {
       description:
         'Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart (available <i>only</i> when the `cl-cart` component is used inside the `cl-cart-link` one).',
@@ -28,6 +21,8 @@ export const meta: Meta<Args> = {
     }
   }
 }
+
+export default meta
 
 export const Basic: StoryFn<Args> = () => {
   return create(
@@ -77,7 +72,4 @@ export const Minicart: StoryFn<Args> = (args) => {
     `
   )
 }
-Minicart.args = {
-  'Use drop-in.css': true,
-  'Use minicart.css': true
-}
+Minicart.args = {}

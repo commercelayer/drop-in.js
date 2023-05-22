@@ -1,7 +1,8 @@
 import { getPrice } from '#apis/commercelayer/prices'
 import { logCode, validateCode } from '#utils/validation-helpers'
 import type { Price } from '@commercelayer/sdk'
-import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
+import { Component, Element, h, type JSX, Prop, Watch } from '@stencil/core'
+import type { CamelCasedProperties } from 'type-fest'
 
 export interface Props {
   code: string | undefined
@@ -11,7 +12,7 @@ export interface Props {
   tag: 'cl-price',
   shadow: true
 })
-export class CLPrice implements Props {
+export class CLPrice implements CamelCasedProperties<Props> {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) code: string | undefined

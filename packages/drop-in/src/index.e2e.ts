@@ -1,4 +1,8 @@
-import { E2EElement, E2EPage, newE2EPage } from '@stencil/core/testing'
+import {
+  type E2EElement,
+  type E2EPage,
+  newE2EPage
+} from '@stencil/core/testing'
 import {
   waitAndExpectForLineItems,
   getAccessToken,

@@ -38,7 +38,7 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
   // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
   const prices: PriceList = pricesResponse.reduce<PriceList>(
     (prices, price) => {
-      if (price.sku_code !== undefined) {
+      if (price.sku_code != null) {
         prices[price.sku_code] = price
       }
 

@@ -3,15 +3,15 @@ import { CLAddToCart } from './cl-add-to-cart'
 import * as skus from '#apis/commercelayer/skus'
 import type { Sku } from '#apis/types'
 
-const baseSku = (
-  id: string
-): Pick<Sku, 'id' | 'type' | 'created_at' | 'updated_at'> => {
+const baseSku = (id: string): Sku => {
   return {
     id,
+    code: id,
+    name: id,
     type: 'skus',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
-  } as const
+  }
 }
 
 const skuList: { [code: string]: Sku } = {

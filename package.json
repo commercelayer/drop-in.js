@@ -17,6 +17,7 @@
     "dep:upgrade:minor": "pnpm dep:upgrade:major -t minor",
     "dep:self-upgrade:major": "pnpm exec npm-check-updates -u",
     "dep:self-upgrade:minor": "pnpm dep:self-upgrade:major -t minor",
+    "ts:check": "pnpm -r --sequential ts:check",
     "lint": "pnpm -r exec eslint ./ --ext ts,tsx",
     "lint:fix": "pnpm lint --fix",
     "version": "node replace-jsdelivr.js && git add ."
@@ -31,14 +32,14 @@
     "pnpm": ">=7"
   },
   "devDependencies": {
-    "@commercelayer/eslint-config-ts": "^0.1.4",
-    "concurrently": "^7.6.0",
-    "eslint": "^8.36.0",
+    "@commercelayer/eslint-config-ts": "^1.0.0",
+    "concurrently": "^8.0.1",
+    "eslint": "^8.41.0",
     "husky": "^8.0.3",
-    "lerna": "^6.5.1",
-    "lint-staged": "^13.2.0",
-    "npm-check-updates": "^16.7.13",
+    "lerna": "^6.6.2",
+    "lint-staged": "^13.2.2",
+    "npm-check-updates": "^16.10.12",
     "replace-in-file": "^6.3.5",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.4"
   }
 }

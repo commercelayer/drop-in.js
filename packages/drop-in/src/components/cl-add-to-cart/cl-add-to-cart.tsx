@@ -13,11 +13,12 @@ import {
   Element,
   h,
   Host,
-  JSX,
+  type JSX,
   Prop,
   State,
   Watch
 } from '@stencil/core'
+import type { CamelCasedProperties } from 'type-fest'
 
 export interface Props {
   code: string | undefined
@@ -27,7 +28,7 @@ export interface Props {
   tag: 'cl-add-to-cart',
   shadow: true
 })
-export class CLAddToCart implements Props {
+export class CLAddToCart implements CamelCasedProperties<Props> {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) code: string | undefined
@@ -100,8 +101,12 @@ export class CLAddToCart implements Props {
         role='button'
         tabindex='0'
         aria-disabled={this.canBeSold() ? undefined : 'true'}
-        onKeyPress={(event: KeyboardEvent) => this.handleKeyPress(event)}
-        onClick={() => this.handleAddItem()}
+        onKeyPress={(event: KeyboardEvent) => {
+          this.handleKeyPress(event)
+        }}
+        onClick={() => {
+          this.handleAddItem()
+        }}
       >
         <slot></slot>
       </Host>

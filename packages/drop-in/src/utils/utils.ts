@@ -14,8 +14,7 @@ export function chunk<T>(array: T[], size: number = 1): T[][] {
 
     resultArray[chunkIndex] ||= []
 
-    // @ts-expect-error
-    resultArray[chunkIndex].push(item)
+    resultArray[chunkIndex]?.push(item)
 
     return resultArray
   }, [])

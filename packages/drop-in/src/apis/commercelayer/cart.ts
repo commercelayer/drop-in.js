@@ -161,7 +161,7 @@ export const triggerHostedCartUpdate: TriggerHostedCartUpdate = async (
 
 export const addItem: AddItem = async (sku, quantity) => {
   const client = await createClient(getConfig())
-  const orderId = (await getCart())?.id ?? (await (await createEmptyCart()).id)
+  const orderId = (await getCart())?.id ?? (await createEmptyCart()).id
 
   const lineItem = await client.line_items.create({
     order: {

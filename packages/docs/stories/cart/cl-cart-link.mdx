@@ -1,20 +1,15 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
-import { meta, Basic, WithIcon } from './cl-cart-link.stories.ts';
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import * as Stories from './cl-cart-link.stories.ts';
 
-<Meta
-  title={meta.title}
-  argTypes={meta.argTypes}
-/>
+<Meta of={Stories} />
 
 # Shopping cart link
 
 Any Commerce Layer account comes with a hosted version of the [open-source Checkout application](https://github.com/commercelayer/commercelayer-cart) that is automatically enabled. It's a React-based implementation that provides you with a production-ready shopping cart powered by Commerce Layer APIs. Developers can integrate it with just a single URL link as explained in detail [here](https://github.com/commercelayer/commercelayer-cart#hosted-version).
 
-Once you have [imported](?path=/docs/getting-started--page) the drop-in library, you can use the `cl-cart-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
+Once you have [imported](?path=/docs/getting-started--docs) the drop-in library, you can use the `cl-cart-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
 
-<Canvas withSource="open">
-  <Story story={Basic} name="Basic" />
-</Canvas>
+<Canvas of={Stories.Basic} />
 
 <ArgsTable story='Basic' />
 
@@ -22,6 +17,5 @@ Once you have [imported](?path=/docs/getting-started--page) the drop-in library,
 
 Instead of a simple text link, you can use any custom icon, as shown in the example below:
 
-<Canvas withSource="open">
-  <Story story={WithIcon} name="Custom icon" />
-</Canvas>
+<Canvas of={Stories.WithIcon} />
+

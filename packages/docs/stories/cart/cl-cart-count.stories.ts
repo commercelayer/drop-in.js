@@ -1,13 +1,11 @@
-import { Meta, StoryFn } from '@storybook/html'
+import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-cart-count/cl-cart-count'
+import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
-import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 
-type Args = GlobalArgs & {
-  'hide-when-empty': boolean
-}
+type Args = Props
 
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart-count',
   argTypes: {
     'hide-when-empty': {
@@ -24,6 +22,8 @@ export const meta: Meta<Args> = {
   }
 }
 
+export default meta
+
 export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
@@ -33,9 +33,7 @@ export const Basic: StoryFn<Args> = (args) => {
     `
   )
 }
-Basic.args = {
-  'Use drop-in.css': true
-}
+Basic.args = {}
 
 export const WithIcon: StoryFn<Args> = (args) => {
   return create(

@@ -8,5 +8,11 @@
     "packages/drop-in/jest.setup.ts",
     "*.d.ts",
     "replace-jsdelivr.js"
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/consistent-indexed-object-style": [
+      "error",
+      "index-signature"
+    ]
+  }
 }

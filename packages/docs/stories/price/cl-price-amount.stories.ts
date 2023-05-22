@@ -1,14 +1,13 @@
-import { Props } from '@commercelayer/drop-in.js/dist/types/components/cl-price-amount/cl-price-amount'
-import { Meta, StoryFn } from '@storybook/html'
+import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-price-amount/cl-price-amount'
+import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
-import type { Args as GlobalArgs } from '../../.storybook/preview'
 import { create } from '../../utils'
 import { codes } from '../assets/constants'
 
-type Args = GlobalArgs & Props & {}
+type Args = Props
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
-export const meta: Meta<Args> = {
+const meta: Meta<Args> = {
   title: 'Components/Price/cl-price-amount',
   argTypes: {
     type: {
@@ -29,6 +28,8 @@ export const meta: Meta<Args> = {
   }
 }
 
+export default meta
+
 export const Basic: StoryFn<Args> = (args) => {
   return create(
     html`
@@ -38,6 +39,4 @@ export const Basic: StoryFn<Args> = (args) => {
     `
   )
 }
-Basic.args = {
-  'Use drop-in.css': true
-}
+Basic.args = {}

@@ -1,18 +1,15 @@
-import litHtml, { render } from 'lit-html'
+import type litHtml from 'lit-html'
+import { render } from 'lit-html'
+import { html } from 'common-tags'
 
-export const create = (
-  value: litHtml.TemplateResult,
-  removeComments: boolean | undefined = true
-): string => {
+export const create = (value: litHtml.TemplateResult): string => {
   const container = document.createElement('div')
 
   render(value, container)
 
-  if (removeComments) {
-    return container.innerHTML
-      .replace(/^[\s]+<!--[\s\S]*?-->\n/gm, '')
-      .replace(/<!--[\s\S]*?-->/g, '')
-  }
-
-  return container.innerHTML.replace('<!---->', '')
+  return html`
+    ${container.innerHTML
+      .replace('<!---->', '')
+      .replace(/<!--\?lit\$[\s\S]*?-->/g, '')}
+  `
 }

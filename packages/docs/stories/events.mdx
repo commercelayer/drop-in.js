@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs'
+import { Canvas, Meta, Story, ArgsTable, Source } from '@storybook/blocks'
 import { linkTo } from '@storybook/addon-links'
 
 <Meta title="Events" />
@@ -16,14 +16,14 @@ All custom events implement the same `interface`, where:
 | **`request.args`**   | Array | The list of arguments used to send the request to the Commerce Layer API endpoint. | 
 | **`response`**  | Object | The JSON object corresponding to the returned [Commerce Layer resource](https://docs.commercelayer.io/core/v/api-reference/). |
 
-```ts dark
+<Source language='ts' dark code={`
 interface CLCustomEvent {
   request: {
     args: [ arg1: any, arg2: any, ... ]
   }
   response: Response
 }
-```
+`} />
 
 `request.args` and `response` vary based on the specific event, as detailed here below.
 
@@ -33,7 +33,7 @@ These are the custom events currently dispatched by the [drop-in.js](https://git
 
 ### `cl-cart-additem`
 
-This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--basic) component when an item is added to cart.
+This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component when an item is added to cart.
 
 The returned `event.detail` contains the SKU code and quantity of the added item as the `request` arguments and the added line item object as the `response`:
 
@@ -42,15 +42,16 @@ The returned `event.detail` contains the SKU code and quantity of the added item
 | **`request.args`** | Array  | `[sku: string, quantity: number]` | 
 | **`response`**     | Object | [`LineItem`](https://docs.commercelayer.io/core/v/api-reference/line_items/object) |
 
-```js dark
+
+<Source language='ts' dark code={`
 document.addEventListener('cl-cart-additem', (event) => {
   console.info(event.detail)
 })
-```
+`} />
 
 ### `cl-prices-getprice`
 
-This event is dispatched by the [**cl-price**](?path=/docs/components-price-cl-price--basic) component when a price is fetched.
+This event is dispatched by the [**cl-price**](?path=/docs/components-price-cl-price--docs) component when a price is fetched.
 
 The returned `event.detail` contains the SKU code associated with the price as the `request` argument and the fetched price object as the `response`:
 
@@ -59,15 +60,15 @@ The returned `event.detail` contains the SKU code associated with the price as t
 | **`request.args`** | Array  | `[code: string]` | 
 | **`response`**     | Object | [`Price`](https://docs.commercelayer.io/core/v/api-reference/prices/object) |
 
-```js dark
+<Source language='ts' dark code={`
 document.addEventListener('cl-prices-getprice', (event) => {
   console.info(event.detail)
 })
-```
+`} />
 
 ### `cl-skus-getsku`
 
-This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--basic) and [**cl-availability**](?path=/docs/components-availability-cl-availability--basic) components when an SKU is fetched.
+This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) and [**cl-availability**](?path=/docs/components-availability-cl-availability--docs) components when an SKU is fetched.
 
 The returned `event.detail` contains the SKU code as the `request` argument and the fetched SKU object as the `response`:
 
@@ -76,11 +77,11 @@ The returned `event.detail` contains the SKU code as the `request` argument and 
 | **`request.args`** | Array  | `[code: string]` | 
 | **`response`**     | Object | [`Sku`](https://docs.commercelayer.io/core/v/api-reference/skus/object) |
 
-```js dark
+<Source language='ts' dark code={`
 document.addEventListener('cl-skus-getsku', (event) => {
   console.info(event.detail)
 })
-```
+`} />
 
 ### Event debouncing
 

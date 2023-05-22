@@ -1,6 +1,6 @@
 import { getKeyForAccessToken } from '#apis/storage'
 import { memoize } from '#utils/utils'
-import CommerceLayer, { CommerceLayerClient } from '@commercelayer/sdk'
+import CommerceLayer, { type CommerceLayerClient } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 import type { Config } from './config'
 

@@ -32,6 +32,10 @@
     }
   }
 
+  .link-list p {
+    margin: 0;
+  }
+
   .link-list > a {
     cursor: pointer;
     display: block;
@@ -200,6 +204,36 @@
     transform: none !important;
     transform-origin: initial !important;
     height: auto !important;
+  }
+</style>
+
+<style>
+  ol {
+    list-style: decimal !important;
+  }
+  h3 {
+    margin: 20px 0 8px !important;
+  }
+
+  /**
+   * TODO: temporary fix for - https://github.com/storybookjs/storybook/issues/22645
+   */
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(1),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(2),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(3),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(4),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(5),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(6),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(7),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(8),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(9),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(10),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(11),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(12),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(13),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(14),
+  .sbdocs.sbdocs-preview .prismjs > .language-html > span:nth-child(15) {
+      display: none;
   }
 </style>
 

@@ -31,6 +31,10 @@ describe('cl-price-amount.spec', () => {
     const priceUpdateEvent: Price = {
       id: 'ABC123',
       type: 'prices',
+      amount_cents: 1200,
+      amount_float: 12,
+      compare_at_amount_cents: 2850,
+      compare_at_amount_float: 28.5,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       formatted_amount: '€ 12.00',
@@ -69,6 +73,10 @@ describe('cl-price-amount.spec', () => {
     const priceUpdateEvent: Price = {
       id: 'ABC123',
       type: 'prices',
+      amount_cents: 1200,
+      amount_float: 12,
+      compare_at_amount_cents: 2850,
+      compare_at_amount_float: 28.5,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       formatted_amount: '€ 12.00',
@@ -107,6 +115,10 @@ describe('cl-price-amount.spec', () => {
     const priceUpdateEvent: Price = {
       id: 'ABC123',
       type: 'prices',
+      amount_cents: 1200,
+      amount_float: 12,
+      compare_at_amount_cents: 1200,
+      compare_at_amount_float: 12,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       formatted_amount: '€ 12.00',

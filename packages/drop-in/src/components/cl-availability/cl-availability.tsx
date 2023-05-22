@@ -1,7 +1,8 @@
 import { getSku } from '#apis/commercelayer/skus'
 import type { Sku } from '#apis/types'
 import { logCode, validateCode } from '#utils/validation-helpers'
-import { Component, Element, h, JSX, Prop, Watch } from '@stencil/core'
+import { Component, Element, h, type JSX, Prop, Watch } from '@stencil/core'
+import type { CamelCasedProperties } from 'type-fest'
 
 export interface Props {
   code: string | undefined
@@ -10,7 +11,7 @@ export interface Props {
   tag: 'cl-availability',
   shadow: true
 })
-export class ClAvailability implements Props {
+export class ClAvailability implements CamelCasedProperties<Props> {
   @Element() host!: HTMLElement
 
   @Prop({ reflect: true }) code: string | undefined
