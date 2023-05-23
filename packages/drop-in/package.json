@@ -56,15 +56,15 @@
     "@stencil/core": "^3.0.0"
   },
   "devDependencies": {
-    "@stencil/core": "^3.2.2",
-    "@stencil/sass": "^3.0.2",
+    "@stencil/core": "^3.3.0",
+    "@stencil/sass": "^3.0.3",
     "@types/iframe-resizer": "^3.5.9",
     "@types/jest": "^27",
     "@types/js-cookie": "^3.0.3",
     "jest": "^27",
     "jest-cli": "^27",
     "nodemon": "^2.0.22",
-    "puppeteer": "^20.2.1",
+    "puppeteer": "^20.3.0",
     "sass": "^1.62.1",
     "ts-jest": "^27",
     "typescript": "^5.0.4"
