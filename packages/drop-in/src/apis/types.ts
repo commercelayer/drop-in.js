@@ -42,7 +42,8 @@ export type GetSku = (code: string) => Promise<Sku | undefined>
 export type AddItem = (sku: string, quantity: number) => Promise<LineItem>
 
 export type TriggerHostedCartUpdate = (
-  iframeId: string
+  iframeId: string,
+  order: Order | null
 ) => Promise<Order | null>
 
 export type TriggerCartUpdate = () => Promise<Order | null>
