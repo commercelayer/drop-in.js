@@ -35,7 +35,7 @@ importers:
   packages/docs:
     dependencies:
       '@commercelayer/drop-in.js':
-        specifier: workspace:^1.3.2
+        specifier: workspace:^1.4.0
         version: link:../drop-in
       lit-html:
         specifier: ^2.7.4
