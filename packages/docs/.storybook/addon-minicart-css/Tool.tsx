@@ -1,7 +1,7 @@
 import { useGlobals, useStorybookApi } from '@storybook/api'
 import { IconButton, Icons } from '@storybook/components'
 import React, { useCallback, useEffect } from 'react'
-import { ADDON_ID, ADDON_NAME, FILENAME, PARAM_KEY, TOOL_ID } from './constants'
+import { ADDON_ID, ADDON_TITLE, FILENAME, PARAM_KEY, TOOL_ID } from './constants'
 
 export const Tool = () => {
   const [globals, updateGlobals] = useGlobals()
@@ -30,7 +30,7 @@ export const Tool = () => {
     <IconButton
       key={TOOL_ID}
       active={active}
-      title={ADDON_NAME}
+      title={ADDON_TITLE}
       onClick={toggle}
     >
       <Icons icon="markup" />
