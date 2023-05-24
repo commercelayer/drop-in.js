@@ -53,6 +53,23 @@
         <div class="flex items-center flex-grow justify-end">
           <cl-cart-count></cl-cart-count>
 
+          <!-- <a href="/cart" target="_blank" aria-label="Cart" class="cl-cart-link ml-4">
+            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
+              <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+              <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"/>
+            </svg>
+            <cl-cart-count></cl-cart-count>
+          </a>
+          
+          <cl-cart-link target="_blank" aria-label="Cart" class="ml-4">
+            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
+              <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+              <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"/>
+            </svg>
+            <cl-cart-count></cl-cart-count>
+          </cl-cart-link>
+        -->
+
           <cl-cart-link class="ml-4">
             <span class="sr-only">My cart with <cl-cart-count></cl-cart-count> items.</span>
             <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
@@ -255,6 +272,14 @@
         </div><!-- grid -->
 
       </section><!-- products -->
+
+
+      <section id="cl-cart">
+        <h2 class="text-xl font-bold mt-10 mb-2">
+          <code>&lt;cl-cart&gt;</code>
+        </h2>
+        <cl-cart></cl-cart>
+      </section>
 
     </div> <!-- container -->
   </body>

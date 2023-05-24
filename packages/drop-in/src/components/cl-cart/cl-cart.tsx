@@ -6,6 +6,7 @@ import {
 } from '#apis/commercelayer/cart'
 import { listenTo } from '#apis/event'
 import { getClosestLocationHref } from '#utils/url'
+import { type Order } from '@commercelayer/sdk'
 import {
   Component,
   Element,
@@ -24,6 +25,7 @@ interface IframeData {
   message:
     | {
         type: 'update'
+        payload?: Order
       }
     | {
         type: 'close'
@@ -109,16 +111,22 @@ export class ClCart implements CamelCasedProperties<Props> {
       this.flag_justAddedToCart = true
       this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
 
-      if (this.href === undefined || !isValidUrl(this.href)) {
-        this.href = await getCartUrl()
-      }
+      await this.updateUrl(this.openOnAdd)
     })
 
     await updateCartUrl(this.getCartPageUrl())
-    this.href = await getCartUrl()
+    await this.updateUrl()
 
     if (this.checkLocationHrefForOpenDirective()) {
       this.open = true
+    }
+  }
+
+  private async updateUrl(bypassMinicartCheck = false): Promise<void> {
+    const shouldUpdate = this.href === undefined || !isValidUrl(this.href)
+
+    if ((this.type !== 'mini' || bypassMinicartCheck) && shouldUpdate) {
+      this.href = await getCartUrl()
     }
   }
 
@@ -161,6 +169,7 @@ export class ClCart implements CamelCasedProperties<Props> {
   @Watch('open')
   watchOpenHandler(opened: boolean): void {
     if (this.type === 'mini') {
+      void this.updateUrl(true)
       document.body.classList.toggle(this.openDirective, opened)
 
       if (!opened) {
@@ -174,7 +183,10 @@ export class ClCart implements CamelCasedProperties<Props> {
       switch (data.message.type) {
         case 'update':
           if (this.flag_listenForHostedCartUpdateResponse) {
-            void triggerHostedCartUpdate(this.iframe.id)
+            void triggerHostedCartUpdate(
+              this.iframe.id,
+              data.message.payload ?? null
+            )
           }
 
           if (

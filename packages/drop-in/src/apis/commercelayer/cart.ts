@@ -144,16 +144,11 @@ export const triggerCartUpdate: TriggerCartUpdate = async () => {
  * @param iframeId iFrame ID who triggered the event
  */
 export const triggerHostedCartUpdate: TriggerHostedCartUpdate = async (
-  iframeId
+  iframeId,
+  order
 ) => {
-  if (getCart.cache.clear !== undefined) {
-    getCart.cache.clear()
-  }
-
-  const order = await getCart()
-
   if (order !== null) {
-    fireEvent('cl-cart-hostedcartupdate', [iframeId], order)
+    fireEvent('cl-cart-hostedcartupdate', [iframeId, order], order)
   }
 
   return order
