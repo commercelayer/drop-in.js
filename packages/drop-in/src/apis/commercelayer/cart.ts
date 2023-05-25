@@ -82,7 +82,7 @@ export async function getCartUrl(
     cartId = cart.id
   }
 
-  return `https://${config.slug}.commercelayer.app/cart/${
+  return `${config.appEndpoint}/cart/${
     cartId ?? 'null'
   }?accessToken=${accessToken}`
 }
@@ -96,7 +96,7 @@ export async function getCheckoutUrl(): Promise<string | undefined> {
     return undefined
   }
 
-  return `https://${config.slug}.commercelayer.app/checkout/${
+  return `${config.appEndpoint}/checkout/${
     cart.id ?? 'null'
   }?accessToken=${accessToken}`
 }

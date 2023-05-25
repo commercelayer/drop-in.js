@@ -5,5 +5,5 @@ export async function getMyAccountUrl(): Promise<string | undefined> {
   const config = getConfig()
   const accessToken = await getAccessToken(config)
 
-  return `https://${config.slug}.commercelayer.app/my-account?accessToken=${accessToken}`
+  return `${config.appEndpoint}/my-account?accessToken=${accessToken}`
 }
