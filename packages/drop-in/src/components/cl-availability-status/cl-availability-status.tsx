@@ -28,7 +28,7 @@ export class ClAvailabilityStatus implements CamelCasedProperties<Props> {
     this.available = event.detail.inventory?.available
   }
 
-  render(): JSX.Element | null {
+  render(): JSX.Element {
     if (
       (this.type === 'available' && this.available === true) ||
       (this.type === 'unavailable' && this.available === false)

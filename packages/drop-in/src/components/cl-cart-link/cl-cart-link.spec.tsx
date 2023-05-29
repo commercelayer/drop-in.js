@@ -11,7 +11,11 @@ beforeEach(() => {
 
 describe('cl-cart-link.spec', () => {
   it('renders the cart url without a cartId during the first load', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
+      type: 'guest',
+      accessToken: 'token-123',
+      scope: 'market:1234'
+    })
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLCartLink],
@@ -39,7 +43,11 @@ describe('cl-cart-link.spec', () => {
   })
 
   it('renders the cart url with a defined cartUrl', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
+      type: 'guest',
+      accessToken: 'token-123',
+      scope: 'market:1234'
+    })
     jest.spyOn(cart, 'getCart').mockResolvedValue({
       type: 'orders',
       id: 'order-123',
@@ -79,7 +87,11 @@ describe('cl-cart-link.spec', () => {
       })
     }
 
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
+      type: 'guest',
+      accessToken: 'token-123',
+      scope: 'market:1234'
+    })
     jest.spyOn(cart, 'getCart').mockResolvedValue(null)
     jest
       .spyOn(client, 'createClient')

@@ -36,7 +36,7 @@ export class CLCartLink implements CamelCasedProperties<Props> {
     }
 
     listenTo('cl-cart-update', async () => {
-      if (this.href === undefined || !isValidUrl(this.href)) {
+      if (this.href === undefined || !(await isValidUrl(this.href))) {
         this.href = await getCartUrl()
       }
     })
@@ -47,7 +47,7 @@ export class CLCartLink implements CamelCasedProperties<Props> {
   }
 
   async handleClick(event: MouseEvent): Promise<void> {
-    if (this.href === undefined || !isValidUrl(this.href)) {
+    if (this.href === undefined || !(await isValidUrl(this.href))) {
       event.preventDefault()
       this.href = await getCartUrl(true)
       window.open(this.href, this.target)

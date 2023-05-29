@@ -1,3 +1,4 @@
+import { type Token } from '#apis/commercelayer/client'
 import type { CommerceLayerConfig } from '#apis/commercelayer/config'
 import type { E2EPage } from '@stencil/core/testing'
 
@@ -38,12 +39,14 @@ export async function getCartId(page: E2EPage): Promise<string | null> {
   return cookie?.value ?? null
 }
 
-export async function getAccessToken(page: E2EPage): Promise<string | null> {
+export async function getAccessToken(page: E2EPage): Promise<Token | null> {
   const cookieName =
     'commercelayer_token-kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8-market:11709'
   const cookie = await getCookie(page, cookieName)
 
-  return cookie?.value ?? null
+  return cookie?.value !== undefined
+    ? JSON.parse(decodeURIComponent(cookie?.value))
+    : null
 }
 
 export async function waitAndExpectForLineItems(
