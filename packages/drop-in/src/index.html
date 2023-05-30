@@ -26,14 +26,18 @@
 
         <script src="https://cdn.tailwindcss.com"></script>
 
-        <!-- <script>
-      document.addEventListener('cl-skus-getsku', (e) => console.info('skus.getSku', e.detail))
-      document.addEventListener('cl-prices-getprice', (e) => console.info('prices.getPrice', e.detail))
-      document.addEventListener('cl-cart-additem', (e) => console.info('cart.addItem', e.detail))
-    </script> -->
+<!-- 
+        <script>
+            document.addEventListener('cl-identity-token', (e) => console.info('skus.getSku', e.detail))
+            document.addEventListener('cl-skus-getsku', (e) => console.info('skus.getSku', e.detail))
+            document.addEventListener('cl-prices-getprice', (e) => console.info('prices.getPrice', e.detail))
+            document.addEventListener('cl-cart-additem', (e) => console.info('cart.addItem', e.detail))
+        </script>
+ -->
 
         <script>
             (function () {
+                // prd
                 window.commercelayerConfig = {
                   clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
                   slug: 'drop-in-js',
@@ -85,17 +89,17 @@
                         <cl-cart-count></cl-cart-count>
                     </cl-cart-link>
 
-                    <cl-identity-status type="logged-out" class="ml-8">
-                        <cl-identity-link type="login" class="ml-8" target="_blank"> Login </cl-identity-link>
-                        <cl-identity-link type="sign-up" class="ml-8" target="_blank"> Sign Up </cl-identity-link>
+                    <cl-identity-status type="guest">
+                        <cl-identity-link type="login" class="ml-8">Login</cl-identity-link>
+                        <cl-identity-link type="sign-up" class="ml-8">Sign Up</cl-identity-link>
                     </cl-identity-status>
 
-                    <cl-identity-status type="logged-in" class="ml-8">
-                        <cl-my-account-link class="ml-8" target="_blank"> My Account </cl-my-account-link>
-                        <cl-identity-link type="logout" class="ml-8" target="_blank"> Logout </cl-identity-link>
+                    <cl-identity-status type="customer">
+                        <cl-my-account-link class="ml-8" target="_blank">My Account</cl-my-account-link>
+                        <cl-identity-link type="logout" class="ml-8">Logout</cl-identity-link>
                     </cl-identity-status>
 
-                    <cl-checkout-link class="ml-8" target="_blank"> Checkout </cl-checkout-link>
+                    <cl-checkout-link class="ml-8" target="_blank">Checkout</cl-checkout-link>
 
                     <!-- <cl-cart type="mini" open-on-add></cl-cart> -->
                 </div>
@@ -138,6 +142,18 @@
                                 >• out of stock</cl-availability-status
                             >
                         </cl-availability>
+                    </div>
+
+                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
+                        Editorial Banner
+
+                        <cl-identity-status type="guest">
+                            <img src="https://png.pngtree.com/png-vector/20221006/ourmid/pngtree-transparent-register-now-banner-png-image_6288367.png" />
+                        </cl-identity-status>
+
+                        <cl-identity-status type="customer">
+                            <img src="https://t3.ftcdn.net/jpg/02/11/77/68/360_F_211776827_BJ7RrkDwbvMK4ZejCBh05fKh8Njhm3jo.jpg" />
+                        </cl-identity-status>
                     </div>
 
                     <script>

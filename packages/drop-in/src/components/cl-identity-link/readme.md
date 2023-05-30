@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default   |
-| -------- | --------- | ----------- | -------- | --------- |
-| `target` | `target`  |             | `string` | `'_self'` |
+| Property | Attribute | Description | Type                                            | Default     |
+| -------- | --------- | ----------- | ----------------------------------------------- | ----------- |
+| `target` | `target`  |             | `string`                                        | `'_self'`   |
+| `type`   | `type`    |             | `"login" \| "logout" \| "sign-up" \| undefined` | `undefined` |
 
 
 ## Shadow Parts

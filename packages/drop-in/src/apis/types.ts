@@ -1,4 +1,5 @@
 import type { LineItem, Order, Price, Sku as SdkSku } from '@commercelayer/sdk'
+import { type Token } from './commercelayer/client'
 
 interface DeliveryLeadTime {
   shipping_method: {
@@ -40,6 +41,8 @@ export type GetPrice = (sku: string) => Promise<Price | undefined>
 export type GetSku = (code: string) => Promise<Sku | undefined>
 
 export type AddItem = (sku: string, quantity: number) => Promise<LineItem>
+
+export type GetToken = () => Promise<Token>
 
 export type TriggerHostedCartUpdate = (
   iframeId: string,

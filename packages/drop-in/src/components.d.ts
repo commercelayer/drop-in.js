@@ -7,8 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Type } from "./components/cl-availability-info/cl-availability-info";
 import { Props } from "./components/cl-identity-link/cl-identity-link";
+import { Props as Props1 } from "./components/cl-identity-status/cl-identity-status";
 export { Type } from "./components/cl-availability-info/cl-availability-info";
 export { Props } from "./components/cl-identity-link/cl-identity-link";
+export { Props as Props1 } from "./components/cl-identity-status/cl-identity-status";
 export namespace Components {
     interface ClAddToCart {
         "code": string | undefined;
@@ -51,6 +53,9 @@ export namespace Components {
     interface ClIdentityLink {
         "target": string;
         "type": Props['type'];
+    }
+    interface ClIdentityStatus {
+        "type": Props1['type'];
     }
     interface ClMyAccountLink {
         "target": string;
@@ -117,6 +122,12 @@ declare global {
         prototype: HTMLClIdentityLinkElement;
         new (): HTMLClIdentityLinkElement;
     };
+    interface HTMLClIdentityStatusElement extends Components.ClIdentityStatus, HTMLStencilElement {
+    }
+    var HTMLClIdentityStatusElement: {
+        prototype: HTMLClIdentityStatusElement;
+        new (): HTMLClIdentityStatusElement;
+    };
     interface HTMLClMyAccountLinkElement extends Components.ClMyAccountLink, HTMLStencilElement {
     }
     var HTMLClMyAccountLinkElement: {
@@ -145,6 +156,7 @@ declare global {
         "cl-cart-link": HTMLClCartLinkElement;
         "cl-checkout-link": HTMLClCheckoutLinkElement;
         "cl-identity-link": HTMLClIdentityLinkElement;
+        "cl-identity-status": HTMLClIdentityStatusElement;
         "cl-my-account-link": HTMLClMyAccountLinkElement;
         "cl-price": HTMLClPriceElement;
         "cl-price-amount": HTMLClPriceAmountElement;
@@ -193,6 +205,9 @@ declare namespace LocalJSX {
         "target"?: string;
         "type"?: Props['type'];
     }
+    interface ClIdentityStatus {
+        "type"?: Props1['type'];
+    }
     interface ClMyAccountLink {
         "target"?: string;
     }
@@ -212,6 +227,7 @@ declare namespace LocalJSX {
         "cl-cart-link": ClCartLink;
         "cl-checkout-link": ClCheckoutLink;
         "cl-identity-link": ClIdentityLink;
+        "cl-identity-status": ClIdentityStatus;
         "cl-my-account-link": ClMyAccountLink;
         "cl-price": ClPrice;
         "cl-price-amount": ClPriceAmount;
@@ -230,6 +246,7 @@ declare module "@stencil/core" {
             "cl-cart-link": LocalJSX.ClCartLink & JSXBase.HTMLAttributes<HTMLClCartLinkElement>;
             "cl-checkout-link": LocalJSX.ClCheckoutLink & JSXBase.HTMLAttributes<HTMLClCheckoutLinkElement>;
             "cl-identity-link": LocalJSX.ClIdentityLink & JSXBase.HTMLAttributes<HTMLClIdentityLinkElement>;
+            "cl-identity-status": LocalJSX.ClIdentityStatus & JSXBase.HTMLAttributes<HTMLClIdentityStatusElement>;
             "cl-my-account-link": LocalJSX.ClMyAccountLink & JSXBase.HTMLAttributes<HTMLClMyAccountLinkElement>;
             "cl-price": LocalJSX.ClPrice & JSXBase.HTMLAttributes<HTMLClPriceElement>;
             "cl-price-amount": LocalJSX.ClPriceAmount & JSXBase.HTMLAttributes<HTMLClPriceAmountElement>;

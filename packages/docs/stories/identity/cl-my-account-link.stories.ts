@@ -6,7 +6,7 @@ import { create } from '../../utils'
 type Args = Props
 
 const meta: Meta<Args> = {
-  title: 'Components/My account/cl-my-account-link',
+  title: 'Components/Identity/cl-my-account-link',
   argTypes: {
     target: {
       description:

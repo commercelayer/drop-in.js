@@ -3,6 +3,7 @@ import { memoize } from '#utils/utils'
 import CommerceLayer, { type CommerceLayerClient } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 import { type Config, getConfig } from './config'
+import { fireEvent } from '#apis/event'
 
 export type Token =
   | (
@@ -166,26 +167,28 @@ async function readGuestToken(
   }
 
   const { accessToken, expires } = salesChannelToken
+
   const token: Token = {
     type: 'guest',
     accessToken,
     scope: clientCredentials.scope
   }
-
   setToken(cookieName, token, expires)
+
   return token
 }
 
 export const getAccessToken = memoize(async function (
   clientCredentials: ClientCredentials
 ): Promise<Token> {
-  const customerToken = await readCustomerToken(clientCredentials)
+  let token = await readCustomerToken(clientCredentials)
 
-  if (customerToken != null) {
-    return customerToken
+  if (token == null) {
+    token = await readGuestToken(clientCredentials)
   }
 
-  return await readGuestToken(clientCredentials)
+  fireEvent('cl-identity-token', [], token)
+  return token
 })
 
 export async function createClient(
@@ -204,4 +207,11 @@ export async function logout(): Promise<void> {
   const config = getConfig()
   const cookieName = getKeyForCustomerToken(config)
   clearToken(cookieName)
+}
+
+export function isCustomer(): boolean {
+  const config = getConfig()
+  const cookieName = getKeyForCustomerToken(config)
+  const token = getToken(cookieName)
+  return token?.type === 'customer'
 }
