@@ -7,6 +7,7 @@ export const codes = {
   doNotTrack: 'BOTT17OZFFFFFF000000XXXX'
 }
 
+// prd
 export const clConfig = {
   clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
   slug: 'drop-in-js',

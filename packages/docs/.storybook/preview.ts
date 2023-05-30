@@ -10,6 +10,20 @@ export const globals = {
 }
 
 const preview: Preview = {
+  argTypesEnhancers: [
+    (context) => Object.fromEntries(
+      Object.entries(context.argTypes).map(([name, value]) => [
+        name,
+        {
+          ...value,
+          table: {
+            ...value.table ?? {},
+            category: value.table?.category ?? 'attributes'
+          }
+        }
+      ])
+    )
+  ],
   parameters: {
     docs: {
       canvas: { sourceState: 'shown' },
@@ -19,6 +33,9 @@ const preview: Preview = {
       grid: { disable: true }
     },
     options: {
+      table: {
+        category: 'asd'
+      },
       storySort: {
         order: [
           'Introduction',
@@ -85,10 +102,7 @@ const preview: Preview = {
     (story) => {
       // @ts-expect-error
       window.commercelayerConfig = {
-        clientId: clConfig.clientId,
-        slug: clConfig.slug,
-        scope: clConfig.scope,
-        debug: clConfig.debug
+        ...clConfig
       }
 
       return story()

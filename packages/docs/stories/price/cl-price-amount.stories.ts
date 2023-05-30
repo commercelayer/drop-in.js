@@ -19,7 +19,6 @@ const meta: Meta<Args> = {
       },
       control: { type: 'select' },
       table: {
-        category: 'attributes',
         defaultValue: {
           summary: 'price'
         }

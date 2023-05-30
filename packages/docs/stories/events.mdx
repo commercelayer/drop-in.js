@@ -31,6 +31,24 @@ interface CLCustomEvent {
 
 These are the custom events currently dispatched by the [drop-in.js](https://github.com/commercelayer/drop-in.js) web components:
 
+### `cl-identity-gettoken`
+
+This event is dispatched by any component component when they ask for an access token.
+
+The returned `event.detail` contains the requested token:
+
+| Attribute          | Type   | Value                      |
+|--------------------|--------|----------------------------|
+| **`request.args`** | Array  | `[]` | 
+| **`response`**     | Object | `Token` |
+
+
+<Source language='ts' dark code={`
+document.addEventListener('cl-identity-gettoken', (event) => {
+  console.info(event.detail)
+})
+`} />
+
 ### `cl-cart-additem`
 
 This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component when an item is added to cart.

@@ -14,9 +14,6 @@ const meta: Meta<Args> = {
         name: 'enum',
         value: ['login', 'sign-up', 'logout'],
         required: true
-      },
-      table: {
-        category: 'attributes'
       }
     },
     target: {
@@ -29,7 +26,6 @@ const meta: Meta<Args> = {
       },
       control: { type: 'select' },
       table: {
-        category: 'attributes',
         defaultValue: {
           summary: '_self'
         }
@@ -55,7 +51,8 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
-  type: 'login'
+  type: 'login',
+  target: '_parent'
 }
 
 export const WithoutAttributes = Template.bind({})

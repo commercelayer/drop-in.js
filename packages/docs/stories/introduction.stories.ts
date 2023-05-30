@@ -21,7 +21,20 @@ export const Basic: StoryFn = () => {
       <nav class="flex p-6">
         <span class="font-semibold text-xl tracking-tight">Store Name</span>
         <div class="flex items-center flex-grow justify-end">
-          <cl-cart-link target="_blank" aria-label="Cart">
+          <cl-identity-status type="guest">
+            <cl-identity-link type="login" target="_parent">
+              Login
+            </cl-identity-link>
+          </cl-identity-status>
+          <cl-identity-status type="customer" class="flex gap-2">
+            <cl-my-account-link target="_blank">
+              My Account
+            </cl-my-account-link>
+            <cl-identity-link type="logout">
+              Logout
+            </cl-identity-link>
+          </cl-identity-status>
+          <cl-cart-link target="_blank" aria-label="Cart" class="ml-4">
             <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
               <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
               <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"/>

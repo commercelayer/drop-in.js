@@ -36,10 +36,7 @@ const meta: Meta<Args> = {
         ],
         required: true
       },
-      control: { type: 'select' },
-      table: {
-        category: 'attributes'
-      }
+      control: { type: 'select' }
     }
   }
 }

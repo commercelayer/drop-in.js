@@ -15,9 +15,6 @@ const meta: Meta<Args> = {
         name: 'enum',
         value: ['guest', 'customer'],
         required: true
-      },
-      table: {
-        category: 'attributes'
       }
     }
   }
