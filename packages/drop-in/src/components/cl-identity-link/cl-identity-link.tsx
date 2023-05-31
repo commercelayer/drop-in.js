@@ -1,19 +1,22 @@
 import { getIdentityUrl } from '#apis/commercelayer/account'
 import { logout } from '#apis/commercelayer/client'
+import { isValidUnion, logUnion } from '#utils/validation-helpers'
 import {
   Component,
   Element,
   Host,
   Prop,
   State,
+  Watch,
   h,
   type JSX
 } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
+import type { CamelCasedProperties, TupleToUnion } from 'type-fest'
 
+const typeList = ['login', 'sign-up', 'logout'] as const
 export interface Props {
   target: string
-  type: 'login' | 'sign-up' | 'logout' | undefined
+  type: TupleToUnion<typeof typeList> | undefined
 }
 
 @Component({
@@ -30,13 +33,24 @@ export class ClIdentityLink implements CamelCasedProperties<Props> {
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
-    if (this.type !== undefined) {
-      this.href = await getIdentityUrl(this.type)
+    await this.updateUrl(this.type)
+  }
+
+  @Watch('type')
+  async watchTypeHandler(newValue: Props['type']): Promise<void> {
+    await this.updateUrl(newValue)
+  }
+
+  private async updateUrl(type: Props['type']): Promise<void> {
+    if (isValidUnion(type, typeList)) {
+      this.href = await getIdentityUrl(type)
     }
+
+    logType(this.host, type)
   }
 
   render(): JSX.Element {
-    if (this.type == null) {
+    if (!isValidUnion(this.type, typeList)) {
       return <Host aria-disabled='true'></Host>
     }
 
@@ -59,4 +73,8 @@ export class ClIdentityLink implements CamelCasedProperties<Props> {
       </Host>
     )
   }
+}
+
+function logType(host: HTMLElement, type: Props['type']): void {
+  logUnion(host, 'type', type, typeList)
 }
