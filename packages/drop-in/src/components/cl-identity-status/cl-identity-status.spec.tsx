@@ -46,7 +46,7 @@ describe('cl-identity-status.spec', () => {
       </div>
     `)
 
-    fireEvent('cl-identity-token', [], {
+    fireEvent('cl-identity-gettoken', [], {
       type: 'guest',
       accessToken: 'token-1234',
       scope: 'market:1234'
@@ -100,7 +100,7 @@ describe('cl-identity-status.spec', () => {
       </div>
     `)
 
-    fireEvent('cl-identity-token', [], {
+    fireEvent('cl-identity-gettoken', [], {
       type: 'customer',
       customerId: '12as',
       accessToken: 'token-1234',

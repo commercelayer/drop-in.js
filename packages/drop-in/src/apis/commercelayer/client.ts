@@ -1,9 +1,9 @@
+import { fireEvent } from '#apis/event'
 import { getKeyForCustomerToken, getKeyForGuestToken } from '#apis/storage'
-import { memoize } from '#utils/utils'
 import CommerceLayer, { type CommerceLayerClient } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
-import { type Config, getConfig } from './config'
-import { fireEvent } from '#apis/event'
+import memoize from 'lodash/memoize'
+import { getConfig, type Config } from './config'
 
 export type Token =
   | (
@@ -178,18 +178,19 @@ async function readGuestToken(
   return token
 }
 
-export const getAccessToken = memoize(async function (
-  clientCredentials: ClientCredentials
-): Promise<Token> {
-  let token = await readCustomerToken(clientCredentials)
+export const getAccessToken = memoize(
+  async function (clientCredentials: ClientCredentials): Promise<Token> {
+    let token = await readCustomerToken(clientCredentials)
 
-  if (token == null) {
-    token = await readGuestToken(clientCredentials)
-  }
+    if (token == null) {
+      token = await readGuestToken(clientCredentials)
+    }
 
-  fireEvent('cl-identity-token', [], token)
-  return token
-})
+    fireEvent('cl-identity-gettoken', [], token)
+    return token
+  },
+  (clientCredentials) => JSON.stringify(clientCredentials)
+)
 
 export async function createClient(
   config: Config
@@ -207,11 +208,7 @@ export async function logout(): Promise<void> {
   const config = getConfig()
   const cookieName = getKeyForCustomerToken(config)
   clearToken(cookieName)
-}
 
-export function isCustomer(): boolean {
-  const config = getConfig()
-  const cookieName = getKeyForCustomerToken(config)
-  const token = getToken(cookieName)
-  return token?.type === 'customer'
+  getAccessToken.cache.clear?.()
+  // await getAccessToken(config)
 }

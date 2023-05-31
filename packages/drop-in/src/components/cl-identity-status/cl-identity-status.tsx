@@ -1,11 +1,21 @@
 import { getAccessToken } from '#apis/commercelayer/client'
 import { getConfig } from '#apis/commercelayer/config'
 import { listenTo } from '#apis/event'
-import { Component, Host, Prop, State, h, type JSX } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
+import { isValidUnion, logUnion } from '#utils/validation-helpers'
+import {
+  Component,
+  Element,
+  Host,
+  Prop,
+  State,
+  h,
+  type JSX
+} from '@stencil/core'
+import type { CamelCasedProperties, TupleToUnion } from 'type-fest'
 
+const typeList = ['guest', 'customer'] as const
 export interface Props {
-  type: 'guest' | 'customer' | undefined
+  type: TupleToUnion<typeof typeList> | undefined
 }
 
 @Component({
@@ -13,23 +23,27 @@ export interface Props {
   shadow: true
 })
 export class ClIdentityStatus implements CamelCasedProperties<Props> {
+  @Element() host!: HTMLElement
+
   @Prop({ reflect: true }) type: Props['type']
 
   @State() status: Props['type']
 
   async componentWillLoad(): Promise<void> {
-    listenTo('cl-identity-token', (event) => {
+    listenTo('cl-identity-gettoken', (event) => {
       this.status = event.detail.response.type
     })
 
     const config = getConfig()
     this.status = (await getAccessToken(config)).type
+
+    logType(this.host, this.type)
   }
 
   render(): JSX.Element {
     if (
-      this.type !== undefined &&
-      this.status !== undefined &&
+      isValidUnion(this.type, typeList) &&
+      isValidUnion(this.status, typeList) &&
       this.type === this.status
     ) {
       return <slot></slot>
@@ -37,4 +51,8 @@ export class ClIdentityStatus implements CamelCasedProperties<Props> {
 
     return <Host aria-disabled='true'></Host>
   }
+}
+
+function logType(host: HTMLElement, type: Props['type']): void {
+  logUnion(host, 'type', type, typeList)
 }

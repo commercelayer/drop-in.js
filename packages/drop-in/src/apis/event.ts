@@ -10,7 +10,7 @@ import type {
 } from './types'
 
 export interface EventTypes {
-  'cl-identity-token': GetToken
+  'cl-identity-gettoken': GetToken
   'cl-prices-getprice': GetPrice
   'cl-skus-getsku': GetSku
   'cl-cart-additem': AddItem
