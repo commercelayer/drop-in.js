@@ -1,12 +1,13 @@
 import { getMyAccountUrl } from '#apis/commercelayer/account'
+import { listenTo } from '#apis/event'
 import {
   Component,
   Element,
-  h,
   Host,
-  type JSX,
   Prop,
-  State
+  State,
+  h,
+  type JSX
 } from '@stencil/core'
 
 export interface Props {
@@ -25,6 +26,10 @@ export class ClMyAccountLink implements Props {
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
+    listenTo('cl-identity-gettoken', async () => {
+      this.href = await getMyAccountUrl()
+    })
+
     this.href = await getMyAccountUrl()
   }
 
