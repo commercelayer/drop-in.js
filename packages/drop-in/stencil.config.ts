@@ -1,9 +1,24 @@
 import { Config } from '@stencil/core'
+import type { JsonDocsComponent, JsonDocsProp } from '@stencil/core/internal'
 import { sass } from '@stencil/sass'
+import { writeFileSync } from 'fs'
+import { resolve } from 'path'
 import { pathsToModuleNameMapper } from 'ts-jest'
 import { compilerOptions } from './tsconfig.json'
-import { writeFileSync, rmSync } from 'fs'
-import path from 'path'
+
+function writeComponents(components: JsonDocsComponent[]): string {
+  const writeProp = (prop: JsonDocsProp) => `/** ${prop.docs} */
+    ['${prop.attr}']: ${prop.type}`
+  const writeComponent = (component: JsonDocsComponent) => `/** ${component.docs} */
+  ['${component.tag}'] : {
+    ${component.props.map(writeProp).join('\n    ')}
+  }`
+
+  return `export type DropInArgs = {
+  ${components.map(writeComponent).join('\n  ')}
+}
+`
+}
 
 export const config: Config = {
   namespace: 'drop-in',
@@ -30,6 +45,7 @@ export const config: Config = {
   outputTargets: [
     {
       type: 'dist',
+      empty: false,
       // esmLoaderPath: '../loader',
     },
     {
@@ -42,35 +58,28 @@ export const config: Config = {
       type: 'docs-readme',
     },
     {
+      type: 'www',
+      serviceWorker: null, // disable service workers
+      copy: [
+        { src: 'cart.html' }
+      ]
+    },
+    {
       type: 'docs-json',
       file: 'dist/custom-elements.json'
     },
     {
       type: 'docs-custom',
       generator(docs) {
-        const file = path.resolve(__dirname, 'dist', 'custom-elements-args.ts')
-        rmSync(file, { force: true })
-        setTimeout(() => {
-          writeFileSync(file, `
-            export type DropInArgs = {
-              ${docs.components.map(component => `
-                ['${component.tag}'] : {
-                  ${component.props.map(prop => `
-                    ['${prop.attr}']: ${prop.type}
-                `).join('')}
-                }
-              `).join('')}
-            }
-          `)
-        }, 500)
+        writeFileSync(
+          resolve(__dirname, 'dist', 'custom-elements-args.d.ts'),
+          writeComponents(docs.components)
+        )
       },
     },
     {
-      type: 'www',
-      serviceWorker: null, // disable service workers
-      copy: [
-        { src: 'cart.html' }
-      ]
+      type: 'docs-vscode',
+      file: 'dist/vscode-data.json',
     }
   ],
 

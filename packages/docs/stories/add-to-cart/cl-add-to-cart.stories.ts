@@ -1,4 +1,4 @@
-import { type DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
+import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'

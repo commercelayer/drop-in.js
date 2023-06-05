@@ -42,13 +42,11 @@ export namespace Components {
     }
     interface ClCart {
         /**
-          * Indicate whether the minicart is open or not.
-          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+          * Indicate whether the minicart is open or not (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "open": boolean;
         /**
-          * Automatically open the minicart as soon as an item is added to the cart.
-          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+          * Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "openOnAdd": boolean;
         /**
@@ -57,10 +55,16 @@ export namespace Components {
         "type": 'mini' | undefined;
     }
     interface ClCartCount {
+        /**
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example above.
+         */
         "hideWhenEmpty": boolean;
     }
     interface ClCartLink {
-        "target": string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target": '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClCheckoutLink {
         "target": string;
@@ -208,13 +212,11 @@ declare namespace LocalJSX {
     }
     interface ClCart {
         /**
-          * Indicate whether the minicart is open or not.
-          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+          * Indicate whether the minicart is open or not (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "open"?: boolean;
         /**
-          * Automatically open the minicart as soon as an item is added to the cart.
-          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+          * Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "openOnAdd"?: boolean;
         /**
@@ -223,10 +225,16 @@ declare namespace LocalJSX {
         "type"?: 'mini' | undefined;
     }
     interface ClCartCount {
+        /**
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example above.
+         */
         "hideWhenEmpty"?: boolean;
     }
     interface ClCartLink {
-        "target"?: string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target"?: '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClCheckoutLink {
         "target"?: string;

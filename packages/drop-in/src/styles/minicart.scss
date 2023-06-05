@@ -55,7 +55,7 @@ cl-cart[type="mini"] {
     transition: right var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function), opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
   }
 
-  &[open] {
+  &[open]:not([open="false"]) {
     right: 0;
     pointer-events: initial;
 

@@ -21,7 +21,7 @@ const preview: Preview = {
 
       function getType(prop: JsonDocsProp) {
         const values = prop.values.filter(v => v.type !== 'undefined')
-        if (values.length > 1) {
+        if (values.length > 1 || values[0].value != null) {
           return {
             name: 'enum',
             value: values.map(v => v.value),
