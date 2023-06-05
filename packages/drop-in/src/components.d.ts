@@ -67,7 +67,10 @@ export namespace Components {
         "target": '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClCheckoutLink {
-        "target": string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target": '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClIdentityLink {
         "target": string;
@@ -237,7 +240,10 @@ declare namespace LocalJSX {
         "target"?: '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClCheckoutLink {
-        "target"?: string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target"?: '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClIdentityLink {
         "target"?: string;
