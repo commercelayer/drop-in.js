@@ -83,9 +83,15 @@ export namespace Components {
         "target": string;
     }
     interface ClPrice {
+        /**
+          * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+         */
         "code": string | undefined;
     }
     interface ClPriceAmount {
+        /**
+          * The type of price amount to be displayed.
+         */
         "type": 'price' | 'compare-at';
     }
 }
@@ -256,9 +262,15 @@ declare namespace LocalJSX {
         "target"?: string;
     }
     interface ClPrice {
-        "code"?: string | undefined;
+        /**
+          * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+         */
+        "code": string | undefined;
     }
     interface ClPriceAmount {
+        /**
+          * The type of price amount to be displayed.
+         */
         "type"?: 'price' | 'compare-at';
     }
     interface IntrinsicElements {
