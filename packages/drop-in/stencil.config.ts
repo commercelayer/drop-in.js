@@ -2,6 +2,8 @@ import { Config } from '@stencil/core'
 import { sass } from '@stencil/sass'
 import { pathsToModuleNameMapper } from 'ts-jest'
 import { compilerOptions } from './tsconfig.json'
+import { writeFileSync, rmSync } from 'fs'
+import path from 'path'
 
 export const config: Config = {
   namespace: 'drop-in',
@@ -38,6 +40,30 @@ export const config: Config = {
     },
     {
       type: 'docs-readme',
+    },
+    {
+      type: 'docs-json',
+      file: 'dist/custom-elements.json'
+    },
+    {
+      type: 'docs-custom',
+      generator(docs) {
+        const file = path.resolve(__dirname, 'dist', 'custom-elements-args.ts')
+        rmSync(file, { force: true })
+        setTimeout(() => {
+          writeFileSync(file, `
+            export type DropInArgs = {
+              ${docs.components.map(component => `
+                ['${component.tag}'] : {
+                  ${component.props.map(prop => `
+                    ['${prop.attr}']: ${prop.type}
+                `).join('')}
+                }
+              `).join('')}
+            }
+          `)
+        }, 500)
+      },
     },
     {
       type: 'www',

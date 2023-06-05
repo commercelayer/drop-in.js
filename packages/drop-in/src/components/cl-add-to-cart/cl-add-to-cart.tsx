@@ -3,54 +3,59 @@ import { getSku } from '#apis/commercelayer/skus'
 import type { Sku } from '#apis/types'
 import { log } from '#utils/logger'
 import {
-  logCode,
-  logQuantity,
-  validateCode,
-  validateQuantity
+  isValidCode,
+  isValidQuantity,
+  logCode
 } from '#utils/validation-helpers'
 import {
   Component,
   Element,
-  h,
   Host,
-  type JSX,
   Prop,
   State,
-  Watch
+  Watch,
+  h,
+  type JSX
 } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
 
-export interface Props {
-  code: string | undefined
-  quantity: number
-}
 @Component({
   tag: 'cl-add-to-cart',
   shadow: true
 })
-export class CLAddToCart implements CamelCasedProperties<Props> {
+export class CLAddToCart {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) code: string | undefined
+  /**
+   * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+   */
+  @Prop({ reflect: true }) code!: string | undefined
+
+  /**
+   * The number of units of the selected product you want to add to the shopping cart.
+   */
   @Prop({ reflect: true, mutable: true }) quantity: number = 1
 
   @State() skuObject: Sku | undefined
 
+  async componentWillLoad(): Promise<void> {
+    await this.updateSku(this.code)
+    await this.updateQuantity(this.quantity)
+  }
+
   @Watch('code')
-  async watchCodeHandler(newValue: string, _oldValue: string): Promise<void> {
-    logCode(this.host, newValue)
+  async watchCodeHandler(newValue: typeof this.code): Promise<void> {
     await this.updateSku(newValue)
   }
 
   @Watch('quantity')
-  watchQuantityHandler(newValue: number, _oldValue: number): void {
-    if (!validateQuantity(newValue)) {
-      this.quantity = 0
-    }
+  async watchQuantityHandler(newValue: typeof this.quantity): Promise<void> {
+    await this.updateQuantity(newValue)
   }
 
-  private async updateSku(code: string | undefined): Promise<void> {
-    if (validateCode(code)) {
+  private async updateSku(code: typeof this.code): Promise<void> {
+    logCode(this.host, code)
+
+    if (isValidCode(code)) {
       this.skuObject = await getSku(code)
       if (this.skuObject === undefined) {
         log('warn', `Cannot find code ${code}.`, this.host)
@@ -58,10 +63,10 @@ export class CLAddToCart implements CamelCasedProperties<Props> {
     }
   }
 
-  async componentWillLoad(): Promise<void> {
-    logCode(this.host, this.code)
-    logQuantity(this.host, this.quantity)
-    await this.updateSku(this.code)
+  private async updateQuantity(quantity: typeof this.quantity): Promise<void> {
+    if (!isValidQuantity(quantity)) {
+      this.quantity = 0
+    }
   }
 
   handleKeyPress(event: KeyboardEvent): void {
@@ -88,7 +93,7 @@ export class CLAddToCart implements CamelCasedProperties<Props> {
       this.quantity <= this.skuObject?.inventory?.quantity
 
     return (
-      validateCode(this.code) &&
+      isValidCode(this.code) &&
       this.quantity > 0 &&
       this.skuObject?.inventory?.available === true &&
       hasQuantity

@@ -1,5 +1,5 @@
 import { getPrice } from '#apis/commercelayer/prices'
-import { logCode, validateCode } from '#utils/validation-helpers'
+import { logCode, isValidCode } from '#utils/validation-helpers'
 import type { Price } from '@commercelayer/sdk'
 import { Component, Element, h, type JSX, Prop, Watch } from '@stencil/core'
 import type { CamelCasedProperties } from 'type-fest'
@@ -29,7 +29,7 @@ export class CLPrice implements CamelCasedProperties<Props> {
   }
 
   private async updatePrice(code: string | undefined): Promise<void> {
-    if (validateCode(code)) {
+    if (isValidCode(code)) {
       const price = await getPrice(code)
 
       if (price !== undefined) {

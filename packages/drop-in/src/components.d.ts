@@ -13,16 +13,31 @@ export { Props } from "./components/cl-identity-link/cl-identity-link";
 export { Props as Props1 } from "./components/cl-identity-status/cl-identity-status";
 export namespace Components {
     interface ClAddToCart {
+        /**
+          * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+         */
         "code": string | undefined;
+        /**
+          * The number of units of the selected product you want to add to the shopping cart.
+         */
         "quantity": number;
     }
     interface ClAvailability {
+        /**
+          * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+         */
         "code": string | undefined;
     }
     interface ClAvailabilityInfo {
+        /**
+          * The type of information to be displayed.
+         */
         "type": Type;
     }
     interface ClAvailabilityStatus {
+        /**
+          * The product availability status. It determines the visibility of the inner message.
+         */
         "type": 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
@@ -164,17 +179,32 @@ declare global {
 }
 declare namespace LocalJSX {
     interface ClAddToCart {
-        "code"?: string | undefined;
+        /**
+          * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+         */
+        "code": string | undefined;
+        /**
+          * The number of units of the selected product you want to add to the shopping cart.
+         */
         "quantity"?: number;
     }
     interface ClAvailability {
+        /**
+          * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+         */
         "code"?: string | undefined;
     }
     interface ClAvailabilityInfo {
-        "type"?: Type;
+        /**
+          * The type of information to be displayed.
+         */
+        "type": Type;
     }
     interface ClAvailabilityStatus {
-        "type"?: 'available' | 'unavailable' | undefined;
+        /**
+          * The product availability status. It determines the visibility of the inner message.
+         */
+        "type": 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
         /**

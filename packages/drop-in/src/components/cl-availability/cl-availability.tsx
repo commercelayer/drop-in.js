@@ -1,19 +1,18 @@
 import { getSku } from '#apis/commercelayer/skus'
 import type { Sku } from '#apis/types'
-import { logCode, validateCode } from '#utils/validation-helpers'
-import { Component, Element, h, type JSX, Prop, Watch } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
+import { isValidCode, logCode } from '#utils/validation-helpers'
+import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
 
-export interface Props {
-  code: string | undefined
-}
 @Component({
   tag: 'cl-availability',
   shadow: true
 })
-export class ClAvailability implements CamelCasedProperties<Props> {
+export class ClAvailability {
   @Element() host!: HTMLElement
 
+  /**
+   * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+   */
   @Prop({ reflect: true }) code: string | undefined
 
   async componentWillLoad(): Promise<void> {
@@ -22,13 +21,13 @@ export class ClAvailability implements CamelCasedProperties<Props> {
   }
 
   @Watch('code')
-  async watchPropHandler(newValue: string, _oldValue: string): Promise<void> {
+  async watchPropHandler(newValue: typeof this.code): Promise<void> {
     logCode(this.host, newValue)
     await this.updateAvailability(newValue)
   }
 
-  private async updateAvailability(code: string | undefined): Promise<void> {
-    if (validateCode(code)) {
+  private async updateAvailability(code: typeof this.code): Promise<void> {
+    if (isValidCode(code)) {
       const sku = await getSku(code)
 
       if (sku !== undefined) {

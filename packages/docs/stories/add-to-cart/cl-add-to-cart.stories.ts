@@ -1,37 +1,18 @@
-import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-add-to-cart/cl-add-to-cart'
+import { type DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
 import { codes } from '../assets/constants'
 
-type Args = Props
+type Args = DropInArgs['cl-add-to-cart']
 
-// More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta: Meta<Args> = {
   title: 'Components/Add to cart/cl-add-to-cart',
-  // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
-  argTypes: {
-    code: {
-      description:
-        'The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).',
-      type: { name: 'string', required: true }
-    },
-    quantity: {
-      description:
-        'The number of units of the selected product you want to add to the shopping cart.',
-      type: { name: 'number', required: false },
-      table: {
-        defaultValue: {
-          summary: '1'
-        }
-      }
-    }
-  }
+  component: 'cl-add-to-cart'
 }
 
 export default meta
 
-// More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
 const Template: StoryFn<Args> = (args) => {
   return create(
     html`

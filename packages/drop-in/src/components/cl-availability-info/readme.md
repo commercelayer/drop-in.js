@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                                                                                                       | Default     |
-| -------- | --------- | ----------- | -------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `type`   | `type`    |             | `"max-days" \| "max-hours" \| "min-days" \| "min-hours" \| "shipping-method-name" \| "shipping-method-price" \| undefined` | `undefined` |
+| Property            | Attribute | Description                              | Type                                                                                                                       | Default     |
+| ------------------- | --------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `type` _(required)_ | `type`    | The type of information to be displayed. | `"max-days" \| "max-hours" \| "min-days" \| "min-hours" \| "shipping-method-name" \| "shipping-method-price" \| undefined` | `undefined` |
 
 
 ----------------------------------------------

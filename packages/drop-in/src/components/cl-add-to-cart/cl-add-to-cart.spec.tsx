@@ -90,7 +90,7 @@ describe('cl-add-to-cart.spec', () => {
       html: '<cl-add-to-cart code="AVAILABLE123" quantity="-3">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="AVAILABLE123" quantity="-3" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart code="AVAILABLE123" quantity="0" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

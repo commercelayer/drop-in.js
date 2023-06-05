@@ -1,25 +1,24 @@
 import type { Sku } from '#apis/types'
 import {
   Component,
-  h,
   Host,
-  type JSX,
   Listen,
   Prop,
-  State
+  State,
+  h,
+  type JSX
 } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
-
-export interface Props {
-  type: 'available' | 'unavailable' | undefined
-}
 
 @Component({
   tag: 'cl-availability-status',
   shadow: true
 })
-export class ClAvailabilityStatus implements CamelCasedProperties<Props> {
-  @Prop({ reflect: true }) type: 'available' | 'unavailable' | undefined
+export class ClAvailabilityStatus {
+  /**
+   * The product availability status.
+   * It determines the visibility of the inner message.
+   */
+  @Prop({ reflect: true }) type!: 'available' | 'unavailable' | undefined
 
   @State() available: boolean | undefined
 

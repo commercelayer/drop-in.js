@@ -1,8 +1,12 @@
-import { Preview } from '@storybook/html'
 import { defineCustomElements } from '@commercelayer/drop-in.js/dist/loader'
+import { Preview } from '@storybook/html'
 import { clConfig } from '../stories/assets/constants'
-import { PARAM_KEY as DROP_IN_CSS_PARAM_KEY, FILENAME as DROP_IN_CSS_FILENAME } from './addon-drop-in-css/constants'
-import { PARAM_KEY as MINICART_CSS_PARAM_KEY, FILENAME as MINICART_CSS_FILENAME } from './addon-minicart-css/constants'
+import { FILENAME as DROP_IN_CSS_FILENAME, PARAM_KEY as DROP_IN_CSS_PARAM_KEY } from './addon-drop-in-css/constants'
+import { FILENAME as MINICART_CSS_FILENAME, PARAM_KEY as MINICART_CSS_PARAM_KEY } from './addon-minicart-css/constants'
+
+import customElements, { JsonDocsProp } from '@commercelayer/drop-in.js/dist/custom-elements'
+
+console.log('customElements', customElements)
 
 export const globals = {
   [DROP_IN_CSS_PARAM_KEY]: true,
@@ -11,6 +15,54 @@ export const globals = {
 
 const preview: Preview = {
   argTypesEnhancers: [
+    // Add StencilJS custom-elements manifest
+    (context) => {
+      const customElement = customElements.components.find(c => c.tag === context.component)
+
+      function getType(prop: JsonDocsProp) {
+        const values = prop.values.filter(v => v.type !== 'undefined')
+        if (values.length > 1) {
+          return {
+            name: 'enum',
+            value: values.map(v => v.value),
+            required: prop.required
+          }
+        }
+
+        return {
+          name: values[0].type,
+          required: prop.required
+        }
+      }
+
+      const argTypes = customElement?.props.map(prop => {
+        const type = getType(prop)
+        return [
+          prop.attr,
+          {
+            name: prop.attr,
+            description: prop.docs,
+            type,
+            control: {
+              type: type.name === 'enum' ? 'select' : undefined
+            },
+            table: {
+              ...('default' in prop ? {
+                defaultValue: {
+                  summary: prop.default
+                }
+              } : {})
+            }
+          }
+        ]
+      })
+
+      return {
+        ...context.argTypes,
+        ...(argTypes != null ? Object.fromEntries(argTypes) : {})
+      }
+    },
+    // Add default category
     (context) => Object.fromEntries(
       Object.entries(context.argTypes).map(([name, value]) => [
         name,
@@ -22,7 +74,7 @@ const preview: Preview = {
           }
         }
       ])
-    )
+    ),
   ],
   parameters: {
     docs: {
