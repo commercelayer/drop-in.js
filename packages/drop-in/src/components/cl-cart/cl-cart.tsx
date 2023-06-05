@@ -110,7 +110,6 @@ export class ClCart {
     })
 
     await updateCartUrl(this.getCartPageUrl())
-    await this.updateUrl()
 
     if (this.checkLocationHrefForOpenDirective()) {
       this.open = true
@@ -119,11 +118,16 @@ export class ClCart {
     this.updateMinicartUrl()
   }
 
-  private async updateUrl(bypassMinicartCheck = false): Promise<void> {
+  private async updateUrl(bypassMinicartCheck?: boolean): Promise<void> {
     const shouldUpdate =
       this.href === undefined || !(await isValidUrl(this.href))
 
-    if ((this.type !== 'mini' || bypassMinicartCheck) && shouldUpdate) {
+    if (
+      ((this.type === 'mini' && this.open) ||
+        this.type !== 'mini' ||
+        bypassMinicartCheck === true) &&
+      shouldUpdate
+    ) {
       this.href = await getCartUrl()
     }
   }
@@ -165,8 +169,8 @@ export class ClCart {
   }
 
   private updateMinicartUrl(): void {
+    void this.updateUrl()
     if (this.type === 'mini') {
-      void this.updateUrl(true)
       document.body.classList.toggle(this.openDirective, this.open)
     }
   }

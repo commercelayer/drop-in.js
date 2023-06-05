@@ -1,7 +1,6 @@
 import { Config } from '@stencil/core'
 import type { JsonDocsComponent, JsonDocsProp } from '@stencil/core/internal'
 import { sass } from '@stencil/sass'
-import { writeFileSync } from 'fs'
 import { resolve } from 'path'
 import { pathsToModuleNameMapper } from 'ts-jest'
 import { compilerOptions } from './tsconfig.json'
@@ -69,10 +68,11 @@ export const config: Config = {
       file: 'dist/custom-elements.json'
     },
     {
-      type: 'docs-custom',
-      generator(docs) {
-        writeFileSync(
-          resolve(__dirname, 'dist', 'custom-elements-args.d.ts'),
+      type: 'custom',
+      name: 'types',
+      async generator(config, compilerCtx, buildCtx, docs) {
+        await compilerCtx.fs.writeFile(
+          'dist/custom-elements-args.d.ts',
           writeComponents(docs.components)
         )
       },
