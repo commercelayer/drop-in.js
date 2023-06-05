@@ -1,4 +1,5 @@
 import type { Sku } from '#apis/types'
+import { logUnion } from '#utils/validation-helpers'
 import {
   Component,
   h,
@@ -6,7 +7,9 @@ import {
   type JSX,
   Listen,
   Prop,
-  State
+  State,
+  Element,
+  Watch
 } from '@stencil/core'
 
 @Component({
@@ -14,6 +17,17 @@ import {
   shadow: true
 })
 export class ClAvailabilityInfo {
+  @Element() host!: HTMLElement
+
+  private readonly typeList: Array<NonNullable<typeof this.type>> = [
+    'min-days',
+    'max-days',
+    'min-hours',
+    'max-hours',
+    'shipping-method-name',
+    'shipping-method-price'
+  ]
+
   /**
    * The type of information to be displayed.
    */
@@ -60,6 +74,19 @@ export class ClAvailabilityInfo {
         this.text = deliveryLeadTime?.shipping_method.formatted_price_amount
         break
     }
+  }
+
+  async componentWillLoad(): Promise<void> {
+    this.logType(this.type)
+  }
+
+  @Watch('type')
+  async watchTypeHandler(newValue: typeof this.type): Promise<void> {
+    this.logType(newValue)
+  }
+
+  private logType(type: typeof this.type): void {
+    logUnion(this.host, 'type', type, this.typeList)
   }
 
   render(): JSX.Element {
