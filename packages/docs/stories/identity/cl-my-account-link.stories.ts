@@ -1,29 +1,13 @@
-import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-my-account-link/cl-my-account-link'
+import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
 
-type Args = Props
+type Args = DropInArgs['cl-my-account-link']
 
 const meta: Meta<Args> = {
   title: 'Components/Identity/cl-my-account-link',
-  argTypes: {
-    target: {
-      description:
-        'The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).',
-      type: {
-        name: 'enum',
-        value: ['_self', '_blank', '_parent', '_top'],
-        required: false
-      },
-      control: { type: 'select' },
-      table: {
-        defaultValue: {
-          summary: '_self'
-        }
-      }
-    }
-  }
+  component: 'cl-my-account-link'
 }
 
 export default meta

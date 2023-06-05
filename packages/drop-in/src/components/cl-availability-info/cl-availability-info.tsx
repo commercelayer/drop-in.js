@@ -9,15 +9,6 @@ import {
   State
 } from '@stencil/core'
 
-export type Type =
-  | 'min-days'
-  | 'max-days'
-  | 'min-hours'
-  | 'max-hours'
-  | 'shipping-method-name'
-  | 'shipping-method-price'
-  | undefined
-
 @Component({
   tag: 'cl-availability-info',
   shadow: true
@@ -26,7 +17,14 @@ export class ClAvailabilityInfo {
   /**
    * The type of information to be displayed.
    */
-  @Prop({ reflect: true }) type!: Type
+  @Prop({ reflect: true }) type!:
+    | 'min-days'
+    | 'max-days'
+    | 'min-hours'
+    | 'max-hours'
+    | 'shipping-method-name'
+    | 'shipping-method-price'
+    | undefined
 
   /**
    * Displayed text.

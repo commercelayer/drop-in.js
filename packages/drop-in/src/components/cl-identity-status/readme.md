@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                 | Default     |
-| -------- | --------- | ----------- | ------------------------------------ | ----------- |
-| `type`   | `type`    |             | `"customer" \| "guest" \| undefined` | `undefined` |
+| Property            | Attribute | Description                                                                                                | Type                                 | Default     |
+| ------------------- | --------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------ | ----------- |
+| `type` _(required)_ | `type`    | // TODO: missing description. It determines the visibility of the inner message based on the stored token. | `"customer" \| "guest" \| undefined` | `undefined` |
 
 
 ----------------------------------------------

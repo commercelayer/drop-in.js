@@ -1,23 +1,13 @@
-import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-identity-status/cl-identity-status'
+import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
 
-type Args = Props
+type Args = DropInArgs['cl-identity-status']
 
 const meta: Meta<Args> = {
   title: 'Components/Identity/cl-identity-status',
-  argTypes: {
-    type: {
-      description:
-        'It determines the visibility of the inner message based on the stored token.',
-      type: {
-        name: 'enum',
-        value: ['guest', 'customer'],
-        required: true
-      }
-    }
-  }
+  component: 'cl-identity-status'
 }
 
 export default meta

@@ -4,9 +4,7 @@ import { clConfig } from '../stories/assets/constants'
 import { FILENAME as DROP_IN_CSS_FILENAME, PARAM_KEY as DROP_IN_CSS_PARAM_KEY } from './addon-drop-in-css/constants'
 import { FILENAME as MINICART_CSS_FILENAME, PARAM_KEY as MINICART_CSS_PARAM_KEY } from './addon-minicart-css/constants'
 
-import customElements, { JsonDocsProp } from '@commercelayer/drop-in.js/dist/custom-elements'
-
-console.log('customElements', customElements)
+import customElements, { type JsonDocsProp } from '@commercelayer/drop-in.js/dist/custom-elements'
 
 export const globals = {
   [DROP_IN_CSS_PARAM_KEY]: true,

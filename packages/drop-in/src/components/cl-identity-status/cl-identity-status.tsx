@@ -9,25 +9,29 @@ import {
   Prop,
   State,
   h,
-  type JSX
+  type JSX,
+  Watch
 } from '@stencil/core'
-import type { CamelCasedProperties, TupleToUnion } from 'type-fest'
-
-const typeList = ['guest', 'customer'] as const
-export interface Props {
-  type: TupleToUnion<typeof typeList> | undefined
-}
 
 @Component({
   tag: 'cl-identity-status',
   shadow: true
 })
-export class ClIdentityStatus implements CamelCasedProperties<Props> {
+export class ClIdentityStatus {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) type: Props['type']
+  private readonly typeList: Array<NonNullable<typeof this.type>> = [
+    'guest',
+    'customer'
+  ]
 
-  @State() status: Props['type']
+  /**
+   * // TODO: missing description.
+   * It determines the visibility of the inner message based on the stored token.
+   */
+  @Prop({ reflect: true }) type!: 'guest' | 'customer' | undefined
+
+  @State() status: typeof this.type
 
   async componentWillLoad(): Promise<void> {
     listenTo('cl-identity-gettoken', (event) => {
@@ -37,13 +41,22 @@ export class ClIdentityStatus implements CamelCasedProperties<Props> {
     const config = getConfig()
     this.status = (await getAccessToken(config)).type
 
-    logType(this.host, this.type)
+    this.logType(this.type)
+  }
+
+  @Watch('type')
+  async watchTypeHandler(newValue: typeof this.type): Promise<void> {
+    this.logType(newValue)
+  }
+
+  private logType(type: typeof this.type): void {
+    logUnion(this.host, 'type', type, this.typeList)
   }
 
   render(): JSX.Element {
     if (
-      isValidUnion(this.type, typeList) &&
-      isValidUnion(this.status, typeList) &&
+      isValidUnion(this.type, this.typeList) &&
+      isValidUnion(this.status, this.typeList) &&
       this.type === this.status
     ) {
       return <slot></slot>
@@ -51,8 +64,4 @@ export class ClIdentityStatus implements CamelCasedProperties<Props> {
 
     return <Host aria-disabled='true'></Host>
   }
-}
-
-function logType(host: HTMLElement, type: Props['type']): void {
-  logUnion(host, 'type', type, typeList)
 }

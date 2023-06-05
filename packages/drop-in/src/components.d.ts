@@ -5,12 +5,6 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Type } from "./components/cl-availability-info/cl-availability-info";
-import { Props } from "./components/cl-identity-link/cl-identity-link";
-import { Props as Props1 } from "./components/cl-identity-status/cl-identity-status";
-export { Type } from "./components/cl-availability-info/cl-availability-info";
-export { Props } from "./components/cl-identity-link/cl-identity-link";
-export { Props as Props1 } from "./components/cl-identity-status/cl-identity-status";
 export namespace Components {
     interface ClAddToCart {
         /**
@@ -32,7 +26,13 @@ export namespace Components {
         /**
           * The type of information to be displayed.
          */
-        "type": Type;
+        "type": | 'min-days'
+    | 'max-days'
+    | 'min-hours'
+    | 'max-hours'
+    | 'shipping-method-name'
+    | 'shipping-method-price'
+    | undefined;
     }
     interface ClAvailabilityStatus {
         /**
@@ -73,14 +73,26 @@ export namespace Components {
         "target": '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClIdentityLink {
-        "target": string;
-        "type": Props['type'];
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target": '_self' | '_blank' | '_parent' | '_top';
+        /**
+          * // TODO: missing description.
+         */
+        "type": 'login' | 'sign-up' | 'logout' | undefined;
     }
     interface ClIdentityStatus {
-        "type": Props1['type'];
+        /**
+          * // TODO: missing description. It determines the visibility of the inner message based on the stored token.
+         */
+        "type": 'guest' | 'customer' | undefined;
     }
     interface ClMyAccountLink {
-        "target": string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target": '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClPrice {
         /**
@@ -211,7 +223,13 @@ declare namespace LocalJSX {
         /**
           * The type of information to be displayed.
          */
-        "type": Type;
+        "type": | 'min-days'
+    | 'max-days'
+    | 'min-hours'
+    | 'max-hours'
+    | 'shipping-method-name'
+    | 'shipping-method-price'
+    | undefined;
     }
     interface ClAvailabilityStatus {
         /**
@@ -252,14 +270,26 @@ declare namespace LocalJSX {
         "target"?: '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClIdentityLink {
-        "target"?: string;
-        "type"?: Props['type'];
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target"?: '_self' | '_blank' | '_parent' | '_top';
+        /**
+          * // TODO: missing description.
+         */
+        "type": 'login' | 'sign-up' | 'logout' | undefined;
     }
     interface ClIdentityStatus {
-        "type"?: Props1['type'];
+        /**
+          * // TODO: missing description. It determines the visibility of the inner message based on the stored token.
+         */
+        "type": 'guest' | 'customer' | undefined;
     }
     interface ClMyAccountLink {
-        "target"?: string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target"?: '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClPrice {
         /**

@@ -11,24 +11,30 @@ import {
   h,
   type JSX
 } from '@stencil/core'
-import type { CamelCasedProperties, TupleToUnion } from 'type-fest'
-
-const typeList = ['login', 'sign-up', 'logout'] as const
-export interface Props {
-  target: string
-  type: TupleToUnion<typeof typeList> | undefined
-}
 
 @Component({
   tag: 'cl-identity-link',
   shadow: true
 })
-export class ClIdentityLink implements CamelCasedProperties<Props> {
+export class ClIdentityLink {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) target: string = '_self'
+  private readonly typeList: Array<NonNullable<typeof this.type>> = [
+    'login',
+    'sign-up',
+    'logout'
+  ]
 
-  @Prop({ reflect: true }) type: Props['type']
+  /**
+   * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+   */
+  @Prop({ reflect: true }) target: '_self' | '_blank' | '_parent' | '_top' =
+    '_self'
+
+  /**
+   * // TODO: missing description.
+   */
+  @Prop({ reflect: true }) type!: 'login' | 'sign-up' | 'logout' | undefined
 
   @State() href: string | undefined
 
@@ -37,20 +43,20 @@ export class ClIdentityLink implements CamelCasedProperties<Props> {
   }
 
   @Watch('type')
-  async watchTypeHandler(newValue: Props['type']): Promise<void> {
+  async watchTypeHandler(newValue: typeof this.type): Promise<void> {
     await this.updateUrl(newValue)
   }
 
-  private async updateUrl(type: Props['type']): Promise<void> {
-    if (isValidUnion(type, typeList)) {
+  private async updateUrl(type: typeof this.type): Promise<void> {
+    if (isValidUnion(type, this.typeList)) {
       this.href = await getIdentityUrl(type)
     }
 
-    logType(this.host, type)
+    logUnion(this.host, 'type', type, this.typeList)
   }
 
   render(): JSX.Element {
-    if (!isValidUnion(this.type, typeList)) {
+    if (!isValidUnion(this.type, this.typeList)) {
       return <Host aria-disabled='true'></Host>
     }
 
@@ -73,8 +79,4 @@ export class ClIdentityLink implements CamelCasedProperties<Props> {
       </Host>
     )
   }
-}
-
-function logType(host: HTMLElement, type: Props['type']): void {
-  logUnion(host, 'type', type, typeList)
 }
