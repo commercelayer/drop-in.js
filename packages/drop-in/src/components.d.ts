@@ -217,7 +217,7 @@ declare namespace LocalJSX {
         /**
           * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
          */
-        "code"?: string | undefined;
+        "code": string | undefined;
     }
     interface ClAvailabilityInfo {
         /**

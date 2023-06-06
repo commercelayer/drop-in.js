@@ -13,7 +13,7 @@ export class ClAvailability {
   /**
    * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
    */
-  @Prop({ reflect: true }) code: string | undefined
+  @Prop({ reflect: true }) code!: string | undefined
 
   async componentWillLoad(): Promise<void> {
     logCode(this.host, this.code)
