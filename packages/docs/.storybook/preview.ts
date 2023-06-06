@@ -83,9 +83,6 @@ const preview: Preview = {
       grid: { disable: true }
     },
     options: {
-      table: {
-        category: 'asd'
-      },
       storySort: {
         order: [
           'Introduction',
