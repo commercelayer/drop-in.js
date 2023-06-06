@@ -1,6 +1,6 @@
 import { getIdentityUrl } from '#apis/commercelayer/account'
 import { logout } from '#apis/commercelayer/client'
-import { isValidUnion, logUnion } from '#utils/validation-helpers'
+import { isValidUnion, logUnion, unionToTuple } from '#utils/validation-helpers'
 import {
   Component,
   Element,
@@ -19,11 +19,11 @@ import {
 export class ClIdentityLink {
   @Element() host!: HTMLElement
 
-  private readonly typeList: Array<NonNullable<typeof this.type>> = [
+  private readonly typeList = unionToTuple<typeof this.type>()(
     'login',
     'sign-up',
     'logout'
-  ]
+  )
 
   /**
    * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).

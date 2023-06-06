@@ -1,5 +1,5 @@
 import type { Sku } from '#apis/types'
-import { logUnion } from '#utils/validation-helpers'
+import { logUnion, unionToTuple } from '#utils/validation-helpers'
 import {
   Component,
   h,
@@ -19,14 +19,14 @@ import {
 export class ClAvailabilityInfo {
   @Element() host!: HTMLElement
 
-  private readonly typeList: Array<NonNullable<typeof this.type>> = [
+  private readonly typeList = unionToTuple<typeof this.type>()(
     'min-days',
     'max-days',
     'min-hours',
     'max-hours',
     'shipping-method-name',
     'shipping-method-price'
-  ]
+  )
 
   /**
    * The type of information to be displayed.

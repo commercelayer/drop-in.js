@@ -39,3 +39,18 @@ export function logUnion<T extends string | undefined>(
     )
   }
 }
+
+type ValueOf<T> = T[keyof T]
+
+type NonEmptyArray<T> = [T, ...T[]]
+
+type MustInclude<T, U extends T[]> = [T] extends [ValueOf<U>] ? U : never
+
+/**
+ * Converts an Union type to a Tuple
+ */
+export function unionToTuple<T>() {
+  return <U extends NonEmptyArray<NonNullable<T>>>(
+    ...elements: MustInclude<NonNullable<T>, U>
+  ) => elements
+}

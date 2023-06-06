@@ -1,7 +1,7 @@
 import { getAccessToken } from '#apis/commercelayer/client'
 import { getConfig } from '#apis/commercelayer/config'
 import { listenTo } from '#apis/event'
-import { isValidUnion, logUnion } from '#utils/validation-helpers'
+import { isValidUnion, logUnion, unionToTuple } from '#utils/validation-helpers'
 import {
   Component,
   Element,
@@ -20,10 +20,10 @@ import {
 export class ClIdentityStatus {
   @Element() host!: HTMLElement
 
-  private readonly typeList: Array<NonNullable<typeof this.type>> = [
+  private readonly typeList = unionToTuple<typeof this.type>()(
     'guest',
     'customer'
-  ]
+  )
 
   /**
    * // TODO: missing description.
