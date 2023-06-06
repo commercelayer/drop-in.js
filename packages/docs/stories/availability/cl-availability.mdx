@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-availability.stories.ts';
 import { codes } from '../assets/constants'
 
@@ -14,7 +14,7 @@ Please note that, if different delivery lead times are available, only the one a
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" />
+<Controls of={Stories.Basic} />
 
 The pre-filled code refers to an available product, try to change it with an out-of-stock (e.g. <code>{codes.outOfStock}</code>) and see how the component behaves in the example above.
 

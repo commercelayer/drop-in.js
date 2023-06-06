@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-availability-info.stories.ts';
 
 <Meta of={Stories} />
@@ -11,7 +11,7 @@ You can choose which kind of data you want to show by using the `type` attribute
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" />
+<Controls of={Stories.Basic} />
 
 ### Multiple information
 

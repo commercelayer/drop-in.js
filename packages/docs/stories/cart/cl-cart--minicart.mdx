@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-cart--minicart.stories.ts';
 import { codes } from '../assets/constants.ts'
 
@@ -12,6 +12,6 @@ Please note that the minicart is unstyled and hidden by default. You have to wri
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" include={['open-on-add']} />
+<Controls of={Stories.Basic} include={['open-on-add']} />
 
 Want to see the `open-on-add` feature in action? Set the related attribute to `true` and click on <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> once again. 😉

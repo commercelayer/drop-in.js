@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-add-to-cart.stories.ts';
 import { codes } from '../assets/constants.ts'
 
@@ -12,7 +12,7 @@ To enable the buy button, the `quantity` value must be greater than `0`. If the 
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" />
+<Controls of={Stories.Basic} />
 
 ## Validation rules
 

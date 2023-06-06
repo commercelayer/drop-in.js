@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-availability-status.stories.ts';
 
 <Meta of={Stories} />
@@ -11,4 +11,4 @@ The inner message will be displayed based on the status type. If the `type` attr
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" />
+<Controls of={Stories.Basic} />
