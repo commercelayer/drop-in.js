@@ -1,37 +1,13 @@
-import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-identity-link/cl-identity-link'
+import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
 
-type Args = Props
+type Args = DropInArgs['cl-identity-link']
 
 const meta: Meta<Args> = {
   title: 'Components/Identity/cl-identity-link',
-  argTypes: {
-    type: {
-      description: '',
-      type: {
-        name: 'enum',
-        value: ['login', 'sign-up', 'logout'],
-        required: true
-      }
-    },
-    target: {
-      description:
-        'The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).',
-      type: {
-        name: 'enum',
-        value: ['_self', '_blank', '_parent', '_top'],
-        required: false
-      },
-      control: { type: 'select' },
-      table: {
-        defaultValue: {
-          summary: '_self'
-        }
-      }
-    }
-  }
+  component: 'cl-identity-link'
 }
 
 export default meta

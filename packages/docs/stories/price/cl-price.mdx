@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-price.stories.ts';
 
 <Meta of={Stories} />
@@ -13,7 +13,7 @@ This component is the owner of the price information. It fetches the price of th
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" />
+<Controls of={Stories.Basic} />
 
 ### No discount
 

@@ -1,7 +1,23 @@
 import { Config } from '@stencil/core'
+import type { JsonDocsComponent, JsonDocsProp } from '@stencil/core/internal'
 import { sass } from '@stencil/sass'
+import { resolve } from 'path'
 import { pathsToModuleNameMapper } from 'ts-jest'
 import { compilerOptions } from './tsconfig.json'
+
+function writeComponents(components: JsonDocsComponent[]): string {
+  const writeProp = (prop: JsonDocsProp) => `/** ${prop.docs} */
+    ['${prop.attr}']: ${prop.type}`
+  const writeComponent = (component: JsonDocsComponent) => `/** ${component.docs} */
+  ['${component.tag}'] : {
+    ${component.props.map(writeProp).join('\n    ')}
+  }`
+
+  return `export type DropInArgs = {
+  ${components.map(writeComponent).join('\n  ')}
+}
+`
+}
 
 export const config: Config = {
   namespace: 'drop-in',
@@ -28,6 +44,7 @@ export const config: Config = {
   outputTargets: [
     {
       type: 'dist',
+      empty: false,
       // esmLoaderPath: '../loader',
     },
     {
@@ -45,6 +62,24 @@ export const config: Config = {
       copy: [
         { src: 'cart.html' }
       ]
+    },
+    {
+      type: 'docs-json',
+      file: 'dist/custom-elements.json'
+    },
+    {
+      type: 'custom',
+      name: 'types',
+      async generator(config, compilerCtx, buildCtx, docs) {
+        await compilerCtx.fs.writeFile(
+          'dist/custom-elements-args.d.ts',
+          writeComponents(docs.components)
+        )
+      },
+    },
+    {
+      type: 'docs-vscode',
+      file: 'dist/vscode-data.json',
     }
   ],
 

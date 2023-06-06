@@ -1,27 +1,17 @@
 import { log } from './logger'
 
-export function validateCode(code: string | undefined): code is string {
+export function isValidCode(code: string | undefined): code is string {
   return typeof code === 'string' && code !== ''
 }
 
 export function logCode(host: HTMLElement, code: string | undefined): void {
-  if (!validateCode(code)) {
+  if (!isValidCode(code)) {
     log('warn', '"code" attribute should be a not empty string.', host)
   }
 }
 
-export function validateQuantity(quantity: number): boolean {
+export function isValidQuantity(quantity: number): boolean {
   return quantity >= 0
-}
-
-export function logQuantity(host: HTMLElement, quantity: number): void {
-  if (!validateQuantity(quantity)) {
-    log(
-      'warn',
-      '"quantity" attribute should be a number equal or greater than 0.',
-      host
-    )
-  }
 }
 
 export function isValidUnion<T extends string | undefined>(
@@ -48,4 +38,19 @@ export function logUnion<T extends string | undefined>(
       host
     )
   }
+}
+
+type ValueOf<T> = T[keyof T]
+
+type NonEmptyArray<T> = [T, ...T[]]
+
+type MustInclude<T, U extends T[]> = [T] extends [ValueOf<U>] ? U : never
+
+/**
+ * Converts an Union type to a Tuple
+ */
+export function unionToTuple<T>() {
+  return <U extends NonEmptyArray<NonNullable<T>>>(
+    ...elements: MustInclude<NonNullable<T>, U>
+  ) => elements
 }

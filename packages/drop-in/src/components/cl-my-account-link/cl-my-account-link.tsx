@@ -10,18 +10,18 @@ import {
   type JSX
 } from '@stencil/core'
 
-export interface Props {
-  target: string
-}
-
 @Component({
   tag: 'cl-my-account-link',
   shadow: true
 })
-export class ClMyAccountLink implements Props {
+export class ClMyAccountLink {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) target: string = '_self'
+  /**
+   * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+   */
+  @Prop({ reflect: true }) target: '_self' | '_blank' | '_parent' | '_top' =
+    '_self'
 
   @State() href: string | undefined
 

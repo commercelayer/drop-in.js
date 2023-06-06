@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-price-amount.stories.ts';
 
 <Meta of={Stories} />
@@ -11,4 +11,4 @@ Each [price](https://docs.commercelayer.io/core/v/api-reference/prices) has an a
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" />
+<Controls of={Stories.Basic} />

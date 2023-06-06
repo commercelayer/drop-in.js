@@ -1,4 +1,5 @@
 import type { Sku } from '#apis/types'
+import { logUnion, unionToTuple } from '#utils/validation-helpers'
 import {
   Component,
   h,
@@ -6,30 +7,42 @@ import {
   type JSX,
   Listen,
   Prop,
-  State
+  State,
+  Element,
+  Watch
 } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
-
-export type Type =
-  | 'min-days'
-  | 'max-days'
-  | 'min-hours'
-  | 'max-hours'
-  | 'shipping-method-name'
-  | 'shipping-method-price'
-  | undefined
-
-export interface Props {
-  type: Type
-}
 
 @Component({
   tag: 'cl-availability-info',
   shadow: true
 })
-export class ClAvailabilityInfo implements CamelCasedProperties<Props> {
-  @Prop({ reflect: true }) type: Type
+export class ClAvailabilityInfo {
+  @Element() host!: HTMLElement
 
+  private readonly typeList = unionToTuple<typeof this.type>()(
+    'min-days',
+    'max-days',
+    'min-hours',
+    'max-hours',
+    'shipping-method-name',
+    'shipping-method-price'
+  )
+
+  /**
+   * The type of information to be displayed.
+   */
+  @Prop({ reflect: true }) type!:
+    | 'min-days'
+    | 'max-days'
+    | 'min-hours'
+    | 'max-hours'
+    | 'shipping-method-name'
+    | 'shipping-method-price'
+    | undefined
+
+  /**
+   * Displayed text.
+   */
   @State() text: string | undefined
 
   @Listen('availabilityUpdate')
@@ -61,6 +74,19 @@ export class ClAvailabilityInfo implements CamelCasedProperties<Props> {
         this.text = deliveryLeadTime?.shipping_method.formatted_price_amount
         break
     }
+  }
+
+  async componentWillLoad(): Promise<void> {
+    this.logType(this.type)
+  }
+
+  @Watch('type')
+  async watchTypeHandler(newValue: typeof this.type): Promise<void> {
+    this.logType(newValue)
+  }
+
+  private logType(type: typeof this.type): void {
+    logUnion(this.host, 'type', type, this.typeList)
   }
 
   render(): JSX.Element {

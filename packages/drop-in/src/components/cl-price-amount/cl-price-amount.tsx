@@ -1,24 +1,22 @@
 import type { Price } from '@commercelayer/sdk'
 import {
   Component,
-  h,
   Host,
-  type JSX,
   Listen,
   Prop,
-  State
+  State,
+  h,
+  type JSX
 } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
-
-export interface Props {
-  type: 'price' | 'compare-at'
-}
 
 @Component({
   tag: 'cl-price-amount',
   shadow: true
 })
-export class CLPriceAmount implements CamelCasedProperties<Props> {
+export class CLPriceAmount {
+  /**
+   * The type of price amount to be displayed.
+   */
   @Prop({ reflect: true }) type: 'price' | 'compare-at' = 'price'
 
   @State() price: Price | undefined

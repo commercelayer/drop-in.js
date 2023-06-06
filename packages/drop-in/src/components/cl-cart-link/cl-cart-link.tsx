@@ -3,26 +3,25 @@ import { listenTo } from '#apis/event'
 import {
   Component,
   Element,
-  h,
   Host,
-  type JSX,
   Prop,
-  State
+  State,
+  h,
+  type JSX
 } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
-
-export interface Props {
-  target: string
-}
 
 @Component({
   tag: 'cl-cart-link',
   shadow: true
 })
-export class CLCartLink implements CamelCasedProperties<Props> {
+export class CLCartLink {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) target: string = '_self'
+  /**
+   * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+   */
+  @Prop({ reflect: true }) target: '_self' | '_blank' | '_parent' | '_top' =
+    '_self'
 
   @State() minicart: HTMLClCartElement | null = null
   @State() href: string | undefined

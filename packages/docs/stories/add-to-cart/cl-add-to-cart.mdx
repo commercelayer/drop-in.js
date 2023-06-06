@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-add-to-cart.stories.ts';
 import { codes } from '../assets/constants.ts'
 
@@ -12,7 +12,7 @@ To enable the buy button, the `quantity` value must be greater than `0`. If the 
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" />
+<Controls of={Stories.Basic} />
 
 ## Validation rules
 
@@ -26,33 +26,25 @@ To enable the buy button, you must specify the product you want to add to the sh
 
 ### Out of stock
 
-<p>
 The <code>cl-add-to-cart</code> component checks the inventory for the product identified by the provided code. If it is out of stock (e.g. <code>{codes.outOfStock}</code>) the button will be rendered as disabled, as shown in the example below:
-</p>
 
 <Canvas of={Stories.OutOfStock} />
 
 ### Non-existing code
 
-<p>
 The provided code must exist among the products of your organization. If you set as the <code>code</code> attribute a non-existing one (e.g. <code>{codes.nonexisting}</code>) the button will be rendered as disabled, as shown in the example below:
-</p>
 
 <Canvas of={Stories.Nonexisting} />
 
 ### Overselling prevention
 
-<p>
-  In order to prevent overselling errors, the <code>cl-add-to-cart</code> component won't let you add to the shopping cart a quantity of the selected product greater than the available one, as shown in the example below where the product with code <code>{codes.noOverselling}</code> has less than <code>100</code> stock units, and so the button is rendered as disabled:
-</p>
+In order to prevent overselling errors, the <code>cl-add-to-cart</code> component won't let you add to the shopping cart a quantity of the selected product greater than the available one, as shown in the example below where the product with code <code>{codes.noOverselling}</code> has less than <code>100</code> stock units, and so the button is rendered as disabled:
 
 <Canvas of={Stories.OversellingPrevention} />
 
 ### Virtually infinite stock
 
-<p>
-  Some products (e.g.<code>{codes.doNotTrack}</code>) can be assigned a virtually infinite stock (to do that, you just need to set the <code>do_not_track</code> attribute of the SKU to <code>true</code>). In this case, the component will let you add as many units as you want and the button will be rendered as enabled for any value of the  <code>quantity</code> attribute (as long as it's greater than  <code>0</code>), as shown in the example below:
-</p>
+Some products (e.g.<code>{codes.doNotTrack}</code>) can be assigned a virtually infinite stock (to do that, you just need to set the <code>do_not_track</code> attribute of the SKU to <code>true</code>). In this case, the component will let you add as many units as you want and the button will be rendered as enabled for any value of the  <code>quantity</code> attribute (as long as it's greater than  <code>0</code>), as shown in the example below:
 
 <Canvas of={Stories.DoNotTrack} />
 
