@@ -13,7 +13,6 @@ const meta: Meta<Args> = {
         'Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example above.',
       type: { name: 'boolean', required: false },
       table: {
-        category: 'attributes',
         defaultValue: {
           summary: 'false'
         }

@@ -30,10 +30,7 @@ const meta: Meta<Args> = {
         value: ['available', 'unavailable'],
         required: true
       },
-      control: { type: 'select' },
-      table: {
-        category: 'attributes'
-      }
+      control: { type: 'select' }
     }
   }
 }

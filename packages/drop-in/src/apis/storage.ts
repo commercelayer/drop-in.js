@@ -10,7 +10,7 @@ export function getKeyForCart(clientCredentials: ClientCredentials): string {
   return `${prefix}order-id-${clientCredentials.clientId}-${scope}`
 }
 
-export function getKeyForAccessToken(
+export function getKeyForGuestToken(
   clientCredentials: ClientCredentials
 ): string {
   const scope = Array.isArray(clientCredentials.scope)
@@ -18,4 +18,14 @@ export function getKeyForAccessToken(
     : clientCredentials.scope ?? 'undefined'
 
   return `${prefix}token-${clientCredentials.clientId}-${scope}`
+}
+
+export function getKeyForCustomerToken(
+  clientCredentials: ClientCredentials
+): string {
+  const scope = Array.isArray(clientCredentials.scope)
+    ? clientCredentials.scope.join('-')
+    : clientCredentials.scope ?? 'undefined'
+
+  return `${prefix}session-${clientCredentials.clientId}-${scope}`
 }

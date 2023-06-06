@@ -528,7 +528,7 @@ describe('index.e2e', () => {
       </cl-cart-count>
     `)
 
-    const accessToken = (await getAccessToken(page)) ?? 'null'
+    const accessToken = (await getAccessToken(page))?.accessToken ?? 'null'
 
     expect(await getCartLink(page)).toEqualHtml(`
       <cl-cart-link target="_blank" cl-hydrated>

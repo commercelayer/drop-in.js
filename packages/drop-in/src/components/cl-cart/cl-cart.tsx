@@ -123,7 +123,8 @@ export class ClCart implements CamelCasedProperties<Props> {
   }
 
   private async updateUrl(bypassMinicartCheck = false): Promise<void> {
-    const shouldUpdate = this.href === undefined || !isValidUrl(this.href)
+    const shouldUpdate =
+      this.href === undefined || !(await isValidUrl(this.href))
 
     if ((this.type !== 'mini' || bypassMinicartCheck) && shouldUpdate) {
       this.href = await getCartUrl()

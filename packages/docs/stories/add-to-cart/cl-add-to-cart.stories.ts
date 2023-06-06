@@ -14,17 +14,13 @@ const meta: Meta<Args> = {
     code: {
       description:
         'The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).',
-      type: { name: 'string', required: true },
-      table: {
-        category: 'attributes'
-      }
+      type: { name: 'string', required: true }
     },
     quantity: {
       description:
         'The number of units of the selected product you want to add to the shopping cart.',
       type: { name: 'number', required: false },
       table: {
-        category: 'attributes',
         defaultValue: {
           summary: '1'
         }

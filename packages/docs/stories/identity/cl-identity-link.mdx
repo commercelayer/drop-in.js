@@ -1,0 +1,21 @@
+import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import * as Stories from './cl-identity-link.stories.ts';
+import { codes } from '../assets/constants.ts'
+
+<Meta of={Stories} />
+
+# Identity
+
+Any Commerce Layer account comes with a hosted version of the [open-source My account application](https://github.com/commercelayer/commercelayer-my-account) that is automatically enabled. It's a React-based, production-ready reserved user area with order history and address management features that developers can integrate with just a single URL link as explained in detail [here](https://github.com/commercelayer/commercelayer-my-account#hosted-version).
+
+Once you have [imported](?path=/docs/getting-started--docs) the drop-in library, you can use the `cl-my-account-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
+
+<Canvas of={Stories.Basic} />
+
+<ArgsTable story='Basic' />
+
+### No type
+
+Type attribute is required. If you don't provide one the component will hide.
+
+<Canvas of={Stories.WithoutAttributes} />

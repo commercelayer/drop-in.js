@@ -4,11 +4,13 @@ import type {
   AddItem,
   GetPrice,
   GetSku,
+  GetToken,
   TriggerCartUpdate,
   TriggerHostedCartUpdate
 } from './types'
 
 export interface EventTypes {
+  'cl-identity-gettoken': GetToken
   'cl-prices-getprice': GetPrice
   'cl-skus-getsku': GetSku
   'cl-cart-additem': AddItem

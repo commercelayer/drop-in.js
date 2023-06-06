@@ -13,7 +13,6 @@ const meta: Meta<Args> = {
         'Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart (available <i>only</i> when the `cl-cart` component is used inside the `cl-cart-link` one).',
       type: { name: 'boolean', required: false },
       table: {
-        category: 'attributes',
         defaultValue: {
           summary: 'false'
         }

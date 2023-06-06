@@ -1,4 +1,4 @@
-import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-checkout-link/cl-checkout-link'
+import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-my-account-link/cl-my-account-link'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
@@ -6,7 +6,7 @@ import { create } from '../../utils'
 type Args = Props
 
 const meta: Meta<Args> = {
-  title: 'Components/Checkout/cl-checkout-link',
+  title: 'Components/Identity/cl-my-account-link',
   argTypes: {
     target: {
       description:
@@ -28,14 +28,12 @@ const meta: Meta<Args> = {
 
 export default meta
 
-// More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-
 const Template: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-checkout-link target=${args.target ?? nothing}>
-        Proceed to checkout
-      </cl-checkout-link>
+      <cl-my-account-link target=${args.target ?? nothing}>
+        Go to my account
+      </cl-my-account-link>
     `
   )
 }
