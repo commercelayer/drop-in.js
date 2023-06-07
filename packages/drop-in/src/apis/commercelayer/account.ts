@@ -14,7 +14,7 @@ export async function getMyAccountUrl(): Promise<string | undefined> {
 }
 
 export async function getIdentityUrl(
-  type: 'login' | 'sign-up' | 'logout'
+  type: 'login' | 'signup' | 'logout'
 ): Promise<string | undefined> {
   const config = getConfig()
 

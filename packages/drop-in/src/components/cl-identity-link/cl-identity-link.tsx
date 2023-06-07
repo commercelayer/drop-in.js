@@ -21,7 +21,7 @@ export class ClIdentityLink {
 
   private readonly typeList = unionToTuple<typeof this.type>()(
     'login',
-    'sign-up',
+    'signup',
     'logout'
   )
 
@@ -34,7 +34,7 @@ export class ClIdentityLink {
   /**
    * // TODO: missing description.
    */
-  @Prop({ reflect: true }) type!: 'login' | 'sign-up' | 'logout' | undefined
+  @Prop({ reflect: true }) type!: 'login' | 'signup' | 'logout' | undefined
 
   @State() href: string | undefined
 

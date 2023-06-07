@@ -36,7 +36,7 @@ describe('cl-identity-link.spec', () => {
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "undefined"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "undefined"',
       root
     )
   })
@@ -64,18 +64,18 @@ describe('cl-identity-link.spec', () => {
     expect(log).not.toHaveBeenCalled()
   })
 
-  it('renders the identity link when type="sign-up"', async () => {
+  it('renders the identity link when type="signup"', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClIdentityLink],
-      html: '<cl-identity-link type="sign-up">Sign Up</cl-identity-link>'
+      html: '<cl-identity-link type="signup">Sign Up</cl-identity-link>'
     })
 
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-identity-link type="sign-up" target="_self">
+      <cl-identity-link type="signup" target="_self">
         <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/identity/sign-up?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
+          <a href="https://drop-in-js.commercelayer.app/identity/signup?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
             <slot></slot>
           </a>
         </mock:shadow-root>
@@ -135,7 +135,7 @@ describe('cl-identity-link.spec', () => {
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "undefined"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "undefined"',
       root
     )
   })
@@ -161,7 +161,7 @@ describe('cl-identity-link.spec', () => {
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "john"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "john"',
       root
     )
   })
@@ -188,13 +188,13 @@ describe('cl-identity-link.spec', () => {
 
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "undefined"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "undefined"',
       root
     )
 
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "john"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "john"',
       root
     )
   })

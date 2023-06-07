@@ -80,7 +80,7 @@ export namespace Components {
         /**
           * // TODO: missing description.
          */
-        "type": 'login' | 'sign-up' | 'logout' | undefined;
+        "type": 'login' | 'signup' | 'logout' | undefined;
     }
     interface ClIdentityStatus {
         /**
@@ -277,7 +277,7 @@ declare namespace LocalJSX {
         /**
           * // TODO: missing description.
          */
-        "type": 'login' | 'sign-up' | 'logout' | undefined;
+        "type": 'login' | 'signup' | 'logout' | undefined;
     }
     interface ClIdentityStatus {
         /**
