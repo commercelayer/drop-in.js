@@ -85,11 +85,11 @@ export const Basic: StoryFn = () => {
         <!-- Editorial Banner -->
         <div class="flex flex-col">
           <cl-identity-status class="h-full" type="guest">
-              <img class="h-full object-contain position-top" src="https://png.pngtree.com/png-vector/20221006/ourmid/pngtree-transparent-register-now-banner-png-image_6288367.png" />
+            <img class="h-full object-contain position-top" src="register.png" />
           </cl-identity-status>
 
           <cl-identity-status class="h-full" type="customer">
-              <img class="h-full object-contain position-top" src="https://t3.ftcdn.net/jpg/02/11/77/68/360_F_211776827_BJ7RrkDwbvMK4ZejCBh05fKh8Njhm3jo.jpg" />
+            <img class="h-full object-contain position-top" src="welcomeback.png" />
           </cl-identity-status>
         </div>
 
