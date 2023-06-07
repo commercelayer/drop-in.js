@@ -3,6 +3,14 @@
   --cl-color-white: #FFF;
 }
 
+cl-identity-status,
+cl-identity-link,
+cl-availability-status {
+  &[aria-disabled="true"] {
+    display: none;
+  }
+}
+
 cl-price-amount {
   color: #101111;
   font-size: 1em;

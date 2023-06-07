@@ -21,9 +21,12 @@ export const Basic: StoryFn = () => {
       <nav class="flex p-6">
         <span class="font-semibold text-xl tracking-tight">Store Name</span>
         <div class="flex items-center flex-grow justify-end">
-          <cl-identity-status type="guest">
+          <cl-identity-status type="guest" class="flex gap-2">
             <cl-identity-link type="login" target="_parent">
               Login
+            </cl-identity-link>
+            <cl-identity-link type="signup" target="_parent">
+              Signup
             </cl-identity-link>
           </cl-identity-status>
           <cl-identity-status type="customer" class="flex gap-2">
@@ -49,37 +52,7 @@ export const Basic: StoryFn = () => {
       <!-- product list -->
       <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-center">
 
-        <!-- 1st product: Black Five-Panel Cap with White Logo -->
-        <div class="flex flex-col">
-          <div class="h-80 sm:h-64">
-            <img
-              src="https://data.commercelayer.app/seed/images/skus/${codes.available}_FLAT.png"
-              class="w-full h-full object-center object-contain"
-            />
-          </div>
-          <h3 class="mt-6 font-medium">Black Five-Panel Cap with White Logo</h3>
-          <small class="text-gray-300">${codes.available}</small>
-          <cl-price code="${codes.available}" class="my-2">
-            <cl-price-amount type="compare-at"></cl-price-amount>
-            <cl-price-amount type="price"></cl-price-amount>
-          </cl-price>
-          <cl-add-to-cart code="${codes.available}" class="my-2 mx-auto">
-            Add to cart
-          </cl-add-to-cart>
-          <cl-availability code="${codes.available}" class="my-2">
-            <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
-            <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
-            <cl-availability-status type="available" class="block">
-              ready to be shipped in
-              <cl-availability-info type="min-days"></cl-availability-info
-              // eslint-disable-next-line prettier/prettier
-              >-<cl-availability-info type="max-days"></cl-availability-info>
-              days
-            </cl-availability-status>
-          </cl-availability>
-        </div>
-
-        <!-- 2nd product: Gray Five-Panel Cap with White Logo -->
+        <!-- 1st product: Gray Five-Panel Cap with White Logo -->
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
@@ -109,7 +82,18 @@ export const Basic: StoryFn = () => {
           </cl-availability>
         </div>
 
-        <!-- 3rd product: White Backpack with Black Logo -->
+        <!-- Editorial Banner -->
+        <div class="flex flex-col">
+          <cl-identity-status class="h-full" type="guest">
+              <img class="h-full object-contain position-top" src="https://png.pngtree.com/png-vector/20221006/ourmid/pngtree-transparent-register-now-banner-png-image_6288367.png" />
+          </cl-identity-status>
+
+          <cl-identity-status class="h-full" type="customer">
+              <img class="h-full object-contain position-top" src="https://t3.ftcdn.net/jpg/02/11/77/68/360_F_211776827_BJ7RrkDwbvMK4ZejCBh05fKh8Njhm3jo.jpg" />
+          </cl-identity-status>
+        </div>
+
+        <!-- 2nd product: White Backpack with Black Logo -->
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
