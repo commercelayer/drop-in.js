@@ -3,9 +3,8 @@
   --cl-color-white: #FFF;
 }
 
-cl-identity-status,
-cl-identity-link,
-cl-availability-status {
+cl-availability-status,
+cl-identity-status {
   &[aria-disabled="true"] {
     display: none;
   }

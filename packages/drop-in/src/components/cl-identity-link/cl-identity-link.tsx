@@ -48,22 +48,23 @@ export class ClIdentityLink {
   }
 
   private async updateUrl(type: typeof this.type): Promise<void> {
-    if (isValidUnion(type, this.typeList)) {
-      this.href = await getIdentityUrl(type)
-    }
+    this.href = isValidUnion(type, this.typeList)
+      ? await getIdentityUrl(type)
+      : undefined
 
     logUnion(this.host, 'type', type, this.typeList)
   }
 
   render(): JSX.Element {
-    if (!isValidUnion(this.type, this.typeList)) {
-      return <Host aria-disabled='true'></Host>
-    }
-
     return (
-      <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
+      <Host
+        aria-disabled={
+          isValidUnion(this.type, this.typeList) && this.href !== undefined
+            ? undefined
+            : 'true'
+        }
+      >
         <a
-          part='a'
           target={this.target}
           href={this.href}
           onClick={(event) => {

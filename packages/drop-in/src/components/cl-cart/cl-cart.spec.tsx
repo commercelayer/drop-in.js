@@ -60,9 +60,6 @@ describe('cl-cart.spec', () => {
 
     expect(page.root).toEqualHtml(`
       <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
         <cl-cart type="mini" aria-hidden="true" tabindex="-1">
           <mock:shadow-root>
             <div>
@@ -84,9 +81,6 @@ describe('cl-cart.spec', () => {
 
     expect(page.root).toEqualHtml(`
       <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
         <cl-cart type="mini" open role="alertdialog" aria-modal="true">
           <mock:shadow-root>
             <div>

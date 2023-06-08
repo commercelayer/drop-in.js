@@ -86,7 +86,6 @@ export class CLCartLink {
     return (
       <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
         <a
-          part='a'
           target={this.target}
           href={this.href}
           onClick={(e) => {

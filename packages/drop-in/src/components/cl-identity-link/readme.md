@@ -13,13 +13,6 @@
 | `type` _(required)_ | `type`    | The user account access action.                                                               | `"login" \| "logout" \| "signup" \| undefined` | `undefined` |
 
 
-## Shadow Parts
-
-| Part  | Description |
-| ----- | ----------- |
-| `"a"` |             |
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

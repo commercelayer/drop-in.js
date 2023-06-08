@@ -24,12 +24,9 @@ describe('cl-checkout-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-checkout-link aria-disabled="true" target="_self">
-        <mock:shadow-root>
-          <a part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Checkout
+        <a target="_self">
+          Checkout
+        </a>
       </cl-checkout-link>
     `)
   })
@@ -46,12 +43,9 @@ describe('cl-checkout-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-checkout-link target="_self">
-        <mock:shadow-root>
-          <a href="https://checkout.url" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Checkout
+        <a href="https://checkout.url" target="_self">
+          Checkout
+        </a>
       </cl-checkout-link>
     `)
   })

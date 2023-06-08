@@ -28,8 +28,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link aria-disabled="true" target="_self">
-        <mock:shadow-root></mock:shadow-root>
-        Login
+        <a target="_self">
+          Login
+        </a>
       </cl-identity-link>
     `)
 
@@ -51,12 +52,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Login
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+          Login
+        </a>
       </cl-identity-link>
     `)
 
@@ -74,12 +72,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="signup" target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/identity/signup?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Sign Up
+        <a href="https://drop-in-js.commercelayer.app/identity/signup?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+          Sign Up
+        </a>
       </cl-identity-link>
     `)
 
@@ -97,12 +92,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="logout" target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/identity/logout?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Logout
+        <a href="https://drop-in-js.commercelayer.app/identity/logout?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+          Logout
+        </a>
       </cl-identity-link>
     `)
 
@@ -123,12 +115,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Login
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+          Login
+        </a>
       </cl-identity-link>
     `)
 
@@ -153,8 +142,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="john" aria-disabled="true" target="_self">
-        <mock:shadow-root></mock:shadow-root>
-        Login
+        <a target="_self">
+         Login
+        </a>
       </cl-identity-link>
     `)
 
@@ -179,8 +169,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="john" aria-disabled="true" target="_self">
-        <mock:shadow-root></mock:shadow-root>
-        Login
+        <a target="_self">
+          Login
+        </a>
       </cl-identity-link>
     `)
 
