@@ -12,7 +12,7 @@ import {
 
 @Component({
   tag: 'cl-my-account-link',
-  shadow: true
+  shadow: false
 })
 export class ClMyAccountLink {
   @Element() host!: HTMLElement

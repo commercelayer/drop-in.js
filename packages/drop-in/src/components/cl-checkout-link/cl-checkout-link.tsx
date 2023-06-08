@@ -12,7 +12,7 @@ import {
 
 @Component({
   tag: 'cl-checkout-link',
-  shadow: true
+  shadow: false
 })
 export class ClCheckoutLink {
   @Element() host!: HTMLElement

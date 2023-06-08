@@ -14,7 +14,7 @@ import {
 
 @Component({
   tag: 'cl-identity-link',
-  shadow: true
+  shadow: false
 })
 export class ClIdentityLink {
   @Element() host!: HTMLElement

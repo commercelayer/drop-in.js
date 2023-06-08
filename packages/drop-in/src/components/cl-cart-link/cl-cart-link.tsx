@@ -12,7 +12,7 @@ import {
 
 @Component({
   tag: 'cl-cart-link',
-  shadow: true
+  shadow: false
 })
 export class CLCartLink {
   @Element() host!: HTMLElement
