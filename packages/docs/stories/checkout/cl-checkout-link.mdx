@@ -1,6 +1,7 @@
 import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-checkout-link.stories.ts';
 import { codes } from '../assets/constants.ts'
+import { Alert } from '../assets/components'
 
 <Meta of={Stories} />
 
@@ -17,4 +18,8 @@ Once you have [imported](?path=/docs/getting-started--docs) the drop-in library,
 ### Empty cart
 
 The checkout link rendered by the component is disabled when the cart is empty (or does not contain any shoppable item).
-As soon as you <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> a product, the link becomes clickable (feel free to try it out by emptying your <cl-cart-link class="font-bold text-[#1EA7FD]">cart<cl-cart></cl-cart></cl-cart-link> first and then clicking on the in-line button — which by the way was *dropped in* this sentence using the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component). 😉
+As soon as you <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> a product, the link becomes clickable.
+
+<Alert title="Try it out!" type="success">
+  Empty your <cl-cart-link class="font-bold text-[#1EA7FD]">cart<cl-cart></cl-cart></cl-cart-link> first and then click on the in-line button in the sentence above (which by the way was *dropped in* this sentence using the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component). 😉
+</Alert>

@@ -1,15 +1,27 @@
 import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-identity-status.stories.ts';
 import { codes } from '../assets/constants.ts'
+import { Alert } from '../assets/components'
 
 <Meta of={Stories} />
 
 # Identity status
 
-Any Commerce Layer account comes with a hosted version of the [open-source My account application](https://github.com/commercelayer/commercelayer-my-account) that is automatically enabled. It's a React-based, production-ready reserved user area with order history and address management features that developers can integrate with just a single URL link as explained in detail [here](https://github.com/commercelayer/commercelayer-my-account#hosted-version).
+The `cl-identity-status` is a placeholder used to [display specific content](?path=/docs/components-identity-cl-identity-status--docs#mutually-exclusive-content) depending on whether the user is logged in or not.
 
-Once you have [imported](?path=/docs/getting-started--docs) the drop-in library, you can use the `cl-my-account-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
+The inner message will be displayed based on the status type, matched against the currently stored access token. If the `type` attribute is set to `customer`, the message will be visible only to logged users. Vice versa, if it is set to `guest`, the message will be visible only to non-logged users. Give it a try here below:
 
 <Canvas of={Stories.Basic} />
 
 <Controls of={Stories.Basic} />
+
+### Mutually exclusive content
+
+Using two instances of the `cl-identity-status` with different `type` you can you can show different editorial content to logged customers than what you show to guests, as shown in the snippet below:
+
+<Canvas of={Stories.Message} />
+
+<Alert title="Try it out!" type="success">
+  <cl-identity-link class="font-bold text-[#1EA7FD]" type="logout" target="_parent">Logout</cl-identity-link> first (if you were already logged in) and then <cl-identity-link class="font-bold text-[#1EA7FD]" type="login" target="_blank">login</cl-identity-link> again (guess what? Both links were *dropped in* this sentence using the [**cl-identity-link**](?path=/docs/components-identity-cl-identity-link--docs) component). 😉.
+</Alert>
+

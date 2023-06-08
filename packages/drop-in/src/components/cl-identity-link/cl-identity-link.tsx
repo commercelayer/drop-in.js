@@ -32,7 +32,7 @@ export class ClIdentityLink {
     '_self'
 
   /**
-   * // TODO: missing description.
+   * The user account access action.
    */
   @Prop({ reflect: true }) type!: 'login' | 'signup' | 'logout' | undefined
 

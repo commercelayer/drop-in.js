@@ -46,7 +46,7 @@ export namespace Components {
          */
         "open": boolean;
         /**
-          * Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
+          * If `true` the minicart automatically opens as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "openOnAdd": boolean;
         /**
@@ -56,7 +56,7 @@ export namespace Components {
     }
     interface ClCartCount {
         /**
-          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example above.
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
          */
         "hideWhenEmpty": boolean;
     }
@@ -78,13 +78,13 @@ export namespace Components {
          */
         "target": '_self' | '_blank' | '_parent' | '_top';
         /**
-          * // TODO: missing description.
+          * The user account access action.
          */
         "type": 'login' | 'signup' | 'logout' | undefined;
     }
     interface ClIdentityStatus {
         /**
-          * // TODO: missing description. It determines the visibility of the inner message based on the stored token.
+          * The user identity status (logged in or not logged in). It determines the visibility of the inner message based on the stored token.
          */
         "type": 'guest' | 'customer' | undefined;
     }
@@ -243,7 +243,7 @@ declare namespace LocalJSX {
          */
         "open"?: boolean;
         /**
-          * Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
+          * If `true` the minicart automatically opens as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "openOnAdd"?: boolean;
         /**
@@ -253,7 +253,7 @@ declare namespace LocalJSX {
     }
     interface ClCartCount {
         /**
-          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example above.
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
          */
         "hideWhenEmpty"?: boolean;
     }
@@ -275,13 +275,13 @@ declare namespace LocalJSX {
          */
         "target"?: '_self' | '_blank' | '_parent' | '_top';
         /**
-          * // TODO: missing description.
+          * The user account access action.
          */
         "type": 'login' | 'signup' | 'logout' | undefined;
     }
     interface ClIdentityStatus {
         /**
-          * // TODO: missing description. It determines the visibility of the inner message based on the stored token.
+          * The user identity status (logged in or not logged in). It determines the visibility of the inner message based on the stored token.
          */
         "type": 'guest' | 'customer' | undefined;
     }

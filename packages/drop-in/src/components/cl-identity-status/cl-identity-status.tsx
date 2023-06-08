@@ -26,7 +26,7 @@ export class ClIdentityStatus {
   )
 
   /**
-   * // TODO: missing description.
+   * The user identity status (logged in or not logged in).
    * It determines the visibility of the inner message based on the stored token.
    */
   @Prop({ reflect: true }) type!: 'guest' | 'customer' | undefined

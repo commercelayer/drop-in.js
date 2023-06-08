@@ -67,7 +67,7 @@ export class ClCart {
   @Prop({ reflect: true }) type: 'mini' | undefined
 
   /**
-   * Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart
+   * If `true` the minicart automatically opens as soon as an item is added to the shopping cart
    * (available _only_ when the `cl-cart` component is used as _minicart_).
    */
   @Prop({ reflect: true }) openOnAdd: boolean = false
