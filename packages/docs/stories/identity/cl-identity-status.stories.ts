@@ -31,7 +31,6 @@ Basic.args = {
 export const Message: StoryFn<Args> = () => {
   return create(
     html`
-      // eslint-disable-next-line prettier/prettier
       <cl-identity-status type="guest">
         Register now!
       </cl-identity-status>
