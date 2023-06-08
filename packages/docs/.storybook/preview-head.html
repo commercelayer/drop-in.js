@@ -247,3 +247,14 @@
 
 <!-- used for the demo story -->
 <script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+  (function() {
+    const url = new URL(window.parent.location.href)
+
+    url.searchParams.delete('accessToken')
+    url.searchParams.delete('scope')
+
+    window.parent.history.replaceState({}, '', url.toString())
+  })()
+</script>
