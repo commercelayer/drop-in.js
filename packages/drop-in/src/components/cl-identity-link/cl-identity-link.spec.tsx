@@ -92,7 +92,7 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="logout" target="_self">
-        <a href="https://drop-in-js.commercelayer.app/identity/logout?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+        <a href="#" target="_self">
           Logout
         </a>
       </cl-identity-link>

@@ -18,6 +18,10 @@ export async function getIdentityUrl(
 ): Promise<string | undefined> {
   const config = getConfig()
 
+  if (type === 'logout') {
+    return '#'
+  }
+
   return `${config.appEndpoint}/identity/${type}?clientId=${
     config.clientId
   }&scope=${config.scope}&returnUrl=${getClosestLocationHref()}`
