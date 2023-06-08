@@ -85,11 +85,11 @@ export const Basic: StoryFn = () => {
         <!-- Editorial Banner -->
         <div class="flex flex-col">
           <cl-identity-status class="h-full" type="guest">
-            <img class="h-full object-contain position-top" src="register.png" />
+            <img class="h-full object-contain position-top" src="register.jpg" />
           </cl-identity-status>
 
           <cl-identity-status class="h-full" type="customer">
-            <img class="h-full object-contain position-top" src="welcomeback.png" />
+            <img class="h-full object-contain position-top" src="welcomeback.jpg" />
           </cl-identity-status>
         </div>
 
