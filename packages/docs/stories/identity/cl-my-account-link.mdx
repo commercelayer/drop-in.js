@@ -9,7 +9,7 @@ import { Alert } from '../assets/components'
 
 Any Commerce Layer account comes with a hosted version of the [open-source My account application](https://github.com/commercelayer/commercelayer-my-account) that is automatically enabled. It's a React-based, production-ready reserved user area with order history, address, and personal wallet management features that developers can integrate with just a single URL link as explained in detail [here](https://github.com/commercelayer/commercelayer-my-account#hosted-version).
 
-Once you have [imported](?path=/docs/getting-started--docs) the drop-in library, you can use the `cl-my-account-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
+Once you have [imported](?path=/docs/getting-started--docs) the drop-in library and <cl-identity-link type="login" target="_parent">logged</cl-identity-link> into your account, you can use the `cl-my-account-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
 
 <Canvas of={Stories.Basic} />
 
@@ -20,5 +20,5 @@ Once you have [imported](?path=/docs/getting-started--docs) the drop-in library,
 The My account link rendered by the component is disabled for guest users. As soon as they login the link becomes clickable.
 
 <Alert title="Try it out!" type="success">
-  <cl-identity-link class="font-bold" type="logout" target="_parent">Logout</cl-identity-link> first (if you were already logged in) and then <cl-identity-link class="font-bold" type="login" target="_blank">login</cl-identity-link> again (guess what? Both links were *dropped in* this sentence using the [**cl-identity-link**](?path=/docs/components-identity-cl-identity-link--docs) component). 😉.
+  <cl-identity-link type="logout" target="_parent">Logout</cl-identity-link> first (if you were already logged in) and then <cl-identity-link type="login" target="_parent">login</cl-identity-link> again (guess what? Both links were *dropped in* this sentence using the [`cl-identity-link`](?path=/docs/components-identity-cl-identity-link--docs) component). 😉.
 </Alert>

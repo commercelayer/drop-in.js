@@ -51,7 +51,7 @@ document.addEventListener('cl-identity-gettoken', (event) => {
 
 ### `cl-cart-additem`
 
-This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component when an item is added to cart.
+This event is dispatched by the [`cl-add-to-cart`](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component when an item is added to cart.
 
 The returned `event.detail` contains the SKU code and quantity of the added item as the `request` arguments and the added line item object as the `response`:
 
@@ -69,7 +69,7 @@ document.addEventListener('cl-cart-additem', (event) => {
 
 ### `cl-prices-getprice`
 
-This event is dispatched by the [**cl-price**](?path=/docs/components-price-cl-price--docs) component when a price is fetched.
+This event is dispatched by the [`cl-price`](?path=/docs/components-price-cl-price--docs) component when a price is fetched.
 
 The returned `event.detail` contains the SKU code associated with the price as the `request` argument and the fetched price object as the `response`:
 
@@ -86,7 +86,7 @@ document.addEventListener('cl-prices-getprice', (event) => {
 
 ### `cl-skus-getsku`
 
-This event is dispatched by the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) and [**cl-availability**](?path=/docs/components-availability-cl-availability--docs) components when an SKU is fetched.
+This event is dispatched by the [`cl-add-to-cart`](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) and [`cl-availability`](?path=/docs/components-availability-cl-availability--docs) components when an SKU is fetched.
 
 The returned `event.detail` contains the SKU code as the `request` argument and the fetched SKU object as the `response`:
 

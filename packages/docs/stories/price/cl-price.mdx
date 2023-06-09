@@ -9,7 +9,7 @@ Once you have correctly set up your organization in Commerce Layer and imported 
 
 Each price has an amount (the actual selling price) and an optional *compare-at* amount (the full price that you want to display to the customer — typically with a strikethrough).
 
-This component is the owner of the price information. It fetches the price of the specified SKU and dispatches it to the [**cl-price-amount**](?path=/docs/components-price-cl-price-amount--docs) children.
+This component is the owner of the price information. It fetches the price of the specified SKU and dispatches it to the [`cl-price-amount`](?path=/docs/components-price-cl-price-amount--docs) children.
 
 <Canvas of={Stories.Basic} />
 
@@ -29,4 +29,4 @@ A price must be associated with a product. That's why the `code` attribute is ma
 
 ## Events
 
-The `cl-price` component triggers the [**cl-prices-getprice**](?path=/docs/events--docs#cl-prices-getprice) custom event when a price is fetched.
+The `cl-price` component triggers the [`cl-prices-getprice`](?path=/docs/events--docs#cl-prices-getprice) custom event when a price is fetched.
