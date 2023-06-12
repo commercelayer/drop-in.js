@@ -111,8 +111,10 @@ const preview: Preview = {
             ],
             'Identity', [
               'cl-identity-link',
-              'cl-identity-status',
-              'cl-my-account-link',
+              'cl-identity-status'
+            ],
+            'My account', [
+              'cl-my-account-link'
             ]
           ]
         ]

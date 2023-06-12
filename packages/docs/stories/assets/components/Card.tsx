@@ -190,6 +190,65 @@ const svgs = {
       xmlns: 'http://www.w3.org/2000/svg'
     },
     React.createElement('path', {
+      d: 'M6.3374 23.1125C7.43514 20.9025 8.00427 18.4676 7.9999 16C8.00095 14.8002 8.271 13.616 8.79018 12.5343C9.30936 11.4527 10.0645 10.5013 10.9999 9.75',
+      stroke: 'black',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    }),
+    React.createElement('path', {
+      d: 'M16 16C16.0054 20.0671 14.9728 24.0684 13 27.625',
+      stroke: 'black',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    }),
+    React.createElement('path', {
+      d: 'M12 16C12 14.9391 12.4214 13.9217 13.1716 13.1716C13.9217 12.4214 14.9391 12 16 12C17.0609 12 18.0783 12.4214 18.8284 13.1716C19.5786 13.9217 20 14.9391 20 16C20.0083 20.1233 19.0988 24.1968 17.3375 27.925',
+      stroke: 'black',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    }),
+    React.createElement('path', {
+      d: 'M27.325 23C27.7728 20.6935 27.9988 18.3495 28 16C28 12.8174 26.7357 9.76516 24.4853 7.51472C22.2348 5.26428 19.1826 4 16 4C12.8174 4 9.76516 5.26428 7.51472 7.51472C5.26428 9.76516 4 12.8174 4 16C4.00358 17.363 3.77097 18.7164 3.3125 20',
+      stroke: 'black',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    }),
+    React.createElement('path', {
+      d: 'M11.5999 20C11.1681 22.1032 10.4044 24.1243 9.3374 25.9875',
+      stroke: 'black',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    }),
+    React.createElement('path', {
+      d: 'M15 8.0625C15.3319 8.02261 15.6657 8.00174 16 8C18.1217 8 20.1566 8.84285 21.6569 10.3431C23.1571 11.8434 24 13.8783 24 16C23.9988 17.3372 23.9154 18.6731 23.75 20',
+      stroke: 'black',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    }),
+    React.createElement('path', {
+      d: 'M22.9876 24C22.8001 24.7375 22.5876 25.475 22.3501 26.1875',
+      stroke: 'black',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    })
+  ),
+  'my-account': React.createElement(
+    'svg',
+    {
+      width: '32',
+      height: '32',
+      viewBox: '0 0 32 32',
+      fill: 'none',
+      xmlns: 'http://www.w3.org/2000/svg'
+    },
+    React.createElement('path', {
       d: 'M16 20C20.4183 20 24 16.4183 24 12C24 7.58172 20.4183 4 16 4C11.5817 4 8 7.58172 8 12C8 16.4183 11.5817 20 16 20Z',
       stroke: 'black',
       strokeWidth: '2',
