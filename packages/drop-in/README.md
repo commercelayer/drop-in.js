@@ -30,7 +30,10 @@ For a constantly updated list of the available and soon-to-come micro frontends 
   Link to the hosted version of the Commerce Layer PCI-compliant [Checkout](https://github.com/commercelayer/commercelayer-react-checkout) application, with integrated payments.
 
 - **Identity**  
-  Signup / login via the hosted version of the Commerce Layer [Identity](https://github.com/commercelayer/mfe-identity) application, and link to the hosted version of the Commerce Layer [My account](https://github.com/commercelayer/commercelayer-my-account) application, a customer portal with personal account information and management.
+  Signup / login via the hosted version of the Commerce Layer [Identity](https://github.com/commercelayer/mfe-identity) application.
+
+- **My account**  
+  Link to the hosted version of the Commerce Layer [My account](https://github.com/commercelayer/commercelayer-my-account) application, a customer portal with personal account information and management.
 
 ## Need help?
 
