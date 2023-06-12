@@ -21,7 +21,7 @@ async function createEmptyCart(): Promise<Order> {
   const config = getConfig()
   const client = await createClient(config)
   const order = await client.orders.create({
-    return_url: config.returnUrl
+    return_url: config.orderReturnUrl
   })
 
   setCartId(order.id)

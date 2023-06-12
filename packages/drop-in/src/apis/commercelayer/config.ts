@@ -28,7 +28,7 @@ export interface CommerceLayerConfig {
   /**
    * Url used in the Hosted Cart to point to "Continue Shopping". This is also used in the thank you page.
    */
-  returnUrl?: string
+  orderReturnUrl?: string
 
   /**
    * API domain
@@ -80,11 +80,11 @@ export function getConfig(): Config {
   }
 
   if (
-    commercelayerConfig.returnUrl !== undefined &&
-    typeof commercelayerConfig.returnUrl !== 'string'
+    commercelayerConfig.orderReturnUrl !== undefined &&
+    typeof commercelayerConfig.orderReturnUrl !== 'string'
   ) {
     throw new Error(
-      `"window.commercelayerConfig.returnUrl" is set but not a string.\n${documentationLink}\n`
+      `"window.commercelayerConfig.orderReturnUrl" is set but not a string.\n${documentationLink}\n`
     )
   }
 
