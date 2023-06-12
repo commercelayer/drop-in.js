@@ -6,7 +6,7 @@ function injectConfig({
   slug = 'example',
   scope = 'market:123',
   debug,
-  returnUrl
+  orderReturnUrl
 }: Partial<Config>): void {
   Object.defineProperty(window, 'commercelayerConfig', {
     value: {
@@ -14,7 +14,7 @@ function injectConfig({
       slug,
       scope,
       debug,
-      returnUrl
+      orderReturnUrl
     }
   })
 }
