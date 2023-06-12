@@ -160,15 +160,6 @@ const preview: Preview = {
       defineCustomElements()
       return story()
     },
-
-    // TODO: temporary fix for - https://github.com/storybookjs/storybook/issues/22645
-    (story) => {
-      const tale = story()
-      return `
-        <div class="hidden">${Math.random()}</div>
-        ${typeof tale === 'string' ? tale : story()}
-      `
-    },
   ]
 };
 
