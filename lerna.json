@@ -3,7 +3,6 @@
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "useNx": false,
   "npmClient": "pnpm",
-  "useWorkspaces": true,
   "command": {
     "version": {
       "preid": "beta"
