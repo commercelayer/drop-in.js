@@ -72,10 +72,29 @@ function parseToken(token: string): { header: any; payload: ResponseToken } {
   }
 }
 
+async function revokeToken(
+  clientCredentials: ClientCredentials,
+  accessToken: string
+): Promise<boolean> {
+  return await fetch(`${clientCredentials.endpoint}/oauth/revoke`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      client_id: clientCredentials.clientId,
+      token: accessToken
+    })
+  })
+    .then(async (res) => await res.json())
+    .then(() => true)
+    .catch(() => false)
+}
+
 async function getSalesChannelToken(
   clientCredentials: ClientCredentials
 ): Promise<SalesChannelToken | null> {
-  const response = await fetch(`${clientCredentials.endpoint}/oauth/token`, {
+  const token = await fetch(`${clientCredentials.endpoint}/oauth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -86,8 +105,8 @@ async function getSalesChannelToken(
       scope: clientCredentials.scope
     })
   })
-
-  const token = await response.json()
+    .then(async (res) => await res.json())
+    .catch(() => undefined)
 
   if (token === undefined) {
     return null
@@ -146,7 +165,7 @@ async function readCustomerToken(
     accessToken,
     scope
   }
-  setToken(cookieName, token)
+  setToken(cookieName, token, new Date(payload.exp * 1000))
 
   return token
 }
@@ -214,9 +233,15 @@ export async function createClient(
 
 export async function logout(): Promise<void> {
   const config = getConfig()
-  const cookieName = getKeyForCustomerToken(config)
-  clearToken(cookieName)
+  const token = await getAccessToken(config)
 
-  getAccessToken.cache.clear?.()
-  // await getAccessToken(config)
+  if (token.type === 'customer') {
+    const cookieName = getKeyForCustomerToken(config)
+    clearToken(cookieName)
+
+    await revokeToken(config, token.accessToken)
+
+    getAccessToken.cache.clear?.()
+    // await getAccessToken(config)
+  }
 }
