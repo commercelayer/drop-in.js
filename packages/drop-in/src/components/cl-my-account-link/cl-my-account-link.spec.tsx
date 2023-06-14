@@ -24,12 +24,9 @@ describe('cl-my-account-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-my-account-link aria-disabled="true" target="_self">
-        <mock:shadow-root>
-          <a part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        My Account
+        <a target="_self">
+          My Account
+        </a>
       </cl-my-account-link>
     `)
   })
@@ -50,12 +47,9 @@ describe('cl-my-account-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-my-account-link aria-disabled="true" target="_blank">
-        <mock:shadow-root>
-          <a part="a" target="_blank">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        My Account
+        <a target="_blank">
+          My Account
+        </a>
       </cl-my-account-link>
     `)
   })
@@ -77,12 +71,9 @@ describe('cl-my-account-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-my-account-link target="_blank">
-        <mock:shadow-root>
-          <a part="a" href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123" target="_blank">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        My Account
+        <a href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123" target="_blank">
+          My Account
+        </a>
       </cl-my-account-link>
     `)
   })
@@ -104,12 +95,9 @@ describe('cl-my-account-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-my-account-link target="_blank">
-        <mock:shadow-root>
-          <a part="a" href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123" target="_blank">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        My Account
+        <a href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123" target="_blank">
+          My Account
+        </a>
       </cl-my-account-link>
     `)
 
@@ -129,12 +117,9 @@ describe('cl-my-account-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-my-account-link aria-disabled="true" target="_blank">
-        <mock:shadow-root>
-          <a part="a" target="_blank">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        My Account
+        <a target="_blank">
+          My Account
+        </a>
       </cl-my-account-link>
     `)
   })

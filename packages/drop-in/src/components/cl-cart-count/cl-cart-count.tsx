@@ -9,7 +9,7 @@ import { Component, Host, Prop, State, h, type JSX } from '@stencil/core'
 })
 export class ClCartCount {
   /**
-   * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example above.
+   * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
    */
   @Prop({ reflect: true }) hideWhenEmpty: boolean = false
 

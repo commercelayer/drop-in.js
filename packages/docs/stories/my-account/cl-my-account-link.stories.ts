@@ -6,7 +6,7 @@ import { create } from '../../utils'
 type Args = DropInArgs['cl-my-account-link']
 
 const meta: Meta<Args> = {
-  title: 'Components/Identity/cl-my-account-link',
+  title: 'Components/My account/cl-my-account-link',
   component: 'cl-my-account-link'
 }
 

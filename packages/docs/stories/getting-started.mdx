@@ -1,5 +1,6 @@
 import { Meta, Source } from '@storybook/blocks'
 import { linkTo } from '@storybook/addon-links'
+import { Alert } from './assets/components'
 
 <Meta title="Getting started" />
 
@@ -39,8 +40,6 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
 
 ## Styling
 
-To simulate in the following interactive documentation pages how the components would look when importing the CSS files below into your website you can use the toggle switches in the header.
-
 ### `drop-in.css`
 
 The drop-in library is shipped unstyled, so that you can apply your own styles. We provide some simple styling. If you're happy with that or you just want to speed up the set up process just add an additional `link` tag to your HTML code as follows:
@@ -51,11 +50,15 @@ The drop-in library is shipped unstyled, so that you can apply your own styles. 
 
 ### `minicart.css`
 
-The [**minicart**](?path=/docs/components-cart-cl-cart-minicart--docs) version of the cart is unstyled and hidden by default. Since its behavior is achieved mostly via CSS, you have to write your own to style it. You can start from scratch, or import a minimal set of styles and take it from there. To do that, just add an additional `link` tag to your HTML code as follows:
+The [minicart](?path=/docs/components-cart-cl-cart-minicart--docs) version of the cart is unstyled and hidden by default. Since its behavior is achieved mostly via CSS, you have to write your own to style it. You can start from scratch, or import a minimal set of styles and take it from there. To do that, just add an additional `link` tag to your HTML code as follows:
 
 <Source language='html' dark code={`
 <link href="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@1.4.0/dist/drop-in/minicart.css" rel="stylesheet" />
 `} />
+
+<Alert title="Applying styles" type="info">
+  To simulate in the following interactive documentation pages how the components would look when importing the CSS files above into your website you can use the toggle switches in the header.
+</Alert>
 
 ## Need help?
 

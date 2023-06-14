@@ -111,8 +111,10 @@ const preview: Preview = {
             ],
             'Identity', [
               'cl-identity-link',
-              'cl-identity-status',
-              'cl-my-account-link',
+              'cl-identity-status'
+            ],
+            'My account', [
+              'cl-my-account-link'
             ]
           ]
         ]
@@ -157,15 +159,6 @@ const preview: Preview = {
     (story) => {
       defineCustomElements()
       return story()
-    },
-
-    // TODO: temporary fix for - https://github.com/storybookjs/storybook/issues/22645
-    (story) => {
-      const tale = story()
-      return `
-        <div class="hidden">${Math.random()}</div>
-        ${typeof tale === 'string' ? tale : story()}
-      `
     },
   ]
 };

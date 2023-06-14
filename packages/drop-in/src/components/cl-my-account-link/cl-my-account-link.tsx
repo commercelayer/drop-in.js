@@ -12,7 +12,7 @@ import {
 
 @Component({
   tag: 'cl-my-account-link',
-  shadow: true
+  shadow: false
 })
 export class ClMyAccountLink {
   @Element() host!: HTMLElement
@@ -36,7 +36,7 @@ export class ClMyAccountLink {
   render(): JSX.Element {
     return (
       <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
-        <a part='a' target={this.target} href={this.href}>
+        <a target={this.target} href={this.href}>
           <slot></slot>
         </a>
       </Host>

@@ -1,6 +1,7 @@
 import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-cart-count.stories.ts'
 import { codes } from '../assets/constants.ts'
+import { Alert } from '../assets/components'
 
 <Meta of={Stories} />
 
@@ -14,11 +15,13 @@ The component works in the most straightforward way, as shown in the code snippe
 
 <Canvas of={Stories.Basic} />
 
-Just in case you were wondering — yes, the in-line button was *dropped in* the sentence above using the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component. Pretty cool, huh? 😎
+<Alert title="Just in case you were wondering..." type="success">
+  Yes, the in-line button was *dropped in* the sentence above using the [`cl-add-to-cart`](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component. Pretty cool, huh? 😎
+</Alert>
 
 ### Counter + link
 
-Although it works perfectly standalone, the most common use case of the `cl-cart-count` component is in combination with the [**cl-cart-link**](?path=/docs/components-cart-cl-cart-link--docs) one, as shown in the two of examples below:
+Although it works perfectly standalone, the most common use case of the `cl-cart-count` component is in combination with the [`cl-cart-link`](?path=/docs/components-cart-cl-cart-link--docs) one, as shown in the two of examples below:
 
 #### Icon with counter
 

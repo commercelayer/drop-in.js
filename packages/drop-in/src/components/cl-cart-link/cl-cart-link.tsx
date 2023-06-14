@@ -12,7 +12,7 @@ import {
 
 @Component({
   tag: 'cl-cart-link',
-  shadow: true
+  shadow: false
 })
 export class CLCartLink {
   @Element() host!: HTMLElement
@@ -86,7 +86,6 @@ export class CLCartLink {
     return (
       <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
         <a
-          part='a'
           target={this.target}
           href={this.href}
           onClick={(e) => {

@@ -14,14 +14,14 @@ import {
 
 @Component({
   tag: 'cl-identity-link',
-  shadow: true
+  shadow: false
 })
 export class ClIdentityLink {
   @Element() host!: HTMLElement
 
   private readonly typeList = unionToTuple<typeof this.type>()(
     'login',
-    'sign-up',
+    'signup',
     'logout'
   )
 
@@ -32,9 +32,9 @@ export class ClIdentityLink {
     '_self'
 
   /**
-   * // TODO: missing description.
+   * The user account access action.
    */
-  @Prop({ reflect: true }) type!: 'login' | 'sign-up' | 'logout' | undefined
+  @Prop({ reflect: true }) type!: 'login' | 'signup' | 'logout' | undefined
 
   @State() href: string | undefined
 
@@ -48,22 +48,23 @@ export class ClIdentityLink {
   }
 
   private async updateUrl(type: typeof this.type): Promise<void> {
-    if (isValidUnion(type, this.typeList)) {
-      this.href = await getIdentityUrl(type)
-    }
+    this.href = isValidUnion(type, this.typeList)
+      ? await getIdentityUrl(type)
+      : undefined
 
     logUnion(this.host, 'type', type, this.typeList)
   }
 
   render(): JSX.Element {
-    if (!isValidUnion(this.type, this.typeList)) {
-      return <Host aria-disabled='true'></Host>
-    }
-
     return (
-      <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
+      <Host
+        aria-disabled={
+          isValidUnion(this.type, this.typeList) && this.href !== undefined
+            ? undefined
+            : 'true'
+        }
+      >
         <a
-          part='a'
           target={this.target}
           href={this.href}
           onClick={(event) => {

@@ -28,15 +28,16 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link aria-disabled="true" target="_self">
-        <mock:shadow-root></mock:shadow-root>
-        Login
+        <a target="_self">
+          Login
+        </a>
       </cl-identity-link>
     `)
 
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "undefined"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "undefined"',
       root
     )
   })
@@ -51,12 +52,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Login
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+          Login
+        </a>
       </cl-identity-link>
     `)
 
@@ -64,22 +62,19 @@ describe('cl-identity-link.spec', () => {
     expect(log).not.toHaveBeenCalled()
   })
 
-  it('renders the identity link when type="sign-up"', async () => {
+  it('renders the identity link when type="signup"', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClIdentityLink],
-      html: '<cl-identity-link type="sign-up">Sign Up</cl-identity-link>'
+      html: '<cl-identity-link type="signup">Sign Up</cl-identity-link>'
     })
 
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-identity-link type="sign-up" target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/identity/sign-up?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Sign Up
+      <cl-identity-link type="signup" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/signup?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+          Sign Up
+        </a>
       </cl-identity-link>
     `)
 
@@ -97,12 +92,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="logout" target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/identity/logout?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Logout
+        <a href="#" target="_self">
+          Logout
+        </a>
       </cl-identity-link>
     `)
 
@@ -123,19 +115,16 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Login
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:11709&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+          Login
+        </a>
       </cl-identity-link>
     `)
 
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "undefined"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "undefined"',
       root
     )
   })
@@ -153,15 +142,16 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="john" aria-disabled="true" target="_self">
-        <mock:shadow-root></mock:shadow-root>
-        Login
+        <a target="_self">
+         Login
+        </a>
       </cl-identity-link>
     `)
 
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "john"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "john"',
       root
     )
   })
@@ -179,8 +169,9 @@ describe('cl-identity-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="john" aria-disabled="true" target="_self">
-        <mock:shadow-root></mock:shadow-root>
-        Login
+        <a target="_self">
+          Login
+        </a>
       </cl-identity-link>
     `)
 
@@ -188,13 +179,13 @@ describe('cl-identity-link.spec', () => {
 
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "undefined"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "undefined"',
       root
     )
 
     expect(log).toHaveBeenCalledWith(
       'warn',
-      '"type" attribute should be one of "login", "sign-up", "logout". Received: "john"',
+      '"type" attribute should be one of "login", "signup", "logout". Received: "john"',
       root
     )
   })

@@ -12,7 +12,7 @@ import {
 
 @Component({
   tag: 'cl-checkout-link',
-  shadow: true
+  shadow: false
 })
 export class ClCheckoutLink {
   @Element() host!: HTMLElement
@@ -51,7 +51,7 @@ export class ClCheckoutLink {
   render(): JSX.Element {
     return (
       <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
-        <a part='a' target={this.target} href={this.href}>
+        <a target={this.target} href={this.href}>
           <slot></slot>
         </a>
       </Host>

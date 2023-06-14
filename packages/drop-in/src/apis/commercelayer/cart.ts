@@ -20,11 +20,15 @@ import memoize from 'lodash/memoize'
 async function createEmptyCart(): Promise<Order> {
   const config = getConfig()
   const client = await createClient(config)
+  const token = await getAccessToken(config)
+
   const order = await client.orders.create({
     return_url: config.orderReturnUrl
   })
 
-  setCartId(order.id)
+  if (token.type === 'guest') {
+    setCartId(order.id)
+  }
 
   await triggerCartUpdate()
 

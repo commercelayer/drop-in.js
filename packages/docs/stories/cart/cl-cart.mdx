@@ -1,6 +1,7 @@
 import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-cart.stories.ts';
 import { codes } from '../assets/constants.ts'
+import { Alert } from '../assets/components'
 
 <Meta of={Stories} />
 
@@ -16,8 +17,10 @@ The component works in the most straightforward way, as shown in the code snippe
 
 {/* <Controls of={Stories.Basic} /> */}
 
-Just in case you were wondering — yes, the in-line button was *dropped in* the sentence above using the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component. Pretty cool, huh? 😎
+<Alert title="Just in case you were wondering..." type="success">
+  Yes, the in-line button was *dropped in* the sentence above using the [`cl-add-to-cart`](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component. Pretty cool, huh? 😎
+</Alert>
 
 ### Minicart
 
-You can use the `cl-cart` component inside a [**cl-cart-link**](?path=/docs/components-cart-cl-cart-link--docs) one to make it act as a [**minicart**](?path=/docs/components-cart-cl-cart-minicart--docs).
+You can use the `cl-cart` component inside a [`cl-cart-link`](?path=/docs/components-cart-cl-cart-link--docs) one to make it act as a [minicart](?path=/docs/components-cart-cl-cart-minicart--docs).

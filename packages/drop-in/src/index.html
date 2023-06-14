@@ -37,25 +37,25 @@
 
         <script>
             (function () {
-                // stg
-                window.commercelayerConfig = {
-                    domain: 'commercelayer.co',
-                    clientId: '2oh-47l4PN_yb8p4mp7AxUsb-Ue3e7tBqteoZcQM-nU',
-                    slug: 'drop-in-js-stg',
-                    scope: 'market:545',
-                    debug: 'all',
-                    orderReturnUrl: 'https://example.com'
-                    // validScopes: ['market:545', 'market:1234', ''],
-                };
-
-                // // prd
+                // // stg
                 // window.commercelayerConfig = {
-                //   clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
-                //   slug: 'drop-in-js',
-                //   scope: 'market:11709',
-                //   debug: 'all',
-                //   orderReturnUrl: 'https://example.com'
-                // }
+                //     domain: 'commercelayer.co',
+                //     clientId: '2oh-47l4PN_yb8p4mp7AxUsb-Ue3e7tBqteoZcQM-nU',
+                //     slug: 'drop-in-js-stg',
+                //     scope: 'market:545',
+                //     debug: 'all',
+                //     orderReturnUrl: 'https://example.com'
+                //     // validScopes: ['market:545', 'market:1234', ''],
+                // };
+
+                // prd
+                window.commercelayerConfig = {
+                  clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+                  slug: 'drop-in-js',
+                  scope: 'market:11709',
+                  debug: 'all',
+                  orderReturnUrl: 'https://example.com'
+                }
             })();
         </script>
     </head>
@@ -102,12 +102,9 @@
                         <cl-cart-count></cl-cart-count>
                     </cl-cart-link>
 
-                    <cl-identity-link type="invalid">Login</cl-identity-link>
-                    <cl-identity-link>Login</cl-identity-link>
-
                     <cl-identity-status type="guest">
                         <cl-identity-link type="login" class="ml-8">Login</cl-identity-link>
-                        <cl-identity-link type="sign-up" class="ml-8">Sign Up</cl-identity-link>
+                        <cl-identity-link type="signup" class="ml-8">Signup</cl-identity-link>
                     </cl-identity-status>
 
                     <cl-identity-status type="customer">
@@ -161,14 +158,14 @@
                     </div>
 
                     <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        Editorial Banner
+                        <div class="mb-4"><code>Editorial Banner</code></div>
 
                         <cl-identity-status type="guest">
-                            <img src="https://png.pngtree.com/png-vector/20221006/ourmid/pngtree-transparent-register-now-banner-png-image_6288367.png" />
+                            <div class="text-xl">Register NOW</div>
                         </cl-identity-status>
 
                         <cl-identity-status type="customer">
-                            <img src="https://t3.ftcdn.net/jpg/02/11/77/68/360_F_211776827_BJ7RrkDwbvMK4ZejCBh05fKh8Njhm3jo.jpg" />
+                            <div class="text-xl">Welcome Back 🎉</div>
                         </cl-identity-status>
                     </div>
 

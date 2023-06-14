@@ -23,7 +23,7 @@ describe('cl-cart-link.spec', () => {
     })
 
     await waitFor(waitForChanges, () => {
-      const link = root?.shadowRoot?.querySelector('a')
+      const link = root?.querySelector('a')
       return (
         link?.getAttribute('href') ===
         'https://drop-in-js.commercelayer.app/cart/null?accessToken=token-123'
@@ -32,12 +32,9 @@ describe('cl-cart-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-cart-link cl-hydrated target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/cart/null?accessToken=token-123" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Cart
+        <a href="https://drop-in-js.commercelayer.app/cart/null?accessToken=token-123" target="_self">
+          Cart
+        </a>
       </cl-cart-link>
     `)
   })
@@ -67,12 +64,9 @@ describe('cl-cart-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-cart-link cl-hydrated target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Cart
+        <a href="https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123" target="_self">
+          Cart
+        </a>
       </cl-cart-link>
     `)
   })
@@ -103,17 +97,17 @@ describe('cl-cart-link.spec', () => {
     })
 
     await waitFor(waitForChanges, () => {
-      const link = root?.shadowRoot?.querySelector('a')
+      const link = root?.querySelector('a')
       return (
         link?.getAttribute('href') ===
         'https://drop-in-js.commercelayer.app/cart/null?accessToken=token-123'
       )
     })
 
-    root?.shadowRoot?.querySelector('a')?.click()
+    root?.querySelector('a')?.click()
 
     await waitFor(waitForChanges, () => {
-      const link = root?.shadowRoot?.querySelector('a')
+      const link = root?.querySelector('a')
       return (
         link?.getAttribute('href') ===
         'https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123'
@@ -122,12 +116,9 @@ describe('cl-cart-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-cart-link cl-hydrated target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Cart
+        <a href="https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123" target="_self">
+          Cart
+        </a>
       </cl-cart-link>
     `)
   })
