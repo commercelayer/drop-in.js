@@ -45,7 +45,15 @@ function clearToken(key: string): void {
 function getToken(key: string): Token | undefined {
   const cookie = Cookies.get(key)
 
-  return cookie != null ? JSON.parse(cookie) : undefined
+  if (cookie == null) {
+    return undefined
+  }
+
+  try {
+    return JSON.parse(cookie)
+  } catch (e) {
+    return undefined
+  }
 }
 
 interface ResponseToken {
