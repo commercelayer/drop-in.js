@@ -10,16 +10,15 @@ import { type Order } from '@commercelayer/sdk'
 import {
   Component,
   Element,
-  h,
   Host,
-  type JSX,
   Listen,
   Prop,
   State,
-  Watch
+  Watch,
+  h,
+  type JSX
 } from '@stencil/core'
-import { type IFrameComponent, iframeResizer } from 'iframe-resizer'
-import type { CamelCasedProperties } from 'type-fest'
+import { iframeResizer, type IFrameComponent } from 'iframe-resizer'
 
 interface IframeData {
   message:
@@ -36,12 +35,6 @@ interface IframeData {
 }
 
 const hostedCartIframeUpdateEvent = { type: 'update' } as const
-
-export interface Props {
-  type: 'mini' | undefined
-  'open-on-add': boolean
-  open: boolean
-}
 
 @Component({
   tag: 'cl-cart',
@@ -62,7 +55,7 @@ export interface Props {
   `,
   shadow: true
 })
-export class ClCart implements CamelCasedProperties<Props> {
+export class ClCart {
   @Element() host!: HTMLClCartElement
 
   private iframe!: IFrameComponent
@@ -74,19 +67,21 @@ export class ClCart implements CamelCasedProperties<Props> {
   @Prop({ reflect: true }) type: 'mini' | undefined
 
   /**
-   * Automatically open the minicart as soon as an item is added to the cart.
-   * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+   * If `true` the minicart automatically opens as soon as an item is added to the shopping cart
+   * (available _only_ when the `cl-cart` component is used as _minicart_).
    */
   @Prop({ reflect: true }) openOnAdd: boolean = false
 
   /**
-   * Indicate whether the minicart is open or not.
-   * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+   * Indicate whether the minicart is open or not
+   * (available _only_ when the `cl-cart` component is used as _minicart_).
    */
   @Prop({ reflect: true, mutable: true }) open: boolean = false
 
   /** Current hosted cart url */
   @State() href: string | undefined
+
+  @State() isMinicart: boolean = false
 
   /**
    * Used for:
@@ -115,17 +110,24 @@ export class ClCart implements CamelCasedProperties<Props> {
     })
 
     await updateCartUrl(this.getCartPageUrl())
-    await this.updateUrl()
 
     if (this.checkLocationHrefForOpenDirective()) {
       this.open = true
     }
+
+    this.updateMinicartUrl()
   }
 
-  private async updateUrl(bypassMinicartCheck = false): Promise<void> {
-    const shouldUpdate = this.href === undefined || !isValidUrl(this.href)
+  private async updateUrl(bypassMinicartCheck?: boolean): Promise<void> {
+    const shouldUpdate =
+      this.href === undefined || !(await isValidUrl(this.href))
 
-    if ((this.type !== 'mini' || bypassMinicartCheck) && shouldUpdate) {
+    if (
+      ((this.type === 'mini' && this.open) ||
+        this.type !== 'mini' ||
+        bypassMinicartCheck === true) &&
+      shouldUpdate
+    ) {
       this.href = await getCartUrl()
     }
   }
@@ -154,7 +156,7 @@ export class ClCart implements CamelCasedProperties<Props> {
    * Check whether the current url has the `openDirective` query parameter.
    * @returns Whether the current url has the `openDirective`
    */
-  checkLocationHrefForOpenDirective(): boolean {
+  private checkLocationHrefForOpenDirective(): boolean {
     const url = new URL(location.href)
 
     if (this.type === 'mini' && url.searchParams.has(this.openDirective)) {
@@ -166,11 +168,17 @@ export class ClCart implements CamelCasedProperties<Props> {
     return false
   }
 
+  private updateMinicartUrl(): void {
+    void this.updateUrl()
+    if (this.type === 'mini') {
+      document.body.classList.toggle(this.openDirective, this.open)
+    }
+  }
+
   @Watch('open')
   watchOpenHandler(opened: boolean): void {
     if (this.type === 'mini') {
-      void this.updateUrl(true)
-      document.body.classList.toggle(this.openDirective, opened)
+      this.updateMinicartUrl()
 
       if (!opened) {
         this.host.closest('cl-cart-link')?.focus()

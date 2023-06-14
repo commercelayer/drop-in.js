@@ -8,7 +8,7 @@ import type {
   TriggerHostedCartUpdate
 } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
-import type { Order } from '@commercelayer/sdk'
+import type { Order, QueryParamsRetrieve } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 import memoize from 'lodash/memoize'
 
@@ -20,11 +20,15 @@ import memoize from 'lodash/memoize'
 async function createEmptyCart(): Promise<Order> {
   const config = getConfig()
   const client = await createClient(config)
+  const token = await getAccessToken(config)
+
   const order = await client.orders.create({
-    return_url: config.returnUrl
+    return_url: config.orderReturnUrl
   })
 
-  setCartId(order.id)
+  if (token.type === 'guest') {
+    setCartId(order.id)
+  }
 
   await triggerCartUpdate()
 
@@ -59,10 +63,10 @@ function getCartId(): string | null {
   return Cookies.get(getKeyForCart(config)) ?? null
 }
 
-export function isValidUrl(url: string): boolean {
-  const cartId = getCartId()
+export async function isValidUrl(url: string): Promise<boolean> {
+  const cartId = (await getCart())?.id
 
-  return cartId !== null && url.includes(`/${cartId}?`)
+  return cartId != null && url.includes(`/${cartId}?`)
 }
 
 /**
@@ -74,7 +78,7 @@ export async function getCartUrl(
   forceCartToExist: boolean = false
 ): Promise<string> {
   const config = getConfig()
-  const accessToken = await getAccessToken(config)
+  const { accessToken } = await getAccessToken(config)
   let cartId = (await getCart())?.id
 
   if (cartId === undefined && forceCartToExist) {
@@ -82,44 +86,65 @@ export async function getCartUrl(
     cartId = cart.id
   }
 
-  return `https://${config.slug}.commercelayer.app/cart/${
+  return `${config.appEndpoint}/cart/${
     cartId ?? 'null'
   }?accessToken=${accessToken}`
 }
 
 export async function getCheckoutUrl(): Promise<string | undefined> {
   const config = getConfig()
-  const accessToken = await getAccessToken(config)
+  const { accessToken } = await getAccessToken(config)
   const cart = await getCart()
 
   if (cart === null || !isValidForCheckout(cart)) {
     return undefined
   }
 
-  return `https://${config.slug}.commercelayer.app/checkout/${
+  return `${config.appEndpoint}/checkout/${
     cart.id ?? 'null'
   }?accessToken=${accessToken}`
 }
 
 export async function _getCart(): Promise<Order | null> {
-  const client = await createClient(getConfig())
+  const config = getConfig()
+  const client = await createClient(config)
+  const token = await getAccessToken(config)
 
-  const orderId = getCartId()
-
-  if (orderId === null) {
-    return null
+  const orderParams: QueryParamsRetrieve = {
+    include: ['line_items.item', 'line_items.line_item_options.sku_option']
   }
 
-  const order = await client.orders
-    .retrieve(orderId, {
-      include: ['line_items.item', 'line_items.line_item_options.sku_option']
-    })
-    .catch(() => null)
+  if (token.type === 'guest') {
+    const orderId = getCartId()
 
-  if (order?.editable === false) {
-    removeCartId()
-    return null
+    if (orderId === null) {
+      return null
+    }
+
+    const order = await client.orders
+      .retrieve(orderId, orderParams)
+      .catch(() => null)
+
+    if (order?.editable === false) {
+      removeCartId()
+      return null
+    }
+
+    return order
   }
+
+  const [order = null] = await client.customers.orders(token.customerId, {
+    ...orderParams,
+    filters: {
+      guest_false: true,
+      editable_true: true,
+      status_eq: 'pending'
+    },
+    sort: {
+      updated_at: 'desc'
+    },
+    pageSize: 1
+  })
 
   return order
 }

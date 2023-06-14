@@ -1,0 +1,27 @@
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
+import * as Stories from './cl-identity-status.stories.ts';
+import { codes } from '../assets/constants.ts'
+import { Alert } from '../assets/components'
+
+<Meta of={Stories} />
+
+# Identity status
+
+The `cl-identity-status` is a placeholder used to [display specific content](#mutually-exclusive-content) depending on whether the user is logged in or not.
+
+The inner message will be displayed based on the status type, matched against the currently stored access token. If the `type` attribute is set to `customer`, the message will be visible only to logged users. Vice versa, if it is set to `guest`, the message will be visible only to non-logged users. Give it a try here below:
+
+<Canvas of={Stories.Basic} />
+
+<Controls of={Stories.Basic} />
+
+### Mutually exclusive content
+
+Using two instances of the `cl-identity-status` with different `type` you can you can show different editorial content to logged customers than what you show to guests, as shown in the snippet below:
+
+<Canvas of={Stories.Message} />
+
+<Alert title="Try it out!" type="success">
+  <cl-identity-link type="logout" target="_parent">Logout</cl-identity-link> first (if you were already logged in) and then <cl-identity-link type="login" target="_blank">login</cl-identity-link> again (guess what? Both links were *dropped in* this sentence using the [`cl-identity-link`](?path=/docs/components-identity-cl-identity-link--docs) component). 😉.
+</Alert>
+

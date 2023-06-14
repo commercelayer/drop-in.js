@@ -1,25 +1,13 @@
-import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-cart-count/cl-cart-count'
+import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
 
-type Args = Props
+type Args = DropInArgs['cl-cart-count']
 
 const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart-count',
-  argTypes: {
-    'hide-when-empty': {
-      description:
-        'Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example above.',
-      type: { name: 'boolean', required: false },
-      table: {
-        category: 'attributes',
-        defaultValue: {
-          summary: 'false'
-        }
-      }
-    }
-  }
+  component: 'cl-cart-count'
 }
 
 export default meta

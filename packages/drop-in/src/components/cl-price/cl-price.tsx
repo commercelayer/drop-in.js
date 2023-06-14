@@ -1,21 +1,19 @@
 import { getPrice } from '#apis/commercelayer/prices'
-import { logCode, validateCode } from '#utils/validation-helpers'
+import { isValidCode, logCode } from '#utils/validation-helpers'
 import type { Price } from '@commercelayer/sdk'
-import { Component, Element, h, type JSX, Prop, Watch } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
-
-export interface Props {
-  code: string | undefined
-}
+import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
 
 @Component({
   tag: 'cl-price',
   shadow: true
 })
-export class CLPrice implements CamelCasedProperties<Props> {
+export class CLPrice {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) code: string | undefined
+  /**
+   * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+   */
+  @Prop({ reflect: true }) code!: string | undefined
 
   async componentWillLoad(): Promise<void> {
     logCode(this.host, this.code)
@@ -29,7 +27,7 @@ export class CLPrice implements CamelCasedProperties<Props> {
   }
 
   private async updatePrice(code: string | undefined): Promise<void> {
-    if (validateCode(code)) {
+    if (isValidCode(code)) {
       const price = await getPrice(code)
 
       if (price !== undefined) {

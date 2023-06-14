@@ -21,7 +21,23 @@ export const Basic: StoryFn = () => {
       <nav class="flex p-6">
         <span class="font-semibold text-xl tracking-tight">Store Name</span>
         <div class="flex items-center flex-grow justify-end">
-          <cl-cart-link target="_blank" aria-label="Cart">
+          <cl-identity-status type="guest" class="flex gap-2">
+            <cl-identity-link type="login" target="_parent">
+              Login
+            </cl-identity-link>
+            <cl-identity-link type="signup" target="_parent">
+              Signup
+            </cl-identity-link>
+          </cl-identity-status>
+          <cl-identity-status type="customer" class="flex gap-2">
+            <cl-my-account-link target="_blank">
+              My Account
+            </cl-my-account-link>
+            <cl-identity-link type="logout">
+              Logout
+            </cl-identity-link>
+          </cl-identity-status>
+          <cl-cart-link target="_blank" aria-label="Cart" class="ml-4">
             <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
               <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
               <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"/>
@@ -36,37 +52,7 @@ export const Basic: StoryFn = () => {
       <!-- product list -->
       <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-center">
 
-        <!-- 1st product: Black Five-Panel Cap with White Logo -->
-        <div class="flex flex-col">
-          <div class="h-80 sm:h-64">
-            <img
-              src="https://data.commercelayer.app/seed/images/skus/${codes.available}_FLAT.png"
-              class="w-full h-full object-center object-contain"
-            />
-          </div>
-          <h3 class="mt-6 font-medium">Black Five-Panel Cap with White Logo</h3>
-          <small class="text-gray-300">${codes.available}</small>
-          <cl-price code="${codes.available}" class="my-2">
-            <cl-price-amount type="compare-at"></cl-price-amount>
-            <cl-price-amount type="price"></cl-price-amount>
-          </cl-price>
-          <cl-add-to-cart code="${codes.available}" class="my-2 mx-auto">
-            Add to cart
-          </cl-add-to-cart>
-          <cl-availability code="${codes.available}" class="my-2">
-            <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
-            <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
-            <cl-availability-status type="available" class="block">
-              ready to be shipped in
-              <cl-availability-info type="min-days"></cl-availability-info
-              // eslint-disable-next-line prettier/prettier
-              >-<cl-availability-info type="max-days"></cl-availability-info>
-              days
-            </cl-availability-status>
-          </cl-availability>
-        </div>
-
-        <!-- 2nd product: Gray Five-Panel Cap with White Logo -->
+        <!-- 1st product: Gray Five-Panel Cap with White Logo -->
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
@@ -96,7 +82,18 @@ export const Basic: StoryFn = () => {
           </cl-availability>
         </div>
 
-        <!-- 3rd product: White Backpack with Black Logo -->
+        <!-- Editorial Banner -->
+        <div class="flex flex-col">
+          <cl-identity-status class="h-full" type="guest">
+            <img class="h-full object-contain position-top" src="register.jpg" />
+          </cl-identity-status>
+
+          <cl-identity-status class="h-full" type="customer">
+            <img class="h-full object-contain position-top" src="welcomeback.jpg" />
+          </cl-identity-status>
+        </div>
+
+        <!-- 2nd product: White Backpack with Black Logo -->
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img

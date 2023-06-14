@@ -1,0 +1,15 @@
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
+import * as Stories from './cl-identity-link.stories.ts';
+import { codes } from '../assets/constants.ts'
+
+<Meta of={Stories} />
+
+# Identity
+
+Any Commerce Layer account comes with a hosted version of the [open-source Identity application](https://github.com/commercelayer/mfe-identity) that is automatically enabled. It's a React-based, production-ready implementation that provides signup and login functionalities for a specific organization that developers can integrate with just a single URL link as explained in detail [here](https://github.com/commercelayer/mfe-identity#hosted-version).
+
+Once you have [imported](?path=/docs/getting-started--docs) the drop-in library, you can use the `cl-identity-link` component as an in-place replacement for an `<a>` tag pointing to the signup or login URLs or performing the logout action, based on the value of the `type` attribute, which is required (if missing, the component will not be rendered). You also have the option to specify the `target`, as shown in the code snippet below.
+
+<Canvas of={Stories.Basic} />
+
+<Controls of={Stories.Basic} />

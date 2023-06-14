@@ -1,19 +1,19 @@
-import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-cart/cl-cart'
+import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
 
-type Args = Props
+type Args = DropInArgs['cl-cart']
 
 const meta: Meta<Args> = {
   title: 'Components/Cart/cl-cart (minicart)',
+  component: 'cl-cart',
   argTypes: {
     'open-on-add': {
       description:
         'Toggle this switch to make the minicart automatically open as soon as an item is added to the shopping cart (available <i>only</i> when the `cl-cart` component is used inside the `cl-cart-link` one).',
       type: { name: 'boolean', required: false },
       table: {
-        category: 'attributes',
         defaultValue: {
           summary: 'false'
         }
@@ -59,7 +59,11 @@ export const Basic: StoryFn<Args> = (args) => {
         </svg>
 
         <cl-cart-count></cl-cart-count>
-        <cl-cart open-on-add=${args['open-on-add'] ?? nothing}></cl-cart>
+        <cl-cart
+          type=${args.type ?? nothing}
+          open=${args.open ?? nothing}
+          open-on-add=${args['open-on-add'] ?? nothing}
+        ></cl-cart>
       </cl-cart-link>
     `
   )

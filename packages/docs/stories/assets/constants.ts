@@ -7,6 +7,16 @@ export const codes = {
   doNotTrack: 'BOTT17OZFFFFFF000000XXXX'
 }
 
+// // stg
+// export const clConfig = {
+//   clientId: '2oh-47l4PN_yb8p4mp7AxUsb-Ue3e7tBqteoZcQM-nU',
+//   slug: 'drop-in-js-stg',
+//   scope: 'market:545',
+//   debug: 'all',
+//   domain: 'commercelayer.co'
+// }
+
+// prd
 export const clConfig = {
   clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
   slug: 'drop-in-js',

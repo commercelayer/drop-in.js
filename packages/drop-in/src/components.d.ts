@@ -5,31 +5,48 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Type } from "./components/cl-availability-info/cl-availability-info";
-export { Type } from "./components/cl-availability-info/cl-availability-info";
 export namespace Components {
     interface ClAddToCart {
+        /**
+          * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+         */
         "code": string | undefined;
+        /**
+          * The number of units of the selected product you want to add to the shopping cart.
+         */
         "quantity": number;
     }
     interface ClAvailability {
+        /**
+          * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+         */
         "code": string | undefined;
     }
     interface ClAvailabilityInfo {
-        "type": Type;
+        /**
+          * The type of information to be displayed.
+         */
+        "type": | 'min-days'
+    | 'max-days'
+    | 'min-hours'
+    | 'max-hours'
+    | 'shipping-method-name'
+    | 'shipping-method-price'
+    | undefined;
     }
     interface ClAvailabilityStatus {
+        /**
+          * The product availability status. It determines the visibility of the inner message.
+         */
         "type": 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
         /**
-          * Indicate whether the minicart is open or not.
-          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+          * Indicate whether the minicart is open or not (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "open": boolean;
         /**
-          * Automatically open the minicart as soon as an item is added to the cart.
-          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+          * If `true` the minicart automatically opens as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "openOnAdd": boolean;
         /**
@@ -38,18 +55,55 @@ export namespace Components {
         "type": 'mini' | undefined;
     }
     interface ClCartCount {
+        /**
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
+         */
         "hideWhenEmpty": boolean;
     }
     interface ClCartLink {
-        "target": string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target": '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClCheckoutLink {
-        "target": string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target": '_self' | '_blank' | '_parent' | '_top';
+    }
+    interface ClIdentityLink {
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target": '_self' | '_blank' | '_parent' | '_top';
+        /**
+          * The user account access action.
+         */
+        "type": 'login' | 'signup' | 'logout' | undefined;
+    }
+    interface ClIdentityStatus {
+        /**
+          * The user identity status (logged in or not logged in). It determines the visibility of the inner message based on the stored token.
+         */
+        "type": 'guest' | 'customer' | undefined;
+    }
+    interface ClMyAccountLink {
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target": '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClPrice {
+        /**
+          * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+         */
         "code": string | undefined;
     }
     interface ClPriceAmount {
+        /**
+          * The type of price amount to be displayed.
+         */
         "type": 'price' | 'compare-at';
     }
 }
@@ -102,6 +156,24 @@ declare global {
         prototype: HTMLClCheckoutLinkElement;
         new (): HTMLClCheckoutLinkElement;
     };
+    interface HTMLClIdentityLinkElement extends Components.ClIdentityLink, HTMLStencilElement {
+    }
+    var HTMLClIdentityLinkElement: {
+        prototype: HTMLClIdentityLinkElement;
+        new (): HTMLClIdentityLinkElement;
+    };
+    interface HTMLClIdentityStatusElement extends Components.ClIdentityStatus, HTMLStencilElement {
+    }
+    var HTMLClIdentityStatusElement: {
+        prototype: HTMLClIdentityStatusElement;
+        new (): HTMLClIdentityStatusElement;
+    };
+    interface HTMLClMyAccountLinkElement extends Components.ClMyAccountLink, HTMLStencilElement {
+    }
+    var HTMLClMyAccountLinkElement: {
+        prototype: HTMLClMyAccountLinkElement;
+        new (): HTMLClMyAccountLinkElement;
+    };
     interface HTMLClPriceElement extends Components.ClPrice, HTMLStencilElement {
     }
     var HTMLClPriceElement: {
@@ -123,33 +195,55 @@ declare global {
         "cl-cart-count": HTMLClCartCountElement;
         "cl-cart-link": HTMLClCartLinkElement;
         "cl-checkout-link": HTMLClCheckoutLinkElement;
+        "cl-identity-link": HTMLClIdentityLinkElement;
+        "cl-identity-status": HTMLClIdentityStatusElement;
+        "cl-my-account-link": HTMLClMyAccountLinkElement;
         "cl-price": HTMLClPriceElement;
         "cl-price-amount": HTMLClPriceAmountElement;
     }
 }
 declare namespace LocalJSX {
     interface ClAddToCart {
-        "code"?: string | undefined;
+        /**
+          * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+         */
+        "code": string | undefined;
+        /**
+          * The number of units of the selected product you want to add to the shopping cart.
+         */
         "quantity"?: number;
     }
     interface ClAvailability {
-        "code"?: string | undefined;
+        /**
+          * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+         */
+        "code": string | undefined;
     }
     interface ClAvailabilityInfo {
-        "type"?: Type;
+        /**
+          * The type of information to be displayed.
+         */
+        "type": | 'min-days'
+    | 'max-days'
+    | 'min-hours'
+    | 'max-hours'
+    | 'shipping-method-name'
+    | 'shipping-method-price'
+    | undefined;
     }
     interface ClAvailabilityStatus {
-        "type"?: 'available' | 'unavailable' | undefined;
+        /**
+          * The product availability status. It determines the visibility of the inner message.
+         */
+        "type": 'available' | 'unavailable' | undefined;
     }
     interface ClCart {
         /**
-          * Indicate whether the minicart is open or not.
-          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+          * Indicate whether the minicart is open or not (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "open"?: boolean;
         /**
-          * Automatically open the minicart as soon as an item is added to the cart.
-          * @info only available when `cl-cart` is used as minicart (`type="mini"`).
+          * If `true` the minicart automatically opens as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
          */
         "openOnAdd"?: boolean;
         /**
@@ -158,18 +252,55 @@ declare namespace LocalJSX {
         "type"?: 'mini' | undefined;
     }
     interface ClCartCount {
+        /**
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
+         */
         "hideWhenEmpty"?: boolean;
     }
     interface ClCartLink {
-        "target"?: string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target"?: '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClCheckoutLink {
-        "target"?: string;
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target"?: '_self' | '_blank' | '_parent' | '_top';
+    }
+    interface ClIdentityLink {
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target"?: '_self' | '_blank' | '_parent' | '_top';
+        /**
+          * The user account access action.
+         */
+        "type": 'login' | 'signup' | 'logout' | undefined;
+    }
+    interface ClIdentityStatus {
+        /**
+          * The user identity status (logged in or not logged in). It determines the visibility of the inner message based on the stored token.
+         */
+        "type": 'guest' | 'customer' | undefined;
+    }
+    interface ClMyAccountLink {
+        /**
+          * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+         */
+        "target"?: '_self' | '_blank' | '_parent' | '_top';
     }
     interface ClPrice {
-        "code"?: string | undefined;
+        /**
+          * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+         */
+        "code": string | undefined;
     }
     interface ClPriceAmount {
+        /**
+          * The type of price amount to be displayed.
+         */
         "type"?: 'price' | 'compare-at';
     }
     interface IntrinsicElements {
@@ -181,6 +312,9 @@ declare namespace LocalJSX {
         "cl-cart-count": ClCartCount;
         "cl-cart-link": ClCartLink;
         "cl-checkout-link": ClCheckoutLink;
+        "cl-identity-link": ClIdentityLink;
+        "cl-identity-status": ClIdentityStatus;
+        "cl-my-account-link": ClMyAccountLink;
         "cl-price": ClPrice;
         "cl-price-amount": ClPriceAmount;
     }
@@ -197,6 +331,9 @@ declare module "@stencil/core" {
             "cl-cart-count": LocalJSX.ClCartCount & JSXBase.HTMLAttributes<HTMLClCartCountElement>;
             "cl-cart-link": LocalJSX.ClCartLink & JSXBase.HTMLAttributes<HTMLClCartLinkElement>;
             "cl-checkout-link": LocalJSX.ClCheckoutLink & JSXBase.HTMLAttributes<HTMLClCheckoutLinkElement>;
+            "cl-identity-link": LocalJSX.ClIdentityLink & JSXBase.HTMLAttributes<HTMLClIdentityLinkElement>;
+            "cl-identity-status": LocalJSX.ClIdentityStatus & JSXBase.HTMLAttributes<HTMLClIdentityStatusElement>;
+            "cl-my-account-link": LocalJSX.ClMyAccountLink & JSXBase.HTMLAttributes<HTMLClMyAccountLinkElement>;
             "cl-price": LocalJSX.ClPrice & JSXBase.HTMLAttributes<HTMLClPriceElement>;
             "cl-price-amount": LocalJSX.ClPriceAmount & JSXBase.HTMLAttributes<HTMLClPriceAmountElement>;
         }

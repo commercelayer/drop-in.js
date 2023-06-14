@@ -1,5 +1,5 @@
-import * as client from '#apis/commercelayer/client'
 import * as cart from '#apis/commercelayer/cart'
+import * as client from '#apis/commercelayer/client'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClCheckoutLink } from './cl-checkout-link'
 
@@ -9,9 +9,11 @@ beforeEach(() => {
 
 describe('cl-checkout-link.spec', () => {
   it('renders the checkout url without a cartId during the first load', async () => {
-    const fakeAccessToken = 'token-123'
-
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue(fakeAccessToken)
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
+      type: 'guest',
+      accessToken: 'token-123',
+      scope: 'market:1234'
+    })
 
     const { root, waitForChanges } = await newSpecPage({
       components: [ClCheckoutLink],
@@ -22,12 +24,9 @@ describe('cl-checkout-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-checkout-link aria-disabled="true" target="_self">
-        <mock:shadow-root>
-          <a part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Checkout
+        <a target="_self">
+          Checkout
+        </a>
       </cl-checkout-link>
     `)
   })
@@ -44,12 +43,9 @@ describe('cl-checkout-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-checkout-link target="_self">
-        <mock:shadow-root>
-          <a href="https://checkout.url" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Checkout
+        <a href="https://checkout.url" target="_self">
+          Checkout
+        </a>
       </cl-checkout-link>
     `)
   })

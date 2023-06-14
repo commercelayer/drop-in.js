@@ -1,14 +1,14 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-price-amount.stories.ts';
 
 <Meta of={Stories} />
 
 # Price amounts
 
-As you saw in the [**cl-price**](?path=/docs/components-price-cl-price--docs) component examples, `cl-price-amount` is a placeholder used to display the price information.
+As you saw in the [`cl-price`](?path=/docs/components-price-cl-price--docs) component examples, `cl-price-amount` is a placeholder used to display the price information.
 
 Each [price](https://docs.commercelayer.io/core/v/api-reference/prices) has an amount (the actual selling price) and an optional *compare-at* amount (the full price that you want to display to the customer — typically with a strikethrough). You can define which of the two kind of amount to show by using the `type` attribute of the component. Give it a try here below: 
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" />
+<Controls of={Stories.Basic} />

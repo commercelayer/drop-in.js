@@ -3,26 +3,25 @@ import { listenTo } from '#apis/event'
 import {
   Component,
   Element,
-  h,
   Host,
-  type JSX,
   Prop,
-  State
+  State,
+  h,
+  type JSX
 } from '@stencil/core'
-import type { CamelCasedProperties } from 'type-fest'
-
-export interface Props {
-  target: string
-}
 
 @Component({
   tag: 'cl-cart-link',
-  shadow: true
+  shadow: false
 })
-export class CLCartLink implements CamelCasedProperties<Props> {
+export class CLCartLink {
   @Element() host!: HTMLElement
 
-  @Prop({ reflect: true }) target: string = '_self'
+  /**
+   * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+   */
+  @Prop({ reflect: true }) target: '_self' | '_blank' | '_parent' | '_top' =
+    '_self'
 
   @State() minicart: HTMLClCartElement | null = null
   @State() href: string | undefined
@@ -36,7 +35,7 @@ export class CLCartLink implements CamelCasedProperties<Props> {
     }
 
     listenTo('cl-cart-update', async () => {
-      if (this.href === undefined || !isValidUrl(this.href)) {
+      if (this.href === undefined || !(await isValidUrl(this.href))) {
         this.href = await getCartUrl()
       }
     })
@@ -47,7 +46,7 @@ export class CLCartLink implements CamelCasedProperties<Props> {
   }
 
   async handleClick(event: MouseEvent): Promise<void> {
-    if (this.href === undefined || !isValidUrl(this.href)) {
+    if (this.href === undefined || !(await isValidUrl(this.href))) {
       event.preventDefault()
       this.href = await getCartUrl(true)
       window.open(this.href, this.target)
@@ -87,7 +86,6 @@ export class CLCartLink implements CamelCasedProperties<Props> {
     return (
       <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
         <a
-          part='a'
           target={this.target}
           href={this.href}
           onClick={(e) => {

@@ -1,16 +1,16 @@
-import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-availability-status/cl-availability-status'
+import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
 import { codes } from '../assets/constants'
 
-type Args = Props & {
+type Args = DropInArgs['cl-availability-status'] & {
   ['Use an available product']: boolean
 }
 
-// More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta: Meta<Args> = {
   title: 'Components/Availability/cl-availability-status',
+  component: 'cl-availability-status',
   argTypes: {
     'Use an available product': {
       description:
@@ -20,19 +20,6 @@ const meta: Meta<Args> = {
       },
       table: {
         category: 'storybook'
-      }
-    },
-    type: {
-      description:
-        'The product availability status. It determines the visibility of the inner message.',
-      type: {
-        name: 'enum',
-        value: ['available', 'unavailable'],
-        required: true
-      },
-      control: { type: 'select' },
-      table: {
-        category: 'attributes'
       }
     }
   }

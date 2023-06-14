@@ -1,9 +1,9 @@
+import * as client from '#apis/commercelayer/client'
 import * as prices from '#apis/commercelayer/prices'
 import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
 import type { Price } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { CLPrice } from './cl-price'
-import * as client from '#apis/commercelayer/client'
 
 const fakePrices: { [sku: string]: Price } = {
   ABC123: {
@@ -34,7 +34,11 @@ const fakePrices: { [sku: string]: Price } = {
 
 describe('cl-price.spec', () => {
   it('renders without attributes', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
+      type: 'guest',
+      accessToken: 'token-123',
+      scope: 'market:1234'
+    })
 
     const { root } = await newSpecPage({
       components: [CLPrice],

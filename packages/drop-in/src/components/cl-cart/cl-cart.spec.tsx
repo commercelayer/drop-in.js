@@ -1,8 +1,8 @@
 import * as cart from '#apis/commercelayer/cart'
+import * as client from '#apis/commercelayer/client'
 import { CLCartLink } from '#components/cl-cart-link/cl-cart-link'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClCart } from './cl-cart'
-import * as client from '#apis/commercelayer/client'
 
 beforeEach(() => {
   jest.resetAllMocks()
@@ -10,7 +10,11 @@ beforeEach(() => {
 
 describe('cl-cart.spec', () => {
   it('renders', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
+      type: 'guest',
+      accessToken: 'token-123',
+      scope: 'market:1234'
+    })
 
     jest
       .spyOn(cart, 'getCartUrl')
@@ -56,9 +60,6 @@ describe('cl-cart.spec', () => {
 
     expect(page.root).toEqualHtml(`
       <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
         <cl-cart type="mini" aria-hidden="true" tabindex="-1">
           <mock:shadow-root>
             <div>
@@ -80,9 +81,6 @@ describe('cl-cart.spec', () => {
 
     expect(page.root).toEqualHtml(`
       <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
         <cl-cart type="mini" open role="alertdialog" aria-modal="true">
           <mock:shadow-root>
             <div>

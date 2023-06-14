@@ -1,17 +1,17 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-cart-link.stories.ts';
 
 <Meta of={Stories} />
 
 # Shopping cart link
 
-Any Commerce Layer account comes with a hosted version of the [open-source Checkout application](https://github.com/commercelayer/commercelayer-cart) that is automatically enabled. It's a React-based implementation that provides you with a production-ready shopping cart powered by Commerce Layer APIs. Developers can integrate it with just a single URL link as explained in detail [here](https://github.com/commercelayer/commercelayer-cart#hosted-version).
+Any Commerce Layer account comes with a hosted version of the [open-source Cart application](https://github.com/commercelayer/commercelayer-cart) that is automatically enabled. It's a React-based implementation that provides you with a production-ready shopping cart powered by Commerce Layer APIs. Developers can integrate it with just a single URL link as explained in detail [here](https://github.com/commercelayer/commercelayer-cart#hosted-version).
 
 Once you have [imported](?path=/docs/getting-started--docs) the drop-in library, you can use the `cl-cart-link` component as an in-place replacement for an `<a>` tag pointing to that URL with the option to specify the `target`, as shown in the code snippet below.
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story='Basic' />
+<Controls of={Stories.Basic} />
 
 ### Custom icon
 
@@ -21,5 +21,5 @@ Instead of a simple text link, you can use any custom icon, as shown in the exam
 
 ### Minicart
 
-You can use the `cl-cart-link` to wrap a [**cl-cart**](?path=/docs/components-cart-cl-cart--docs) one and make it act as a [**minicart**](?path=/docs/components-cart-cl-cart-minicart--docs).
+You can use the `cl-cart-link` to wrap a [`cl-cart`](?path=/docs/components-cart-cl-cart--docs) one and make it act as a [minicart](?path=/docs/components-cart-cl-cart-minicart--docs).
 

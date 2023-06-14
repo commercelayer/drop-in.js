@@ -1,16 +1,16 @@
-import { type Props } from '@commercelayer/drop-in.js/dist/types/components/cl-availability-info/cl-availability-info'
+import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
 import { type Meta, type StoryFn } from '@storybook/html'
 import { html, nothing } from 'lit-html'
 import { create } from '../../utils'
 import { codes } from '../assets/constants'
 
-type Args = Props & {
+type Args = DropInArgs['cl-availability-info'] & {
   ['Use an available product']: boolean
 }
 
-// More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta: Meta<Args> = {
   title: 'Components/Availability/cl-availability-info',
+  component: 'cl-availability-info',
   argTypes: {
     'Use an available product': {
       description:
@@ -20,25 +20,6 @@ const meta: Meta<Args> = {
       },
       table: {
         category: 'storybook'
-      }
-    },
-    type: {
-      description: 'The type of information to be displayed.',
-      type: {
-        name: 'enum',
-        value: [
-          'min-days',
-          'max-days',
-          'min-hours',
-          'max-hours',
-          'shipping-method-name',
-          'shipping-method-price'
-        ],
-        required: true
-      },
-      control: { type: 'select' },
-      table: {
-        category: 'attributes'
       }
     }
   }

@@ -1,14 +1,14 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-availability-status.stories.ts';
 
 <Meta of={Stories} />
 
 # Availability status
 
-As you saw in the [**cl-availability**](?path=/docs/components-availability-cl-availability--docs) component examples, `cl-availability-status` is a placeholder used to display the availability status.
+As you saw in the [`cl-availability`](?path=/docs/components-availability-cl-availability--docs) component examples, `cl-availability-status` is a placeholder used to display the availability status.
 
 The inner message will be displayed based on the status type. If the `type` attribute is set to `available`, the message will be visible only if the product is available. Vice versa, if it is set to `unavailable`, the message will be visible only if the product is out of stock. Give it a try here below by playing with different combinations of the *Use an available product toggle* and the `type` attribute selector:
 
 <Canvas of={Stories.Basic} />
 
-<ArgsTable story="Basic" />
+<Controls of={Stories.Basic} />

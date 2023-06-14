@@ -1,6 +1,7 @@
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
 import * as Stories from './cl-cart-count.stories.ts'
 import { codes } from '../assets/constants.ts'
+import { Alert } from '../assets/components'
 
 <Meta of={Stories} />
 
@@ -8,17 +9,19 @@ import { codes } from '../assets/constants.ts'
 
 Once you have correctly set up your organization in Commerce Layer and imported the drop-in library as described [here](?path=/docs/getting-started--docs), you can use the `cl-cart-count` component to display the number of items that are in your [shopping cart](?path=/docs/components-cart-cl-cart--docs), with the option to hide it in case the cart is empty. 
 
-<ArgsTable story='Basic' />
+<Controls of={Stories.Basic} />
 
 The component works in the most straightforward way, as shown in the code snippet below. Just click on <cl-add-to-cart class="mx-1 px-2 py-1" code={codes.available}>add to cart</cl-add-to-cart> and check the counter:
 
 <Canvas of={Stories.Basic} />
 
-Just in case you were wondering — yes, the in-line button was *dropped in* the sentence above using the [**cl-add-to-cart**](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component. Pretty cool, huh? 😎
+<Alert title="Just in case you were wondering..." type="success">
+  Yes, the in-line button was *dropped in* the sentence above using the [`cl-add-to-cart`](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) component. Pretty cool, huh? 😎
+</Alert>
 
 ### Counter + link
 
-Although it works perfectly standalone, the most common use case of the `cl-cart-count` component is in combination with the [**cl-cart-link**](?path=/docs/components-cart-cl-cart-link--docs) one, as shown in the two of examples below:
+Although it works perfectly standalone, the most common use case of the `cl-cart-count` component is in combination with the [`cl-cart-link`](?path=/docs/components-cart-cl-cart-link--docs) one, as shown in the two of examples below:
 
 #### Icon with counter
 

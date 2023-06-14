@@ -28,13 +28,18 @@ export interface CommerceLayerConfig {
   /**
    * Url used in the Hosted Cart to point to "Continue Shopping". This is also used in the thank you page.
    */
-  returnUrl?: string
+  orderReturnUrl?: string
+
+  /**
+   * API domain
+   */
+  domain: 'commercelayer.io' | 'commercelayer.co'
 }
 
 export type Config = CommerceLayerConfig & {
   debug: Exclude<CommerceLayerConfig['debug'], undefined>
   endpoint: string
-  domain: string
+  appEndpoint: string
 }
 
 const documentationLink =
@@ -75,22 +80,32 @@ export function getConfig(): Config {
   }
 
   if (
-    commercelayerConfig.returnUrl !== undefined &&
-    typeof commercelayerConfig.returnUrl !== 'string'
+    commercelayerConfig.orderReturnUrl !== undefined &&
+    typeof commercelayerConfig.orderReturnUrl !== 'string'
   ) {
     throw new Error(
-      `"window.commercelayerConfig.returnUrl" is set but not a string.\n${documentationLink}\n`
+      `"window.commercelayerConfig.orderReturnUrl" is set but not a string.\n${documentationLink}\n`
     )
   }
 
+  if (
+    !['commercelayer.io', 'commercelayer.co'].includes(
+      commercelayerConfig.domain
+    )
+  ) {
+    commercelayerConfig.domain = 'commercelayer.io'
+  }
+
   const debug: Config['debug'] = commercelayerConfig.debug ?? 'none'
-  const domain = 'commercelayer.io'
-  const endpoint: Config['endpoint'] = `https://${commercelayerConfig.slug}.${domain}`
+  const endpoint: Config['endpoint'] = `https://${commercelayerConfig.slug}.${commercelayerConfig.domain}`
+  const appEndpoint = `https://${commercelayerConfig.slug}${
+    commercelayerConfig.domain === 'commercelayer.co' ? '.stg' : ''
+  }.commercelayer.app`
 
   return {
     ...commercelayerConfig,
     debug,
     endpoint,
-    domain
+    appEndpoint
   }
 }

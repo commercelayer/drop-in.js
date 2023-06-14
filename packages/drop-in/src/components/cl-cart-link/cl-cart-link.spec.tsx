@@ -11,7 +11,11 @@ beforeEach(() => {
 
 describe('cl-cart-link.spec', () => {
   it('renders the cart url without a cartId during the first load', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
+      type: 'guest',
+      accessToken: 'token-123',
+      scope: 'market:1234'
+    })
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLCartLink],
@@ -19,7 +23,7 @@ describe('cl-cart-link.spec', () => {
     })
 
     await waitFor(waitForChanges, () => {
-      const link = root?.shadowRoot?.querySelector('a')
+      const link = root?.querySelector('a')
       return (
         link?.getAttribute('href') ===
         'https://drop-in-js.commercelayer.app/cart/null?accessToken=token-123'
@@ -28,18 +32,19 @@ describe('cl-cart-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-cart-link cl-hydrated target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/cart/null?accessToken=token-123" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Cart
+        <a href="https://drop-in-js.commercelayer.app/cart/null?accessToken=token-123" target="_self">
+          Cart
+        </a>
       </cl-cart-link>
     `)
   })
 
   it('renders the cart url with a defined cartUrl', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
+      type: 'guest',
+      accessToken: 'token-123',
+      scope: 'market:1234'
+    })
     jest.spyOn(cart, 'getCart').mockResolvedValue({
       type: 'orders',
       id: 'order-123',
@@ -59,12 +64,9 @@ describe('cl-cart-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-cart-link cl-hydrated target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Cart
+        <a href="https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123" target="_self">
+          Cart
+        </a>
       </cl-cart-link>
     `)
   })
@@ -79,7 +81,11 @@ describe('cl-cart-link.spec', () => {
       })
     }
 
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue('token-123')
+    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
+      type: 'guest',
+      accessToken: 'token-123',
+      scope: 'market:1234'
+    })
     jest.spyOn(cart, 'getCart').mockResolvedValue(null)
     jest
       .spyOn(client, 'createClient')
@@ -91,17 +97,17 @@ describe('cl-cart-link.spec', () => {
     })
 
     await waitFor(waitForChanges, () => {
-      const link = root?.shadowRoot?.querySelector('a')
+      const link = root?.querySelector('a')
       return (
         link?.getAttribute('href') ===
         'https://drop-in-js.commercelayer.app/cart/null?accessToken=token-123'
       )
     })
 
-    root?.shadowRoot?.querySelector('a')?.click()
+    root?.querySelector('a')?.click()
 
     await waitFor(waitForChanges, () => {
-      const link = root?.shadowRoot?.querySelector('a')
+      const link = root?.querySelector('a')
       return (
         link?.getAttribute('href') ===
         'https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123'
@@ -110,12 +116,9 @@ describe('cl-cart-link.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-cart-link cl-hydrated target="_self">
-        <mock:shadow-root>
-          <a href="https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123" part="a" target="_self">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
-        Cart
+        <a href="https://drop-in-js.commercelayer.app/cart/order-123?accessToken=token-123" target="_self">
+          Cart
+        </a>
       </cl-cart-link>
     `)
   })

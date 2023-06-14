@@ -1,5 +1,6 @@
 import { Meta, Source } from '@storybook/blocks'
 import { linkTo } from '@storybook/addon-links'
+import { Alert } from './assets/components'
 
 <Meta title="Getting started" />
 
@@ -7,22 +8,22 @@ import { linkTo } from '@storybook/addon-links'
 
 Assuming you already have a Commerce Layer account ([sign up](https://dashboard.commercelayer.io/sign_up) if you don't — it's free!) and your organization properly set up and filled with real or sample data (check our [onboarding documentation](https://docs.commercelayer.io/core/welcome) for more information about that), you can get easily started with Commerce Layer `drop-in.js` in two simple steps:
 
-1. Import the library from the [CDN](https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@1.4.0/dist/drop-in/drop-in.esm.js).
+1. Import the library from the [CDN](https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2.0.0-beta.0/dist/drop-in/drop-in.esm.js).
 2. Declare a global variable called `commercelayerConfig` and set the following attributes.
 
-| Attribute       | Type   | Required | Description                                                                                                                                                                                                      |
-|-----------------|--------|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **`clientId`**  | String |     ✓    | Your [sales channel](https://docs.commercelayer.io/core/applications#sales-channel) client ID. You can find it in your application details page on your dashboard.                                                                                                                | 
-| **`slug`**      | String |     ✓    | Your organization slug (i.e. the subdomain of your base endpoint, usually the slugified version of your organization's name). You can find the base endpoint in your application details page on your dashboard. |
-| **`scope`**     | String |     ✓    | Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (use it to restrict the dataset of your application). You can find the allowed scopes in your application details page on your dashboard.                                                |
-| `debug`         | String |          | The debug level. Can be one of `none` or `all`. Default is `none`.                                                                                                                                               |
-| `returnUrl`     | String |          | The URL the cart's *Continue shopping* button points to. This is also used in the thank you page.                                                                                                           |
+| Attribute            | Type   | Required | Description                                                                                                                                                                                                      |
+|----------------------|--------|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`clientId`**       | String |     ✓    | Your [sales channel](https://docs.commercelayer.io/core/applications#sales-channel) client ID. You can find it in your application details page on your dashboard.                                                                                                                | 
+| **`slug`**           | String |     ✓    | Your organization slug (i.e. the subdomain of your base endpoint, usually the slugified version of your organization's name). You can find the base endpoint in your application details page on your dashboard. |
+| **`scope`**          | String |     ✓    | Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (use it to restrict the dataset of your application). You can find the allowed scopes in your application details page on your dashboard.                                                |
+| `debug`              | String |          | The debug level. Can be one of `none` or `all`. Default is `none`.                                                                                                                                               |
+| `orderReturnUrl`     | String |          | The URL the cart's *Continue shopping* button points to. This is also used in the thank you page.                                                                                                           |
 
 
  The final result should be similar to the code snippet below:
 
 <Source language='html' dark code={`
-<script type="module" src="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@1.4.0/dist/drop-in/drop-in.esm.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2.0.0-beta.0/dist/drop-in/drop-in.esm.js"></script>
 
 <script>
   (function() {
@@ -31,7 +32,7 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
       slug: 'drop-in-js',
       scope: 'market:11709',
       debug: 'all', // default is 'none'
-      returnUrl: 'https://example.com' // optional
+      orderReturnUrl: 'https://example.com' // optional
     }
   }());
 </script>
@@ -39,23 +40,25 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
 
 ## Styling
 
-To simulate in the following interactive documentation pages how the components would look when importing the CSS files below into your website you can use the toggle switches in the header.
-
 ### `drop-in.css`
 
 The drop-in library is shipped unstyled, so that you can apply your own styles. We provide some simple styling. If you're happy with that or you just want to speed up the set up process just add an additional `link` tag to your HTML code as follows:
 
 <Source language='html' dark code={`
-<link href="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@1.4.0/dist/drop-in/drop-in.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2.0.0-beta.0/dist/drop-in/drop-in.css" rel="stylesheet" />
 `} />
 
 ### `minicart.css`
 
-The [**minicart**](?path=/docs/components-cart-cl-cart-minicart--docs) version of the cart is unstyled and hidden by default. Since its behavior is achieved mostly via CSS, you have to write your own to style it. You can start from scratch, or import a minimal set of styles and take it from there. To do that, just add an additional `link` tag to your HTML code as follows:
+The [minicart](?path=/docs/components-cart-cl-cart-minicart--docs) version of the cart is unstyled and hidden by default. Since its behavior is achieved mostly via CSS, you have to write your own to style it. You can start from scratch, or import a minimal set of styles and take it from there. To do that, just add an additional `link` tag to your HTML code as follows:
 
 <Source language='html' dark code={`
-<link href="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@1.4.0/dist/drop-in/minicart.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2.0.0-beta.0/dist/drop-in/minicart.css" rel="stylesheet" />
 `} />
+
+<Alert title="Applying styles" type="info">
+  To simulate in the following interactive documentation pages how the components would look when importing the CSS files above into your website you can use the toggle switches in the header.
+</Alert>
 
 ## Need help?
 
