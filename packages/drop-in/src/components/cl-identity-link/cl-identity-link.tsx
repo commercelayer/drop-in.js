@@ -70,8 +70,9 @@ export class ClIdentityLink {
           onClick={(event) => {
             if (this.type === 'logout') {
               event.preventDefault()
-              void logout()
-              location.reload()
+              void logout().then(() => {
+                location.reload()
+              })
             }
           }}
         >
