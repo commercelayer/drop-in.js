@@ -36,7 +36,7 @@ describe('cl-cart-count.spec', () => {
     })
 
     expect(root).toEqualHtml(`
-      <cl-cart-count hide-when-empty>
+      <cl-cart-count hide-when-empty="true">
         <mock:shadow-root></mock:shadow-root>
       </cl-cart-count>
     `)
