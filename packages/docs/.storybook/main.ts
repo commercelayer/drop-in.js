@@ -1,8 +1,16 @@
 import { StorybookConfig } from '@storybook/types'
 
 const storybookConfig: StorybookConfig = {
-  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions', '@storybook/addon-mdx-gfm'],
+  stories: [
+    '../stories/**/*.mdx',
+    '../stories/**/*.stories.@(js|jsx|ts|tsx)'
+  ],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    '@storybook/addon-mdx-gfm'
+  ],
   // @ts-expect-error This 'managerEntries' exists.
   managerEntries: [
     require.resolve('./addon-drop-in-css/manager.tsx'),
