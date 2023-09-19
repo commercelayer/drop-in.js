@@ -14,16 +14,14 @@ const meta: Meta<Args> = {
 export default meta
 
 const Template: StoryFn<Args> = (args) => {
-  return create(
-    html`
-      <cl-add-to-cart
-        code=${args.code ?? nothing}
-        quantity=${args.quantity ?? nothing}
-      >
-        Add to cart
-      </cl-add-to-cart>
-    `
-  )
+  return create(html`
+    <cl-add-to-cart
+      code=${args.code ?? nothing}
+      quantity=${args.quantity ?? nothing}
+    >
+      Add to cart
+    </cl-add-to-cart>
+  `)
 }
 
 export const Basic = Template.bind({})

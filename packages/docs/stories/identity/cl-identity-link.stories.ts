@@ -13,16 +13,14 @@ const meta: Meta<Args> = {
 export default meta
 
 const Template: StoryFn<Args> = (args) => {
-  return create(
-    html`
-      <cl-identity-link
-        type=${args.type ?? nothing}
-        target=${args.target ?? nothing}
-      >
-        Identity link
-      </cl-identity-link>
-    `
-  )
+  return create(html`
+    <cl-identity-link
+      type=${args.type ?? nothing}
+      target=${args.target ?? nothing}
+    >
+      Identity link
+    </cl-identity-link>
+  `)
 }
 
 export const Basic = Template.bind({})

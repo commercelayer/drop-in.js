@@ -5,19 +5,18 @@ import Cookies from 'js-cookie'
 import memoize from 'lodash/memoize'
 import { getConfig, type Config } from './config'
 
-export type Token =
-  | (
-      | {
-          type: 'guest'
-        }
-      | {
-          type: 'customer'
-          customerId: string
-        }
-    ) & {
-      accessToken: string
-      scope: string
+export type Token = (
+  | {
+      type: 'guest'
     }
+  | {
+      type: 'customer'
+      customerId: string
+    }
+) & {
+  accessToken: string
+  scope: string
+}
 
 export interface ClientCredentials {
   clientId: string

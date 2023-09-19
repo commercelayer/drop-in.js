@@ -36,8 +36,7 @@ export class ClCartCount {
   }
 
   render(): JSX.Element {
-    const value =
-      this.count !== undefined ? this.count : this.hideWhenEmpty ? undefined : 0
+    const value = this.count ?? (this.hideWhenEmpty ? undefined : 0)
     return <Host quantity={this.count}>{value}</Host>
   }
 }

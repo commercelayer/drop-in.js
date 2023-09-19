@@ -14,12 +14,10 @@ const meta: Meta<Args> = {
 export default meta
 
 export const Basic: StoryFn<Args> = (args) => {
-  return create(
-    html`
-      <cl-price code=${codes.available}>
-        <cl-price-amount type=${args.type ?? nothing}></cl-price-amount>
-      </cl-price>
-    `
-  )
+  return create(html`
+    <cl-price code=${codes.available}>
+      <cl-price-amount type=${args.type ?? nothing}></cl-price-amount>
+    </cl-price>
+  `)
 }
 Basic.args = {}

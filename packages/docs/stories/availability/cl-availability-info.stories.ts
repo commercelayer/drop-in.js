@@ -28,19 +28,15 @@ const meta: Meta<Args> = {
 export default meta
 
 export const Basic: StoryFn<Args> = (args) => {
-  return create(
-    html`
-      <cl-availability
-        code=${args['Use an available product']
-          ? codes.available
-          : codes.outOfStock}
-      >
-        <cl-availability-info
-          type=${args.type ?? nothing}
-        ></cl-availability-info>
-      </cl-availability>
-    `
-  )
+  return create(html`
+    <cl-availability
+      code=${args['Use an available product']
+        ? codes.available
+        : codes.outOfStock}
+    >
+      <cl-availability-info type=${args.type ?? nothing}></cl-availability-info>
+    </cl-availability>
+  `)
 }
 Basic.args = {
   'Use an available product': true,

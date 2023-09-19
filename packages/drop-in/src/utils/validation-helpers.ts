@@ -32,9 +32,7 @@ export function logUnion<T extends string | undefined>(
       'warn',
       `"${attributeName}" attribute should be one of ${validValues
         .map((v) => `"${v}"`)
-        .join(', ')}. Received: "${
-        attributeValue !== undefined ? attributeValue : 'undefined'
-      }"`,
+        .join(', ')}. Received: "${attributeValue ?? 'undefined'}"`,
       host
     )
   }

@@ -14,14 +14,12 @@ const meta: Meta<Args> = {
 export default meta
 
 const Template: StoryFn<Args> = (args) => {
-  return create(
-    html`
-      <cl-price code=${args.code ?? nothing}>
-        <cl-price-amount type="compare-at"></cl-price-amount>
-        <cl-price-amount type="price"></cl-price-amount>
-      </cl-price>
-    `
-  )
+  return create(html`
+    <cl-price code=${args.code ?? nothing}>
+      <cl-price-amount type="compare-at"></cl-price-amount>
+      <cl-price-amount type="price"></cl-price-amount>
+    </cl-price>
+  `)
 }
 
 export const Basic = Template.bind({})

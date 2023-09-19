@@ -58,15 +58,12 @@ export function memoDebounce<F extends (...args: any[]) => any>(
   func: F,
   wait = 0,
   options: DebounceSettings = {},
-  resolver?: (...args: Parameters<F>) => unknown
+  resolver: (...args: Parameters<F>) => unknown = (...args: Parameters<F>) =>
+    JSON.stringify(args)
 ): DebouncedFunc<F> {
   const debounceMemo = memoize<(...args: Parameters<F>) => DebouncedFunc<F>>(
     (..._args: Parameters<F>) => debounce(func, wait, options),
-    resolver !== undefined
-      ? resolver
-      : (...args: Parameters<F>) => {
-          return JSON.stringify(args)
-        }
+    resolver
   )
 
   function wrappedFunction(...args: Parameters<F>): ReturnType<F> | undefined {
