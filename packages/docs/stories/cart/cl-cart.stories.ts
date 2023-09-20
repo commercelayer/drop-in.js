@@ -13,13 +13,11 @@ const meta: Meta<Args> = {
 export default meta
 
 export const Basic: StoryFn<Args> = (args) => {
-  return create(
-    html`
-      <cl-cart
-        type=${args.type ?? nothing}
-        open=${args.open ?? nothing}
-        open-on-add=${args['open-on-add'] ?? nothing}
-      ></cl-cart>
-    `
-  )
+  return create(html`
+    <cl-cart
+      type=${args.type ?? nothing}
+      open=${args.open ?? nothing}
+      open-on-add=${args['open-on-add'] ?? nothing}
+    ></cl-cart>
+  `)
 }

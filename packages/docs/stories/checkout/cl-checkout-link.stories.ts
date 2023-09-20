@@ -13,13 +13,11 @@ const meta: Meta<Args> = {
 export default meta
 
 const Template: StoryFn<Args> = (args) => {
-  return create(
-    html`
-      <cl-checkout-link target=${args.target ?? nothing}>
-        Proceed to checkout
-      </cl-checkout-link>
-    `
-  )
+  return create(html`
+    <cl-checkout-link target=${args.target ?? nothing}>
+      Proceed to checkout
+    </cl-checkout-link>
+  `)
 }
 
 export const Basic = Template.bind({})
