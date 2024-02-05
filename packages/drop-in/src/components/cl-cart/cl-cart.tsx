@@ -268,6 +268,7 @@ export class ClCart {
           <iframe
             part='iframe'
             title='My Cart'
+            allow='payment'
             ref={(el) => (this.iframe = el as IFrameComponent)}
             src={this.href}
             style={{

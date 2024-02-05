@@ -53,7 +53,7 @@ export const Basic: StoryFn = () => {
       <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-center">
 
         <!-- 1st product: Gray Five-Panel Cap with White Logo -->
-        <div class="flex flex-col">
+        <div class="flex flex-col items-start">
           <div class="h-80 sm:h-64">
             <img
               src="https://data.commercelayer.app/seed/images/skus/${codes.outOfStock}_FLAT.png"
@@ -83,13 +83,13 @@ export const Basic: StoryFn = () => {
         </div>
 
         <!-- Editorial Banner -->
-        <div class="flex flex-col">
+        <div class="flex flex-col items-start">
           <cl-identity-status class="h-full" type="guest">
-            <img class="h-full object-contain position-top" src="register.jpg" />
+            <img class="object-contain position-top" src="register.jpg" />
           </cl-identity-status>
 
           <cl-identity-status class="h-full" type="customer">
-            <img class="h-full object-contain position-top" src="welcomeback.jpg" />
+            <img class="object-contain position-top" src="welcomeback.jpg" />
           </cl-identity-status>
         </div>
 
