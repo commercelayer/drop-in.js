@@ -16,10 +16,13 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
 
   const uniqSkus = uniq(skus)
 
-  const log = logGroup('getPrices invoked')
+  const log = logGroup('`getPrices` method invoked with a list of SKUs')
 
-  log('info', `found`, uniqSkus.length)
-  log('info', 'unique skus', uniqSkus)
+  log(
+    'info',
+    '`getPrices` is the method involved in fetching a list of prices from Commerce Layer. You can follow the request in the "network" panel.'
+  )
+  log('info', 'SKUs', uniqSkus)
 
   const pageSize = 25
   const chunkedSkus = chunk(uniqSkus, pageSize)
