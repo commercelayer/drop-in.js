@@ -77,4 +77,4 @@ type Logs = [LogType, ...any]
  * @param type Type of message.
  * @param messages List of messages.
  */
-type Log = (type: LogType, ...messages: any[]) => void
+type Log = (type: LogType, ...messages: unknown[]) => void

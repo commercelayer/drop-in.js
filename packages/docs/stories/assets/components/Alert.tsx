@@ -11,10 +11,10 @@ export const Alert: React.FC<Props> = ({ title, type = 'info', children }) => {
     type === 'danger'
       ? 'bg-red-100 border-red-500 text-red-700'
       : type === 'success'
-      ? 'bg-green-100 border-green-500 text-green-700'
-      : type === 'warning'
-      ? 'bg-orange-100 border-orange-500 text-orange-700'
-      : 'bg-blue-100 border-blue-500 text-blue-700'
+        ? 'bg-green-100 border-green-500 text-green-700'
+        : type === 'warning'
+          ? 'bg-orange-100 border-orange-500 text-orange-700'
+          : 'bg-blue-100 border-blue-500 text-blue-700'
 
   const titleElement = React.createElement(
     'p',
