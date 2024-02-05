@@ -41,5 +41,9 @@
     "npm-check-updates": "^16.14.14",
     "replace-in-file": "^7.1.0",
     "typescript": "^5.3.3"
+  },
+  "resolutions": {
+    "follow-redirects": "^1.15.4",
+    "postcss": "^8.4.31"
   }
 }
