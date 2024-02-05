@@ -14,7 +14,8 @@ const storybookConfig: StorybookConfig = {
   // @ts-expect-error This 'managerEntries' exists.
   managerEntries: [
     require.resolve('./addon-drop-in-css/manager.tsx'),
-    require.resolve('./addon-minicart-css/manager.tsx')
+    require.resolve('./addon-minicart-css/manager.tsx'),
+    require.resolve('./addon-gh-repository/manager.tsx')
   ],
   framework: {
     name: '@storybook/html-webpack5',
