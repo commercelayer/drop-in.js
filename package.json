@@ -4,7 +4,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
-    "build": "pnpm -r build",
+    "build": "pnpm -r build && cp -r packages/drop-in/www/demo packages/docs/storybook-static",
     "build:drop-in": "pnpm --filter drop-in.js build",
     "start:drop-in": "pnpm --filter drop-in.js start",
     "start:docs": "pnpm build:drop-in && concurrently -n drop-in,docs -c 'bgBlue.bold,bgMagenta.bold' 'pnpm --filter drop-in.js build:watch' 'pnpm --filter docs start'",

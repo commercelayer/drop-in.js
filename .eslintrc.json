@@ -5,6 +5,7 @@
   ],
   "ignorePatterns": [
     "packages/drop-in/stencil.config.ts",
+    "packages/drop-in/stencil.test.config.ts",
     "packages/drop-in/jest.setup.ts",
     "*.d.ts",
     "replace-jsdelivr.js"

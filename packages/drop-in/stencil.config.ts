@@ -58,6 +58,8 @@ export const config: Config = {
     },
     {
       type: 'www',
+      baseUrl: 'demo',
+      empty: true,
       serviceWorker: null, // disable service workers
       copy: [
         { src: 'cart.html' }
@@ -81,10 +83,5 @@ export const config: Config = {
       type: 'docs-vscode',
       file: 'dist/vscode-data.json',
     }
-  ],
-
-  testing: {
-    browserHeadless: 'new',
-    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
-  }
+  ]
 }
