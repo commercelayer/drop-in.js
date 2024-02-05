@@ -22,7 +22,7 @@ export class CLPriceAmount {
   @State() price: Price | undefined
 
   @Listen('priceUpdate')
-  priceUpdateHandler(event: CustomEvent<Price>): void {
+  priceUpdateHandler(event: CustomEvent<Price | undefined>): void {
     this.price = event.detail
   }
 

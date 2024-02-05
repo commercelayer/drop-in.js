@@ -33,8 +33,8 @@ export class ClAvailabilityStatus {
   @State() available: boolean | undefined
 
   @Listen('availabilityUpdate')
-  availabilityUpdateHandler(event: CustomEvent<Sku>): void {
-    this.available = event.detail.inventory?.available
+  availabilityUpdateHandler(event: CustomEvent<Sku | undefined>): void {
+    this.available = event.detail?.inventory?.available
   }
 
   async componentWillLoad(): Promise<void> {

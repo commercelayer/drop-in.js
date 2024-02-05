@@ -30,15 +30,13 @@ export class ClAvailability {
     if (isValidCode(code)) {
       const sku = await getSku(code)
 
-      if (sku !== undefined) {
-        this.host
-          .querySelectorAll('cl-availability-status, cl-availability-info')
-          .forEach((element) => {
-            element.dispatchEvent(
-              new CustomEvent<Sku>('availabilityUpdate', { detail: sku })
-            )
-          })
-      }
+      this.host
+        .querySelectorAll('cl-availability-status, cl-availability-info')
+        .forEach((element) => {
+          element.dispatchEvent(
+            new CustomEvent<Sku>('availabilityUpdate', { detail: sku })
+          )
+        })
     }
   }
 

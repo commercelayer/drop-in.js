@@ -120,4 +120,38 @@ describe('cl-price.spec', () => {
     </cl-price>
     `)
   })
+
+  it('should empty the price when the there are no results', async () => {
+    jest
+      .spyOn(prices, 'getPrice')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(fakePrices[sku])
+      )
+
+    const { root, waitForChanges } = await newSpecPage({
+      components: [CLPrice, CLPriceAmount],
+      html: `
+        <cl-price code="ABC123">
+          <cl-price-amount></cl-price-amount>
+          <another-tag></another-tag>
+        </cl-price>
+      `
+    })
+
+    root?.setAttribute('code', 'ABC456')
+
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-price code="ABC456">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        <cl-price-amount type="price">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-price-amount>
+        <another-tag></another-tag>
+    </cl-price>
+    `)
+  })
 })

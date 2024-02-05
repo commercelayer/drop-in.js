@@ -156,4 +156,48 @@ describe('cl-availability.spec', () => {
     </cl-availability>
     `)
   })
+
+  it('should empty the text when the there are no results', async () => {
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
+
+    const { root, waitForChanges } = await newSpecPage({
+      components: [ClAvailability, ClAvailabilityStatus],
+      html: `
+        <cl-availability code="AVAILABLE123">
+          <cl-availability-status></cl-availability-status>
+          <cl-availability-status type="available">• available</cl-availability-status>
+          <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
+          <another-tag></another-tag>
+        </cl-availability>
+      `
+    })
+
+    root?.setAttribute('code', 'NONEXISTING')
+
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-availability code="NONEXISTING">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        <cl-availability-status aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-status>
+        <cl-availability-status type="available" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="unavailable" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • out of stock
+        </cl-availability-status>
+        <another-tag></another-tag>
+    </cl-availability>
+    `)
+  })
 })
