@@ -45,29 +45,30 @@
     "email": "marco.montalbano@commercelayer.io"
   },
   "dependencies": {
-    "@commercelayer/sdk": "^5.14.0",
-    "@types/lodash": "^4.14.198",
-    "iframe-resizer": "4.3.7",
+    "@commercelayer/sdk": "^5.31.1",
+    "@types/lodash": "^4.14.202",
+    "iframe-resizer": "4.3.9",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
-    "type-fest": "^4.3.1"
+    "type-fest": "^4.10.2"
   },
   "peerDependencies": {
     "@stencil/core": "^3.0.0"
   },
   "devDependencies": {
-    "@stencil/core": "^4.3.0",
-    "@stencil/sass": "^3.0.5",
-    "@types/iframe-resizer": "^3.5.9",
-    "@types/jest": "^27.5.2",
-    "@types/js-cookie": "^3.0.4",
-    "jest": "^27.5.1",
-    "jest-cli": "^27.5.1",
-    "nodemon": "^3.0.1",
-    "puppeteer": "21.3.1",
-    "sass": "^1.67.0",
-    "ts-jest": "^27.1.5",
-    "typescript": "^5.2.2"
+    "@stencil/core": "^4.12.0",
+    "@stencil/sass": "^3.0.9",
+    "@types/iframe-resizer": "^3.5.13",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.16",
+    "@types/js-cookie": "^3.0.6",
+    "jest": "^29.7.0",
+    "jest-cli": "^29.7.0",
+    "nodemon": "^3.0.3",
+    "puppeteer": "21.11.0",
+    "sass": "^1.70.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
   },
   "license": "MIT",
   "engines": {

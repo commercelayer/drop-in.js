@@ -30,7 +30,7 @@ interface SalesChannelToken {
   expires: Date
   expiresIn: number
   scope: string
-  createdAt: string
+  createdAt: number
 }
 
 function setToken(key: string, value: Token, expires?: Date): void {
@@ -104,7 +104,13 @@ async function getSalesChannelToken(
       scope: clientCredentials.scope
     })
   })
-    .then(async (res) => await res.json())
+    .then<{
+      access_token: string
+      token_type: 'bearer'
+      expires_in: number
+      scope: string
+      created_at: number
+    }>(async (res) => await res.json())
     .catch(() => undefined)
 
   if (token === undefined) {
@@ -114,7 +120,7 @@ async function getSalesChannelToken(
   return {
     accessToken: token.access_token,
     createdAt: token.created_at,
-    expires: new Date(Date.now() + parseInt(token.expires_in) * 1000),
+    expires: new Date(Date.now() + token.expires_in * 1000),
     expiresIn: token.expires_in,
     scope: token.scope,
     tokenType: token.token_type

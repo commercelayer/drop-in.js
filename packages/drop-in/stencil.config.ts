@@ -84,14 +84,7 @@ export const config: Config = {
   ],
 
   testing: {
-    browserHeadless: true,
-    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-    moduleNameMapper: {
-      ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
-
-      // TODO: remove this when updating to Jest v29. (waiting for Stencil)
-      // https://github.com/axios/axios/issues/5026#issuecomment-1288528794
-      '^axios$': require.resolve('axios')
-    }
+    browserHeadless: 'new',
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
   }
 }

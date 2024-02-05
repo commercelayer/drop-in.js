@@ -39,11 +39,11 @@ const hostedCartIframeUpdateEvent = { type: 'update' } as const
 @Component({
   tag: 'cl-cart',
   styles: `
-    :host([type="mini"]) {
+    :host([type='mini']) {
       display: none;
     }
 
-    :host([type="mini"]) > div {
+    :host([type='mini']) > div {
       background: var(--cl-cart-mini-modal-bg);
     }
 

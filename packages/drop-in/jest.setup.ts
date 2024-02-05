@@ -7,6 +7,12 @@ Object.defineProperty(window, 'parent', {
   value: Object.create(window)
 })
 
+Object.defineProperty(window, 'location', {
+  value: {
+    href: 'http://example.com'
+  }
+})
+
 Object.defineProperty(window, 'commercelayerConfig', {
   configurable: true,
   value: {

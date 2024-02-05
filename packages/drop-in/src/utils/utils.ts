@@ -47,7 +47,7 @@ export const memoize = <T extends (...args: any) => any>(
 ): ((...args: Parameters<T>) => ReturnType<T>) => {
   const cache: { [key: string]: any } = {}
 
-  return (...args: any): any => {
+  return (...args: unknown[]): any => {
     const cacheKey = JSON.stringify(args)
     if (cache[cacheKey] === undefined) {
       cache[cacheKey] = func(...args)
