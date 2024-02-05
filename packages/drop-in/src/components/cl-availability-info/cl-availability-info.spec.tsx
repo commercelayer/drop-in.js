@@ -210,4 +210,124 @@ describe('cl-availability-info.spec', () => {
       </div>
     `)
   })
+
+  it('renders as empty when the SKU is undefined', async () => {
+    const { body, waitForChanges } = await newSpecPage({
+      components: [ClAvailabilityInfo],
+      html: `
+        <div>
+          <cl-availability-info type="min-days"></cl-availability-info>
+          <cl-availability-info type="max-days"></cl-availability-info>
+          <cl-availability-info type="min-hours"></cl-availability-info>
+          <cl-availability-info type="max-hours"></cl-availability-info>
+          <cl-availability-info type="shipping-method-name"></cl-availability-info>
+          <cl-availability-info type="shipping-method-price"></cl-availability-info>
+        </div>
+      `
+    })
+
+    expect(body).toEqualHtml(`
+      <div>
+        <cl-availability-info type="min-days">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="max-days">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="min-hours">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="max-hours">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-name">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-price">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+      </div>
+    `)
+
+    const availabilityUpdateEvent: Sku = {
+      id: 'ABC123',
+      code: 'ABC123',
+      name: 'ABC123',
+      type: 'skus',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      inventory: {
+        available: true,
+        quantity: 98,
+        levels: [
+          {
+            delivery_lead_times: [
+              {
+                min: {
+                  days: 1,
+                  hours: 1 * 24
+                },
+                max: {
+                  days: 2,
+                  hours: 2 * 24
+                },
+                shipping_method: {
+                  name: 'Standard',
+                  reference: 'reference-1',
+                  price_amount_cents: 700,
+                  formatted_price_amount: '$7.00',
+                  formatted_free_over_amount: null,
+                  free_over_amount_cents: null
+                }
+              }
+            ],
+            quantity: 98
+          }
+        ]
+      }
+    }
+
+    body.querySelectorAll('cl-availability-info').forEach((element) =>
+      element.dispatchEvent(
+        new CustomEvent<Sku>('availabilityUpdate', {
+          detail: availabilityUpdateEvent
+        })
+      )
+    )
+
+    await waitForChanges()
+
+    body.querySelectorAll('cl-availability-info').forEach((element) =>
+      element.dispatchEvent(
+        new CustomEvent<Sku>('availabilityUpdate', {
+          detail: undefined
+        })
+      )
+    )
+
+    await waitForChanges()
+
+    expect(body).toEqualHtml(`
+      <div>
+        <cl-availability-info type="min-days">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="max-days">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="min-hours">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="max-hours">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-name">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="shipping-method-price">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-info>
+      </div>
+    `)
+  })
 })

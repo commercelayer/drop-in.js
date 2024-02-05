@@ -46,13 +46,13 @@ export class ClAvailabilityInfo {
   @State() text: string | undefined
 
   @Listen('availabilityUpdate')
-  availabilityUpdateHandler(event: CustomEvent<Sku>): void {
+  availabilityUpdateHandler(event: CustomEvent<Sku | undefined>): void {
     if (this.type === undefined) {
       return
     }
 
     const deliveryLeadTime =
-      event.detail.inventory?.levels[0]?.delivery_lead_times[0]
+      event.detail?.inventory?.levels[0]?.delivery_lead_times[0]
 
     switch (this.type) {
       case 'min-days':

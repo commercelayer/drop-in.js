@@ -151,4 +151,80 @@ describe('cl-availability-status.spec', () => {
       </div>
     `)
   })
+
+  it('renders as empty when the SKU is undefined', async () => {
+    const { body, waitForChanges } = await newSpecPage({
+      components: [ClAvailabilityStatus],
+      html: `
+        <div>
+          <cl-availability-status type="available">
+            • available
+          </cl-availability-status>
+          <cl-availability-status type="unavailable">
+            • out of stock
+          </cl-availability-status>
+        </div>
+      `
+    })
+
+    expect(body).toEqualHtml(`
+      <div>
+        <cl-availability-status type="available" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="unavailable" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • out of stock
+        </cl-availability-status>
+      </div>
+    `)
+
+    const availabilityUpdateEvent: Sku = {
+      id: 'ABC123',
+      code: 'ABC123',
+      name: 'ABC123',
+      type: 'skus',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      inventory: {
+        available: true,
+        quantity: 98,
+        levels: []
+      }
+    }
+
+    body.querySelectorAll('cl-availability-status').forEach((element) =>
+      element.dispatchEvent(
+        new CustomEvent<Sku>('availabilityUpdate', {
+          detail: availabilityUpdateEvent
+        })
+      )
+    )
+
+    await waitForChanges()
+
+    body.querySelectorAll('cl-availability-status').forEach((element) =>
+      element.dispatchEvent(
+        new CustomEvent<Sku>('availabilityUpdate', {
+          detail: undefined
+        })
+      )
+    )
+
+    await waitForChanges()
+
+    expect(body).toEqualHtml(`
+      <div>
+        <cl-availability-status aria-disabled="true" type="available">
+          <mock:shadow-root></mock:shadow-root>
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="unavailable" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • out of stock
+        </cl-availability-status>
+      </div>
+    `)
+  })
 })
