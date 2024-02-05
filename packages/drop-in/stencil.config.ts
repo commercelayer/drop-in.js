@@ -58,7 +58,7 @@ export const config: Config = {
     },
     {
       type: 'www',
-      baseUrl: 'demo',
+      baseUrl: '/drop-in.js/demo/',
       empty: true,
       serviceWorker: null, // disable service workers
       copy: [
