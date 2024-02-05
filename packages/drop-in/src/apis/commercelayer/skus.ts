@@ -15,10 +15,13 @@ const _getSkuIds = async (skus: string[]): Promise<SkuIdList> => {
 
   const uniqSkus = uniq(skus)
 
-  const log = logGroup('getSkuIds invoked')
+  const log = logGroup('`getSkuIds` method invoked with a list of SKUs')
 
-  log('info', `found`, uniqSkus.length)
-  log('info', 'unique skus', uniqSkus)
+  log(
+    'info',
+    '`getSkuIds` is the method involved in fetching a list of SKUs from Commerce Layer. You can follow the request in the "network" panel.'
+  )
+  log('info', 'SKUs', uniqSkus)
 
   const pageSize = 25
   const chunkedSkus = chunk(uniqSkus, pageSize)
