@@ -16,6 +16,35 @@ describe('cl-price-amount.spec', () => {
     `)
   })
 
+  it('renders as empty when the Price is undefined', async () => {
+    const { root, waitForChanges } = await newSpecPage({
+      components: [CLPriceAmount],
+      html: '<cl-price-amount type="price"></cl-price-amount>'
+    })
+
+    expect(root).toEqualHtml(`
+      <cl-price-amount type="price">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    const priceUpdateEvent: Price | undefined = undefined
+
+    root?.dispatchEvent(
+      new CustomEvent<Price>('priceUpdate', {
+        detail: priceUpdateEvent
+      })
+    )
+
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-price-amount type="price">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-price-amount>
+    `)
+  })
+
   it('renders as formatted_amount when `type="price"`', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [CLPriceAmount],

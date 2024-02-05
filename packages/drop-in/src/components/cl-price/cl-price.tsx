@@ -30,13 +30,11 @@ export class CLPrice {
     if (isValidCode(code)) {
       const price = await getPrice(code)
 
-      if (price !== undefined) {
-        this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-          element.dispatchEvent(
-            new CustomEvent<Price>('priceUpdate', { detail: price })
-          )
-        })
-      }
+      this.host.querySelectorAll('cl-price-amount').forEach((element) => {
+        element.dispatchEvent(
+          new CustomEvent<Price>('priceUpdate', { detail: price })
+        )
+      })
     }
   }
 
