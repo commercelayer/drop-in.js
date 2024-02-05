@@ -33,6 +33,7 @@ describe('cl-cart.spec', () => {
               part="iframe"
               title="My Cart"
               id="iFrameResizer0"
+              allow="payment"
               src="https://example.com/checkout-url"
               style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
             ></iframe>
@@ -67,6 +68,7 @@ describe('cl-cart.spec', () => {
                 part="iframe"
                 title="My Cart"
                 id="iFrameResizer1"
+                allow="payment"
                 style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
               ></iframe>
             </div>
@@ -88,6 +90,7 @@ describe('cl-cart.spec', () => {
                 part="iframe"
                 title="My Cart"
                 id="iFrameResizer1"
+                allow="payment"
                 src="https://example.com/checkout-url"
                 style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
               ></iframe>
