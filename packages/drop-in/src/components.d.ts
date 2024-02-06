@@ -21,6 +21,10 @@ export namespace Components {
           * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
          */
         "code": string | undefined;
+        /**
+          * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
+         */
+        "rule": 'cheapest' | 'fastest';
     }
     interface ClAvailabilityInfo {
         /**
@@ -218,6 +222,10 @@ declare namespace LocalJSX {
           * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
          */
         "code": string | undefined;
+        /**
+          * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
+         */
+        "rule"?: 'cheapest' | 'fastest';
     }
     interface ClAvailabilityInfo {
         /**

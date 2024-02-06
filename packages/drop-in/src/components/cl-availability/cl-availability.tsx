@@ -1,5 +1,5 @@
 import { getSku } from '#apis/commercelayer/skus'
-import type { Sku } from '#apis/types'
+import type { AvailabilityUpdateEventPayload } from '#apis/types'
 import { isValidCode, logCode } from '#utils/validation-helpers'
 import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
 
@@ -14,6 +14,13 @@ export class ClAvailability {
    * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
    */
   @Prop({ reflect: true }) code!: string | undefined
+
+  /**
+   * The rule used to determine the information that will be displayed.
+   * `cheapest` is the delivery lead time associated with the lower shipping method cost,
+   * `fastest` is the delivery lead time associated with the lower average time to delivery.
+   */
+  @Prop({ reflect: true }) rule: 'cheapest' | 'fastest' = 'cheapest'
 
   async componentWillLoad(): Promise<void> {
     logCode(this.host, this.code)
@@ -34,7 +41,12 @@ export class ClAvailability {
         .querySelectorAll('cl-availability-status, cl-availability-info')
         .forEach((element) => {
           element.dispatchEvent(
-            new CustomEvent<Sku>('availabilityUpdate', { detail: sku })
+            new CustomEvent<AvailabilityUpdateEventPayload>(
+              'availabilityUpdate',
+              {
+                detail: { sku, rule: this.rule }
+              }
+            )
           )
         })
     }

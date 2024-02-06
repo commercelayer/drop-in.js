@@ -1,16 +1,17 @@
-import type { Sku } from '#apis/types'
+import type { AvailabilityUpdateEventPayload } from '#apis/types'
 import { logUnion, unionToTuple } from '#utils/validation-helpers'
 import {
   Component,
-  h,
+  Element,
   Host,
-  type JSX,
   Listen,
   Prop,
   State,
-  Element,
-  Watch
+  Watch,
+  h,
+  type JSX
 } from '@stencil/core'
+import minBy from 'lodash/minBy'
 
 @Component({
   tag: 'cl-availability-info',
@@ -46,13 +47,22 @@ export class ClAvailabilityInfo {
   @State() text: string | undefined
 
   @Listen('availabilityUpdate')
-  availabilityUpdateHandler(event: CustomEvent<Sku | undefined>): void {
+  availabilityUpdateHandler(
+    event: CustomEvent<AvailabilityUpdateEventPayload>
+  ): void {
     if (this.type === undefined) {
       return
     }
 
+    const deliveryLeadTimes =
+      event.detail?.sku?.inventory?.levels[0]?.delivery_lead_times
+
     const deliveryLeadTime =
-      event.detail?.inventory?.levels[0]?.delivery_lead_times[0]
+      event.detail.rule === 'cheapest'
+        ? deliveryLeadTimes?.[0]
+        : minBy(deliveryLeadTimes, function (o) {
+            return (o.min.hours + o.max.hours) / 2
+          })
 
     switch (this.type) {
       case 'min-days':

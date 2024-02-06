@@ -1,4 +1,4 @@
-export const DESCRIPTION = 'Select an authorization scope.'
+export const DESCRIPTION = 'Toggle this switch to change the market in scope.'
 export const ADDON_ID = 'addon-scope-selector' as const
 export const ADDON_TITLE = DESCRIPTION
 export const TOOL_ID = `${ADDON_ID}/tool` as const
