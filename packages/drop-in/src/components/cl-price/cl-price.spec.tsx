@@ -54,6 +54,12 @@ describe('cl-price.spec', () => {
   })
 
   it('renders with a code', async () => {
+    jest
+      .spyOn(prices, 'getPrice')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(fakePrices[sku])
+      )
+
     const { root } = await newSpecPage({
       components: [CLPrice],
       html: '<cl-price code="SKU1234"></cl-price>'
@@ -121,7 +127,7 @@ describe('cl-price.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-price code="DEF456">
+      <cl-price kind="sku" code="DEF456">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -157,7 +163,7 @@ describe('cl-price.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-price code="ABC456">
+      <cl-price kind="sku" code="ABC456">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

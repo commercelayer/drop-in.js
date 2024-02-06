@@ -40,6 +40,8 @@
       document.addEventListener('cl-identity-gettoken', (e) => console.info('identity.getToken', e.detail));
       document.addEventListener('cl-skus-getsku', (e) => console.info('skus.getSku', e.detail));
       document.addEventListener('cl-prices-getprice', (e) => console.info('prices.getPrice', e.detail));
+      document.addEventListener('cl-bundles-getbundle', (e) => console.info('bundles.getBundle', e.detail))
+      document.addEventListener('cl-bundles-getprice', (e) => console.info('bundles.getPrice', e.detail))
       document.addEventListener('cl-cart-additem', (e) => console.info('cart.addItem', e.detail));
     </script>
 
