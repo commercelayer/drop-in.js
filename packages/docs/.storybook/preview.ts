@@ -1,8 +1,9 @@
 import { defineCustomElements } from '@commercelayer/drop-in.js/dist/loader'
 import { Preview } from '@storybook/html'
-import { clConfig } from '../stories/assets/constants'
+import { createConfig } from '../stories/assets/constants'
 import { FILENAME as DROP_IN_CSS_FILENAME, PARAM_KEY as DROP_IN_CSS_PARAM_KEY } from './addon-drop-in-css/constants'
 import { FILENAME as MINICART_CSS_FILENAME, PARAM_KEY as MINICART_CSS_PARAM_KEY } from './addon-minicart-css/constants'
+import { getSelectedScopeValue } from './addon-scope-selector/constants'
 
 import customElements, { type JsonDocsProp } from '@commercelayer/drop-in.js/dist/custom-elements'
 
@@ -150,9 +151,7 @@ const preview: Preview = {
     },
     (story) => {
       // @ts-expect-error
-      window.commercelayerConfig = {
-        ...clConfig
-      }
+      window.commercelayerConfig = createConfig(getSelectedScopeValue())
 
       return story()
     },

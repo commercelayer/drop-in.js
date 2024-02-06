@@ -7,9 +7,14 @@ export const Tool = () => {
     <>
       <Separator />
       <IconButton
+        autoFocus={null}
+        rev={null}
+        content={null}
+        nonce={null}
+        rel={null}
         key={TOOL_ID}
-        active={false}
         title={ADDON_NAME}
+        active={false}
       >
         
         <A target='_blank' href={REPOSITORY_URL}>
