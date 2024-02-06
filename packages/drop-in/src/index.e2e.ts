@@ -223,7 +223,7 @@ describe('index.e2e', () => {
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability cl-hydrated code="${codes.available}">
+          <cl-availability cl-hydrated code="${codes.available}" rule="cheapest">
             <cl-availability-status cl-hydrated type="available">
               <span style="color: green;">Available</span>
               ready to be shipped in
@@ -244,7 +244,7 @@ describe('index.e2e', () => {
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability cl-hydrated code="${codes.noDiscount}">
+          <cl-availability cl-hydrated code="${codes.noDiscount}" rule="cheapest">
             <cl-availability-status cl-hydrated type="available">
               <span style="color: green;">Available</span>
               ready to be shipped in
@@ -265,7 +265,7 @@ describe('index.e2e', () => {
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability cl-hydrated code="${codes.outOfStock}">
+          <cl-availability cl-hydrated code="${codes.outOfStock}" rule="cheapest">
             <cl-availability-status aria-disabled="true" cl-hydrated type="available">
               <span style="color: green;">Available</span>
               ready to be shipped in
@@ -286,7 +286,7 @@ describe('index.e2e', () => {
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability cl-hydrated code="${codes.doNotTrack}">
+          <cl-availability cl-hydrated code="${codes.doNotTrack}" rule="cheapest">
             <cl-availability-status cl-hydrated type="available">
               <span style="color: green;">Available</span>
               ready to be shipped in

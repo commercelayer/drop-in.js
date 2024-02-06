@@ -1,4 +1,4 @@
-import type { Sku } from '#apis/types'
+import type { AvailabilityUpdateEventPayload } from '#apis/types'
 import { logUnion } from '#utils/validation-helpers'
 import {
   Component,
@@ -33,8 +33,10 @@ export class ClAvailabilityStatus {
   @State() available: boolean | undefined
 
   @Listen('availabilityUpdate')
-  availabilityUpdateHandler(event: CustomEvent<Sku | undefined>): void {
-    this.available = event.detail?.inventory?.available
+  availabilityUpdateHandler(
+    event: CustomEvent<AvailabilityUpdateEventPayload>
+  ): void {
+    this.available = event.detail?.sku?.inventory?.available
   }
 
   async componentWillLoad(): Promise<void> {

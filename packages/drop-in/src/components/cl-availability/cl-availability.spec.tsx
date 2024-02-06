@@ -1,6 +1,7 @@
 import * as skus from '#apis/commercelayer/skus'
 import type { Sku } from '#apis/types'
 import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-availability-status'
+import { ClAvailabilityInfo } from '#components/cl-availability-info/cl-availability-info'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailability } from './cl-availability'
 
@@ -19,7 +20,31 @@ const skuList: { [code: string]: Sku } = {
   AVAILABLE123: {
     ...baseSku('AVAILABLE123'),
     inventory: {
-      levels: [],
+      levels: [
+        {
+          delivery_lead_times: [
+            {
+              min: {
+                days: 1,
+                hours: 1 * 24
+              },
+              max: {
+                days: 2,
+                hours: 2 * 24
+              },
+              shipping_method: {
+                name: 'Standard',
+                reference: 'reference-1',
+                price_amount_cents: 700,
+                formatted_price_amount: '$7.00',
+                formatted_free_over_amount: null,
+                free_over_amount_cents: null
+              }
+            }
+          ],
+          quantity: 98
+        }
+      ],
       available: true,
       quantity: 98
     }
@@ -41,7 +66,7 @@ describe('cl-availability.spec', () => {
       html: `<cl-availability></cl-availability>`
     })
     expect(page.root).toEqualHtml(`
-      <cl-availability>
+      <cl-availability rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -61,7 +86,7 @@ describe('cl-availability.spec', () => {
       html: '<cl-availability code="AVAILABLE123"></cl-availability>'
     })
     expect(root).toEqualHtml(`
-      <cl-availability code="AVAILABLE123">
+      <cl-availability code="AVAILABLE123" rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -77,19 +102,21 @@ describe('cl-availability.spec', () => {
       )
 
     const { root } = await newSpecPage({
-      components: [ClAvailability, ClAvailabilityStatus],
+      components: [ClAvailability, ClAvailabilityStatus, ClAvailabilityInfo],
       html: `
         <cl-availability code="AVAILABLE123">
           <cl-availability-status></cl-availability-status>
           <cl-availability-status type="available">• available</cl-availability-status>
           <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
+          <cl-availability-info type="min-days"></cl-availability-info>
+          <cl-availability-info type="max-days"></cl-availability-info>
           <another-tag></another-tag>
         </cl-availability>
       `
     })
 
     expect(root).toEqualHtml(`
-      <cl-availability code="AVAILABLE123">
+      <cl-availability code="AVAILABLE123" rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -106,6 +133,12 @@ describe('cl-availability.spec', () => {
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>
+        <cl-availability-info type="min-days">
+          <mock:shadow-root>1</mock:shadow-root>
+        </cl-availability-info>
+        <cl-availability-info type="max-days">
+          <mock:shadow-root>2</mock:shadow-root>
+        </cl-availability-info>
         <another-tag></another-tag>
     </cl-availability>
     `)
@@ -135,7 +168,7 @@ describe('cl-availability.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-availability code="NOTAVAILABLE456">
+      <cl-availability code="NOTAVAILABLE456" rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -181,7 +214,7 @@ describe('cl-availability.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-availability code="NONEXISTING">
+      <cl-availability code="NONEXISTING" rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

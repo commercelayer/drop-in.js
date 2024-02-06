@@ -1,4 +1,4 @@
-import type { Sku } from '#apis/types'
+import type { AvailabilityUpdateEventPayload, Sku } from '#apis/types'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailabilityStatus } from './cl-availability-status'
 
@@ -44,7 +44,7 @@ describe('cl-availability-status.spec', () => {
       </div>
     `)
 
-    const availabilityUpdateEvent: Sku = {
+    const sku: Sku = {
       id: 'ABC123',
       code: 'ABC123',
       name: 'ABC123',
@@ -60,8 +60,11 @@ describe('cl-availability-status.spec', () => {
 
     body.querySelectorAll('cl-availability-status').forEach((element) =>
       element.dispatchEvent(
-        new CustomEvent<Sku>('availabilityUpdate', {
-          detail: availabilityUpdateEvent
+        new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
+          detail: {
+            sku,
+            rule: 'cheapest'
+          }
         })
       )
     )
@@ -112,7 +115,7 @@ describe('cl-availability-status.spec', () => {
       </div>
     `)
 
-    const availabilityUpdateEvent: Sku = {
+    const sku: Sku = {
       id: 'ABC123',
       code: 'ABC123',
       name: 'ABC123',
@@ -128,8 +131,11 @@ describe('cl-availability-status.spec', () => {
 
     body.querySelectorAll('cl-availability-status').forEach((element) =>
       element.dispatchEvent(
-        new CustomEvent<Sku>('availabilityUpdate', {
-          detail: availabilityUpdateEvent
+        new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
+          detail: {
+            sku,
+            rule: 'cheapest'
+          }
         })
       )
     )
@@ -180,7 +186,7 @@ describe('cl-availability-status.spec', () => {
       </div>
     `)
 
-    const availabilityUpdateEvent: Sku = {
+    const sku: Sku = {
       id: 'ABC123',
       code: 'ABC123',
       name: 'ABC123',
@@ -196,8 +202,11 @@ describe('cl-availability-status.spec', () => {
 
     body.querySelectorAll('cl-availability-status').forEach((element) =>
       element.dispatchEvent(
-        new CustomEvent<Sku>('availabilityUpdate', {
-          detail: availabilityUpdateEvent
+        new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
+          detail: {
+            sku,
+            rule: 'cheapest'
+          }
         })
       )
     )
@@ -206,7 +215,7 @@ describe('cl-availability-status.spec', () => {
 
     body.querySelectorAll('cl-availability-status').forEach((element) =>
       element.dispatchEvent(
-        new CustomEvent<Sku>('availabilityUpdate', {
+        new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: undefined
         })
       )
