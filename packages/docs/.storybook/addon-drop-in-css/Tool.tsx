@@ -28,9 +28,14 @@ export const Tool = () => {
 
   return (
     <IconButton
+      autoFocus={null}
+      rev={null}
+      content={null}
+      nonce={null}
+      rel={null}
       key={TOOL_ID}
-      active={active}
       title={ADDON_TITLE}
+      active={active}
       onClick={toggle}
     >
       <Icons icon="markup" />
