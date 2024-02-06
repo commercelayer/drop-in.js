@@ -2,6 +2,8 @@ import { memoDebounce } from '#utils/debounce'
 import type { Expand } from '#utils/utility-types'
 import type {
   AddItem,
+  GetBundle,
+  GetBundlePrice,
   GetPrice,
   GetSku,
   GetToken,
@@ -12,6 +14,8 @@ import type {
 export interface EventTypes {
   'cl-identity-gettoken': GetToken
   'cl-prices-getprice': GetPrice
+  'cl-bundles-getbundle': GetBundle
+  'cl-bundles-getprice': GetBundlePrice
   'cl-skus-getsku': GetSku
   'cl-cart-additem': AddItem
   'cl-cart-hostedcartupdate': NonNullableReturnType<TriggerHostedCartUpdate>

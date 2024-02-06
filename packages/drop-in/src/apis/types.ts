@@ -1,4 +1,10 @@
-import type { LineItem, Order, Price, Sku as SdkSku } from '@commercelayer/sdk'
+import type {
+  Bundle,
+  LineItem,
+  Order,
+  Price,
+  Sku as SdkSku
+} from '@commercelayer/sdk'
 import { type Token } from './commercelayer/client'
 
 interface DeliveryLeadTime {
@@ -37,6 +43,9 @@ export type Sku = SdkSku & {
 }
 
 export type GetPrice = (sku: string) => Promise<Price | undefined>
+
+export type GetBundle = (code: string) => Promise<Bundle | undefined>
+export type GetBundlePrice = (code: string) => Promise<Price | undefined>
 
 export type GetSku = (code: string) => Promise<Sku | undefined>
 
