@@ -62,7 +62,8 @@ export const config: Config = {
       empty: true,
       serviceWorker: null, // disable service workers
       copy: [
-        { src: 'cart.html' }
+        { src: 'cart.html' },
+        { src: '.well-known', dest: '../../.well-known/' }
       ]
     },
     {
