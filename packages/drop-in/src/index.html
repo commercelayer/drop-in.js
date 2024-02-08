@@ -1,379 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html dir="ltr" lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-        <title>drop-in.js</title>
-        <meta name="description" content="MFE elements by Commerce Layer" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>drop-in.js</title>
+    <meta name="description" content="MFE elements by Commerce Layer" />
 
-        <style>
-            .sr-only {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                padding: 0;
-                margin: -1px;
-                overflow: hidden;
-                clip: rect(0, 0, 0, 0);
-                border: 0;
-            }
-        </style>
+    <style>
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
 
-        <script type="module" src="/drop-in.js/demo/build/drop-in.esm.js"></script>
-        <script nomodule src="/drop-in.js/demo/build/drop-in.js"></script>
+      #main-navigation {
+        a {
+          opacity: .4;
+          &:link {
+            opacity: 1;
+            text-decoration: underline;
+          }
+        }
+      }
+    </style>
 
-        <link href="/drop-in.js/demo/build/drop-in.css" rel="stylesheet" />
+    <script type="module" src="/drop-in.js/demo/build/drop-in.esm.js"></script>
+    <script nomodule src="/drop-in.js/demo/build/drop-in.js"></script>
 
-        <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/drop-in.js/demo/build/drop-in.css" rel="stylesheet" />
 
+    <script src="https://cdn.tailwindcss.com"></script>
 
-        <script>
-            document.addEventListener('cl-identity-gettoken', (e) => console.info('identity.getToken', e.detail))
-            document.addEventListener('cl-skus-getsku', (e) => console.info('skus.getSku', e.detail))
-            document.addEventListener('cl-prices-getprice', (e) => console.info('prices.getPrice', e.detail))
-            document.addEventListener('cl-cart-additem', (e) => console.info('cart.addItem', e.detail))
-        </script>
+    <script>
+      document.addEventListener('cl-identity-gettoken', (e) => console.info('identity.getToken', e.detail));
+      document.addEventListener('cl-skus-getsku', (e) => console.info('skus.getSku', e.detail));
+      document.addEventListener('cl-prices-getprice', (e) => console.info('prices.getPrice', e.detail));
+      document.addEventListener('cl-cart-additem', (e) => console.info('cart.addItem', e.detail));
+    </script>
 
+    <script>
+      (function () {
+        // // stg
+        // window.commercelayerConfig = {
+        //     domain: 'commercelayer.co',
+        //     clientId: '',
+        //     slug: 'drop-in-js-stg',
+        //     scope: 'market:545',
+        //     debug: 'all',
+        //     orderReturnUrl: 'https://example.com'
+        //     // validScopes: ['market:545', 'market:1234', ''],
+        // };
 
-        <script>
-            (function () {
-                // // stg
-                // window.commercelayerConfig = {
-                //     domain: 'commercelayer.co',
-                //     clientId: '2oh-47l4PN_yb8p4mp7AxUsb-Ue3e7tBqteoZcQM-nU',
-                //     slug: 'drop-in-js-stg',
-                //     scope: 'market:545',
-                //     debug: 'all',
-                //     orderReturnUrl: 'https://example.com'
-                //     // validScopes: ['market:545', 'market:1234', ''],
-                // };
+        // prd
+        window.commercelayerConfig = {
+          clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+          slug: 'drop-in-js',
+          scope: 'market:11709',
+          debug: 'all',
+          orderReturnUrl: 'https://example.com',
+        };
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="container mx-auto p-6">
+      <nav class="flex mb-12">
+        <menu id="main-navigation">
+            <div>
+              <cl-identity-status type="guest">
+                <cl-identity-link type="login" class="mr-4">Login</cl-identity-link>
+                <cl-identity-link type="signup">Signup</cl-identity-link>
+              </cl-identity-status>
+              <cl-identity-status type="customer">
+                <cl-my-account-link target="_blank" class="mr-4">My Account</cl-my-account-link>
+                <cl-identity-link type="logout">Logout</cl-identity-link>
+              </cl-identity-status>
+            </div>
+            <div class="my-4">
+                <cl-cart-link target="_blank" class="mr-4">Cart link</cl-cart-link>
+                <cl-checkout-link target="_blank">Checkout link</cl-checkout-link>
+            </div>
+            <div>
+              You have <cl-cart-count class="font-bold"></cl-cart-count> item/s in the cart
+            </div>
+        </menu>
 
-                // prd
-                window.commercelayerConfig = {
-                  clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
-                  slug: 'drop-in-js',
-                  scope: 'market:11709',
-                  debug: 'all',
-                  orderReturnUrl: 'https://example.com'
-                }
-            })();
-        </script>
-    </head>
-    <body>
-        <div class="container mx-auto p-6">
-            <nav class="flex mb-12">
-                <span class="font-semibold text-xl tracking-tight">Store Name</span>
-                <div class="flex items-center flex-grow justify-end">
-                    <cl-cart-count></cl-cart-count>
+        <div id="cart" class="flex items-start flex-grow justify-end">
+          <!-- <cl-cart type="mini" open-on-add></cl-cart> -->
 
-                    <!-- <cl-cart type="mini" open="true" open-on-add="false"></cl-cart> -->
+          <!-- <cl-cart type="mini" open="true" open-on-add="false"></cl-cart> -->
 
-                    <cl-cart-link class="ml-4">
-                        <span class="sr-only">My cart with <cl-cart-count></cl-cart-count> items.</span>
-                        <svg
-                            aria-hidden="true"
-                            focusable="false"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="32"
-                            height="32"
-                            fill="none"
-                        >
-                            <path
-                                stroke="#000"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
-                            />
-                            <path
-                                stroke="#000"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"
-                            />
-                        </svg>
-                        <cl-cart-count aria-hidden="true"></cl-cart-count>
-                        <cl-cart open-on-add></cl-cart>
-                    </cl-cart-link>
-
-                    <cl-cart-link target="_blank" class="ml-4">
-                        Cart
-                        <cl-cart-count></cl-cart-count>
-                    </cl-cart-link>
-
-                    <cl-identity-status type="guest">
-                        <cl-identity-link type="login" class="ml-8">Login</cl-identity-link>
-                        <cl-identity-link type="signup" class="ml-8">Signup</cl-identity-link>
-                    </cl-identity-status>
-
-                    <cl-identity-status type="customer">
-                        <cl-my-account-link class="ml-8" target="_blank">My Account</cl-my-account-link>
-                        <cl-identity-link type="logout" class="ml-8">Logout</cl-identity-link>
-                    </cl-identity-status>
-
-                    <cl-checkout-link class="ml-8" target="_blank">Checkout</cl-checkout-link>
-
-                    <!-- <cl-cart type="mini" open-on-add></cl-cart> -->
-                </div>
-            </nav>
-
-            <section id="products">
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 text-center gap-6">
-                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        <div class="mb-4">
-                            <code>
-                                <select id="vs--select">
-                                    <option value="5PANECAP000000FFFFFFXXXX">Available</option>
-                                    <option value="BACKPACKFFFFFF000000XXXX">No Discount</option>
-                                    <option value="5PANECAP9D9CA1FFFFFFXXXX">Out Of Stock</option>
-                                    <option value="GMUG11OZFFFFFF000000XXXX">Overselling</option>
-                                    <option value="SKU5678">Non-Existing SKU</option>
-                                </select>
-                            </code>
-                        </div>
-                        <div id="vs--sku">5PANECAP000000FFFFFFXXXX</div>
-                        <cl-price id="vs--price" code="5PANECAP000000FFFFFFXXXX">
-                            price is:
-                            <cl-price-amount type="compare-at"></cl-price-amount>
-                            <cl-price-amount></cl-price-amount>
-                        </cl-price>
-                        <cl-add-to-cart id="vs--add-to-cart" code="5PANECAP000000FFFFFFXXXX"
-                            >Add to cart</cl-add-to-cart
-                        >
-                        <cl-availability id="vs--availability" code="5PANECAP000000FFFFFFXXXX">
-                            <cl-availability-status type="available" style="color: #1fda8a"
-                                >• available</cl-availability-status
-                            >
-                            <cl-availability-status type="available">
-                                ready to be shipped in
-                                <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info
-                                    type="max-days"
-                                ></cl-availability-info>
-                                days
-                            </cl-availability-status>
-                            <cl-availability-status type="unavailable" style="color: #ff656b"
-                                >• out of stock</cl-availability-status
-                            >
-                        </cl-availability>
-                    </div>
-
-                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        <div class="mb-4"><code>Editorial Banner</code></div>
-
-                        <cl-identity-status type="guest">
-                            <div class="text-xl">Register NOW</div>
-                        </cl-identity-status>
-
-                        <cl-identity-status type="customer">
-                            <div class="text-xl">Welcome Back 🎉</div>
-                        </cl-identity-status>
-                    </div>
-
-                    <script>
-                        const select = document.getElementById('vs--select');
-                        const title = document.getElementById('vs--sku');
-                        const price = document.getElementById('vs--price');
-                        const addToCart = document.getElementById('vs--add-to-cart');
-                        const availability = document.getElementById('vs--availability');
-
-                        select.addEventListener('change', function (event) {
-                            const sku = event.currentTarget.value;
-                            title.innerText = sku;
-                            price.code = sku;
-                            addToCart.code = sku;
-                            availability.code = sku;
-                        });
-                    </script>
-                </div>
-
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 text-center gap-6">
-                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        <div class="mb-4"><code>ALL RIGHT!</code></div>
-                        5PANECAP000000FFFFFFXXXX
-                        <cl-price code="5PANECAP000000FFFFFFXXXX">
-                            price is:
-                            <cl-price-amount type="compare-at"></cl-price-amount>
-                            <cl-price-amount></cl-price-amount>
-                        </cl-price>
-                        <cl-add-to-cart code="5PANECAP000000FFFFFFXXXX">Add to cart</cl-add-to-cart>
-                        <cl-availability code="5PANECAP000000FFFFFFXXXX">
-                            <cl-availability-status type="available" style="color: #1fda8a"
-                                >• available</cl-availability-status
-                            >
-                            <cl-availability-status type="available">
-                                ready to be shipped in
-                                <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info
-                                    type="max-days"
-                                ></cl-availability-info>
-                                days
-                            </cl-availability-status>
-                            <cl-availability-status type="unavailable" style="color: #ff656b"
-                                >• out of stock</cl-availability-status
-                            >
-                        </cl-availability>
-                    </div>
-
-                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        <div class="mb-4"><code>ALL RIGHT!</code></div>
-                        BACKPACKFFFFFF000000XXXX
-                        <cl-price code="BACKPACKFFFFFF000000XXXX">
-                            price is:
-                            <cl-price-amount type="compare-at"></cl-price-amount>
-                            <cl-price-amount></cl-price-amount>
-                        </cl-price>
-                        <cl-add-to-cart code="BACKPACKFFFFFF000000XXXX" quantity="2">Add to cart</cl-add-to-cart>
-                        <cl-availability code="BACKPACKFFFFFF000000XXXX">
-                            <cl-availability-status type="available" style="color: #1fda8a"
-                                >• available</cl-availability-status
-                            >
-                            <cl-availability-status type="available">
-                                ready to be shipped in
-                                <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info
-                                    type="max-days"
-                                ></cl-availability-info>
-                                days
-                            </cl-availability-status>
-                            <cl-availability-status type="unavailable" style="color: #ff656b"
-                                >• out of stock</cl-availability-status
-                            >
-                        </cl-availability>
-                    </div>
-
-                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        <div class="mb-4"><code>WITH NEGATIVE QUANTITY</code></div>
-                        5PANECAP000000FFFFFFXXXX
-                        <cl-price code="5PANECAP000000FFFFFFXXXX">
-                            price is:
-                            <cl-price-amount type="compare-at"></cl-price-amount>
-                            <cl-price-amount></cl-price-amount>
-                        </cl-price>
-                        <cl-add-to-cart code="5PANECAP000000FFFFFFXXXX" quantity="-1">Add to cart</cl-add-to-cart>
-                        <cl-availability code="5PANECAP000000FFFFFFXXXX">
-                            <cl-availability-status type="available" style="color: #1fda8a"
-                                >• available</cl-availability-status
-                            >
-                            <cl-availability-status type="available">
-                                ready to be shipped in
-                                <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info
-                                    type="max-days"
-                                ></cl-availability-info>
-                                days
-                            </cl-availability-status>
-                            <cl-availability-status type="unavailable" style="color: #ff656b"
-                                >• out of stock</cl-availability-status
-                            >
-                        </cl-availability>
-                    </div>
-
-                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        <div class="mb-4"><code>OUT OF STOCK</code></div>
-                        5PANECAP9D9CA1FFFFFFXXXX
-                        <cl-price code="5PANECAP9D9CA1FFFFFFXXXX">
-                            price is:
-                            <cl-price-amount type="compare-at"></cl-price-amount>
-                            <cl-price-amount></cl-price-amount>
-                        </cl-price>
-                        <cl-add-to-cart code="5PANECAP9D9CA1FFFFFFXXXX">Add to cart</cl-add-to-cart>
-                        <cl-availability code="5PANECAP9D9CA1FFFFFFXXXX">
-                            <cl-availability-status type="available" style="color: #1fda8a"
-                                >• available</cl-availability-status
-                            >
-                            <cl-availability-status type="available">
-                                ready to be shipped in
-                                <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info
-                                    type="max-days"
-                                ></cl-availability-info>
-                                days
-                            </cl-availability-status>
-                            <cl-availability-status type="unavailable" style="color: #ff656b"
-                                >• out of stock</cl-availability-status
-                            >
-                        </cl-availability>
-                    </div>
-
-                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        <div class="mb-4"><code>WITHOUT ATTRIBUTES</code></div>
-                        -
-                        <cl-price>
-                            price is:
-                            <cl-price-amount type="compare-at"></cl-price-amount>
-                            <cl-price-amount></cl-price-amount>
-                        </cl-price>
-                        <cl-add-to-cart>Add to cart</cl-add-to-cart>
-                        <cl-availability>
-                            <cl-availability-status type="available" style="color: #1fda8a"
-                                >• available</cl-availability-status
-                            >
-                            <cl-availability-status type="available">
-                                ready to be shipped in
-                                <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info
-                                    type="max-days"
-                                ></cl-availability-info>
-                                days
-                            </cl-availability-status>
-                            <cl-availability-status type="unavailable" style="color: #ff656b"
-                                >• out of stock</cl-availability-status
-                            >
-                        </cl-availability>
-                    </div>
-
-                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        <div class="mb-4"><code>NONEXISTING SKU</code></div>
-                        SKU1234
-                        <cl-price code="SKU1234">
-                            price is:
-                            <cl-price-amount type="compare-at"></cl-price-amount>
-                            <cl-price-amount></cl-price-amount>
-                        </cl-price>
-                        <cl-add-to-cart code="SKU1234">Add to cart</cl-add-to-cart>
-                        <cl-availability code="SKU1234">
-                            <cl-availability-status type="available" style="color: #1fda8a"
-                                >• available</cl-availability-status
-                            >
-                            <cl-availability-status type="available">
-                                ready to be shipped in
-                                <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info
-                                    type="max-days"
-                                ></cl-availability-info>
-                                days
-                            </cl-availability-status>
-                            <cl-availability-status type="unavailable" style="color: #ff656b"
-                                >• out of stock</cl-availability-status
-                            >
-                        </cl-availability>
-                    </div>
-
-                    <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
-                        <div class="mb-4"><code>DO NOT TRACK</code></div>
-                        BOTT17OZFFFFFF000000XXXX
-                        <cl-price code="BOTT17OZFFFFFF000000XXXX">
-                            price is:
-                            <cl-price-amount type="compare-at"></cl-price-amount>
-                            <cl-price-amount></cl-price-amount>
-                        </cl-price>
-                        <cl-add-to-cart code="BOTT17OZFFFFFF000000XXXX">Add to cart</cl-add-to-cart>
-                        <cl-availability code="BOTT17OZFFFFFF000000XXXX">
-                            <cl-availability-status type="available" style="color: #1fda8a"
-                                >• available</cl-availability-status
-                            >
-                            <cl-availability-status type="available">
-                                ready to be shipped in
-                                <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info
-                                    type="max-days"
-                                ></cl-availability-info>
-                                days
-                            </cl-availability-status>
-                            <cl-availability-status type="unavailable" style="color: #ff656b"
-                                >• out of stock</cl-availability-status
-                            >
-                        </cl-availability>
-                    </div>
-                </div>
-                <!-- grid -->
-            </section>
-            <!-- products -->
+          <cl-cart-link class="ml-4">
+            <span class="sr-only">My cart with <cl-cart-count></cl-cart-count> items.</span>
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="none"
+            >
+              <path
+                stroke="#000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
+              />
+              <path
+                stroke="#000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"
+              />
+            </svg>
+            <cl-cart-count aria-hidden="true"></cl-cart-count>
+            <cl-cart open-on-add></cl-cart>
+          </cl-cart-link>
         </div>
-        <!-- container -->
-    </body>
+      </nav>
+
+      <main>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-center gap-6">
+
+          <!-- <product-card> -->
+          <div data-id="product-card" class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2 border border-gray-100">
+            <div data-id="pc--selector" class="mb-4">
+              <code>
+                <select>
+                  <option value="5PANECAP000000FFFFFFXXXX">Available</option>
+                  <option value="5PANECAP000000FFFFFFXXXX" data-quantity="-1">With Negative Quantity</option>
+                  <option value="BACKPACKFFFFFF000000XXXX" data-quantity="5">No Discount</option>
+                  <option value="5PANECAP9D9CA1FFFFFFXXXX">Out Of Stock</option>
+                  <option value="GMUG11OZFFFFFF000000XXXX">Overselling</option>
+                  <option value="BOTT17OZFFFFFF000000XXXX">Do Not Track</option>
+                  <option value="SKU1234">Non-Existing SKU</option>
+                  <option value="">Without Attributes</option>
+                </select>
+              </code>
+            </div>
+            <img
+              data-id="pc--img"
+              src="https://data.commercelayer.app/seed/images/skus/5PANECAP000000FFFFFFXXXX_FLAT.png"
+              class="w-2/3 mx-auto"
+              />
+            <small data-id="pc--sku">5PANECAP000000FFFFFFXXXX</small>
+            <cl-price code="5PANECAP000000FFFFFFXXXX">
+              <cl-price-amount type="compare-at"></cl-price-amount>
+              <cl-price-amount></cl-price-amount>
+            </cl-price>
+            <cl-add-to-cart code="5PANECAP000000FFFFFFXXXX">Add to cart</cl-add-to-cart>
+            <cl-availability code="5PANECAP000000FFFFFFXXXX" class="text-sm">
+              <cl-availability-status type="available" style="color: #1fda8a">available<br /></cl-availability-status>
+              <cl-availability-status type="available">
+                ready to be shipped in
+                <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info
+                  type="max-days"
+                ></cl-availability-info>
+                days
+              </cl-availability-status>
+              <cl-availability-status type="unavailable" style="color: #ff656b">out of stock</cl-availability-status>
+            </cl-availability>
+          </div>
+          <!-- </product-card> -->
+
+          <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
+            <div class="mb-4"><code>EDITORIAL BANNER</code></div>
+            <cl-identity-status type="guest">
+              <div class="text-xl"><img alt="Register" class="max-h-[325px] w-full object-contain" src="https://commercelayer.github.io/drop-in.js/register.jpg" /></div>
+            </cl-identity-status>
+            <cl-identity-status type="customer">
+              <div class="text-xl"><img alt="Welcome Back!" class="max-h-[325px] w-full object-contain" src="https://commercelayer.github.io/drop-in.js/welcomeback.jpg" /></div>
+            </cl-identity-status>
+          </div>
+
+          <script>
+            const productCard = document.querySelector('[data-id="product-card"]')
+            const select = productCard.querySelector('[data-id="pc--selector"] select')
+
+            const skus = Array.from(select.querySelectorAll('option')).flatMap(option => (
+              [[
+                option.innerText,
+                {
+                  sku: option.value,
+                  quantity: parseInt(option.dataset.quantity)
+                }
+              ]]
+            ))
+
+            function updateProductCard(productCard, { sku, quantity, description } = {}) {
+              productCard.querySelector('[data-id="pc--sku"]').innerText = sku;
+              productCard.querySelector('[data-id="pc--img"]').src = `https://data.commercelayer.app/seed/images/skus/${sku}_FLAT.png`
+              productCard.querySelector('cl-price').code = sku;
+              productCard.querySelector('cl-add-to-cart').code = sku;
+              productCard.querySelector('cl-add-to-cart').quantity = isNaN(quantity) || quantity == null ? 1 : quantity;
+              productCard.querySelector('cl-availability').code = sku;
+              if (description != null) {
+                productCard.querySelector('[data-id="pc--selector"]').innerHTML = `<code>${description.toUpperCase()}</code>`
+              }
+            }
+
+            select.addEventListener('change', function (event) {
+              const sku = event.currentTarget.value;
+              const quantity = parseInt(event.currentTarget.selectedOptions[0].dataset.quantity)
+              console.log(sku, quantity)
+              updateProductCard(productCard, { sku, quantity })
+            })
+          </script>
+        </div>
+
+        <div id="product-list" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-center gap-6">
+          <!-- client-side generated -->
+        </div>
+
+        <script>
+          skus.forEach(([description, {sku, quantity}]) => {
+            const newProductCard = productCard.cloneNode(true)
+            updateProductCard(newProductCard, { sku, quantity, description })
+            document.getElementById('product-list').append(newProductCard)
+          })
+        </script>
+      </main>
+
+    </div>
+  </body>
 </html>
