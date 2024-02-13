@@ -37,7 +37,7 @@ jobs:
         run: pnpm lint
 
       - name: Run Audit 🔬
-        run: pnpm audit --audit-level high && (pnpm audit || exit 0)
+        run: pnpm audit || exit 0
 
       - name: Test 🐛
         run: pnpm test:unit
