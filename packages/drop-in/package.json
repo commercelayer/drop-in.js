@@ -56,7 +56,7 @@
     "@stencil/core": "^3.0.0"
   },
   "devDependencies": {
-    "@stencil/core": "^4.12.2",
+    "@stencil/core": "^4.12.3",
     "@stencil/sass": "^3.0.9",
     "@types/iframe-resizer": "^3.5.13",
     "@types/jest": "^29.5.12",

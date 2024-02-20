@@ -43,8 +43,5 @@
     "npm-check-updates": "^16.14.15",
     "replace-in-file": "^7.1.0",
     "typescript": "^5.3.3"
-  },
-  "resolutions": {
-    "ip": "^2.0.1"
   }
 }
