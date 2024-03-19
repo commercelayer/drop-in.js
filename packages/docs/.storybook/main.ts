@@ -9,7 +9,8 @@ const storybookConfig: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-mdx-gfm'
+    '@storybook/addon-mdx-gfm',
+    '@storybook/addon-webpack5-compiler-swc'
   ],
   // @ts-expect-error This 'managerEntries' exists.
   managerEntries: [
