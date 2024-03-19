@@ -1,7 +1,7 @@
 {
   "name": "docs",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.2.0",
   "scripts": {
     "start": "concurrently -n sass,app -c 'bgMagenta,bgMagenta' 'pnpm build:sass:watch' 'storybook dev -p 6006'",
     "build:copy": "cp -r ../drop-in/dist public/",
@@ -29,8 +29,8 @@
     "@storybook/blocks": "^8.0.1",
     "@storybook/components": "^8.0.1",
     "@storybook/core-common": "^8.0.1",
-    "@storybook/html-webpack5": "^8.0.1",
     "@storybook/html": "^8.0.1",
+    "@storybook/html-webpack5": "^8.0.1",
     "@storybook/icons": "^1.2.9",
     "@storybook/manager-api": "^8.0.1",
     "@storybook/test": "^8.0.1",
@@ -48,7 +48,7 @@
     "webpack": "^5.90.3"
   },
   "dependencies": {
-    "@commercelayer/drop-in.js": "workspace:^2.1.0",
+    "@commercelayer/drop-in.js": "workspace:^2.2.0",
     "lit-html": "^3.1.2"
   }
 }
