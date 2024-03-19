@@ -1,4 +1,5 @@
-import { IconButton, Icons, Separator, WithTooltip, TooltipLinkList,  } from '@storybook/components'
+import { IconButton, Separator, WithTooltip, TooltipLinkList } from '@storybook/components'
+import { BasketIcon, CheckIcon } from '@storybook/icons'
 import React, { useCallback } from 'react'
 import { SCOPES, PARAM_KEY, getSelectedScopeKey, ADDON_TITLE, TOOL_ID } from './constants'
 import { styled, color } from "@storybook/theming"
@@ -26,7 +27,7 @@ export const Tool = () => {
             links={scopes.map((scope) => ({
               id: scope,
               title: <LinkTitle active={isActive(scope)}>{scope}</LinkTitle>,
-              right: <LinkIcon icon="check" width={12} height={12} active={isActive(scope)} />,
+              right: <LinkIcon width={12} height={12} active={isActive(scope)} />,
               onClick: () => {
                 localStorage.setItem(PARAM_KEY, scope)
                 location.reload()
@@ -37,16 +38,11 @@ export const Tool = () => {
         )}
       >
         <IconButton
-          autoFocus={null}
-          rev={null}
-          content={null}
-          nonce={null}
-          rel={null}
           key={TOOL_ID}
           title={ADDON_TITLE}
           active={scopes.some(isActive)}
         >
-          <Icons icon="basket" />&nbsp;&nbsp;{getSelectedScopeKey()}
+          <BasketIcon /> {getSelectedScopeKey()}
         </IconButton>
       </WithTooltip>
     </>
@@ -57,7 +53,7 @@ const LinkTitle = styled.span<{ active?: boolean }>(({ active }) => ({
   color: active ? color.secondary : "inherit",
 }))
 
-const LinkIcon = styled(Icons)<{ active?: boolean }>(({ active }) => ({
+const LinkIcon = styled(CheckIcon)<{ active?: boolean }>(({ active }) => ({
   opacity: active ? 1 : 0,
   path: { fill: active ? color.secondary : "inherit" },
 }))

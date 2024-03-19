@@ -1,5 +1,6 @@
-import { useGlobals, useStorybookApi } from '@storybook/api'
-import { IconButton, Icons } from '@storybook/components'
+import { useGlobals, useStorybookApi } from '@storybook/manager-api'
+import { IconButton } from '@storybook/components'
+import { MarkupIcon } from '@storybook/icons'
 import React, { useCallback, useEffect } from 'react'
 import { ADDON_ID, ADDON_TITLE, FILENAME, PARAM_KEY, TOOL_ID } from './constants'
 
@@ -28,18 +29,12 @@ export const Tool = () => {
 
   return (
     <IconButton
-      autoFocus={null}
-      rev={null}
-      content={null}
-      nonce={null}
-      rel={null}
       key={TOOL_ID}
       title={ADDON_TITLE}
       active={active}
       onClick={toggle}
     >
-      <Icons icon="markup" />
-      &nbsp;&nbsp;{FILENAME}
+      <MarkupIcon /> {FILENAME}
     </IconButton>
   )
 }
