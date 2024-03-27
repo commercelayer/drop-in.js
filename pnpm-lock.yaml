@@ -138,6 +138,9 @@ importers:
 
   packages/drop-in:
     dependencies:
+      '@commercelayer/js-auth':
+        specifier: ^6.0.0
+        version: 6.0.0
       '@commercelayer/sdk':
         specifier: ^5.35.0
         version: 5.35.0
@@ -1660,6 +1663,11 @@ packages:
       - eslint-import-resolver-webpack
       - supports-color
     dev: true
+
+  /@commercelayer/js-auth@6.0.0:
+    resolution: {integrity: sha512-RT7Kpi+lz0uJngyzuuz0g9TeAJvAlOoFe+8r8W/BPrqGZWwRgfqhcW715bf8qaaojJYTkX3Y4YSvvWUFDy3+dg==}
+    engines: {node: '>=18.0.0'}
+    dev: false
 
   /@commercelayer/sdk@5.35.0:
     resolution: {integrity: sha512-ItYl68HjHw1xFV2upnGSSEPDxF60rS4kNFIFHXfcLqpNFWK2P9YeKN5w1EWTZR8sczXUMnyMl7/dl+U3J7Wa7g==}

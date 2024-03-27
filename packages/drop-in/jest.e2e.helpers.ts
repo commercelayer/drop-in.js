@@ -7,7 +7,7 @@ type Cookie = Awaited<ReturnType<E2EPage['cookies']>>[number]
 export function getCommerceLayerConfiguration({
   clientId = 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
   slug = 'drop-in-js',
-  scope = 'market:11709'
+  scope = 'market:code:usa'
 }: Partial<CommerceLayerConfig> = {}): string {
   return `
     <script>
@@ -33,7 +33,7 @@ export async function getCookie(
 
 export async function getCartId(page: E2EPage): Promise<string | null> {
   const cookieName =
-    'commercelayer_order-id-kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8-market:11709'
+    'commercelayer_order-id-kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8-market:code:usa'
   const cookie = await getCookie(page, cookieName)
 
   return cookie?.value ?? null
@@ -41,7 +41,7 @@ export async function getCartId(page: E2EPage): Promise<string | null> {
 
 export async function getAccessToken(page: E2EPage): Promise<Token | null> {
   const cookieName =
-    'commercelayer_token-kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8-market:11709'
+    'commercelayer_token-kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8-market:code:usa'
   const cookie = await getCookie(page, cookieName)
 
   return cookie?.value !== undefined

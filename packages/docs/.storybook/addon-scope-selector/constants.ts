@@ -4,8 +4,8 @@ export const ADDON_TITLE = DESCRIPTION
 export const TOOL_ID = `${ADDON_ID}/tool` as const
 export const PARAM_KEY = ADDON_ID
 export const SCOPES = {
-  'market: USA': 'market:11709',
-  'market: Europe': 'market:11708'
+  'market: USA': 'market:code:usa',
+  'market: Europe': 'market:code:europe'
 } as const
 
 export type Scope = keyof typeof SCOPES

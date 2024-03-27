@@ -15,7 +15,7 @@ export interface CommerceLayerConfig {
   /**
    * Restrict the dataset of your application by specifying allowed scopes. You can find them in your dashboard.
    * @example
-   * `market:11708`
+   * `market:code:usa`
    */
   scope: string
 

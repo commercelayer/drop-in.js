@@ -4,7 +4,7 @@ import { log } from './logger'
 function injectConfig({
   clientId = '1234',
   slug = 'example',
-  scope = 'market:123',
+  scope = 'market:code:usa',
   debug,
   orderReturnUrl
 }: Partial<Config>): void {

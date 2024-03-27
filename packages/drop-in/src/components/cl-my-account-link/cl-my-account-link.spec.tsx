@@ -12,7 +12,7 @@ describe('cl-my-account-link.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { root, waitForChanges } = await newSpecPage({
@@ -35,7 +35,7 @@ describe('cl-my-account-link.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { root, waitForChanges } = await newSpecPage({
@@ -59,7 +59,7 @@ describe('cl-my-account-link.spec', () => {
       type: 'customer',
       customerId: '1234',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { root, waitForChanges } = await newSpecPage({
@@ -83,7 +83,7 @@ describe('cl-my-account-link.spec', () => {
       type: 'customer',
       customerId: '1234',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { root, waitForChanges } = await newSpecPage({
@@ -104,12 +104,12 @@ describe('cl-my-account-link.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
       accessToken: 'token-1234',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
     fireEvent('cl-identity-gettoken', [], {
       type: 'guest',
       accessToken: 'token-1234',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     await waitForChanges()

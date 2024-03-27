@@ -37,7 +37,7 @@ describe('cl-identity-status.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { body } = await newSpecPage({
@@ -77,7 +77,7 @@ describe('cl-identity-status.spec', () => {
       type: 'customer',
       customerId: '1234',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { body } = await newSpecPage({
@@ -116,7 +116,7 @@ describe('cl-identity-status.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { body, waitForChanges } = await newSpecPage({
@@ -152,7 +152,7 @@ describe('cl-identity-status.spec', () => {
       type: 'customer',
       customerId: '12as',
       accessToken: 'token-1234',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     await waitForChanges()
@@ -180,7 +180,7 @@ describe('cl-identity-status.spec', () => {
       type: 'customer',
       customerId: '1234',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { body, waitForChanges } = await newSpecPage({
@@ -215,7 +215,7 @@ describe('cl-identity-status.spec', () => {
     fireEvent('cl-identity-gettoken', [], {
       type: 'guest',
       accessToken: 'token-1234',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     await waitForChanges()

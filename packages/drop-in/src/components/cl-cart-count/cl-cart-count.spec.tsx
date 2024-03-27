@@ -8,7 +8,7 @@ describe('cl-cart-count.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { root } = await newSpecPage({
@@ -27,7 +27,7 @@ describe('cl-cart-count.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     const { root } = await newSpecPage({
