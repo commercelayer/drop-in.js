@@ -1,31 +1,27 @@
-import type { ClientCredentials } from './commercelayer/client'
+import type { AuthenticateOptions } from '@commercelayer/js-auth'
 
 const prefix = 'commercelayer_'
 
-export function getKeyForCart(clientCredentials: ClientCredentials): string {
-  const scope = Array.isArray(clientCredentials.scope)
-    ? clientCredentials.scope.join('-')
-    : clientCredentials.scope ?? 'undefined'
+export function getKeyForCart(
+  clientCredentials: AuthenticateOptions<'client_credentials'>
+): string {
+  const scope = (clientCredentials.scope ?? 'undefined').replace(' ', '-')
 
   return `${prefix}order-id-${clientCredentials.clientId}-${scope}`
 }
 
 export function getKeyForGuestToken(
-  clientCredentials: ClientCredentials
+  clientCredentials: AuthenticateOptions<'client_credentials'>
 ): string {
-  const scope = Array.isArray(clientCredentials.scope)
-    ? clientCredentials.scope.join('-')
-    : clientCredentials.scope ?? 'undefined'
+  const scope = (clientCredentials.scope ?? 'undefined').replace(' ', '-')
 
   return `${prefix}token-${clientCredentials.clientId}-${scope}`
 }
 
 export function getKeyForCustomerToken(
-  clientCredentials: ClientCredentials
+  clientCredentials: AuthenticateOptions<'client_credentials'>
 ): string {
-  const scope = Array.isArray(clientCredentials.scope)
-    ? clientCredentials.scope.join('-')
-    : clientCredentials.scope ?? 'undefined'
+  const scope = (clientCredentials.scope ?? 'undefined').replace(' ', '-')
 
   return `${prefix}session-${clientCredentials.clientId}-${scope}`
 }

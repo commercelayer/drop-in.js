@@ -18,6 +18,6 @@ Object.defineProperty(window, 'commercelayerConfig', {
   value: {
     clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
     slug: 'drop-in-js',
-    scope: 'market:11709'
+    scope: 'market:code:usa'
   }
 })

@@ -13,7 +13,7 @@ describe('cl-cart.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
       accessToken: 'token-123',
-      scope: 'market:1234'
+      scope: 'market:code:usa'
     })
 
     jest

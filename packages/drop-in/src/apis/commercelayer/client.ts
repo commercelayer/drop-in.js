@@ -1,5 +1,13 @@
 import { fireEvent } from '#apis/event'
 import { getKeyForCustomerToken, getKeyForGuestToken } from '#apis/storage'
+import {
+  authenticate,
+  jwtDecode,
+  jwtIsSalesChannel,
+  revoke,
+  type AuthenticateOptions,
+  type AuthenticateReturn
+} from '@commercelayer/js-auth'
 import CommerceLayer, { type CommerceLayerClient } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 import memoize from 'lodash/memoize'
@@ -15,22 +23,7 @@ export type Token = (
     }
 ) & {
   accessToken: string
-  scope: string
-}
-
-export interface ClientCredentials {
-  clientId: string
-  endpoint: string
-  scope: string
-}
-
-interface SalesChannelToken {
-  accessToken: string
-  tokenType: string
-  expires: Date
-  expiresIn: number
-  scope: string
-  createdAt: number
+  scope?: string
 }
 
 function setToken(key: string, value: Token, expires?: Date): void {
@@ -55,76 +48,26 @@ function getToken(key: string): Token | undefined {
   }
 }
 
-interface ResponseToken {
-  owner?: {
-    id: string
-    type: 'Customer'
-  }
-  exp: number
-}
-
-function parseToken(token: string): { header: any; payload: ResponseToken } {
-  const [header, payload] = token.split('.')
-  return {
-    header: JSON.parse(header != null ? window.atob(header) : 'null'),
-    payload: JSON.parse(payload != null ? window.atob(payload) : 'null')
-  }
-}
-
 async function revokeToken(
-  clientCredentials: ClientCredentials,
+  clientCredentials: AuthenticateOptions<'client_credentials'>,
   accessToken: string
 ): Promise<boolean> {
-  return await fetch(`${clientCredentials.endpoint}/oauth/revoke`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      client_id: clientCredentials.clientId,
-      token: accessToken
-    })
+  const res = await revoke({
+    clientId: clientCredentials.clientId,
+    token: accessToken
   })
-    .then(async (res) => await res.json())
-    .then(() => true)
-    .catch(() => false)
+
+  return res.errors == null
 }
 
 async function getSalesChannelToken(
-  clientCredentials: ClientCredentials
-): Promise<SalesChannelToken | null> {
-  const token = await fetch(`${clientCredentials.endpoint}/oauth/token`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      grant_type: 'client_credentials',
-      client_id: clientCredentials.clientId,
-      scope: clientCredentials.scope
-    })
-  })
-    .then<{
-      access_token: string
-      token_type: 'bearer'
-      expires_in: number
-      scope: string
-      created_at: number
-    }>(async (res) => await res.json())
-    .catch(() => undefined)
-
-  if (token === undefined) {
-    return null
-  }
-
-  return {
-    accessToken: token.access_token,
-    createdAt: token.created_at,
-    expires: new Date(Date.now() + token.expires_in * 1000),
-    expiresIn: token.expires_in,
-    scope: token.scope,
-    tokenType: token.token_type
-  }
+  clientCredentials: AuthenticateOptions<'client_credentials'>
+): Promise<AuthenticateReturn<'client_credentials'> | null> {
+  return await authenticate('client_credentials', {
+    clientId: clientCredentials.clientId,
+    scope: clientCredentials.scope,
+    domain: clientCredentials.domain
+  }).then((res) => (res.errors == null ? res : null))
 }
 
 const getCustomerInfoFromUrl = (): {
@@ -147,9 +90,10 @@ const getCustomerInfoFromUrl = (): {
 }
 
 async function readCustomerToken(
-  clientCredentials: ClientCredentials
+  clientCredentials: AuthenticateOptions<'client_credentials'>
 ): Promise<Token | null> {
   const cookieName = getKeyForCustomerToken(clientCredentials)
+  const cookieValue = getToken(cookieName) ?? null
 
   // const searchParams = new window.URL(window.location.href).searchParams
   // const accessToken = searchParams.get('accessToken')
@@ -157,26 +101,30 @@ async function readCustomerToken(
   const { accessToken, scope = clientCredentials.scope } =
     getCustomerInfoFromUrl()
 
-  const { payload } =
-    accessToken != null ? parseToken(accessToken) : { payload: undefined }
-
-  if (accessToken == null || payload?.owner == null) {
-    return getToken(cookieName) ?? null
+  if (accessToken == null) {
+    return cookieValue
   }
 
-  const token: Token = {
-    type: 'customer',
-    customerId: payload.owner.id,
-    accessToken,
-    scope
-  }
-  setToken(cookieName, token, new Date(payload.exp * 1000))
+  const jwt = jwtDecode(accessToken)
 
-  return token
+  if (jwtIsSalesChannel(jwt.payload) && jwt.payload.owner != null) {
+    const token: Token = {
+      type: 'customer',
+      customerId: jwt.payload.owner.id,
+      accessToken,
+      scope
+    }
+
+    setToken(cookieName, token, new Date(jwt.payload.exp * 1000))
+
+    return token
+  }
+
+  return cookieValue
 }
 
 async function readGuestToken(
-  clientCredentials: ClientCredentials
+  clientCredentials: AuthenticateOptions<'client_credentials'>
 ): Promise<Token> {
   const cookieName = getKeyForGuestToken(clientCredentials)
   const value = getToken(cookieName)
@@ -211,7 +159,9 @@ async function readGuestToken(
 }
 
 export const getAccessToken = memoize(
-  async function (clientCredentials: ClientCredentials): Promise<Token> {
+  async function (
+    clientCredentials: AuthenticateOptions<'client_credentials'>
+  ): Promise<Token> {
     let token = await readCustomerToken(clientCredentials)
 
     if (token == null) {
