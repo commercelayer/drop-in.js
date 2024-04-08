@@ -140,6 +140,7 @@
                   <option value="5PANECAP9D9CA1FFFFFFXXXX">Out Of Stock</option>
                   <option value="GMUG11OZFFFFFF000000XXXX">Overselling</option>
                   <option value="BOTT17OZFFFFFF000000XXXX">Do Not Track</option>
+                  <option value="POLOMXXX000000FFFFFFMXXX" data-quantity="2" data-frequency="three-month">Subscription (3 months)</option>
                   <option value="SKU1234">Non-Existing SKU</option>
                   <option value="">Without Attributes</option>
                 </select>
@@ -189,17 +190,26 @@
                 option.innerText,
                 {
                   sku: option.value,
-                  quantity: parseInt(option.dataset.quantity)
+                  quantity: parseInt(option.dataset.quantity),
+                  frequency: option.dataset.frequency,
                 }
               ]]
             ))
 
-            function updateProductCard(productCard, { sku, quantity, description } = {}) {
+            console.groupCollapsed('DEMO - development log')
+            console.info('skus', skus)
+            console.groupEnd()
+
+            /**
+             * @type {(productCard: Element, options: { sku: string; quantity?: number; frequency?: string; description?: string; }) => void}
+             */
+            function updateProductCard(productCard, { sku, quantity, description, frequency }) {
               productCard.querySelector('[data-id="pc--sku"]').innerText = sku;
               productCard.querySelector('[data-id="pc--img"]').src = `https://data.commercelayer.app/seed/images/skus/${sku}_FLAT.png`
               productCard.querySelector('cl-price').code = sku;
               productCard.querySelector('cl-add-to-cart').code = sku;
               productCard.querySelector('cl-add-to-cart').quantity = isNaN(quantity) || quantity == null ? 1 : quantity;
+              productCard.querySelector('cl-add-to-cart').frequency = frequency;
               productCard.querySelector('cl-availability').code = sku;
               if (description != null) {
                 productCard.querySelector('[data-id="pc--selector"]').innerHTML = `<code>${description.toUpperCase()}</code>`
@@ -209,8 +219,9 @@
             select.addEventListener('change', function (event) {
               const sku = event.currentTarget.value;
               const quantity = parseInt(event.currentTarget.selectedOptions[0].dataset.quantity)
-              console.log(sku, quantity)
-              updateProductCard(productCard, { sku, quantity })
+              const frequency = event.currentTarget.selectedOptions[0].dataset.frequency
+
+              updateProductCard(productCard, { sku, quantity, frequency })
             })
           </script>
         </div>
@@ -220,9 +231,9 @@
         </div>
 
         <script>
-          skus.forEach(([description, {sku, quantity}]) => {
+          skus.forEach(([description, {sku, quantity, frequency}]) => {
             const newProductCard = productCard.cloneNode(true)
-            updateProductCard(newProductCard, { sku, quantity, description })
+            updateProductCard(newProductCard, { sku, quantity, description, frequency })
             document.getElementById('product-list').append(newProductCard)
           })
         </script>

@@ -12,6 +12,10 @@ export namespace Components {
          */
         "code": string | undefined;
         /**
+          * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). Must be supported by existing associated `subscription_model`.
+         */
+        "frequency": string | undefined;
+        /**
           * The number of units of the selected product you want to add to the shopping cart.
          */
         "quantity": number;
@@ -212,6 +216,10 @@ declare namespace LocalJSX {
           * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
          */
         "code": string | undefined;
+        /**
+          * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). Must be supported by existing associated `subscription_model`.
+         */
+        "frequency"?: string | undefined;
         /**
           * The number of units of the selected product you want to add to the shopping cart.
          */

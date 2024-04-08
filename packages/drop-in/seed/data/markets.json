@@ -5,7 +5,8 @@
     "inventory_model": "inventory_model_1",
     "price_list": "price_list_1",
     "name": "Europe",
-    "code": "europe"
+    "code": "europe",
+    "subscription_model": "subscription_model_1"
   },
   {
     "reference": "market_2",
@@ -13,7 +14,8 @@
     "inventory_model": "inventory_model_2",
     "price_list": "price_list_2",
     "name": "USA",
-    "code": "usa"
+    "code": "usa",
+    "subscription_model": "subscription_model_1"
   },
   {
     "reference": "market_3",
@@ -21,6 +23,7 @@
     "inventory_model": "inventory_model_1",
     "price_list": "price_list_3",
     "name": "UK",
-    "code": "uk"
+    "code": "uk",
+    "subscription_model": "subscription_model_1"
   }
 ]

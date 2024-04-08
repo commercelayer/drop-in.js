@@ -1,0 +1,11 @@
+[
+  {
+    "reference": "subscription_model_1",
+    "name": "Primary Subscription Model",
+    "frequencies": [
+      "monthly",
+      "three-month",
+      "six-month"
+    ]
+  }
+]
