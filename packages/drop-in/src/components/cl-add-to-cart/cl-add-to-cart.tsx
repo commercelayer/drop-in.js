@@ -35,6 +35,11 @@ export class CLAddToCart {
    */
   @Prop({ reflect: true, mutable: true }) quantity: number = 1
 
+  /**
+   * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). Must be supported by existing associated `subscription_model`.
+   */
+  @Prop({ reflect: true }) frequency: string | undefined
+
   @State() skuObject: Sku | undefined
 
   async componentWillLoad(): Promise<void> {
@@ -77,9 +82,11 @@ export class CLAddToCart {
 
   handleAddItem(): void {
     if (this.code !== undefined && this.canBeSold()) {
-      addItem(this.code, this.quantity).catch((error) => {
-        throw error
-      })
+      addItem(this.code, this.quantity, { frequency: this.frequency }).catch(
+        (error) => {
+          throw error
+        }
+      )
     }
   }
 

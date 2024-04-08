@@ -40,7 +40,11 @@ export type GetPrice = (sku: string) => Promise<Price | undefined>
 
 export type GetSku = (code: string) => Promise<Sku | undefined>
 
-export type AddItem = (sku: string, quantity: number) => Promise<LineItem>
+export type AddItem = (
+  sku: string,
+  quantity: number,
+  options?: Partial<Pick<LineItem, 'frequency'>>
+) => Promise<LineItem>
 
 export type GetToken = () => Promise<Token>
 

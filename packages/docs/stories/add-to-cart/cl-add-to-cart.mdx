@@ -48,6 +48,14 @@ Some products (e.g.<code>{codes.doNotTrack}</code>) can be assigned a virtually 
 
 <Canvas of={Stories.DoNotTrack} />
 
+## Subscriptions
+
+Commerce Layer's [Subscriptions](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions) allow merchants to offer regular purchases of a product or group of products.
+
+You can use the `frequency` attribute to select the frequency which generates a subscription. The value must be supported by existing associated subscription_model.
+
+<Canvas of={Stories.Subscription} />
+
 ## Events
 
 The `cl-add-to-cart` component triggers the [`cl-cart-additem`](?path=/docs/events--docs#cl-cart-additem) custom event when an item is added to the cart and the [`cl-skus-getsku`](?path=/docs/events--docs#cl-skus-getsku) custom event when an SKU is fetched.
