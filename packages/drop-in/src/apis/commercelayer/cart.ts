@@ -179,11 +179,12 @@ export const triggerHostedCartUpdate: TriggerHostedCartUpdate = async (
   return order
 }
 
-export const addItem: AddItem = async (sku, quantity) => {
+export const addItem: AddItem = async (sku, quantity, options = {}) => {
   const client = await createClient(getConfig())
   const orderId = (await getCart())?.id ?? (await createEmptyCart()).id
 
   const lineItem = await client.line_items.create({
+    ...options,
     order: {
       id: orderId,
       type: 'orders'
@@ -193,7 +194,7 @@ export const addItem: AddItem = async (sku, quantity) => {
     _update_quantity: true
   })
 
-  fireEvent('cl-cart-additem', [sku, quantity], lineItem)
+  fireEvent('cl-cart-additem', [sku, quantity, options], lineItem)
 
   if (getCart.cache.clear !== undefined) {
     getCart.cache.clear()

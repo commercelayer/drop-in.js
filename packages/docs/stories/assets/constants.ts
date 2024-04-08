@@ -4,7 +4,8 @@ export const codes = {
   noOverselling: 'GMUG11OZFFFFFF000000XXXX',
   noDiscount: 'BACKPACKFFFFFF000000XXXX',
   outOfStock: '5PANECAP9D9CA1FFFFFFXXXX',
-  doNotTrack: 'BOTT17OZFFFFFF000000XXXX'
+  doNotTrack: 'BOTT17OZFFFFFF000000XXXX',
+  subscription: 'POLOMXXX000000FFFFFFMXXX'
 }
 
 // // stg

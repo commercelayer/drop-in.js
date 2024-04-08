@@ -18,6 +18,7 @@ const Template: StoryFn<Args> = (args) => {
     <cl-add-to-cart
       code=${args.code ?? nothing}
       quantity=${args.quantity ?? nothing}
+      frequency=${args.frequency ?? nothing}
     >
       Add to cart
     </cl-add-to-cart>
@@ -27,6 +28,12 @@ const Template: StoryFn<Args> = (args) => {
 export const Basic = Template.bind({})
 Basic.args = {
   code: codes.available
+}
+
+export const Subscription = Template.bind({})
+Subscription.args = {
+  code: codes.subscription,
+  frequency: 'three-month'
 }
 
 export const WithoutAttributes = Template.bind({})
