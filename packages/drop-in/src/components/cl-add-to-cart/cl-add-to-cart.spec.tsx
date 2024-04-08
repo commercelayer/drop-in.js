@@ -171,6 +171,31 @@ describe('cl-add-to-cart.spec', () => {
     `)
   })
 
+  it('renders properly when "frequency" attribute is set', async () => {
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
+
+    const { root, waitForChanges } = await newSpecPage({
+      components: [CLAddToCart],
+      html: '<cl-add-to-cart code="AVAILABLE123" frequency="three-month">Add to cart</cl-add-to-cart>'
+    })
+
+    root?.setAttribute('frequency', 'six-month')
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-add-to-cart code="AVAILABLE123" frequency="six-month" quantity="1" role="button" tabindex="0">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        Add to cart
+      </cl-add-to-cart>
+    `)
+  })
+
   it('renders disabled when item is out of stock', async () => {
     jest
       .spyOn(skus, 'getSku')

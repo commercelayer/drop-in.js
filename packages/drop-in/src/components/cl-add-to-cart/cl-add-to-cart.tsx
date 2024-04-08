@@ -36,7 +36,7 @@ export class CLAddToCart {
   @Prop({ reflect: true, mutable: true }) quantity: number = 1
 
   /**
-   * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). Must be supported by existing associated `subscription_model`.
+   * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). The value must be supported by the associated subscription model.
    */
   @Prop({ reflect: true }) frequency: string | undefined
 

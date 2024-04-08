@@ -12,7 +12,7 @@ export namespace Components {
          */
         "code": string | undefined;
         /**
-          * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). Must be supported by existing associated `subscription_model`.
+          * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). The value must be supported by the associated subscription model.
          */
         "frequency": string | undefined;
         /**
@@ -217,7 +217,7 @@ declare namespace LocalJSX {
          */
         "code": string | undefined;
         /**
-          * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). Must be supported by existing associated `subscription_model`.
+          * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). The value must be supported by the associated subscription model.
          */
         "frequency"?: string | undefined;
         /**
