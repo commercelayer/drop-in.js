@@ -124,6 +124,12 @@ describe('cl-price.spec', () => {
 
     root?.setAttribute('code', 'DEF456')
 
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null)
+      }, 11)
+    })
+
     await waitForChanges()
 
     expect(root).toEqualHtml(`
@@ -159,6 +165,12 @@ describe('cl-price.spec', () => {
     })
 
     root?.setAttribute('code', 'ABC456')
+
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null)
+      }, 11)
+    })
 
     await waitForChanges()
 

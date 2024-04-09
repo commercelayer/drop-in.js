@@ -45,7 +45,7 @@ export class CLPrice {
   @Watch('code')
   async watchCodeHandler(newValue: typeof this.code): Promise<void> {
     logCode(this.host, newValue)
-    await this.updatePrice(this.kind, newValue)
+    await this.debouncedUpdatePrice(this.kind, newValue)
   }
 
   @Watch('kind')
@@ -56,34 +56,36 @@ export class CLPrice {
     }
 
     logUnion(this.host, 'kind', newValue, this.typeList)
-    await this.updatePrice(newValue, this.code)
+    await this.debouncedUpdatePrice(newValue, this.code)
   }
 
-  private readonly updatePrice = debounce(
-    async (kind: typeof this.kind, code: typeof this.code): Promise<void> => {
-      if (isValidCode(code)) {
-        let price: Price | undefined
+  private readonly updatePrice = async (
+    kind: typeof this.kind,
+    code: typeof this.code
+  ): Promise<void> => {
+    if (isValidCode(code)) {
+      let price: Price | undefined
 
-        switch (kind) {
-          case 'bundle':
-            price = await getBundlePrice(code)
-            break
+      switch (kind) {
+        case 'bundle':
+          price = await getBundlePrice(code)
+          break
 
-          case 'sku':
-          default:
-            price = await getSkuPrice(code)
-            break
-        }
-
-        this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-          element.dispatchEvent(
-            new CustomEvent<Price>('priceUpdate', { detail: price })
-          )
-        })
+        case 'sku':
+        default:
+          price = await getSkuPrice(code)
+          break
       }
-    },
-    10
-  )
+
+      this.host.querySelectorAll('cl-price-amount').forEach((element) => {
+        element.dispatchEvent(
+          new CustomEvent<Price>('priceUpdate', { detail: price })
+        )
+      })
+    }
+  }
+
+  private readonly debouncedUpdatePrice = debounce(this.updatePrice, 10)
 
   render(): JSX.Element {
     return <slot></slot>

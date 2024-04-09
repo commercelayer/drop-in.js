@@ -48,7 +48,7 @@ describe('cl-add-to-cart.spec', () => {
       html: '<cl-add-to-cart>Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart quantity="1" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" quantity="1" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -69,7 +69,7 @@ describe('cl-add-to-cart.spec', () => {
       html: '<cl-add-to-cart code="AVAILABLE123">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="AVAILABLE123" quantity="1" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" code="AVAILABLE123" quantity="1" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -90,7 +90,7 @@ describe('cl-add-to-cart.spec', () => {
       html: '<cl-add-to-cart code="AVAILABLE123" quantity="-3">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="AVAILABLE123" quantity="0" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" code="AVAILABLE123" quantity="0" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -111,7 +111,7 @@ describe('cl-add-to-cart.spec', () => {
       html: '<cl-add-to-cart code="AVAILABLE123" quantity="8">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="AVAILABLE123" quantity="8" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" code="AVAILABLE123" quantity="8" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -137,7 +137,7 @@ describe('cl-add-to-cart.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="UNAVAILABLE789" quantity="4" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" code="UNAVAILABLE789" quantity="4" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -162,7 +162,7 @@ describe('cl-add-to-cart.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="AVAILABLE123" quantity="0" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" code="AVAILABLE123" quantity="0" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -187,7 +187,7 @@ describe('cl-add-to-cart.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="AVAILABLE123" frequency="six-month" quantity="1" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" code="AVAILABLE123" frequency="six-month" quantity="1" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -211,7 +211,7 @@ describe('cl-add-to-cart.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="UNAVAILABLE789" quantity="1" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" code="UNAVAILABLE789" quantity="1" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -235,7 +235,7 @@ describe('cl-add-to-cart.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="AVAILABLE123" quantity="99" aria-disabled="true" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" code="AVAILABLE123" quantity="99" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -259,7 +259,7 @@ describe('cl-add-to-cart.spec', () => {
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-add-to-cart code="DONOTTRACK456" quantity="99" role="button" tabindex="0">
+      <cl-add-to-cart kind="sku" code="DONOTTRACK456" quantity="99" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
