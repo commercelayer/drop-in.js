@@ -213,7 +213,7 @@
                 ? 'https://res.cloudinary.com/commercelayer/image/upload/v1681465805/demo-store/assets/white-glossy-mug-15oz-valentines-day.png'
                 : `https://data.commercelayer.app/seed/images/skus/${sku}_FLAT.png`
               productCard.querySelector('cl-price').code = sku;
-              productCard.querySelector('cl-price').kind = kind;
+              productCard.querySelector('cl-price').kind = kind ?? null;
               productCard.querySelector('cl-add-to-cart').code = sku;
               productCard.querySelector('cl-add-to-cart').quantity = isNaN(quantity) || quantity == null ? 1 : quantity;
               productCard.querySelector('cl-add-to-cart').frequency = frequency;

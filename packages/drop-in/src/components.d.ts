@@ -109,8 +109,9 @@ export namespace Components {
         "code": string | undefined;
         /**
           * Indicates whether the code refers to a `sku` or a `bundle`.
+          * @default sku
          */
-        "kind": 'sku' | 'bundle';
+        "kind"?: 'sku' | 'bundle';
     }
     interface ClPriceAmount {
         /**
@@ -318,6 +319,7 @@ declare namespace LocalJSX {
         "code": string | undefined;
         /**
           * Indicates whether the code refers to a `sku` or a `bundle`.
+          * @default sku
          */
         "kind"?: 'sku' | 'bundle';
     }

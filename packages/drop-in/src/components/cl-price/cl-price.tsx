@@ -8,6 +8,7 @@ import {
 } from '#utils/validation-helpers'
 import type { Price } from '@commercelayer/sdk'
 import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
+import debounce from 'lodash/debounce'
 
 export interface Props {
   code: string | undefined
@@ -22,10 +23,14 @@ export class CLPrice {
 
   private readonly typeList = unionToTuple<typeof this.kind>()('sku', 'bundle')
 
+  private readonly kindDefault: NonNullable<typeof this.kind> = 'sku'
+
   /**
    * Indicates whether the code refers to a `sku` or a `bundle`.
+   * @default sku
    */
-  @Prop({ reflect: true }) kind: 'sku' | 'bundle' = 'sku'
+  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' =
+    this.kindDefault
 
   /**
    * The SKU code (i.e. the unique identifier of the product whose price you want to display).
@@ -45,37 +50,40 @@ export class CLPrice {
 
   @Watch('kind')
   async watchKindHandler(newValue: typeof this.kind): Promise<void> {
+    if (newValue == null) {
+      this.kind = this.kindDefault
+      return
+    }
+
     logUnion(this.host, 'kind', newValue, this.typeList)
     await this.updatePrice(newValue, this.code)
   }
 
-  private async updatePrice(
-    kind: typeof this.kind,
-    code: typeof this.code
-  ): Promise<void> {
-    if (isValidCode(code)) {
-      let price: Price | undefined
+  private readonly updatePrice = debounce(
+    async (kind: typeof this.kind, code: typeof this.code): Promise<void> => {
+      if (isValidCode(code)) {
+        let price: Price | undefined
 
-      switch (kind) {
-        case 'sku':
-          price = await getSkuPrice(code)
-          break
+        switch (kind) {
+          case 'bundle':
+            price = await getBundlePrice(code)
+            break
 
-        case 'bundle':
-          price = await getBundlePrice(code)
-          break
+          case 'sku':
+          default:
+            price = await getSkuPrice(code)
+            break
+        }
 
-        default:
-          break
+        this.host.querySelectorAll('cl-price-amount').forEach((element) => {
+          element.dispatchEvent(
+            new CustomEvent<Price>('priceUpdate', { detail: price })
+          )
+        })
       }
-
-      this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-        element.dispatchEvent(
-          new CustomEvent<Price>('priceUpdate', { detail: price })
-        )
-      })
-    }
-  }
+    },
+    10
+  )
 
   render(): JSX.Element {
     return <slot></slot>
