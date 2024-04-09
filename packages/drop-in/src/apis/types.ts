@@ -50,7 +50,8 @@ export type GetBundlePrice = (code: string) => Promise<Price | undefined>
 export type GetSku = (code: string) => Promise<Sku | undefined>
 
 export type AddItem = (
-  sku: string,
+  kind: 'bundle' | 'sku',
+  code: string,
   quantity: number,
   options?: Partial<Pick<LineItem, 'frequency'>>
 ) => Promise<LineItem>

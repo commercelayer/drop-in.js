@@ -5,7 +5,9 @@ import { log } from '#utils/logger'
 import {
   isValidCode,
   isValidQuantity,
-  logCode
+  logCode,
+  logUnion,
+  unionToTuple
 } from '#utils/validation-helpers'
 import {
   Component,
@@ -24,6 +26,17 @@ import {
 })
 export class CLAddToCart {
   @Element() host!: HTMLElement
+
+  private readonly typeList = unionToTuple<typeof this.kind>()('sku', 'bundle')
+
+  private readonly kindDefault: NonNullable<typeof this.kind> = 'sku'
+
+  /**
+   * Indicates whether the code refers to a `sku` or a `bundle`.
+   * @default sku
+   */
+  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' =
+    this.kindDefault
 
   /**
    * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
@@ -47,6 +60,17 @@ export class CLAddToCart {
     await this.updateQuantity(this.quantity)
   }
 
+  @Watch('kind')
+  async watchKindHandler(newValue: typeof this.kind): Promise<void> {
+    console.log('newValue', newValue)
+    if (newValue == null) {
+      this.kind = this.kindDefault
+      return
+    }
+
+    logUnion(this.host, 'kind', newValue, this.typeList)
+  }
+
   @Watch('code')
   async watchCodeHandler(newValue: typeof this.code): Promise<void> {
     await this.updateSku(newValue)
@@ -60,7 +84,7 @@ export class CLAddToCart {
   private async updateSku(code: typeof this.code): Promise<void> {
     logCode(this.host, code)
 
-    if (isValidCode(code)) {
+    if (this.kind !== 'bundle' && isValidCode(code)) {
       this.skuObject = await getSku(code)
       if (this.skuObject === undefined) {
         log('warn', `Cannot find code ${code}.`, this.host)
@@ -82,11 +106,11 @@ export class CLAddToCart {
 
   handleAddItem(): void {
     if (this.code !== undefined && this.canBeSold()) {
-      addItem(this.code, this.quantity, { frequency: this.frequency }).catch(
-        (error) => {
-          throw error
-        }
-      )
+      addItem(this.kind ?? this.kindDefault, this.code, this.quantity, {
+        frequency: this.frequency
+      }).catch((error) => {
+        throw error
+      })
     }
   }
 
@@ -98,6 +122,10 @@ export class CLAddToCart {
     const hasQuantity =
       this.skuObject?.inventory?.quantity === undefined ||
       this.quantity <= this.skuObject?.inventory?.quantity
+
+    if (this.kind === 'bundle') {
+      return true
+    }
 
     return (
       isValidCode(this.code) &&
