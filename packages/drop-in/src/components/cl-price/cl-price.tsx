@@ -1,5 +1,5 @@
 import { getPrice as getBundlePrice } from '#apis/commercelayer/bundles'
-import { getPrice as getSkuPrice } from '#apis/commercelayer/prices'
+import { getPrice as getSkuPrice } from '#apis/commercelayer/skus'
 import {
   isValidCode,
   logCode,

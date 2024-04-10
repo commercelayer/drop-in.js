@@ -1,5 +1,5 @@
 import * as client from '#apis/commercelayer/client'
-import * as prices from '#apis/commercelayer/prices'
+import * as skus from '#apis/commercelayer/skus'
 import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
 import type { Price } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
@@ -56,7 +56,7 @@ describe('cl-price.spec', () => {
 
   it('renders with a code', async () => {
     jest
-      .spyOn(prices, 'getPrice')
+      .spyOn(skus, 'getPrice')
       .mockImplementation(
         async (sku: string) => await Promise.resolve(fakePrices[sku])
       )
@@ -76,7 +76,7 @@ describe('cl-price.spec', () => {
 
   it('should pass-throw the "priceUpdate" event to children', async () => {
     jest
-      .spyOn(prices, 'getPrice')
+      .spyOn(skus, 'getPrice')
       .mockImplementation(
         async (sku: string) => await Promise.resolve(fakePrices[sku])
       )
@@ -108,7 +108,7 @@ describe('cl-price.spec', () => {
 
   it('should fetch the new price when "code" changes', async () => {
     jest
-      .spyOn(prices, 'getPrice')
+      .spyOn(skus, 'getPrice')
       .mockImplementation(
         async (sku: string) => await Promise.resolve(fakePrices[sku])
       )
@@ -146,7 +146,7 @@ describe('cl-price.spec', () => {
 
   it('should empty the price when the there are no results', async () => {
     jest
-      .spyOn(prices, 'getPrice')
+      .spyOn(skus, 'getPrice')
       .mockImplementation(
         async (sku: string) => await Promise.resolve(fakePrices[sku])
       )

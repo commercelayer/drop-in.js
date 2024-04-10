@@ -3,8 +3,8 @@ import type { GetSku, Sku } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
 import { chunk, memoize, uniq } from '#utils/utils'
-import { createClient } from './client'
-import { getConfig } from './config'
+import { createClient } from '../client'
+import { getConfig } from '../config'
 
 interface SkuIdList {
   [sku: string]: string | undefined
@@ -54,11 +54,9 @@ const _getSkuIds = async (skus: string[]): Promise<SkuIdList> => {
 
 const getSkuIds = pDebounce(_getSkuIds, { wait: 10, maxWait: 50 })
 
-export const getSkuId = memoize(
-  async (code: string): Promise<string | undefined> => {
-    return await getSkuIds([code]).then((result) => result[code])
-  }
-)
+const getSkuId = memoize(async (code: string): Promise<string | undefined> => {
+  return await getSkuIds([code]).then((result) => result[code])
+})
 
 const getMemoizedSku = memoize<GetSku>(async (code) => {
   const id = await getSkuId(code)

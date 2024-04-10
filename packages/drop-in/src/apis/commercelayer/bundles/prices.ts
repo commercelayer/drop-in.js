@@ -3,9 +3,9 @@ import type { GetBundle, GetBundlePrice } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
 import type { Bundle, Price } from '@commercelayer/sdk'
-import { chunk, memoize, uniq } from '../../utils/utils'
-import { createClient } from './client'
-import { getConfig } from './config'
+import { chunk, memoize, uniq } from '../../../utils/utils'
+import { createClient } from '../client'
+import { getConfig } from '../config'
 
 interface BundleList {
   [sku: string]: Bundle | undefined

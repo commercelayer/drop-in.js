@@ -3,9 +3,9 @@ import type { GetSkuPrice } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
 import type { Price } from '@commercelayer/sdk'
-import { chunk, memoize, uniq } from '../../utils/utils'
-import { createClient } from './client'
-import { getConfig } from './config'
+import { chunk, memoize, uniq } from '../../../utils/utils'
+import { createClient } from '../client'
+import { getConfig } from '../config'
 
 interface PriceList {
   [sku: string]: Price | undefined
