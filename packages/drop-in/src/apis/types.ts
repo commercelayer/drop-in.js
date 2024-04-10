@@ -31,23 +31,22 @@ interface Level {
   delivery_lead_times: DeliveryLeadTime[]
 }
 
-interface Inventory {
+export interface Inventory {
   available: boolean
   quantity?: number
   levels: Level[]
 }
 
 // TODO: move this at sdk level
-export type Sku = SdkSku & {
+export type Sku = Omit<SdkSku, 'inventory'> & {
   inventory?: Inventory
 }
 
-export type GetPrice = (sku: string) => Promise<Price | undefined>
+export type GetSku = (code: string) => Promise<Sku | undefined>
+export type GetSkuPrice = (code: string) => Promise<Price | undefined>
 
 export type GetBundle = (code: string) => Promise<Bundle | undefined>
 export type GetBundlePrice = (code: string) => Promise<Price | undefined>
-
-export type GetSku = (code: string) => Promise<Sku | undefined>
 
 export type AddItem = (
   kind: 'bundle' | 'sku',

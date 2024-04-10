@@ -32,7 +32,22 @@ const _getBundles = async (codes: string[]): Promise<BundleList> => {
       chunkedCodes.map(async (codes) => {
         return await client.bundles.list({
           pageSize,
-          filters: { code_in: codes.join(',') }
+          filters: { code_in: codes.join(',') },
+          fields: {
+            bundles: [
+              'code',
+              'compare_at_amount_cents',
+              'compare_at_amount_float',
+              'created_at',
+              'currency_code',
+              'formatted_compare_at_amount',
+              'formatted_price_amount',
+              'id',
+              'price_amount_cents',
+              'price_amount_float',
+              'updated_at'
+            ]
+          }
         })
       })
     )
@@ -61,32 +76,32 @@ const getMemoizedBundle = memoize<GetBundle>(async (code) => {
   return await getBundles([code]).then((result) => result[code])
 })
 
-const getBundle: GetBundle = async (code) => {
+const getBundleByCode: GetBundle = async (code) => {
   const bundle = await getMemoizedBundle(code)
 
-  fireEvent('cl-bundles-getbundle', [code], bundle)
+  // fireEvent('cl-bundles-getbundle', [code], bundle)
 
   return bundle
 }
 
 const getMemoizedPrice = memoize<GetBundlePrice>(async (code) => {
-  return await getBundle(code).then((bundle) => {
+  return await getBundleByCode(code).then((bundle) => {
     if (bundle?.price_amount_cents == null) {
       return undefined
     }
 
     const price: Price = {
       amount_cents: bundle.price_amount_cents,
-      amount_float: bundle?.price_amount_float,
-      compare_at_amount_cents: bundle?.compare_at_amount_cents,
-      compare_at_amount_float: bundle?.compare_at_amount_float,
-      created_at: bundle?.created_at,
-      formatted_amount: bundle?.formatted_price_amount,
-      formatted_compare_at_amount: bundle?.formatted_compare_at_amount,
-      id: bundle?.id,
+      amount_float: bundle.price_amount_float,
+      compare_at_amount_cents: bundle.compare_at_amount_cents,
+      compare_at_amount_float: bundle.compare_at_amount_float,
+      created_at: bundle.created_at,
+      formatted_amount: bundle.formatted_price_amount,
+      formatted_compare_at_amount: bundle.formatted_compare_at_amount,
+      id: bundle.id,
       type: 'prices',
-      updated_at: bundle?.updated_at,
-      currency_code: bundle?.currency_code
+      updated_at: bundle.updated_at,
+      currency_code: bundle.currency_code
     }
 
     return price

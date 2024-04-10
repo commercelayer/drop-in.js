@@ -1,6 +1,6 @@
 import { addItem } from '#apis/commercelayer/cart'
 import { getSku } from '#apis/commercelayer/skus'
-import type { Sku } from '#apis/types'
+import type { Inventory } from '#apis/types'
 import { log } from '#utils/logger'
 import {
   isValidCode,
@@ -19,6 +19,7 @@ import {
   h,
   type JSX
 } from '@stencil/core'
+import debounce from 'lodash/debounce'
 
 @Component({
   tag: 'cl-add-to-cart',
@@ -27,7 +28,7 @@ import {
 export class CLAddToCart {
   @Element() host!: HTMLElement
 
-  private readonly typeList = unionToTuple<typeof this.kind>()('sku', 'bundle')
+  private readonly kindList = unionToTuple<typeof this.kind>()('sku', 'bundle')
 
   private readonly kindDefault: NonNullable<typeof this.kind> = 'sku'
 
@@ -53,7 +54,7 @@ export class CLAddToCart {
    */
   @Prop({ reflect: true }) frequency: string | undefined
 
-  @State() skuObject: Sku | undefined
+  @State() inventory: Inventory | undefined
 
   async componentWillLoad(): Promise<void> {
     await this.updateSku(this.code)
@@ -62,18 +63,17 @@ export class CLAddToCart {
 
   @Watch('kind')
   async watchKindHandler(newValue: typeof this.kind): Promise<void> {
-    console.log('newValue', newValue)
     if (newValue == null) {
       this.kind = this.kindDefault
       return
     }
 
-    logUnion(this.host, 'kind', newValue, this.typeList)
+    logUnion(this.host, 'kind', newValue, this.kindList)
   }
 
   @Watch('code')
   async watchCodeHandler(newValue: typeof this.code): Promise<void> {
-    await this.updateSku(newValue)
+    await this.debouncedUpdateSku(newValue)
   }
 
   @Watch('quantity')
@@ -81,16 +81,20 @@ export class CLAddToCart {
     await this.updateQuantity(newValue)
   }
 
-  private async updateSku(code: typeof this.code): Promise<void> {
+  private readonly updateSku = async (
+    code: typeof this.code
+  ): Promise<void> => {
     logCode(this.host, code)
 
     if (this.kind !== 'bundle' && isValidCode(code)) {
-      this.skuObject = await getSku(code)
-      if (this.skuObject === undefined) {
+      this.inventory = (await getSku(code))?.inventory
+      if (this.inventory === undefined) {
         log('warn', `Cannot find code ${code}.`, this.host)
       }
     }
   }
+
+  private readonly debouncedUpdateSku = debounce(this.updateSku, 10)
 
   private async updateQuantity(quantity: typeof this.quantity): Promise<void> {
     if (!isValidQuantity(quantity)) {
@@ -120,8 +124,8 @@ export class CLAddToCart {
    */
   canBeSold(): boolean {
     const hasQuantity =
-      this.skuObject?.inventory?.quantity === undefined ||
-      this.quantity <= this.skuObject?.inventory?.quantity
+      this.inventory?.quantity === undefined ||
+      this.quantity <= this.inventory?.quantity
 
     if (this.kind === 'bundle') {
       return true
@@ -130,7 +134,7 @@ export class CLAddToCart {
     return (
       isValidCode(this.code) &&
       this.quantity > 0 &&
-      this.skuObject?.inventory?.available === true &&
+      this.inventory?.available === true &&
       hasQuantity
     )
   }

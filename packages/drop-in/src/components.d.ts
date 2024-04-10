@@ -31,6 +31,11 @@ export namespace Components {
          */
         "code": string | undefined;
         /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.
+          * @default sku
+         */
+        "kind"?: 'sku' | 'bundle';
+        /**
           * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
          */
         "rule": 'cheapest' | 'fastest';
@@ -245,6 +250,11 @@ declare namespace LocalJSX {
           * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
          */
         "code": string | undefined;
+        /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.
+          * @default sku
+         */
+        "kind"?: 'sku' | 'bundle';
         /**
           * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
          */

@@ -67,23 +67,6 @@ document.addEventListener('cl-cart-additem', (event) => {
 })
 `} />
 
-### `cl-prices-getprice`
-
-This event is dispatched by the [`cl-price`](?path=/docs/components-price-cl-price--docs) component when a price is fetched.
-
-The returned `event.detail` contains the SKU code associated with the price as the `request` argument and the fetched price object as the `response`:
-
-| Attribute          | Type   | Value                      |
-|--------------------|--------|----------------------------|
-| **`request.args`** | Array  | `[code: string]` | 
-| **`response`**     | Object | [`Price`](https://docs.commercelayer.io/core/v/api-reference/prices/object) |
-
-<Source language='ts' dark code={`
-document.addEventListener('cl-prices-getprice', (event) => {
-  console.info(event.detail)
-})
-`} />
-
 ### `cl-skus-getsku`
 
 This event is dispatched by the [`cl-add-to-cart`](?path=/docs/components-add-to-cart-cl-add-to-cart--docs) and [`cl-availability`](?path=/docs/components-availability-cl-availability--docs) components when an SKU is fetched.
@@ -97,6 +80,40 @@ The returned `event.detail` contains the SKU code as the `request` argument and 
 
 <Source language='ts' dark code={`
 document.addEventListener('cl-skus-getsku', (event) => {
+  console.info(event.detail)
+})
+`} />
+
+### `cl-skus-getprice`
+
+This event is dispatched by the [`cl-price`](?path=/docs/components-price-cl-price--docs) component when a price is fetched.
+
+The returned `event.detail` contains the SKU code associated with the price as the `request` argument and the fetched price object as the `response`:
+
+| Attribute          | Type   | Value                      |
+|--------------------|--------|----------------------------|
+| **`request.args`** | Array  | `[code: string]` | 
+| **`response`**     | Object | [`Price`](https://docs.commercelayer.io/core/v/api-reference/prices/object) |
+
+<Source language='ts' dark code={`
+document.addEventListener('cl-skus-getprice', (event) => {
+  console.info(event.detail)
+})
+`} />
+
+### `cl-bundles-getprice`
+
+This event is dispatched by the [`cl-price`](?path=/docs/components-price-cl-price--docs) component when a price is fetched.
+
+The returned `event.detail` contains the bundle code associated with the price as the `request` argument and the fetched price object as the `response`:
+
+| Attribute          | Type   | Value                      |
+|--------------------|--------|----------------------------|
+| **`request.args`** | Array  | `[code: string]` | 
+| **`response`**     | Object | [`Price`](https://docs.commercelayer.io/core/v/api-reference/prices/object) |
+
+<Source language='ts' dark code={`
+document.addEventListener('cl-bundles-getprice', (event) => {
   console.info(event.detail)
 })
 `} />

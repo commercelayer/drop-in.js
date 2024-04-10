@@ -1,7 +1,13 @@
 import { getSku } from '#apis/commercelayer/skus'
 import type { AvailabilityUpdateEventPayload } from '#apis/types'
-import { isValidCode, logCode } from '#utils/validation-helpers'
+import {
+  isValidCode,
+  logCode,
+  logUnion,
+  unionToTuple
+} from '#utils/validation-helpers'
 import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
+import debounce from 'lodash/debounce'
 
 @Component({
   tag: 'cl-availability',
@@ -9,6 +15,17 @@ import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
 })
 export class ClAvailability {
   @Element() host!: HTMLElement
+
+  private readonly kindList = unionToTuple<typeof this.kind>()('sku', 'bundle')
+
+  private readonly kindDefault: NonNullable<typeof this.kind> = 'sku'
+
+  /**
+   * Indicates whether the code refers to a `sku` or a `bundle`.
+   * @default sku
+   */
+  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' =
+    this.kindDefault
 
   /**
    * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
@@ -27,14 +44,26 @@ export class ClAvailability {
     await this.updateAvailability(this.code)
   }
 
+  @Watch('kind')
+  async watchKindHandler(newValue: typeof this.kind): Promise<void> {
+    if (newValue == null) {
+      this.kind = this.kindDefault
+      return
+    }
+
+    logUnion(this.host, 'kind', newValue, this.kindList)
+  }
+
   @Watch('code')
   async watchPropHandler(newValue: typeof this.code): Promise<void> {
     logCode(this.host, newValue)
-    await this.updateAvailability(newValue)
+    await this.debouncedUpdateAvailability(newValue)
   }
 
-  private async updateAvailability(code: typeof this.code): Promise<void> {
-    if (isValidCode(code)) {
+  private readonly updateAvailability = async (
+    code: typeof this.code
+  ): Promise<void> => {
+    if (this.kind !== 'bundle' && isValidCode(code)) {
       const sku = await getSku(code)
 
       this.host
@@ -51,6 +80,11 @@ export class ClAvailability {
         })
     }
   }
+
+  private readonly debouncedUpdateAvailability = debounce(
+    this.updateAvailability,
+    10
+  )
 
   render(): JSX.Element {
     return <slot></slot>

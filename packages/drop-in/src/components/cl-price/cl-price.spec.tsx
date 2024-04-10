@@ -4,6 +4,7 @@ import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
 import type { Price } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { CLPrice } from './cl-price'
+import { waitForMs } from 'jest.spec.helpers'
 
 const fakePrices: { [sku: string]: Price } = {
   ABC123: {
@@ -124,11 +125,7 @@ describe('cl-price.spec', () => {
 
     root?.setAttribute('code', 'DEF456')
 
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null)
-      }, 11)
-    })
+    await waitForMs(11)
 
     await waitForChanges()
 
@@ -166,11 +163,7 @@ describe('cl-price.spec', () => {
 
     root?.setAttribute('code', 'ABC456')
 
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null)
-      }, 11)
-    })
+    await waitForMs(11)
 
     await waitForChanges()
 

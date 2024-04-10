@@ -21,7 +21,7 @@ export interface Props {
 export class CLPrice {
   @Element() host!: HTMLElement
 
-  private readonly typeList = unionToTuple<typeof this.kind>()('sku', 'bundle')
+  private readonly kindList = unionToTuple<typeof this.kind>()('sku', 'bundle')
 
   private readonly kindDefault: NonNullable<typeof this.kind> = 'sku'
 
@@ -42,12 +42,6 @@ export class CLPrice {
     await this.updatePrice(this.kind, this.code)
   }
 
-  @Watch('code')
-  async watchCodeHandler(newValue: typeof this.code): Promise<void> {
-    logCode(this.host, newValue)
-    await this.debouncedUpdatePrice(this.kind, newValue)
-  }
-
   @Watch('kind')
   async watchKindHandler(newValue: typeof this.kind): Promise<void> {
     if (newValue == null) {
@@ -55,8 +49,14 @@ export class CLPrice {
       return
     }
 
-    logUnion(this.host, 'kind', newValue, this.typeList)
+    logUnion(this.host, 'kind', newValue, this.kindList)
     await this.debouncedUpdatePrice(newValue, this.code)
+  }
+
+  @Watch('code')
+  async watchCodeHandler(newValue: typeof this.code): Promise<void> {
+    logCode(this.host, newValue)
+    await this.debouncedUpdatePrice(this.kind, newValue)
   }
 
   private readonly updatePrice = async (

@@ -1,5 +1,5 @@
 import { fireEvent } from '#apis/event'
-import type { GetPrice } from '#apis/types'
+import type { GetSkuPrice } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
 import type { Price } from '@commercelayer/sdk'
@@ -57,14 +57,17 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
 
 const getPrices = pDebounce(_getPrices, { wait: 10, maxWait: 50 })
 
-const getMemoizedPrice = memoize<GetPrice>(async (sku) => {
+const getMemoizedPrice = memoize<GetSkuPrice>(async (sku) => {
   return await getPrices([sku]).then((result) => result[sku])
 })
 
-export const getPrice: GetPrice = async (sku) => {
+export const getPrice: GetSkuPrice = async (sku) => {
   const price = await getMemoizedPrice(sku)
 
+  /** @deprecated Use `cl-skus-getprice` instead. */
   fireEvent('cl-prices-getprice', [sku], price)
+
+  fireEvent('cl-skus-getprice', [sku], price)
 
   return price
 }

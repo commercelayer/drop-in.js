@@ -4,6 +4,7 @@ import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-avai
 import { ClAvailabilityInfo } from '#components/cl-availability-info/cl-availability-info'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClAvailability } from './cl-availability'
+import { waitForMs } from 'jest.spec.helpers'
 
 const baseSku = (id: string): Sku => {
   return {
@@ -66,7 +67,7 @@ describe('cl-availability.spec', () => {
       html: `<cl-availability></cl-availability>`
     })
     expect(page.root).toEqualHtml(`
-      <cl-availability rule="cheapest">
+      <cl-availability kind="sku" rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -86,7 +87,7 @@ describe('cl-availability.spec', () => {
       html: '<cl-availability code="AVAILABLE123"></cl-availability>'
     })
     expect(root).toEqualHtml(`
-      <cl-availability code="AVAILABLE123" rule="cheapest">
+      <cl-availability kind="sku" code="AVAILABLE123" rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -116,7 +117,7 @@ describe('cl-availability.spec', () => {
     })
 
     expect(root).toEqualHtml(`
-      <cl-availability code="AVAILABLE123" rule="cheapest">
+      <cl-availability kind="sku" code="AVAILABLE123" rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -165,10 +166,12 @@ describe('cl-availability.spec', () => {
 
     root?.setAttribute('code', 'NOTAVAILABLE456')
 
+    await waitForMs(11)
+
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-availability code="NOTAVAILABLE456" rule="cheapest">
+      <cl-availability kind="sku" code="NOTAVAILABLE456" rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -211,10 +214,12 @@ describe('cl-availability.spec', () => {
 
     root?.setAttribute('code', 'NONEXISTING')
 
+    await waitForMs(11)
+
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-availability code="NONEXISTING" rule="cheapest">
+      <cl-availability kind="sku" code="NONEXISTING" rule="cheapest">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

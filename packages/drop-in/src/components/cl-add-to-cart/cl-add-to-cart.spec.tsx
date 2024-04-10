@@ -2,6 +2,7 @@ import { newSpecPage } from '@stencil/core/testing'
 import { CLAddToCart } from './cl-add-to-cart'
 import * as skus from '#apis/commercelayer/skus'
 import type { Sku } from '#apis/types'
+import { waitForMs } from 'jest.spec.helpers'
 
 const baseSku = (id: string): Sku => {
   return {
@@ -134,6 +135,9 @@ describe('cl-add-to-cart.spec', () => {
 
     root?.setAttribute('code', 'UNAVAILABLE789')
     root?.setAttribute('quantity', '4')
+
+    await waitForMs(11)
+
     await waitForChanges()
 
     expect(root).toEqualHtml(`
@@ -159,6 +163,9 @@ describe('cl-add-to-cart.spec', () => {
     })
 
     root?.setAttribute('quantity', '-3')
+
+    await waitForMs(11)
+
     await waitForChanges()
 
     expect(root).toEqualHtml(`
@@ -184,6 +191,9 @@ describe('cl-add-to-cart.spec', () => {
     })
 
     root?.setAttribute('frequency', 'six-month')
+
+    await waitForMs(11)
+
     await waitForChanges()
 
     expect(root).toEqualHtml(`

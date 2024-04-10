@@ -4,7 +4,7 @@ import type {
   AddItem,
   GetBundle,
   GetBundlePrice,
-  GetPrice,
+  GetSkuPrice,
   GetSku,
   GetToken,
   TriggerCartUpdate,
@@ -13,13 +13,16 @@ import type {
 
 export interface EventTypes {
   'cl-identity-gettoken': GetToken
-  'cl-prices-getprice': GetPrice
+  'cl-skus-getsku': GetSku
+  'cl-skus-getprice': GetSkuPrice
   'cl-bundles-getbundle': GetBundle
   'cl-bundles-getprice': GetBundlePrice
-  'cl-skus-getsku': GetSku
   'cl-cart-additem': AddItem
   'cl-cart-hostedcartupdate': NonNullableReturnType<TriggerHostedCartUpdate>
   'cl-cart-update': NonNullableReturnType<TriggerCartUpdate>
+
+  /** @deprecated Use `cl-skus-getprice` instead. */
+  'cl-prices-getprice': GetSkuPrice
 }
 
 export type CLCustomEventDetailMap = {
