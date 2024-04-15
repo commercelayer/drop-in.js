@@ -8,7 +8,14 @@ import type {
   TriggerHostedCartUpdate
 } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
-import type { Order, QueryParamsRetrieve } from '@commercelayer/sdk'
+import {
+  createItem,
+  readItem,
+  readRelationships,
+  updateItem,
+  type Order,
+  type ReadItemQuery
+} from '@commercelayer/core-sdk'
 import Cookies from 'js-cookie'
 import memoize from 'lodash/memoize'
 
@@ -22,9 +29,11 @@ async function createEmptyCart(): Promise<Order> {
   const client = await createClient(config)
   const token = await getAccessToken(config)
 
-  const order = await client.orders.create({
-    return_url: config.orderReturnUrl
-  })
+  const order = await client.request(
+    createItem('orders', {
+      return_url: config.orderReturnUrl
+    })
+  )
 
   if (token.type === 'guest') {
     setCartId(order.id)
@@ -110,8 +119,15 @@ export async function _getCart(): Promise<Order | null> {
   const client = await createClient(config)
   const token = await getAccessToken(config)
 
-  const orderParams: QueryParamsRetrieve = {
-    include: ['line_items.item', 'line_items.line_item_options.sku_option']
+  const orderParams: ReadItemQuery<'orders'> = {
+    include: {
+      line_items: {
+        item: {},
+        line_item_options: {
+          sku_option: {}
+        }
+      }
+    }
   }
 
   if (token.type === 'guest') {
@@ -121,9 +137,7 @@ export async function _getCart(): Promise<Order | null> {
       return null
     }
 
-    const order = await client.orders
-      .retrieve(orderId, orderParams)
-      .catch(() => null)
+    const order = await client.request(readItem('orders', orderId, orderParams))
 
     if (order?.editable === false) {
       removeCartId()
@@ -133,18 +147,30 @@ export async function _getCart(): Promise<Order | null> {
     return order
   }
 
-  const [order = null] = await client.customers.orders(token.customerId, {
-    ...orderParams,
-    filters: {
-      guest_false: true,
-      editable_true: true,
-      status_eq: 'pending'
-    },
-    sort: {
-      updated_at: 'desc'
-    },
-    pageSize: 1
-  })
+  const [order = null] = await client.request(
+    readRelationships('customers', token.customerId, 'orders', {
+      ...orderParams,
+      filters: [
+        {
+          or: ['guest'],
+          matcher: { false: 'true' }
+        },
+        {
+          /** @ts-expect-error // TODO: why editable is not filterable? */
+          or: ['editable'],
+          matcher: { true: 'true' }
+        },
+        {
+          or: ['status'],
+          matcher: { eq: 'pending' }
+        }
+      ],
+      sort: {
+        updated_at: 'desc'
+      },
+      pageSize: 1
+    })
+  )
 
   return order
 }
@@ -183,16 +209,19 @@ export const addItem: AddItem = async (kind, code, quantity, options = {}) => {
   const client = await createClient(getConfig())
   const orderId = (await getCart())?.id ?? (await createEmptyCart()).id
 
-  const lineItem = await client.line_items.create({
-    ...options,
-    order: {
-      id: orderId,
-      type: 'orders'
-    },
-    quantity,
-    ...(kind === 'sku' ? { sku_code: code } : { bundle_code: code }),
-    _update_quantity: true
-  })
+  const lineItem = await client.request(
+    createItem('line_items', {
+      relationships: {
+        order: {
+          type: 'orders',
+          id: orderId
+        }
+      },
+      quantity,
+      ...(kind === 'sku' ? { sku_code: code } : { bundle_code: code }),
+      _update_quantity: true
+    })
+  )
 
   fireEvent('cl-cart-additem', [kind, code, quantity, options], lineItem)
 
@@ -215,9 +244,10 @@ export async function updateCartUrl(cartUrl: string): Promise<void> {
 
   if (cart !== null && cart.cart_url !== cartUrl) {
     const client = await createClient(getConfig())
-    await client.orders.update({
-      id: cart.id,
-      cart_url: cartUrl
-    })
+    await client.request(
+      updateItem('orders', cart.id, {
+        cart_url: cartUrl
+      })
+    )
   }
 }

@@ -1,6 +1,6 @@
 import { fireEvent } from '#apis/event'
 import type { GetBundlePrice } from '#apis/types'
-import type { Price } from '@commercelayer/sdk'
+import type { Price, PriceList, Sku } from '@commercelayer/core-sdk'
 import { memoize } from '../../../utils/utils'
 import { _getBundleViaList } from './list'
 
@@ -21,7 +21,9 @@ const getMemoizedPrice = memoize<GetBundlePrice>(async (code) => {
       id: bundle.id,
       type: 'prices',
       updated_at: bundle.updated_at,
-      currency_code: bundle.currency_code
+      currency_code: bundle.currency_code,
+      price_list: {} as unknown as PriceList,
+      sku: {} as unknown as Sku
     }
 
     return price

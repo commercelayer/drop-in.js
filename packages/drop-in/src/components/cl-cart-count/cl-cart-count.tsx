@@ -1,6 +1,6 @@
 import { getCart } from '#apis/commercelayer/cart'
 import { listenTo } from '#apis/event'
-import type { Order } from '@commercelayer/sdk'
+import type { Order } from '@commercelayer/core-sdk'
 import { Component, Host, Prop, State, h, type JSX } from '@stencil/core'
 
 @Component({

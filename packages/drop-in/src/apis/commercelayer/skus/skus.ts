@@ -1,6 +1,7 @@
 import { fireEvent } from '#apis/event'
 import type { GetSku, Sku } from '#apis/types'
 import { memoize } from '#utils/utils'
+import { readItem } from '@commercelayer/core-sdk'
 import { createClient } from '../client'
 import { getConfig } from '../config'
 import { _getSkuViaList } from './list'
@@ -14,7 +15,7 @@ const getMemoizedSku = memoize<GetSku>(async (code) => {
 
   const client = await createClient(getConfig())
 
-  const sku = (await client.skus.retrieve(id)) as Sku
+  const sku = (await client.request(readItem('skus', id))) as Sku
 
   return sku
 })

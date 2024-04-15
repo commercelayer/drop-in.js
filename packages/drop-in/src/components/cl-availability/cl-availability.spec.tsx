@@ -13,7 +13,14 @@ const baseSku = (id: string): Sku => {
     name: id,
     type: 'skus',
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
+    shipping_category: {
+      type: 'shipping_categories',
+      id: '1111',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      name: 'asd'
+    }
   } as const
 }
 

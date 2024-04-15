@@ -6,7 +6,7 @@ import {
 } from '#apis/commercelayer/cart'
 import { listenTo } from '#apis/event'
 import { getClosestLocationHref } from '#utils/url'
-import { type Order } from '@commercelayer/sdk'
+import { type Order } from '@commercelayer/core-sdk'
 import {
   Component,
   Element,

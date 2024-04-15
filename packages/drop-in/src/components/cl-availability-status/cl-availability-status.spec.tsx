@@ -55,6 +55,13 @@ describe('cl-availability-status.spec', () => {
         available: true,
         quantity: 98,
         levels: []
+      },
+      shipping_category: {
+        type: 'shipping_categories',
+        id: '1111',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: 'asd'
       }
     }
 
@@ -126,6 +133,13 @@ describe('cl-availability-status.spec', () => {
         available: false,
         quantity: 0,
         levels: []
+      },
+      shipping_category: {
+        type: 'shipping_categories',
+        id: '1111',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: 'asd'
       }
     }
 
@@ -197,6 +211,13 @@ describe('cl-availability-status.spec', () => {
         available: true,
         quantity: 98,
         levels: []
+      },
+      shipping_category: {
+        type: 'shipping_categories',
+        id: '1111',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: 'asd'
       }
     }
 

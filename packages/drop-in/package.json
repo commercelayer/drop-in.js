@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@commercelayer/js-auth": "^6.2.2",
-    "@commercelayer/sdk": "^5.45.0",
+    "@commercelayer/core-sdk": "v0.0.0-alpha.6",
     "@types/lodash": "^4.17.5",
     "iframe-resizer": "4.4.2",
     "js-cookie": "^3.0.5",

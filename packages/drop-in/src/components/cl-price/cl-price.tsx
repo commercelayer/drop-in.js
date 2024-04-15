@@ -6,7 +6,7 @@ import {
   logUnion,
   unionToTuple
 } from '#utils/validation-helpers'
-import type { Price } from '@commercelayer/sdk'
+import type { Price } from '@commercelayer/core-sdk'
 import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
 import debounce from 'lodash/debounce'
 

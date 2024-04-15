@@ -8,7 +8,7 @@ import {
   type AuthenticateOptions,
   type AuthenticateReturn
 } from '@commercelayer/js-auth'
-import CommerceLayer, { type CommerceLayerClient } from '@commercelayer/sdk'
+import { createCommerceLayer, rest } from '@commercelayer/core-sdk'
 import Cookies from 'js-cookie'
 import memoize from 'lodash/memoize'
 import { getConfig, type Config } from './config'
@@ -174,16 +174,14 @@ export const getAccessToken = memoize(
   (clientCredentials) => JSON.stringify(clientCredentials)
 )
 
-export async function createClient(
-  config: Config
-): Promise<CommerceLayerClient> {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export async function createClient(config: Config) {
   const token = await getAccessToken(config)
 
-  return CommerceLayer({
+  return createCommerceLayer({
     accessToken: token.accessToken,
-    organization: config.slug,
     domain: config.domain
-  })
+  }).with(rest())
 }
 
 export async function logout(): Promise<void> {

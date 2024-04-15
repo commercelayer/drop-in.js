@@ -2,7 +2,7 @@ import { fireEvent } from '#apis/event'
 import type { GetSkuPrice } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
-import type { Price } from '@commercelayer/sdk'
+import { type Price, readItems } from '@commercelayer/core-sdk'
 import { chunk, memoize, uniq } from '../../../utils/utils'
 import { createClient } from '../client'
 import { getConfig } from '../config'
@@ -30,10 +30,17 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
   const pricesResponse = (
     await Promise.all(
       chunkedSkus.map(async (skus) => {
-        return await client.prices.list({
-          pageSize,
-          filters: { sku_code_in: skus.join(',') }
-        })
+        return await client.request(
+          readItems('prices', {
+            pageSize,
+            filters: [
+              {
+                or: [{ sku: 'code' }],
+                matcher: { in: skus.join(',') }
+              }
+            ]
+          })
+        )
       })
     )
   ).flat()

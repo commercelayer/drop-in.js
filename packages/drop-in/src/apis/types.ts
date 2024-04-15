@@ -6,7 +6,7 @@ import type {
   Sku as SdkSku,
   SkuList,
   SkuListItem
-} from '@commercelayer/sdk'
+} from '@commercelayer/core-sdk'
 import { type Token } from './commercelayer/client'
 
 interface DeliveryLeadTime {

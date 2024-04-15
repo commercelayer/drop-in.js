@@ -1,7 +1,7 @@
 import * as client from '#apis/commercelayer/client'
 import * as skus from '#apis/commercelayer/skus'
 import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
-import type { Price } from '@commercelayer/sdk'
+import type { Price } from '@commercelayer/core-sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { CLPrice } from './cl-price'
 import { waitForMs } from 'jest.spec.helpers'
@@ -17,7 +17,30 @@ const fakePrices: { [sku: string]: Price } = {
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     formatted_amount: '€ 12.00',
-    formatted_compare_at_amount: '€ 28.50'
+    formatted_compare_at_amount: '€ 28.50',
+    price_list: {
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      currency_code: 'USD',
+      id: '1111',
+      name: 'USD',
+      type: 'price_lists'
+    },
+    sku: {
+      type: 'skus',
+      id: '1111',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      code: '1111',
+      name: '1111',
+      shipping_category: {
+        type: 'shipping_categories',
+        id: '1111',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: 'asd'
+      }
+    }
   },
   DEF456: {
     id: 'DEF456',
@@ -29,7 +52,30 @@ const fakePrices: { [sku: string]: Price } = {
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     formatted_amount: '€ 31.00',
-    formatted_compare_at_amount: '€ 43.00'
+    formatted_compare_at_amount: '€ 43.00',
+    price_list: {
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      currency_code: 'USD',
+      id: '1111',
+      name: 'USD',
+      type: 'price_lists'
+    },
+    sku: {
+      type: 'skus',
+      id: '1111',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      code: '1111',
+      name: '1111',
+      shipping_category: {
+        type: 'shipping_categories',
+        id: '1111',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: 'asd'
+      }
+    }
   }
 }
 

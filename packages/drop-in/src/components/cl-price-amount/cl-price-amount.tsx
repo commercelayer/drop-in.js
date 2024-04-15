@@ -1,4 +1,4 @@
-import type { Price } from '@commercelayer/sdk'
+import type { Price } from '@commercelayer/core-sdk'
 import {
   Component,
   Host,

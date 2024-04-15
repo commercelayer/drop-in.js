@@ -65,6 +65,7 @@ describe('cl-cart-count.spec', () => {
               fulfillment_status: 'fulfilled',
               payment_status: 'paid',
               line_items: [
+                // @ts-expect-error asd
                 {
                   type: 'line_items',
                   created_at: new Date().toISOString(),
@@ -75,6 +76,7 @@ describe('cl-cart-count.spec', () => {
                   total_amount_float: 12,
                   item_type: 'skus'
                 },
+                // @ts-expect-error asd
                 {
                   type: 'line_items',
                   created_at: new Date().toISOString(),
@@ -85,6 +87,7 @@ describe('cl-cart-count.spec', () => {
                   total_amount_float: 12,
                   item_type: 'bundles'
                 },
+                // @ts-expect-error asd
                 {
                   type: 'line_items',
                   created_at: new Date().toISOString(),
@@ -95,6 +98,7 @@ describe('cl-cart-count.spec', () => {
                   total_amount_float: 12,
                   item_type: 'payment_methods'
                 },
+                // @ts-expect-error asd
                 {
                   type: 'line_items',
                   created_at: new Date().toISOString(),
@@ -146,6 +150,7 @@ describe('cl-cart-count.spec', () => {
               fulfillment_status: 'fulfilled',
               payment_status: 'paid',
               line_items: [
+                // @ts-expect-error asd
                 {
                   type: 'line_items',
                   created_at: new Date().toISOString(),
@@ -156,6 +161,7 @@ describe('cl-cart-count.spec', () => {
                   total_amount_float: 12,
                   item_type: 'skus'
                 },
+                // @ts-expect-error asd
                 {
                   type: 'line_items',
                   created_at: new Date().toISOString(),
@@ -166,6 +172,7 @@ describe('cl-cart-count.spec', () => {
                   total_amount_float: 12,
                   item_type: 'bundles'
                 },
+                // @ts-expect-error asd
                 {
                   type: 'line_items',
                   created_at: new Date().toISOString(),
@@ -176,6 +183,7 @@ describe('cl-cart-count.spec', () => {
                   total_amount_float: 12,
                   item_type: 'payment_methods'
                 },
+                // @ts-expect-error asd
                 {
                   type: 'line_items',
                   created_at: new Date().toISOString(),

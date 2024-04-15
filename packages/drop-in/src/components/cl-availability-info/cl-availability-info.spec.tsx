@@ -60,6 +60,13 @@ describe('cl-availability-info.spec', () => {
       type: 'skus',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
+      shipping_category: {
+        type: 'shipping_categories',
+        id: '1111',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: 'asd'
+      },
       inventory: {
         available: true,
         quantity: 98,
@@ -191,6 +198,13 @@ describe('cl-availability-info.spec', () => {
       type: 'skus',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
+      shipping_category: {
+        type: 'shipping_categories',
+        id: '1111',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: 'asd'
+      },
       inventory: {
         available: true,
         quantity: 98,
@@ -322,6 +336,13 @@ describe('cl-availability-info.spec', () => {
       type: 'skus',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
+      shipping_category: {
+        type: 'shipping_categories',
+        id: '1111',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: 'asd'
+      },
       inventory: {
         available: false,
         quantity: 0,
@@ -411,6 +432,13 @@ describe('cl-availability-info.spec', () => {
       type: 'skus',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
+      shipping_category: {
+        type: 'shipping_categories',
+        id: '1111',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: 'asd'
+      },
       inventory: {
         available: true,
         quantity: 98,

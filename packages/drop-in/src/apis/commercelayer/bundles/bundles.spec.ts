@@ -12,6 +12,7 @@ function mockSkuListItem(
     updated_at: time,
     id: `123`,
     quantity: skuListItem.quantity,
+    // @ts-expect-error asd
     sku: {
       code: '123',
       created_at: time,
