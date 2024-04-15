@@ -1,8 +1,8 @@
 import { fireEvent } from '#apis/event'
-import type { GetBundle, GetBundlePrice } from '#apis/types'
+import type { Bundle, GetBundle, GetBundlePrice } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
-import type { Bundle, Price } from '@commercelayer/sdk'
+import type { Price } from '@commercelayer/sdk'
 import { chunk, memoize, uniq } from '../../../utils/utils'
 import { createClient } from '../client'
 import { getConfig } from '../config'
@@ -16,7 +16,7 @@ const _getBundles = async (codes: string[]): Promise<BundleList> => {
 
   const uniqCodes = uniq(codes)
 
-  const log = logGroup('`getBundles` method invoked with a list of SKUs')
+  const log = logGroup('`getBundles` method invoked with a list of codes')
 
   log(
     'info',
@@ -57,7 +57,7 @@ const _getBundles = async (codes: string[]): Promise<BundleList> => {
   const bundles: BundleList = bundlesResponse.reduce<BundleList>(
     (bundles, bundle) => {
       if (bundle.code !== undefined) {
-        bundles[bundle.code] = bundle
+        bundles[bundle.code] = bundle as Bundle
       }
 
       return bundles
@@ -72,12 +72,12 @@ const _getBundles = async (codes: string[]): Promise<BundleList> => {
 
 const getBundles = pDebounce(_getBundles, { wait: 10, maxWait: 50 })
 
-const getMemoizedBundle = memoize<GetBundle>(async (code) => {
+const getMemoizedBundleByCode = memoize<GetBundle>(async (code) => {
   return await getBundles([code]).then((result) => result[code])
 })
 
 const getBundleByCode: GetBundle = async (code) => {
-  const bundle = await getMemoizedBundle(code)
+  const bundle = await getMemoizedBundleByCode(code)
 
   // fireEvent('cl-bundles-getbundle', [code], bundle)
 
@@ -114,4 +114,31 @@ export const getPrice: GetBundlePrice = async (code) => {
   fireEvent('cl-bundles-getprice', [code], price)
 
   return price
+}
+
+const getMemoizedBundle = memoize<GetBundle>(async (code) => {
+  const bundle = await getBundleByCode(code)
+
+  if (bundle === undefined) {
+    return undefined
+  }
+
+  const client = await createClient(getConfig())
+
+  return (await client.bundles.retrieve(bundle.id, {
+    include: [
+      'skus', // this is useless because I don't have the SKU quantities.
+      'sku_list',
+      'sku_list.sku_list_items',
+      'sku_list.sku_list_items.sku'
+    ]
+  })) as Bundle
+})
+
+export const getBundle: GetBundle = async (code) => {
+  const bundle = await getMemoizedBundle(code)
+
+  fireEvent('cl-bundles-getbundle', [code], bundle)
+
+  return bundle
 }

@@ -1,3 +1,4 @@
+import { getBundle } from '#apis/commercelayer/bundles'
 import { addItem } from '#apis/commercelayer/cart'
 import { getSku } from '#apis/commercelayer/skus'
 import type { Inventory } from '#apis/types'
@@ -55,6 +56,7 @@ export class CLAddToCart {
   @Prop({ reflect: true }) frequency: string | undefined
 
   @State() inventory: Inventory | undefined
+  // @State() inventory: Inventory | Inventory[] | undefined
 
   async componentWillLoad(): Promise<void> {
     await this.updateSku(this.code)
@@ -86,10 +88,22 @@ export class CLAddToCart {
   ): Promise<void> => {
     logCode(this.host, code)
 
-    if (this.kind !== 'bundle' && isValidCode(code)) {
-      this.inventory = (await getSku(code))?.inventory
-      if (this.inventory === undefined) {
-        log('warn', `Cannot find code ${code}.`, this.host)
+    if (isValidCode(code)) {
+      switch (this.kind) {
+        case 'bundle':
+          console.log('bundle', await getBundle(code))
+          // this.inventory = (await getBundle(code))?.skus
+          //   ?.map((sku) => sku.inventory)
+          //   .filter((inventory): inventory is Inventory => inventory != null)
+          break
+
+        case 'sku':
+        default:
+          this.inventory = (await getSku(code))?.inventory
+          if (this.inventory === undefined) {
+            log('warn', `Cannot find code ${code}.`, this.host)
+          }
+          break
       }
     }
   }

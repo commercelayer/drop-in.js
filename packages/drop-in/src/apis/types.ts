@@ -1,5 +1,5 @@
 import type {
-  Bundle,
+  Bundle as SdkBundle,
   LineItem,
   Order,
   Price,
@@ -40,6 +40,10 @@ export interface Inventory {
 // TODO: move this at sdk level
 export type Sku = Omit<SdkSku, 'inventory'> & {
   inventory?: Inventory
+}
+
+export type Bundle = Omit<SdkBundle, 'skus'> & {
+  skus?: Sku[] | null
 }
 
 export type GetSku = (code: string) => Promise<Sku | undefined>
