@@ -1,4 +1,5 @@
 import { StorybookConfig } from '@storybook/types'
+import remarkGfm from 'remark-gfm'
 
 const storybookConfig: StorybookConfig = {
   stories: [
@@ -7,9 +8,23 @@ const storybookConfig: StorybookConfig = {
   ],
   addons: [
     '@storybook/addon-links',
-    '@storybook/addon-essentials',
+    {
+      name: '@storybook/addon-essentials',
+      options: {
+        docs: false
+      },
+    },
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
     '@storybook/addon-interactions',
-    '@storybook/addon-mdx-gfm',
     '@storybook/addon-webpack5-compiler-swc'
   ],
   // @ts-expect-error This 'managerEntries' exists.

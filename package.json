@@ -13,12 +13,8 @@
     "test:watch": "pnpm --filter drop-in.js test:watch",
     "test:unit:watch": "pnpm --filter drop-in.js test:unit:watch",
     "test:e2e:watch": "pnpm --filter drop-in.js test:e2e:watch",
-    "dep:upgrade:major": "pnpm -r exec npm-check-updates -u",
-    "dep:upgrade:minor": "pnpm dep:upgrade:major -t minor",
-    "dep:self-upgrade:major": "pnpm exec npm-check-updates -u",
-    "dep:self-upgrade:minor": "pnpm dep:self-upgrade:major -t minor",
-    "dep:major": "pnpm dep:upgrade:major && pnpm dep:self-upgrade:major",
-    "dep:minor": "pnpm dep:upgrade:minor && pnpm dep:self-upgrade:minor",
+    "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
+    "dep:minor": "pnpm dep:major -t minor",
     "ts:check": "pnpm -r --sequential ts:check",
     "lint": "pnpm -r exec eslint ./ --ext ts,tsx",
     "lint:fix": "pnpm lint --fix",
@@ -38,10 +34,9 @@
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "husky": "^9.0.11",
-    "lerna": "^8.1.2",
-    "lint-staged": "^15.2.2",
-    "npm-check-updates": "^16.14.18",
+    "lerna": "^8.1.3",
+    "lint-staged": "^15.2.4",
     "replace-in-file": "^7.1.0",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   }
 }
