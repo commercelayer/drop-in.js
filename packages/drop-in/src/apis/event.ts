@@ -21,7 +21,7 @@ export interface EventTypes {
   'cl-cart-hostedcartupdate': NonNullableReturnType<TriggerHostedCartUpdate>
   'cl-cart-update': NonNullableReturnType<TriggerCartUpdate>
 
-  /** @deprecated Use `cl-skus-getprice` instead. */
+  /** @deprecated Use `cl-skus-getprice` instead. This will be removed in a future version. */
   'cl-prices-getprice': GetSkuPrice
 }
 

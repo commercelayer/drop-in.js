@@ -16,7 +16,7 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
 
   const uniqSkus = uniq(skus)
 
-  const log = logGroup('`getSkuPrices` method invoked with a list of SKUs')
+  const log = logGroup('`getSkuPrices` method invoked with a list of SKU codes')
 
   log(
     'info',
@@ -64,7 +64,7 @@ const getMemoizedPrice = memoize<GetSkuPrice>(async (sku) => {
 export const getPrice: GetSkuPrice = async (sku) => {
   const price = await getMemoizedPrice(sku)
 
-  /** @deprecated Use `cl-skus-getprice` instead. */
+  /** @deprecated Use `cl-skus-getprice` instead. This will be removed in a future version. */
   fireEvent('cl-prices-getprice', [sku], price)
 
   fireEvent('cl-skus-getprice', [sku], price)
