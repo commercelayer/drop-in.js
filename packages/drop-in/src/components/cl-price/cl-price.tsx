@@ -29,8 +29,7 @@ export class CLPrice {
    * Indicates whether the code refers to a `sku` or a `bundle`.
    * @default sku
    */
-  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' =
-    this.kindDefault
+  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' = 'sku'
 
   /**
    * The SKU code (i.e. the unique identifier of the product whose price you want to display).

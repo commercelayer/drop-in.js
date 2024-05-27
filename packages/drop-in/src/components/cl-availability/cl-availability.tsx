@@ -22,10 +22,12 @@ export class ClAvailability {
 
   /**
    * Indicates whether the code refers to a `sku` or a `bundle`.
+   *
+   * _⚠️ `bundle` is not fully implemented._
+   *
    * @default sku
    */
-  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' =
-    this.kindDefault
+  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' = 'sku'
 
   /**
    * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
@@ -41,7 +43,7 @@ export class ClAvailability {
 
   async componentWillLoad(): Promise<void> {
     logCode(this.host, this.code)
-    await this.updateAvailability(this.code)
+    await this.updateAvailability(this.kind, this.code)
   }
 
   @Watch('kind')
@@ -52,20 +54,22 @@ export class ClAvailability {
     }
 
     logUnion(this.host, 'kind', newValue, this.kindList)
+    await this.debouncedUpdateAvailability(newValue, this.code)
   }
 
   @Watch('code')
   async watchPropHandler(newValue: typeof this.code): Promise<void> {
     logCode(this.host, newValue)
-    await this.debouncedUpdateAvailability(newValue)
+    await this.debouncedUpdateAvailability(this.kind, newValue)
   }
 
   private readonly updateAvailability = async (
+    kind: typeof this.kind,
     code: typeof this.code
   ): Promise<void> => {
     let sku: Sku | undefined
 
-    if (this.kind !== 'bundle' && isValidCode(code)) {
+    if (kind !== 'bundle' && isValidCode(code)) {
       sku = await getSku(code)
     }
 

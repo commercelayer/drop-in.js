@@ -5,7 +5,8 @@ export const codes = {
   noDiscount: 'BACKPACKFFFFFF000000XXXX',
   outOfStock: '5PANECAP9D9CA1FFFFFFXXXX',
   doNotTrack: 'BOTT17OZFFFFFF000000XXXX',
-  subscription: 'POLOMXXX000000FFFFFFMXXX'
+  subscription: 'POLOMXXX000000FFFFFFMXXX',
+  bundleAvailable: 'CLGETTINGSTARTED'
 }
 
 // // stg

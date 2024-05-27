@@ -37,8 +37,7 @@ export class CLAddToCart {
    * Indicates whether the code refers to a `sku` or a `bundle`.
    * @default sku
    */
-  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' =
-    this.kindDefault
+  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' = 'sku'
 
   /**
    * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
@@ -47,6 +46,7 @@ export class CLAddToCart {
 
   /**
    * The number of units of the selected product you want to add to the shopping cart.
+   * @default 1
    */
   @Prop({ reflect: true, mutable: true }) quantity: number = 1
 
@@ -56,7 +56,6 @@ export class CLAddToCart {
   @Prop({ reflect: true }) frequency: string | undefined
 
   @State() inventory: Inventory | undefined
-  // @State() inventory: Inventory | Inventory[] | undefined
 
   async componentWillLoad(): Promise<void> {
     await this.updateSku(this.code)

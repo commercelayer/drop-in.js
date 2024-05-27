@@ -22,6 +22,7 @@ export namespace Components {
         "kind"?: 'sku' | 'bundle';
         /**
           * The number of units of the selected product you want to add to the shopping cart.
+          * @default 1
          */
         "quantity": number;
     }
@@ -31,7 +32,7 @@ export namespace Components {
          */
         "code": string | undefined;
         /**
-          * Indicates whether the code refers to a `sku` or a `bundle`.
+          * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` is not fully implemented._
           * @default sku
          */
         "kind"?: 'sku' | 'bundle';
@@ -242,6 +243,7 @@ declare namespace LocalJSX {
         "kind"?: 'sku' | 'bundle';
         /**
           * The number of units of the selected product you want to add to the shopping cart.
+          * @default 1
          */
         "quantity"?: number;
     }
@@ -251,7 +253,7 @@ declare namespace LocalJSX {
          */
         "code": string | undefined;
         /**
-          * Indicates whether the code refers to a `sku` or a `bundle`.
+          * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` is not fully implemented._
           * @default sku
          */
         "kind"?: 'sku' | 'bundle';
