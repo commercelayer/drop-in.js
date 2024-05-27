@@ -1,5 +1,5 @@
 import { getSku } from '#apis/commercelayer/skus'
-import type { AvailabilityUpdateEventPayload } from '#apis/types'
+import type { AvailabilityUpdateEventPayload, Sku } from '#apis/types'
 import {
   isValidCode,
   logCode,
@@ -63,22 +63,24 @@ export class ClAvailability {
   private readonly updateAvailability = async (
     code: typeof this.code
   ): Promise<void> => {
-    if (this.kind !== 'bundle' && isValidCode(code)) {
-      const sku = await getSku(code)
+    let sku: Sku | undefined
 
-      this.host
-        .querySelectorAll('cl-availability-status, cl-availability-info')
-        .forEach((element) => {
-          element.dispatchEvent(
-            new CustomEvent<AvailabilityUpdateEventPayload>(
-              'availabilityUpdate',
-              {
-                detail: { sku, rule: this.rule }
-              }
-            )
-          )
-        })
+    if (this.kind !== 'bundle' && isValidCode(code)) {
+      sku = await getSku(code)
     }
+
+    this.host
+      .querySelectorAll('cl-availability-status, cl-availability-info')
+      .forEach((element) => {
+        element.dispatchEvent(
+          new CustomEvent<AvailabilityUpdateEventPayload>(
+            'availabilityUpdate',
+            {
+              detail: { sku, rule: this.rule }
+            }
+          )
+        )
+      })
   }
 
   private readonly debouncedUpdateAvailability = debounce(

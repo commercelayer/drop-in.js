@@ -63,9 +63,9 @@ export class CLPrice {
     kind: typeof this.kind,
     code: typeof this.code
   ): Promise<void> => {
-    if (isValidCode(code)) {
-      let price: Price | undefined
+    let price: Price | undefined
 
+    if (isValidCode(code)) {
       switch (kind) {
         case 'bundle':
           price = await getBundlePrice(code)
@@ -76,13 +76,13 @@ export class CLPrice {
           price = await getSkuPrice(code)
           break
       }
-
-      this.host.querySelectorAll('cl-price-amount').forEach((element) => {
-        element.dispatchEvent(
-          new CustomEvent<Price>('priceUpdate', { detail: price })
-        )
-      })
     }
+
+    this.host.querySelectorAll('cl-price-amount').forEach((element) => {
+      element.dispatchEvent(
+        new CustomEvent<Price>('priceUpdate', { detail: price })
+      )
+    })
   }
 
   private readonly debouncedUpdatePrice = debounce(this.updatePrice, 10)

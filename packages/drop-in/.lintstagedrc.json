@@ -2,6 +2,6 @@
   "*.{js,jsx,ts,tsx}": [
     "bash -c \"tsc -p ./tsconfig.json --noEmit\"",
     "eslint ./ --ext ts,tsx",
-    "pnpm test"
+    "bash -c \"pnpm test\""
   ]
 }
