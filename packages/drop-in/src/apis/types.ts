@@ -3,7 +3,9 @@ import type {
   LineItem,
   Order,
   Price,
-  Sku as SdkSku
+  Sku as SdkSku,
+  SkuList,
+  SkuListItem
 } from '@commercelayer/sdk'
 import { type Token } from './commercelayer/client'
 
@@ -42,14 +44,19 @@ export type Sku = Omit<SdkSku, 'inventory'> & {
   inventory?: Inventory
 }
 
-export type Bundle = Omit<SdkBundle, 'skus'> & {
+export type Bundle = Omit<SdkBundle, 'skus' | 'sku_list'> & {
   skus?: Sku[] | null
+  sku_list: Omit<SkuList, 'sku_list_items'> & {
+    sku_list_items: Array<Omit<SkuListItem, 'sku'> & { sku: Sku }>
+  }
 }
 
 export type GetSku = (code: string) => Promise<Sku | undefined>
 export type GetSkuPrice = (code: string) => Promise<Price | undefined>
 
-export type GetBundle = (code: string) => Promise<Bundle | undefined>
+export type GetBundle = (
+  code: string
+) => Promise<(Bundle & Pick<Sku, 'inventory'>) | undefined>
 export type GetBundlePrice = (code: string) => Promise<Price | undefined>
 
 export type AddItem = (

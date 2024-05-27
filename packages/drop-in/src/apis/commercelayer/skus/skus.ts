@@ -6,15 +6,17 @@ import { getConfig } from '../config'
 import { _getSkuViaList } from './list'
 
 const getMemoizedSku = memoize<GetSku>(async (code) => {
-  const sku = await _getSkuViaList(code)
+  const { id } = (await _getSkuViaList(code)) ?? {}
 
-  if (sku === undefined) {
+  if (id === undefined) {
     return undefined
   }
 
   const client = await createClient(getConfig())
 
-  return (await client.skus.retrieve(sku.id)) as Sku
+  const sku = (await client.skus.retrieve(id)) as Sku
+
+  return sku
 })
 
 export const getSku: GetSku = async (code) => {

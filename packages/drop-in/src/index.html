@@ -160,6 +160,7 @@
               <cl-price-amount type="compare-at"></cl-price-amount>
               <cl-price-amount></cl-price-amount>
             </cl-price>
+            <input data-id="pc--quantity" type="number" max="101" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
             <cl-add-to-cart code="5PANECAP000000FFFFFFXXXX">Add to cart</cl-add-to-cart>
             <cl-availability code="5PANECAP000000FFFFFFXXXX" class="text-sm">
               <cl-availability-status type="available" style="color: #1fda8a">available<br /></cl-availability-status>
@@ -218,13 +219,36 @@
               productCard.querySelector('cl-add-to-cart').kind = kind ?? null;
               productCard.querySelector('cl-add-to-cart').code = code;
               productCard.querySelector('cl-add-to-cart').quantity = isNaN(quantity) || quantity == null ? 1 : quantity;
+              productCard.querySelector('[data-id="pc--quantity"]').value = isNaN(quantity) || quantity == null ? 1 : quantity;
               productCard.querySelector('cl-add-to-cart').frequency = frequency;
               productCard.querySelector('cl-availability').kind = kind ?? null;
               productCard.querySelector('cl-availability').code = code;
               if (description != null) {
                 productCard.querySelector('[data-id="pc--selector"]').innerHTML = `<code>${description.toUpperCase()}</code>`
               }
+
+              productCard.querySelector('[data-id="pc--quantity"]').addEventListener('keyup', function (event) {
+                const qnt = parseInt(event.currentTarget.value)
+                productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : qnt < -101 ? -101 : qnt
+                if (qnt > 101) {
+                  event.currentTarget.value = 101
+                }
+                if (qnt < -101) {
+                  event.currentTarget.value = -101
+                }
+              })
             }
+
+            productCard.querySelector('[data-id="pc--quantity"]').addEventListener('keyup', function (event) {
+              const qnt = parseInt(event.currentTarget.value)
+              productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : qnt < -101 ? -101 : qnt
+              if (qnt > 101) {
+                event.currentTarget.value = 101
+              }
+              if (qnt < -101) {
+                event.currentTarget.value = -101
+              }
+            })
 
             select.addEventListener('change', function (event) {
               const code = event.currentTarget.value;

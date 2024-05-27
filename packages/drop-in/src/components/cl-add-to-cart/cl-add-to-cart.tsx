@@ -91,10 +91,10 @@ export class CLAddToCart {
     if (isValidCode(code)) {
       switch (this.kind) {
         case 'bundle':
-          console.log('bundle', await getBundle(code))
-          // this.inventory = (await getBundle(code))?.skus
-          //   ?.map((sku) => sku.inventory)
-          //   .filter((inventory): inventory is Inventory => inventory != null)
+          this.inventory = (await getBundle(code))?.inventory
+          if (this.inventory === undefined) {
+            log('warn', `Cannot find code ${code}.`, this.host)
+          }
           break
 
         case 'sku':
@@ -140,10 +140,6 @@ export class CLAddToCart {
     const hasQuantity =
       this.inventory?.quantity === undefined ||
       this.quantity <= this.inventory?.quantity
-
-    if (this.kind === 'bundle') {
-      return true
-    }
 
     return (
       isValidCode(this.code) &&
