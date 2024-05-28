@@ -1,5 +1,6 @@
 import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
-import * as Stories from './cl-price.stories.ts';
+import * as Stories from './cl-price.stories.ts'
+import { Alert } from '../assets/components'
 
 <Meta of={Stories} />
 
@@ -9,25 +10,21 @@ Once you have correctly set up your organization in Commerce Layer and imported 
 
 Each price has an amount (the actual selling price) and an optional *compare-at* amount (the full price that you want to display to the customer — typically with a strikethrough).
 
-This component is the owner of the price information. It fetches the price of the specified SKU or Bundle and dispatches it to the [`cl-price-amount`](?path=/docs/components-price-cl-price-amount--docs) children.
+This component is the owner of the price information. It fetches the price of the specified SKU or bundle and dispatches it to the [`cl-price-amount`](?path=/docs/components-price-cl-price-amount--docs) children.
 
 <Canvas of={Stories.Basic} />
 
 <Controls of={Stories.Basic} />
+
+<Alert title="Bundle" type="info">
+  TODO: write doc here
+</Alert>
 
 ### No discount
 
 If the *compare-at* amount of the price is not set (i.e. the product isn't discounted) it won't be displayed, as shown in the example below:
 
 <Canvas of={Stories.NoDiscount} />
-
-### Bundle
-
-### TODO: MISSING TEXT HERE ###
-
-By default the `kind` attribute is set to *sku*. If you need, you can set it to *bundle*:
-
-<Canvas of={Stories.Bundle} />
 
 ### No code
 

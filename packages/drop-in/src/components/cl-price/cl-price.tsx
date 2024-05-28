@@ -32,7 +32,7 @@ export class CLPrice {
   @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' = 'sku'
 
   /**
-   * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+   * The SKU or the bundle code (i.e. the unique identifier of the product or bundle whose price you want to display).
    */
   @Prop({ reflect: true }) code!: string | undefined
 

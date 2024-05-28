@@ -40,7 +40,7 @@ export class CLAddToCart {
   @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' = 'sku'
 
   /**
-   * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+   * The SKU or the bundle code (i.e. the unique identifier of the product or bundle you want to add to the shopping cart).
    */
   @Prop({ reflect: true }) code!: string | undefined
 

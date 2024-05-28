@@ -42,11 +42,7 @@ const getMemoizedBundle = memoize<GetBundle>(async (code) => {
   const client = await createClient(getConfig())
 
   const bundle = (await client.bundles.retrieve(id, {
-    include: [
-      'sku_list',
-      'sku_list.sku_list_items',
-      'sku_list.sku_list_items.sku'
-    ]
+    include: ['sku_list.sku_list_items.sku']
   })) as Bundle
 
   return {

@@ -38,6 +38,12 @@ OutOfStock.args = {
   code: codes.outOfStock
 }
 
+export const BundleOutOfStock = Template.bind({})
+BundleOutOfStock.args = {
+  kind: 'bundle',
+  code: codes.bundleOutOfStock
+}
+
 export const Nonexisting = Template.bind({})
 Nonexisting.args = {
   code: codes.nonexisting
@@ -47,6 +53,13 @@ export const OversellingPrevention = Template.bind({})
 OversellingPrevention.args = {
   code: codes.noOverselling,
   quantity: 100
+}
+
+export const BundleOversellingPrevention = Template.bind({})
+BundleOversellingPrevention.args = {
+  kind: 'bundle',
+  code: codes.bundleAvailable,
+  quantity: 10
 }
 
 export const DoNotTrack = Template.bind({})
@@ -59,10 +72,4 @@ export const Subscription = Template.bind({})
 Subscription.args = {
   code: codes.subscription,
   frequency: 'three-month'
-}
-
-export const Bundle = Template.bind({})
-Bundle.args = {
-  code: codes.bundleAvailable,
-  kind: 'bundle'
 }

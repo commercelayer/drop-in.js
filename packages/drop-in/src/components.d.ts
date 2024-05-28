@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface ClAddToCart {
         /**
-          * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+          * The SKU or the bundle code (i.e. the unique identifier of the product or bundle you want to add to the shopping cart).
          */
         "code": string | undefined;
         /**
@@ -28,7 +28,7 @@ export namespace Components {
     }
     interface ClAvailability {
         /**
-          * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+          * The SKU or the bundle code (i.e. the unique identifier of the product or bundle whose availability you want to display).
          */
         "code": string | undefined;
         /**
@@ -115,7 +115,7 @@ export namespace Components {
     }
     interface ClPrice {
         /**
-          * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+          * The SKU or the bundle code (i.e. the unique identifier of the product or bundle whose price you want to display).
          */
         "code": string | undefined;
         /**
@@ -229,7 +229,7 @@ declare global {
 declare namespace LocalJSX {
     interface ClAddToCart {
         /**
-          * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+          * The SKU or the bundle code (i.e. the unique identifier of the product or bundle you want to add to the shopping cart).
          */
         "code": string | undefined;
         /**
@@ -249,7 +249,7 @@ declare namespace LocalJSX {
     }
     interface ClAvailability {
         /**
-          * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+          * The SKU or the bundle code (i.e. the unique identifier of the product or bundle whose availability you want to display).
          */
         "code": string | undefined;
         /**
@@ -336,7 +336,7 @@ declare namespace LocalJSX {
     }
     interface ClPrice {
         /**
-          * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+          * The SKU or the bundle code (i.e. the unique identifier of the product or bundle whose price you want to display).
          */
         "code": string | undefined;
         /**
