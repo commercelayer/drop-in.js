@@ -1,5 +1,9 @@
 name: Release
 
+permissions:
+  contents: write
+  discussions: write
+
 on:
   push:
     tags: ["v*"]
@@ -13,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create a draft GitHub release 🎁
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.COMMERCELAYER_CI_TOKEN }}
           draft: true
