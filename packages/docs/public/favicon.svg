@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="commerce-layer-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" viewBox="0 0 320 320" style="enable-background:new 0 0 320 320;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#101111;}
+</style>
+<g id="glyph">
+	<rect id="right-eye" x="183.8" y="128" class="st0" width="64" height="64"/>
+	<rect id="left-eye" x="71.8" y="128" class="st0" width="64" height="64"/>
+	<path id="bottom-bracket" class="st0" d="M288,239.6c-0.3,7.5-3.3,16.4-16,16.4h-63.4c-4.9-0.2-28.3-0.4-46,16.1
+		c-0.9,0.9-1.8,1.8-2.6,2.8c-0.9-0.9-1.7-1.9-2.6-2.8c-17.7-16.5-41.1-16.4-46-16.1H48c-12.7,0-15.7-8.9-16-16v-48H0v48.2
+		C0.2,259.4,13.2,288,48,288h63.8h1c0.1,0,14.1-0.6,22.9,7.7c5.4,5.1,8.2,13.3,8.2,24.3h32.4c0-11,2.8-19.2,8.2-24.3
+		c8.8-8.3,22.7-7.7,22.7-7.7l64.9,0c34.8,0,47.8-28.6,48-48v-48h-32V239.6z"/>
+	<path id="top-bracket" class="st0" d="M32,80.4C32.3,72.9,35.3,64,48,64h63.4c4.9,0.2,28.3,0.4,46-16.1c0.9-0.9,1.8-1.8,2.6-2.8
+		c0.9,0.9,1.7,1.9,2.6,2.8c17.7,16.5,41.1,16.4,46,16.1H272c12.7,0,15.7,8.9,16,16v48h32V79.8C319.8,60.6,306.8,32,272,32h-63.8h-1
+		c-0.1,0-14.1,0.6-22.9-7.7c-5.4-5.1-8.1-13.3-8.1-24.3h-32.4c0,11-2.8,19.2-8.2,24.3c-8.8,8.3-22.7,7.7-22.7,7.7H48
+		C13.2,32,0.2,60.6,0,80v48h32V80.4z"/>
+</g>
+</svg>
