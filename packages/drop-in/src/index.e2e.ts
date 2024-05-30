@@ -16,7 +16,10 @@ const codes = {
   noOverselling: 'GMUG11OZFFFFFF000000XXXX',
   noDiscount: 'BACKPACKFFFFFF000000XXXX',
   outOfStock: '5PANECAP9D9CA1FFFFFFXXXX',
-  doNotTrack: 'BOTT17OZFFFFFF000000XXXX'
+  doNotTrack: 'BOTT17OZFFFFFF000000XXXX',
+  subscription: 'POLOMXXX000000FFFFFFMXXX',
+  bundleAvailable: 'CLGETTINGSTARTED',
+  bundleOutOfStock: 'CLOUTOFSTOCK'
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -73,6 +76,9 @@ const availableElements = getCodeElements(codes.available)
 const noDiscountElements = getCodeElements(codes.noDiscount)
 const outOfStockElements = getCodeElements(codes.outOfStock)
 const doNotTrackElements = getCodeElements(codes.doNotTrack)
+const subscriptionElements = getCodeElements(codes.subscription)
+const bundleAvailableElements = getCodeElements(codes.bundleAvailable)
+const bundleOutOfStockElements = getCodeElements(codes.bundleOutOfStock)
 
 // eslint-disable-next-line prettier/prettier
 const getCartLink = async (page: E2EPage): Promise<E2EElement> => await page.find('cl-cart-link')
@@ -192,6 +198,81 @@ describe('index.e2e', () => {
               <cl-availability-status type="unavailable">Out Of Stock</cl-availability-status>
             </cl-availability>
           </div>
+
+          <div>
+            <cl-add-to-cart
+              code="${codes.subscription}"
+              quantity="1"
+              frequency="three-month"
+            >Add to cart</cl-add-to-cart>
+            <cl-price code="${codes.subscription}">
+              <cl-price-amount type="price"></cl-price-amount>
+              <cl-price-amount type="compare-at"></cl-price-amount>
+            </cl-price>
+            <cl-availability code="${codes.subscription}">
+              <cl-availability-status type="available">
+                <span style="color: green;">Available</span>
+                ready to be shipped in
+                <cl-availability-info type="min-days"></cl-availability-info>
+                -
+                <cl-availability-info type="max-days"></cl-availability-info>
+                days with
+                <cl-availability-info type="shipping-method-name"></cl-availability-info>
+                (<cl-availability-info type="shipping-method-price"></cl-availability-info>)
+              </cl-availability-status>
+              <cl-availability-status type="unavailable">Out Of Stock</cl-availability-status>
+            </cl-availability>
+          </div>
+
+          <div>
+            <cl-add-to-cart
+              kind="bundle"
+              code="${codes.bundleAvailable}"
+              quantity="1"
+            >Add to cart</cl-add-to-cart>
+            <cl-price kind="bundle" code="${codes.bundleAvailable}">
+              <cl-price-amount type="price"></cl-price-amount>
+              <cl-price-amount type="compare-at"></cl-price-amount>
+            </cl-price>
+            <cl-availability kind="bundle" code="${codes.bundleAvailable}">
+              <cl-availability-status type="available">
+                <span style="color: green;">Available</span>
+                ready to be shipped in
+                <cl-availability-info type="min-days"></cl-availability-info>
+                -
+                <cl-availability-info type="max-days"></cl-availability-info>
+                days with
+                <cl-availability-info type="shipping-method-name"></cl-availability-info>
+                (<cl-availability-info type="shipping-method-price"></cl-availability-info>)
+              </cl-availability-status>
+              <cl-availability-status type="unavailable">Out Of Stock</cl-availability-status>
+            </cl-availability>
+          </div>
+
+          <div>
+            <cl-add-to-cart
+              kind="bundle"
+              code="${codes.bundleOutOfStock}"
+              quantity="1"
+            >Add to cart</cl-add-to-cart>
+            <cl-price kind="bundle" code="${codes.bundleOutOfStock}">
+              <cl-price-amount type="price"></cl-price-amount>
+              <cl-price-amount type="compare-at"></cl-price-amount>
+            </cl-price>
+            <cl-availability kind="bundle" code="${codes.bundleOutOfStock}">
+              <cl-availability-status type="available">
+                <span style="color: green;">Available</span>
+                ready to be shipped in
+                <cl-availability-info type="min-days"></cl-availability-info>
+                -
+                <cl-availability-info type="max-days"></cl-availability-info>
+                days with
+                <cl-availability-info type="shipping-method-name"></cl-availability-info>
+                (<cl-availability-info type="shipping-method-price"></cl-availability-info>)
+              </cl-availability-status>
+              <cl-availability-status type="unavailable">Out Of Stock</cl-availability-status>
+            </cl-availability>
+          </div>
         </div>
       `
     })
@@ -288,6 +369,69 @@ describe('index.e2e', () => {
           </cl-price>
           <cl-availability kind="sku" cl-hydrated code="${codes.doNotTrack}" rule="cheapest">
             <cl-availability-status cl-hydrated type="available">
+              <span style="color: green;">Available</span>
+              ready to be shipped in
+              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
+              -
+              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
+              days with
+              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
+              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+            </cl-availability-status>
+            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+          </cl-availability>
+        </div>
+
+        <div>
+          <cl-add-to-cart kind="sku" code="${codes.subscription}" quantity="1" frequency="three-month" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
+          <cl-price kind="sku" code="${codes.subscription}" cl-hydrated>
+            <cl-price-amount type="price" cl-hydrated></cl-price-amount>
+            <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
+          </cl-price>
+          <cl-availability kind="sku" cl-hydrated code="${codes.subscription}" rule="cheapest">
+            <cl-availability-status cl-hydrated type="available">
+              <span style="color: green;">Available</span>
+              ready to be shipped in
+              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
+              -
+              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
+              days with
+              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
+              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+            </cl-availability-status>
+            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+          </cl-availability>
+        </div>
+
+        <div>
+          <cl-add-to-cart kind="bundle" code="${codes.bundleAvailable}" quantity="1" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
+          <cl-price kind="bundle" code="${codes.bundleAvailable}" cl-hydrated>
+            <cl-price-amount type="price" cl-hydrated></cl-price-amount>
+            <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
+          </cl-price>
+          <cl-availability kind="bundle" cl-hydrated code="${codes.bundleAvailable}" rule="cheapest">
+            <cl-availability-status aria-disabled="true" cl-hydrated type="available">
+              <span style="color: green;">Available</span>
+              ready to be shipped in
+              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
+              -
+              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
+              days with
+              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
+              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+            </cl-availability-status>
+            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+          </cl-availability>
+        </div>
+
+        <div>
+          <cl-add-to-cart aria-disabled="true" kind="bundle" code="${codes.bundleOutOfStock}" quantity="1" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
+          <cl-price kind="bundle" code="${codes.bundleOutOfStock}" cl-hydrated>
+            <cl-price-amount type="price" cl-hydrated></cl-price-amount>
+            <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
+          </cl-price>
+          <cl-availability kind="bundle" cl-hydrated code="${codes.bundleOutOfStock}" rule="cheapest">
+            <cl-availability-status aria-disabled="true" cl-hydrated type="available">
               <span style="color: green;">Available</span>
               ready to be shipped in
               <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
@@ -523,6 +667,171 @@ describe('index.e2e', () => {
         <mock:shadow-root>
           $7.00
         </mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    /**
+     * EXPECTATIONS FOR "SUBSCRIPTION" PRODUCT
+     */
+
+    expect(await subscriptionElements.getPriceAmount(page)).toEqualHtml(`
+      <cl-price-amount cl-hydrated type="price">
+        <mock:shadow-root>
+          $107.00
+        </mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    expect(await subscriptionElements.getPriceCompareAtAmount(page))
+      .toEqualHtml(`
+      <cl-price-amount cl-hydrated type="compare-at">
+        <mock:shadow-root>
+          <s part="strikethrough">
+            $119.90
+          </s>
+        </mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    expect(await subscriptionElements.getAvailabilityInfoMinDays(page))
+      .toEqualHtml(`
+      <cl-availability-info cl-hydrated type="min-days">
+        <mock:shadow-root>
+          4
+        </mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(await subscriptionElements.getAvailabilityInfoMaxDays(page))
+      .toEqualHtml(`
+      <cl-availability-info cl-hydrated type="max-days">
+        <mock:shadow-root>
+          6
+        </mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(
+      await subscriptionElements.getAvailabilityInfoShippingMethodName(page)
+    ).toEqualHtml(`
+      <cl-availability-info cl-hydrated type="shipping-method-name">
+        <mock:shadow-root>
+          Standard Shipping
+        </mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(
+      await subscriptionElements.getAvailabilityInfoShippingMethodPrice(page)
+    ).toEqualHtml(`
+      <cl-availability-info cl-hydrated type="shipping-method-price">
+        <mock:shadow-root>
+          $7.00
+        </mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    /**
+     * EXPECTATIONS FOR "AVAILABLE BUNDLE" PRODUCT
+     */
+
+    expect(await bundleAvailableElements.getPriceAmount(page)).toEqualHtml(`
+      <cl-price-amount cl-hydrated type="price">
+        <mock:shadow-root>
+          $100.00
+        </mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    expect(await bundleAvailableElements.getPriceCompareAtAmount(page))
+      .toEqualHtml(`
+      <cl-price-amount cl-hydrated type="compare-at">
+        <mock:shadow-root>
+          <s part="strikethrough">
+            $405.00
+          </s>
+        </mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    expect(await bundleAvailableElements.getAvailabilityInfoMinDays(page))
+      .toEqualHtml(`
+      <cl-availability-info cl-hydrated type="min-days">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(await bundleAvailableElements.getAvailabilityInfoMaxDays(page))
+      .toEqualHtml(`
+      <cl-availability-info cl-hydrated type="max-days">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(
+      await bundleAvailableElements.getAvailabilityInfoShippingMethodName(page)
+    ).toEqualHtml(`
+      <cl-availability-info cl-hydrated type="shipping-method-name">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(
+      await bundleAvailableElements.getAvailabilityInfoShippingMethodPrice(page)
+    ).toEqualHtml(`
+      <cl-availability-info cl-hydrated type="shipping-method-price">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    /**
+     * EXPECTATIONS FOR "AVAILABLE OUT-OF-STOCK" PRODUCT
+     */
+
+    expect(await bundleOutOfStockElements.getPriceAmount(page)).toEqualHtml(`
+      <cl-price-amount cl-hydrated type="price">
+        <mock:shadow-root>
+          $85.30
+        </mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    expect(await bundleOutOfStockElements.getPriceCompareAtAmount(page))
+      .toEqualHtml(`
+      <cl-price-amount cl-hydrated type="compare-at">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-price-amount>
+    `)
+
+    expect(await bundleOutOfStockElements.getAvailabilityInfoMinDays(page))
+      .toEqualHtml(`
+      <cl-availability-info cl-hydrated type="min-days">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(await bundleOutOfStockElements.getAvailabilityInfoMaxDays(page))
+      .toEqualHtml(`
+      <cl-availability-info cl-hydrated type="max-days">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(
+      await bundleOutOfStockElements.getAvailabilityInfoShippingMethodName(page)
+    ).toEqualHtml(`
+      <cl-availability-info cl-hydrated type="shipping-method-name">
+        <mock:shadow-root></mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(
+      await bundleOutOfStockElements.getAvailabilityInfoShippingMethodPrice(
+        page
+      )
+    ).toEqualHtml(`
+      <cl-availability-info cl-hydrated type="shipping-method-price">
+        <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
