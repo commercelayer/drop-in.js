@@ -75,7 +75,7 @@ export namespace Components {
     }
     interface ClCartCount {
         /**
-          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0`.
          */
         "hideWhenEmpty": boolean;
     }
@@ -296,7 +296,7 @@ declare namespace LocalJSX {
     }
     interface ClCartCount {
         /**
-          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0`.
          */
         "hideWhenEmpty"?: boolean;
     }

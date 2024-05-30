@@ -64,7 +64,48 @@ describe('cl-cart-count.spec', () => {
               status: 'approved',
               fulfillment_status: 'fulfilled',
               payment_status: 'paid',
-              skus_count: 12
+              line_items: [
+                {
+                  type: 'line_items',
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  id: 'LI1',
+                  quantity: 6,
+                  tax_amount_float: 12,
+                  total_amount_float: 12,
+                  item_type: 'skus'
+                },
+                {
+                  type: 'line_items',
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  id: 'LI2',
+                  quantity: 2,
+                  tax_amount_float: 12,
+                  total_amount_float: 12,
+                  item_type: 'bundles'
+                },
+                {
+                  type: 'line_items',
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  id: 'LI3',
+                  quantity: 15,
+                  tax_amount_float: 12,
+                  total_amount_float: 12,
+                  item_type: 'payment_methods'
+                },
+                {
+                  type: 'line_items',
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  id: 'LI4',
+                  quantity: 4,
+                  tax_amount_float: 12,
+                  total_amount_float: 12,
+                  item_type: 'skus'
+                }
+              ]
             }
           }
         }
@@ -104,7 +145,48 @@ describe('cl-cart-count.spec', () => {
               status: 'approved',
               fulfillment_status: 'fulfilled',
               payment_status: 'paid',
-              skus_count: 12
+              line_items: [
+                {
+                  type: 'line_items',
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  id: 'LI1',
+                  quantity: 6,
+                  tax_amount_float: 12,
+                  total_amount_float: 12,
+                  item_type: 'skus'
+                },
+                {
+                  type: 'line_items',
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  id: 'LI2',
+                  quantity: 2,
+                  tax_amount_float: 12,
+                  total_amount_float: 12,
+                  item_type: 'bundles'
+                },
+                {
+                  type: 'line_items',
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  id: 'LI3',
+                  quantity: 15,
+                  tax_amount_float: 12,
+                  total_amount_float: 12,
+                  item_type: 'payment_methods'
+                },
+                {
+                  type: 'line_items',
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                  id: 'LI4',
+                  quantity: 4,
+                  tax_amount_float: 12,
+                  total_amount_float: 12,
+                  item_type: 'skus'
+                }
+              ]
             }
           }
         }
@@ -129,7 +211,7 @@ describe('cl-cart-count.spec', () => {
               status: 'approved',
               fulfillment_status: 'fulfilled',
               payment_status: 'paid',
-              skus_count: 0
+              line_items: []
             }
           }
         }
