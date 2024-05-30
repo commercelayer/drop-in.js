@@ -50,7 +50,7 @@ export const Basic: StoryFn = () => {
 
 
       <!-- product list -->
-      <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 text-center">
+      <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-center">
 
         <!-- 1st product: Gray Five-Panel Cap with White Logo -->
         <div class="flex flex-col">
@@ -80,17 +80,6 @@ export const Basic: StoryFn = () => {
               days
             </cl-availability-status>
           </cl-availability>
-        </div>
-
-        <!-- Editorial Banner -->
-        <div class="flex flex-col items-center">
-          <cl-identity-status class="h-full" type="guest">
-            <img class="object-contain position-top max-h-[470px]" src="register.jpg" />
-          </cl-identity-status>
-
-          <cl-identity-status class="h-full" type="customer">
-            <img class="object-contain position-top max-h-[470px]" src="welcomeback.jpg" />
-          </cl-identity-status>
         </div>
 
         <!-- 2nd product: White Backpack with Black Logo -->
@@ -154,6 +143,17 @@ export const Basic: StoryFn = () => {
         </div>
 
       </section>
+
+      <!-- Editorial Banner -->
+      <div class="flex flex-col items-center mt-8">
+        <cl-identity-status class="h-full" type="guest">
+          <img class="object-contain position-top max-h-[470px]" src="register-h.jpg" />
+        </cl-identity-status>
+
+        <cl-identity-status class="h-full" type="customer">
+          <img class="object-contain position-top max-h-[470px]" src="welcomeback-h.jpg" />
+        </cl-identity-status>
+      </div>
     `
   )
 }
