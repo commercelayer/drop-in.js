@@ -30,7 +30,7 @@ export class ClAvailability {
   @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' = 'sku'
 
   /**
-   * The SKU or the bundle code (i.e. the unique identifier of the product or bundle whose availability you want to display).
+   * The SKU or bundle code (i.e. the unique identifier of the product or bundle whose availability you want to display).
    */
   @Prop({ reflect: true }) code!: string | undefined
 

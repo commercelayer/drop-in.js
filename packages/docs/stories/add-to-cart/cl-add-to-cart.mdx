@@ -7,7 +7,7 @@ import { Alert } from '../assets/components'
 
 # Add to cart
 
-Once you have correctly set up your organization in Commerce Layer and imported the drop-in library as described [here](?path=/docs/getting-started--docs), you can use the `cl-add-to-cart` component to display a buy button on any page with embedded validation rules. By clicking the button, you will be able to add to the shopping cart a specified quantity of a specific product, as shown in the code snippets below.
+Once you have correctly set up your organization in Commerce Layer and imported the drop-in library as described [here](?path=/docs/getting-started--docs), you can use the `cl-add-to-cart` component to display a buy button on any page with embedded validation rules. By clicking the button, you will be able to add to the shopping cart a specified quantity of a specific product or bundle, as shown in the code snippets below.
 
 To enable the buy button, the `quantity` value must be greater than `0`. If the quantity isn't specified the default value will be used and just one unit of the selected product will be added to the shopping cart.
 
@@ -15,8 +15,8 @@ To enable the buy button, the `quantity` value must be greater than `0`. If the 
 
 <Controls of={Stories.Basic} />
 
-<Alert title="Bundle" type="info">
-  TODO: write doc here
+<Alert title="Bundles" type="info">
+  The pre-filled code in the *Control* field refers to an SKU. If you select <code>bundle</code> as the kind of item, make sure to change it with a bundle code (e.g. <code>{codes.bundleAvailable}</code>) so that the button in the example above is enabled.
 </Alert>
 
 ## Validation rules
@@ -34,6 +34,9 @@ To enable the buy button, you must specify the product you want to add to the sh
 The <code>cl-add-to-cart</code> component checks the inventory for the product identified by the provided code. If it is out of stock (e.g. <code>{codes.outOfStock}</code>) the button will be rendered as disabled, as shown in the example below:
 
 <Canvas of={Stories.OutOfStock} />
+
+The same happens when the item you want to add to the shopping cart is a bundle that contains one or more products that are out of stock (e.g. <code>{codes.bundleOutOfStock}</code>), like in the example below:
+
 <Canvas of={Stories.BundleOutOfStock} />
 
 ### Non-existing code
@@ -47,6 +50,9 @@ The provided code must exist among the products of your organization. If you set
 In order to prevent overselling errors, the <code>cl-add-to-cart</code> component won't let you add to the shopping cart a quantity of the selected product greater than the available one, as shown in the example below where the product with code <code>{codes.noOverselling}</code> has less than <code>100</code> stock units, and so the button is rendered as disabled:
 
 <Canvas of={Stories.OversellingPrevention} />
+
+The same happens if the available quantity of a product is exceeded across bundles, as shown in the example below where the bundle with code <code>{codes.bundleAvailable}</code> contains <code>10</code> units of the product with code <code>{codes.noOverselling}</code> that has a stock quantity less than <code>100</code>. If you try to add to the shopping cart <code>10</code> of those bundles (<code>10*10=100</code>), the button will be rendered as disabled:
+
 <Canvas of={Stories.BundleOversellingPrevention} />
 
 ### Virtually infinite stock
