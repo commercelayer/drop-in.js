@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface ClAddToCart {
         /**
-          * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+          * The SKU or bundle code (i.e. the unique identifier of the product or bundle you want to add to the shopping cart).
          */
         "code": string | undefined;
         /**
@@ -16,15 +16,26 @@ export namespace Components {
          */
         "frequency": string | undefined;
         /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.
+          * @default sku
+         */
+        "kind"?: 'sku' | 'bundle';
+        /**
           * The number of units of the selected product you want to add to the shopping cart.
+          * @default 1
          */
         "quantity": number;
     }
     interface ClAvailability {
         /**
-          * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+          * The SKU or bundle code (i.e. the unique identifier of the product or bundle whose availability you want to display).
          */
         "code": string | undefined;
+        /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` is not fully implemented._
+          * @default sku
+         */
+        "kind"?: 'sku' | 'bundle';
         /**
           * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
          */
@@ -64,7 +75,7 @@ export namespace Components {
     }
     interface ClCartCount {
         /**
-          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0`.
          */
         "hideWhenEmpty": boolean;
     }
@@ -104,9 +115,14 @@ export namespace Components {
     }
     interface ClPrice {
         /**
-          * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+          * The SKU or bundle code (i.e. the unique identifier of the product or bundle whose price you want to display).
          */
         "code": string | undefined;
+        /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.
+          * @default sku
+         */
+        "kind"?: 'sku' | 'bundle';
     }
     interface ClPriceAmount {
         /**
@@ -213,7 +229,7 @@ declare global {
 declare namespace LocalJSX {
     interface ClAddToCart {
         /**
-          * The SKU code (i.e. the unique identifier of the product you want to add to the shopping cart).
+          * The SKU or bundle code (i.e. the unique identifier of the product or bundle you want to add to the shopping cart).
          */
         "code": string | undefined;
         /**
@@ -221,15 +237,26 @@ declare namespace LocalJSX {
          */
         "frequency"?: string | undefined;
         /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.
+          * @default sku
+         */
+        "kind"?: 'sku' | 'bundle';
+        /**
           * The number of units of the selected product you want to add to the shopping cart.
+          * @default 1
          */
         "quantity"?: number;
     }
     interface ClAvailability {
         /**
-          * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+          * The SKU or bundle code (i.e. the unique identifier of the product or bundle whose availability you want to display).
          */
         "code": string | undefined;
+        /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` is not fully implemented._
+          * @default sku
+         */
+        "kind"?: 'sku' | 'bundle';
         /**
           * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
          */
@@ -269,7 +296,7 @@ declare namespace LocalJSX {
     }
     interface ClCartCount {
         /**
-          * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
+          * Toggle this switch to hide the counter when the cart is empty instead of showing `0`.
          */
         "hideWhenEmpty"?: boolean;
     }
@@ -309,9 +336,14 @@ declare namespace LocalJSX {
     }
     interface ClPrice {
         /**
-          * The SKU code (i.e. the unique identifier of the product whose price you want to display).
+          * The SKU or bundle code (i.e. the unique identifier of the product or bundle whose price you want to display).
          */
         "code": string | undefined;
+        /**
+          * Indicates whether the code refers to a `sku` or a `bundle`.
+          * @default sku
+         */
+        "kind"?: 'sku' | 'bundle';
     }
     interface ClPriceAmount {
         /**

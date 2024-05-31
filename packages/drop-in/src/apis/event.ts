@@ -2,7 +2,9 @@ import { memoDebounce } from '#utils/debounce'
 import type { Expand } from '#utils/utility-types'
 import type {
   AddItem,
-  GetPrice,
+  GetBundle,
+  GetBundlePrice,
+  GetSkuPrice,
   GetSku,
   GetToken,
   TriggerCartUpdate,
@@ -11,11 +13,16 @@ import type {
 
 export interface EventTypes {
   'cl-identity-gettoken': GetToken
-  'cl-prices-getprice': GetPrice
   'cl-skus-getsku': GetSku
+  'cl-skus-getprice': GetSkuPrice
+  'cl-bundles-getbundle': GetBundle
+  'cl-bundles-getprice': GetBundlePrice
   'cl-cart-additem': AddItem
   'cl-cart-hostedcartupdate': NonNullableReturnType<TriggerHostedCartUpdate>
   'cl-cart-update': NonNullableReturnType<TriggerCartUpdate>
+
+  /** @deprecated Use `cl-skus-getprice` instead. This will be removed in a future version. */
+  'cl-prices-getprice': GetSkuPrice
 }
 
 export type CLCustomEventDetailMap = {

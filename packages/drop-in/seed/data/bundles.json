@@ -1,0 +1,22 @@
+[
+  {
+    "reference": "bundle_1",
+    "name": "Commerce Layer - Getting Started Bundle",
+    "code": "CLGETTINGSTARTED",
+    "currency_code": "USD",
+    "price_amount_cents": 10000,
+    "_compute_compare_at_amount": true,
+    "sku_list": "sku_list_1",
+    "market": "market_2"
+  },
+  {
+    "reference": "bundle_2",
+    "name": "Out of stock bundle",
+    "code": "CLOUTOFSTOCK",
+    "currency_code": "USD",
+    "_compute_price_amount": true,
+    "_compute_compare_at_amount": true,
+    "sku_list": "sku_list_2",
+    "market": "market_2"
+  }
+]

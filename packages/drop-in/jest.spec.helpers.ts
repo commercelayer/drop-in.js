@@ -13,3 +13,11 @@ export async function waitFor(
     }, 100)
   })
 }
+
+export async function waitForMs(ms: number): Promise<void> {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(null)
+    }, ms)
+  })
+}

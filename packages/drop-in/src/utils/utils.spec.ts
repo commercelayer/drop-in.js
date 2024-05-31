@@ -57,5 +57,5 @@ test('memoize should returns a new memoized function', () => {
   expect(memoizedFunc(4, 4)).toEqual(8)
   expect(memoizedFunc(4, 4)).toEqual(8)
 
-  expect(func).toBeCalledTimes(2)
+  expect(func).toHaveBeenCalledTimes(2)
 })

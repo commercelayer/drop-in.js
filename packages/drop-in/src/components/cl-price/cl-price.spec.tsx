@@ -1,9 +1,10 @@
 import * as client from '#apis/commercelayer/client'
-import * as prices from '#apis/commercelayer/prices'
+import * as skus from '#apis/commercelayer/skus'
 import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
 import type { Price } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { CLPrice } from './cl-price'
+import { waitForMs } from 'jest.spec.helpers'
 
 const fakePrices: { [sku: string]: Price } = {
   ABC123: {
@@ -45,7 +46,27 @@ describe('cl-price.spec', () => {
       html: '<cl-price></cl-price>'
     })
     expect(root).toEqualHtml(`
-      <cl-price>
+      <cl-price kind="sku">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+      </cl-price>
+    `)
+  })
+
+  it('renders with a code', async () => {
+    jest
+      .spyOn(skus, 'getPrice')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(fakePrices[sku])
+      )
+
+    const { root } = await newSpecPage({
+      components: [CLPrice],
+      html: '<cl-price code="SKU1234"></cl-price>'
+    })
+    expect(root).toEqualHtml(`
+      <cl-price kind="sku" code="SKU1234">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -55,7 +76,7 @@ describe('cl-price.spec', () => {
 
   it('should pass-throw the "priceUpdate" event to children', async () => {
     jest
-      .spyOn(prices, 'getPrice')
+      .spyOn(skus, 'getPrice')
       .mockImplementation(
         async (sku: string) => await Promise.resolve(fakePrices[sku])
       )
@@ -71,7 +92,7 @@ describe('cl-price.spec', () => {
     })
 
     expect(root).toEqualHtml(`
-      <cl-price code="ABC123">
+      <cl-price kind="sku" code="ABC123">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -87,7 +108,7 @@ describe('cl-price.spec', () => {
 
   it('should fetch the new price when "code" changes', async () => {
     jest
-      .spyOn(prices, 'getPrice')
+      .spyOn(skus, 'getPrice')
       .mockImplementation(
         async (sku: string) => await Promise.resolve(fakePrices[sku])
       )
@@ -104,10 +125,12 @@ describe('cl-price.spec', () => {
 
     root?.setAttribute('code', 'DEF456')
 
+    await waitForMs(11)
+
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-price code="DEF456">
+      <cl-price kind="sku" code="DEF456">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -123,7 +146,7 @@ describe('cl-price.spec', () => {
 
   it('should empty the price when the there are no results', async () => {
     jest
-      .spyOn(prices, 'getPrice')
+      .spyOn(skus, 'getPrice')
       .mockImplementation(
         async (sku: string) => await Promise.resolve(fakePrices[sku])
       )
@@ -140,10 +163,12 @@ describe('cl-price.spec', () => {
 
     root?.setAttribute('code', 'ABC456')
 
+    await waitForMs(11)
+
     await waitForChanges()
 
     expect(root).toEqualHtml(`
-      <cl-price code="ABC456">
+      <cl-price kind="sku" code="ABC456">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>

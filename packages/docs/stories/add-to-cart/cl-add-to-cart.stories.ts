@@ -16,6 +16,7 @@ export default meta
 const Template: StoryFn<Args> = (args) => {
   return create(html`
     <cl-add-to-cart
+      kind=${args.kind ?? nothing}
       code=${args.code ?? nothing}
       quantity=${args.quantity ?? nothing}
       frequency=${args.frequency ?? nothing}
@@ -30,17 +31,17 @@ Basic.args = {
   code: codes.available
 }
 
-export const Subscription = Template.bind({})
-Subscription.args = {
-  code: codes.subscription,
-  frequency: 'three-month'
-}
-
 export const WithoutAttributes = Template.bind({})
 
 export const OutOfStock = Template.bind({})
 OutOfStock.args = {
   code: codes.outOfStock
+}
+
+export const BundleOutOfStock = Template.bind({})
+BundleOutOfStock.args = {
+  kind: 'bundle',
+  code: codes.bundleOutOfStock
 }
 
 export const Nonexisting = Template.bind({})
@@ -54,8 +55,21 @@ OversellingPrevention.args = {
   quantity: 100
 }
 
+export const BundleOversellingPrevention = Template.bind({})
+BundleOversellingPrevention.args = {
+  kind: 'bundle',
+  code: codes.bundleAvailable,
+  quantity: 10
+}
+
 export const DoNotTrack = Template.bind({})
 DoNotTrack.args = {
   code: codes.doNotTrack,
   quantity: 9999
+}
+
+export const Subscription = Template.bind({})
+Subscription.args = {
+  code: codes.subscription,
+  frequency: 'three-month'
 }

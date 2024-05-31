@@ -1,11 +1,11 @@
 import { fireEvent } from '#apis/event'
-import type { GetPrice } from '#apis/types'
+import type { GetSkuPrice } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
 import type { Price } from '@commercelayer/sdk'
-import { chunk, memoize, uniq } from '../../utils/utils'
-import { createClient } from './client'
-import { getConfig } from './config'
+import { chunk, memoize, uniq } from '../../../utils/utils'
+import { createClient } from '../client'
+import { getConfig } from '../config'
 
 interface PriceList {
   [sku: string]: Price | undefined
@@ -16,11 +16,11 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
 
   const uniqSkus = uniq(skus)
 
-  const log = logGroup('`getPrices` method invoked with a list of SKUs')
+  const log = logGroup('`getSkuPrices` method invoked with a list of SKU codes')
 
   log(
     'info',
-    '`getPrices` is the method involved in fetching a list of prices from Commerce Layer. You can follow the request in the "network" panel.'
+    '`getSkuPrices` is the method involved in fetching a list of prices from Commerce Layer. You can follow the request in the "network" panel.'
   )
   log('info', 'SKUs', uniqSkus)
 
@@ -57,14 +57,17 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
 
 const getPrices = pDebounce(_getPrices, { wait: 10, maxWait: 50 })
 
-const getMemoizedPrice = memoize<GetPrice>(async (sku) => {
+const getMemoizedPrice = memoize<GetSkuPrice>(async (sku) => {
   return await getPrices([sku]).then((result) => result[sku])
 })
 
-export const getPrice: GetPrice = async (sku) => {
+export const getPrice: GetSkuPrice = async (sku) => {
   const price = await getMemoizedPrice(sku)
 
+  /** @deprecated Use `cl-skus-getprice` instead. This will be removed in a future version. */
   fireEvent('cl-prices-getprice', [sku], price)
+
+  fireEvent('cl-skus-getprice', [sku], price)
 
   return price
 }

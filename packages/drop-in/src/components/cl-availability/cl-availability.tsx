@@ -1,7 +1,13 @@
 import { getSku } from '#apis/commercelayer/skus'
-import type { AvailabilityUpdateEventPayload } from '#apis/types'
-import { isValidCode, logCode } from '#utils/validation-helpers'
+import type { AvailabilityUpdateEventPayload, Sku } from '#apis/types'
+import {
+  isValidCode,
+  logCode,
+  logUnion,
+  unionToTuple
+} from '#utils/validation-helpers'
 import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
+import debounce from 'lodash/debounce'
 
 @Component({
   tag: 'cl-availability',
@@ -10,8 +16,21 @@ import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
 export class ClAvailability {
   @Element() host!: HTMLElement
 
+  private readonly kindList = unionToTuple<typeof this.kind>()('sku', 'bundle')
+
+  private readonly kindDefault: NonNullable<typeof this.kind> = 'sku'
+
   /**
-   * The SKU code (i.e. the unique identifier of the product whose availability you want to display).
+   * Indicates whether the code refers to a `sku` or a `bundle`.
+   *
+   * _⚠️ `bundle` is not fully implemented._
+   *
+   * @default sku
+   */
+  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' = 'sku'
+
+  /**
+   * The SKU or bundle code (i.e. the unique identifier of the product or bundle whose availability you want to display).
    */
   @Prop({ reflect: true }) code!: string | undefined
 
@@ -24,33 +43,54 @@ export class ClAvailability {
 
   async componentWillLoad(): Promise<void> {
     logCode(this.host, this.code)
-    await this.updateAvailability(this.code)
+    await this.updateAvailability(this.kind, this.code)
+  }
+
+  @Watch('kind')
+  async watchKindHandler(newValue: typeof this.kind): Promise<void> {
+    if (newValue == null) {
+      this.kind = this.kindDefault
+      return
+    }
+
+    logUnion(this.host, 'kind', newValue, this.kindList)
+    await this.debouncedUpdateAvailability(newValue, this.code)
   }
 
   @Watch('code')
   async watchPropHandler(newValue: typeof this.code): Promise<void> {
     logCode(this.host, newValue)
-    await this.updateAvailability(newValue)
+    await this.debouncedUpdateAvailability(this.kind, newValue)
   }
 
-  private async updateAvailability(code: typeof this.code): Promise<void> {
-    if (isValidCode(code)) {
-      const sku = await getSku(code)
+  private readonly updateAvailability = async (
+    kind: typeof this.kind,
+    code: typeof this.code
+  ): Promise<void> => {
+    let sku: Sku | undefined
 
-      this.host
-        .querySelectorAll('cl-availability-status, cl-availability-info')
-        .forEach((element) => {
-          element.dispatchEvent(
-            new CustomEvent<AvailabilityUpdateEventPayload>(
-              'availabilityUpdate',
-              {
-                detail: { sku, rule: this.rule }
-              }
-            )
-          )
-        })
+    if (kind !== 'bundle' && isValidCode(code)) {
+      sku = await getSku(code)
     }
+
+    this.host
+      .querySelectorAll('cl-availability-status, cl-availability-info')
+      .forEach((element) => {
+        element.dispatchEvent(
+          new CustomEvent<AvailabilityUpdateEventPayload>(
+            'availabilityUpdate',
+            {
+              detail: { sku, rule: this.rule }
+            }
+          )
+        )
+      })
   }
+
+  private readonly debouncedUpdateAvailability = debounce(
+    this.updateAvailability,
+    10
+  )
 
   render(): JSX.Element {
     return <slot></slot>

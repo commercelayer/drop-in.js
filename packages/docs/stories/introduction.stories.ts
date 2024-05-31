@@ -60,7 +60,7 @@ export const Basic: StoryFn = () => {
               class="w-full h-full object-center object-contain"
             />
           </div>
-          <h3 class="mt-6 font-medium">Gray Five-Panel Cap with White Logo</h3>
+          <h3 class="mt-6 font-medium">Gray Cap</h3>
           <small class="text-gray-300">${codes.outOfStock}</small>
           <cl-price code="${codes.outOfStock}" class="my-2">
             <cl-price-amount type="compare-at"></cl-price-amount>
@@ -69,7 +69,7 @@ export const Basic: StoryFn = () => {
           <cl-add-to-cart code="${codes.outOfStock}" class="my-2 mx-auto">
             Add to cart
           </cl-add-to-cart>
-          <cl-availability code="${codes.outOfStock}" class="my-2">
+          <cl-availability code="${codes.outOfStock}" class="my-2 text-sm">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
             <cl-availability-status type="available" class="block">
@@ -82,17 +82,6 @@ export const Basic: StoryFn = () => {
           </cl-availability>
         </div>
 
-        <!-- Editorial Banner -->
-        <div class="flex flex-col">
-          <cl-identity-status class="h-full" type="guest">
-            <img class="object-contain position-top" src="register.jpg" />
-          </cl-identity-status>
-
-          <cl-identity-status class="h-full" type="customer">
-            <img class="object-contain position-top" src="welcomeback.jpg" />
-          </cl-identity-status>
-        </div>
-
         <!-- 2nd product: White Backpack with Black Logo -->
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
@@ -101,7 +90,7 @@ export const Basic: StoryFn = () => {
               class="w-full h-full object-center object-contain"
             />
           </div>
-          <h3 class="mt-6 font-medium">White Backpack with Black Logo</h3>
+          <h3 class="mt-6 font-medium">White Backpack</h3>
           <small class="text-gray-300">${codes.noDiscount}</small>
           <cl-price code="${codes.noDiscount}" class="my-2">
             <cl-price-amount type="compare-at"></cl-price-amount>
@@ -110,7 +99,37 @@ export const Basic: StoryFn = () => {
           <cl-add-to-cart code="${codes.noDiscount}" class="my-2 mx-auto">
             Add to cart
           </cl-add-to-cart>
-          <cl-availability code="${codes.noDiscount}" class="my-2">
+          <cl-availability code="${codes.noDiscount}" class="my-2 text-sm">
+            <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
+            <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
+            <cl-availability-status type="available" class="block">
+              ready to be shipped in
+              <cl-availability-info type="min-days"></cl-availability-info
+              // eslint-disable-next-line prettier/prettier
+              >-<cl-availability-info type="max-days"></cl-availability-info>
+              days
+            </cl-availability-status>
+          </cl-availability>
+        </div>
+
+        <!-- 3rd product: BUNDLE -->
+        <div class="flex flex-col">
+          <div class="h-80 sm:h-64 flex justify-center">
+            <img
+              src="https://res.cloudinary.com/commercelayer/image/upload/v1681465805/demo-store/assets/white-glossy-mug-15oz-valentines-day.png"
+              class="h-full object-center object-contain rounded-md"
+            />
+          </div>
+          <h3 class="mt-6 font-medium">Getting Started bundle</h3>
+          <small class="text-gray-300">${codes.bundleAvailable}</small>
+          <cl-price kind="bundle" code="${codes.bundleAvailable}" class="my-2">
+            <cl-price-amount type="compare-at"></cl-price-amount>
+            <cl-price-amount type="price"></cl-price-amount>
+          </cl-price>
+          <cl-add-to-cart kind="bundle" code="${codes.bundleAvailable}" class="my-2 mx-auto">
+            Add to cart
+          </cl-add-to-cart>
+          <cl-availability kind="bundle" code="${codes.bundleAvailable}" class="my-2 text-sm">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
             <cl-availability-status type="available" class="block">
@@ -124,6 +143,17 @@ export const Basic: StoryFn = () => {
         </div>
 
       </section>
+
+      <!-- Editorial Banner -->
+      <div class="flex flex-col items-center mt-8">
+        <cl-identity-status class="h-full" type="guest">
+          <img class="object-contain position-top max-h-[470px]" src="register-h.jpg" />
+        </cl-identity-status>
+
+        <cl-identity-status class="h-full" type="customer">
+          <img class="object-contain position-top max-h-[470px]" src="welcomeback-h.jpg" />
+        </cl-identity-status>
+      </div>
     `
   )
 }

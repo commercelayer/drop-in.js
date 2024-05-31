@@ -37,10 +37,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
-      document.addEventListener('cl-identity-gettoken', (e) => console.info('identity.getToken', e.detail));
-      document.addEventListener('cl-skus-getsku', (e) => console.info('skus.getSku', e.detail));
-      document.addEventListener('cl-prices-getprice', (e) => console.info('prices.getPrice', e.detail));
-      document.addEventListener('cl-cart-additem', (e) => console.info('cart.addItem', e.detail));
+      document.addEventListener('cl-identity-gettoken', (e) => console.info('cl-identity-gettoken', e.detail));
+      document.addEventListener('cl-skus-getsku', (e) => console.info('cl-skus-getsku', e.detail));
+      document.addEventListener('cl-skus-getprice', (e) => console.info('cl-skus-getprice', e.detail));
+      document.addEventListener('cl-bundles-getbundle', (e) => console.info('cl-bundles-getbundle', e.detail))
+      document.addEventListener('cl-bundles-getprice', (e) => console.info('cl-bundles-getprice', e.detail))
+      document.addEventListener('cl-cart-additem', (e) => console.info('cl-cart-additem', e.detail));
     </script>
 
     <script>
@@ -120,7 +122,7 @@
                 d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"
               />
             </svg>
-            <cl-cart-count aria-hidden="true"></cl-cart-count>
+            <cl-cart-count aria-hidden="true" hide-when-empty="true"></cl-cart-count>
             <cl-cart open-on-add></cl-cart>
           </cl-cart-link>
         </div>
@@ -135,6 +137,8 @@
               <code>
                 <select>
                   <option value="5PANECAP000000FFFFFFXXXX">Available</option>
+                  <option value="CLGETTINGSTARTED" data-kind="bundle">Bundle</option>
+                  <option value="CLOUTOFSTOCK" data-kind="bundle">Bundle - Out Of Stock</option>
                   <option value="5PANECAP000000FFFFFFXXXX" data-quantity="-1">With Negative Quantity</option>
                   <option value="BACKPACKFFFFFF000000XXXX" data-quantity="5">No Discount</option>
                   <option value="5PANECAP9D9CA1FFFFFFXXXX">Out Of Stock</option>
@@ -156,6 +160,7 @@
               <cl-price-amount type="compare-at"></cl-price-amount>
               <cl-price-amount></cl-price-amount>
             </cl-price>
+            <input data-id="pc--quantity" type="number" max="101" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
             <cl-add-to-cart code="5PANECAP000000FFFFFFXXXX">Add to cart</cl-add-to-cart>
             <cl-availability code="5PANECAP000000FFFFFFXXXX" class="text-sm">
               <cl-availability-status type="available" style="color: #1fda8a">available<br /></cl-availability-status>
@@ -174,10 +179,10 @@
           <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
             <div class="mb-4"><code>EDITORIAL BANNER</code></div>
             <cl-identity-status type="guest">
-              <div class="text-xl"><img alt="Register" class="max-h-[325px] w-full object-contain" src="https://commercelayer.github.io/drop-in.js/register.jpg" /></div>
+              <div class="text-xl"><img alt="Register" class="max-h-[325px] w-full object-contain" src="https://commercelayer.github.io/drop-in.js/register-v.jpg" /></div>
             </cl-identity-status>
             <cl-identity-status type="customer">
-              <div class="text-xl"><img alt="Welcome Back!" class="max-h-[325px] w-full object-contain" src="https://commercelayer.github.io/drop-in.js/welcomeback.jpg" /></div>
+              <div class="text-xl"><img alt="Welcome Back!" class="max-h-[325px] w-full object-contain" src="https://commercelayer.github.io/drop-in.js/welcomeback-v.jpg" /></div>
             </cl-identity-status>
           </div>
 
@@ -185,43 +190,73 @@
             const productCard = document.querySelector('[data-id="product-card"]')
             const select = productCard.querySelector('[data-id="pc--selector"] select')
 
-            const skus = Array.from(select.querySelectorAll('option')).flatMap(option => (
+            const codes = Array.from(select.querySelectorAll('option')).flatMap(option => (
               [[
                 option.innerText,
                 {
-                  sku: option.value,
+                  code: option.value,
                   quantity: parseInt(option.dataset.quantity),
                   frequency: option.dataset.frequency,
+                  kind: option.dataset.kind,
                 }
               ]]
             ))
 
             console.groupCollapsed('DEMO - development log')
-            console.info('skus', skus)
+            console.info('codes', codes)
             console.groupEnd()
 
             /**
-             * @type {(productCard: Element, options: { sku: string; quantity?: number; frequency?: string; description?: string; }) => void}
+             * @type {(productCard: Element, options: { code: string; quantity?: number; frequency?: string; kind?: 'bundle' | 'sku'; description?: string; }) => void}
              */
-            function updateProductCard(productCard, { sku, quantity, description, frequency }) {
-              productCard.querySelector('[data-id="pc--sku"]').innerText = sku;
-              productCard.querySelector('[data-id="pc--img"]').src = `https://data.commercelayer.app/seed/images/skus/${sku}_FLAT.png`
-              productCard.querySelector('cl-price').code = sku;
-              productCard.querySelector('cl-add-to-cart').code = sku;
+            function updateProductCard(productCard, { code, quantity, description, frequency, kind }) {
+              productCard.querySelector('[data-id="pc--sku"]').innerText = code;
+              productCard.querySelector('[data-id="pc--img"]').src = kind === 'bundle'
+                ? 'https://res.cloudinary.com/commercelayer/image/upload/v1681465805/demo-store/assets/white-glossy-mug-15oz-valentines-day.png'
+                : `https://data.commercelayer.app/seed/images/skus/${code}_FLAT.png`
+              productCard.querySelector('cl-price').kind = kind ?? null;
+              productCard.querySelector('cl-price').code = code;
+              productCard.querySelector('cl-add-to-cart').kind = kind ?? null;
+              productCard.querySelector('cl-add-to-cart').code = code;
               productCard.querySelector('cl-add-to-cart').quantity = isNaN(quantity) || quantity == null ? 1 : quantity;
+              productCard.querySelector('[data-id="pc--quantity"]').value = isNaN(quantity) || quantity == null ? 1 : quantity;
               productCard.querySelector('cl-add-to-cart').frequency = frequency;
-              productCard.querySelector('cl-availability').code = sku;
+              productCard.querySelector('cl-availability').kind = kind ?? null;
+              productCard.querySelector('cl-availability').code = code;
               if (description != null) {
                 productCard.querySelector('[data-id="pc--selector"]').innerHTML = `<code>${description.toUpperCase()}</code>`
               }
+
+              productCard.querySelector('[data-id="pc--quantity"]').addEventListener('keyup', function (event) {
+                const qnt = parseInt(event.currentTarget.value)
+                productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : qnt < -101 ? -101 : qnt
+                if (qnt > 101) {
+                  event.currentTarget.value = 101
+                }
+                if (qnt < -101) {
+                  event.currentTarget.value = -101
+                }
+              })
             }
 
+            productCard.querySelector('[data-id="pc--quantity"]').addEventListener('keyup', function (event) {
+              const qnt = parseInt(event.currentTarget.value)
+              productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : qnt < -101 ? -101 : qnt
+              if (qnt > 101) {
+                event.currentTarget.value = 101
+              }
+              if (qnt < -101) {
+                event.currentTarget.value = -101
+              }
+            })
+
             select.addEventListener('change', function (event) {
-              const sku = event.currentTarget.value;
+              const code = event.currentTarget.value;
               const quantity = parseInt(event.currentTarget.selectedOptions[0].dataset.quantity)
               const frequency = event.currentTarget.selectedOptions[0].dataset.frequency
+              const kind = event.currentTarget.selectedOptions[0].dataset.kind
 
-              updateProductCard(productCard, { sku, quantity, frequency })
+              updateProductCard(productCard, { code, quantity, frequency, kind })
             })
           </script>
         </div>
@@ -231,11 +266,11 @@
         </div>
 
         <script>
-          skus.forEach(([description, {sku, quantity, frequency}]) => {
-            const newProductCard = productCard.cloneNode(true)
-            updateProductCard(newProductCard, { sku, quantity, description, frequency })
-            document.getElementById('product-list').append(newProductCard)
-          })
+          // codes.forEach(([description, { code, quantity, frequency, kind }]) => {
+          //   const newProductCard = productCard.cloneNode(true)
+          //   updateProductCard(newProductCard, { code, quantity, description, frequency, kind })
+          //   document.getElementById('product-list').append(newProductCard)
+          // })
         </script>
       </main>
 

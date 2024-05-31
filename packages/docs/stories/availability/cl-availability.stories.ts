@@ -16,7 +16,7 @@ export default meta
 const Template: StoryFn<Args> = (args) => {
   return create(
     html`
-      <cl-availability code=${args.code ?? nothing} rule=${args.rule ?? nothing}>
+      <cl-availability kind=${args.kind ?? nothing} code=${args.code ?? nothing} rule=${args.rule ?? nothing}>
         <cl-availability-status type="available">
           <span style="color: green;">• available</span>
           ready to be shipped in

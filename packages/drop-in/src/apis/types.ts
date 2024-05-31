@@ -1,4 +1,12 @@
-import type { LineItem, Order, Price, Sku as SdkSku } from '@commercelayer/sdk'
+import type {
+  Bundle as SdkBundle,
+  LineItem,
+  Order,
+  Price,
+  Sku as SdkSku,
+  SkuList,
+  SkuListItem
+} from '@commercelayer/sdk'
 import { type Token } from './commercelayer/client'
 
 interface DeliveryLeadTime {
@@ -25,23 +33,35 @@ interface Level {
   delivery_lead_times: DeliveryLeadTime[]
 }
 
-interface Inventory {
+export interface Inventory {
   available: boolean
   quantity?: number
   levels: Level[]
 }
 
 // TODO: move this at sdk level
-export type Sku = SdkSku & {
+export type Sku = Omit<SdkSku, 'inventory'> & {
   inventory?: Inventory
 }
 
-export type GetPrice = (sku: string) => Promise<Price | undefined>
+export type Bundle = Omit<SdkBundle, 'skus' | 'sku_list'> & {
+  skus?: Sku[] | null
+  sku_list: Omit<SkuList, 'sku_list_items'> & {
+    sku_list_items: Array<Omit<SkuListItem, 'sku'> & { sku: Sku }>
+  }
+}
 
 export type GetSku = (code: string) => Promise<Sku | undefined>
+export type GetSkuPrice = (code: string) => Promise<Price | undefined>
+
+export type GetBundle = (
+  code: string
+) => Promise<(Bundle & Pick<Sku, 'inventory'>) | undefined>
+export type GetBundlePrice = (code: string) => Promise<Price | undefined>
 
 export type AddItem = (
-  sku: string,
+  kind: 'bundle' | 'sku',
+  code: string,
   quantity: number,
   options?: Partial<Pick<LineItem, 'frequency'>>
 ) => Promise<LineItem>

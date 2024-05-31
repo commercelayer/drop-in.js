@@ -1,5 +1,7 @@
 import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
-import * as Stories from './cl-price.stories.ts';
+import * as Stories from './cl-price.stories.ts'
+import { codes } from '../assets/constants'
+import { Alert } from '../assets/components'
 
 <Meta of={Stories} />
 
@@ -9,11 +11,15 @@ Once you have correctly set up your organization in Commerce Layer and imported 
 
 Each price has an amount (the actual selling price) and an optional *compare-at* amount (the full price that you want to display to the customer — typically with a strikethrough).
 
-This component is the owner of the price information. It fetches the price of the specified SKU and dispatches it to the [`cl-price-amount`](?path=/docs/components-price-cl-price-amount--docs) children.
+This component is the owner of the price information. It fetches the price of the specified [SKU](https://docs.commercelayer.io/core/v/api-reference/skus) or [bundle](https://docs.commercelayer.io/core/v/api-reference/bundles) and dispatches it to the [`cl-price-amount`](?path=/docs/components-price-cl-price-amount--docs) children.
 
 <Canvas of={Stories.Basic} />
 
 <Controls of={Stories.Basic} />
+
+<Alert title="Bundles" type="info">
+  The pre-filled code in the *Control* field refers to an SKU. If you select <code>bundle</code> as the kind of item, make sure to change it with a bundle code (e.g. <code>{codes.bundleAvailable}</code>) so that the example above shows the correct price.
+</Alert>
 
 ### No discount
 

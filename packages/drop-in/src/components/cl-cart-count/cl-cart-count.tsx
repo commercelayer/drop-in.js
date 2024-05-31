@@ -9,7 +9,7 @@ import { Component, Host, Prop, State, h, type JSX } from '@stencil/core'
 })
 export class ClCartCount {
   /**
-   * Toggle this switch to hide the counter when the cart is empty instead of showing `0` in the example below.
+   * Toggle this switch to hide the counter when the cart is empty instead of showing `0`.
    */
   @Prop({ reflect: true }) hideWhenEmpty: boolean = false
 
@@ -28,8 +28,19 @@ export class ClCartCount {
   }
 
   private async updateCart(cart: Order | null): Promise<void> {
-    if (cart?.skus_count != null && cart.skus_count > 0) {
-      this.count = cart.skus_count
+    const itemCount = cart?.line_items
+      ?.filter(
+        (item) => item.item_type === 'skus' || item.item_type === 'bundles'
+      )
+      .reduce((count, item) => count + item.quantity, 0)
+
+    // TODO: `skus_count` counts SKUs inside the bundle (this could be a future option).
+    // if (cart?.skus_count != null && cart.skus_count > 0) {
+    //   this.count = cart.skus_count
+    // }
+
+    if (itemCount != null && itemCount > 0) {
+      this.count = itemCount
     } else {
       this.count = undefined
     }

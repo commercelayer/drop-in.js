@@ -15,7 +15,7 @@ export default meta
 
 const Template: StoryFn<Args> = (args) => {
   return create(html`
-    <cl-price code=${args.code ?? nothing}>
+    <cl-price kind=${args.kind ?? nothing} code=${args.code ?? nothing}>
       <cl-price-amount type="compare-at"></cl-price-amount>
       <cl-price-amount type="price"></cl-price-amount>
     </cl-price>
@@ -30,6 +30,12 @@ Basic.args = {
 export const NoDiscount = Template.bind({})
 NoDiscount.args = {
   code: codes.noDiscount
+}
+
+export const Bundle = Template.bind({})
+Bundle.args = {
+  kind: 'bundle',
+  code: codes.bundleAvailable
 }
 
 export const WithoutAttributes = Template.bind({})
