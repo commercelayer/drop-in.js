@@ -7,6 +7,8 @@ Prices, availability messages, shopping bag, and more are automatically mixed in
 ![Commerce Layer drop-in library](https://user-images.githubusercontent.com/1681269/203999041-980f0dec-4fca-45c9-a558-b14153158106.jpg)
 
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/@commercelayer/drop-in.js)
+[![NPM](https://img.shields.io/npm/v/%40commercelayer%2Fdrop-in.js)](https://www.npmjs.com/package/@commercelayer/drop-in.js)
+[![jsDelivr Stats](https://data.jsdelivr.com/v1/stats/packages/npm/@commercelayer/drop-in.js/badge?type=hits&period=month&style=rounded)](https://www.jsdelivr.com/package/npm/@commercelayer/drop-in.js?tab=stats)
 
 ## Getting started
 
