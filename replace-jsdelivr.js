@@ -25,18 +25,29 @@ const tasks = [
     to: `\`$1${major}\``
   },
   {
-    from: /`(drop-in.js@)([0-9a-z]+\.[0-9a-z]+\.[0-9a-z\-]+)`/g,
+    from: /`(drop-in.js@)([0-9]+\.[0-9]+\.[0-9a-z\-]+)`/g,
     to: `\`$1${version}\``
+  },
+  {
+    from: /({\/\* DO NOT REMOVE - replace version \*\/}v)([0-9a-z\.\-]+)/g,
+    to: `$1${version}`
   }
 ]
 
 try {
   const results = tasks.flatMap(task => sync({
     dry: false,
+    ignore: [
+      './node_modules/**',
+      './**/node_modules/**',
+    ],
     files: [
       './**/*.md*',
       './**/*.ts*',
-      './**/*.js*'
+      './**/*.js*',
+
+      './packages/docs/.storybook/**/*.ts*',
+      './packages/docs/.storybook/**/*.js*',
     ],
     ...task
   }))

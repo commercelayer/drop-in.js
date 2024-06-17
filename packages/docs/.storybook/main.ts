@@ -32,6 +32,7 @@ const storybookConfig: StorybookConfig = {
     require.resolve('./addon-drop-in-css/manager.tsx'),
     require.resolve('./addon-minicart-css/manager.tsx'),
     require.resolve('./addon-scope-selector/manager.tsx'),
+    require.resolve('./addon-version/manager.tsx'),
     require.resolve('./addon-gh-repository/manager.tsx'),
   ],
   framework: {
