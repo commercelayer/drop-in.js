@@ -11,13 +11,11 @@ export function getCommerceLayerConfiguration({
 }: Partial<CommerceLayerConfig> = {}): string {
   return `
     <script>
-      (function() {
-        commercelayerConfig = {
-          clientId: '${clientId}',
-          slug: '${slug}',
-          scope: '${scope}'
-        }
-      }());
+      commercelayerConfig = {
+        clientId: '${clientId}',
+        slug: '${slug}',
+        scope: '${scope}'
+      }
     </script>
   `
 }
