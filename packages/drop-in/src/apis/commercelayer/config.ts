@@ -14,14 +14,13 @@ export interface CommerceLayerConfig {
 
   /**
    * Restrict the dataset of your application by specifying allowed scopes. You can find them in your dashboard.
-   * @example
-   * `market:code:usa`
+   * @example 'market:code:usa'
    */
   scope: string
 
   /**
    * Define the debug level.
-   * @default none
+   * @default 'none'
    */
   debug?: 'none' | 'all'
 
@@ -32,8 +31,9 @@ export interface CommerceLayerConfig {
 
   /**
    * API domain
+   * @default 'commercelayer.io'
    */
-  domain: 'commercelayer.io' | 'commercelayer.co'
+  domain?: string
 }
 
 export type Config = CommerceLayerConfig & {
@@ -89,9 +89,8 @@ export function getConfig(): Config {
   }
 
   if (
-    !['commercelayer.io', 'commercelayer.co'].includes(
-      commercelayerConfig.domain
-    )
+    typeof commercelayerConfig.domain !== 'string' ||
+    commercelayerConfig.domain === ''
   ) {
     commercelayerConfig.domain = 'commercelayer.io'
   }
