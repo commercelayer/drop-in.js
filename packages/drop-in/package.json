@@ -27,7 +27,7 @@
     "drop-in"
   ],
   "scripts": {
-    "postinstall": "pnpm build",
+    "prepare": "pnpm build",
     "build": "stencil build --docs && pnpm build:sass",
     "build:sass": "sass --style compressed ./src/styles/:./dist/drop-in/",
     "build:watch": "stencil build --docs --watch",

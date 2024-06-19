@@ -27,15 +27,13 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
 <script type="module" src="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.esm.js"></script>
 
 <script>
-  (function() {
-    window.commercelayerConfig = {
-      clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
-      slug: 'drop-in-js',
-      scope: '${getSelectedScopeValue()}',
-      debug: 'all', // default is 'none'
-      orderReturnUrl: 'https://example.com' // optional
-    }
-  }());
+  window.commercelayerConfig = {
+    clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+    slug: 'drop-in-js',
+    scope: '${getSelectedScopeValue()}',
+    debug: 'all', // default is 'none'
+    orderReturnUrl: 'https://example.com' // optional
+  }
 </script>
 `} />
 
