@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@commercelayer/js-auth": "^6.2.2",
-    "@commercelayer/sdk": "^5.46.0",
+    "@commercelayer/sdk": "^6.9.1",
     "@types/lodash": "^4.17.5",
     "iframe-resizer": "4.4.2",
     "js-cookie": "^3.0.5",
@@ -73,7 +73,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=18.18.0",
+    "node": ">=20",
     "pnpm": ">=9"
   }
 }

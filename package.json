@@ -26,7 +26,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=18.18.0",
+    "node": ">=20",
     "pnpm": "9.1.3"
   },
   "packageManager": "pnpm@9.1.3",
@@ -37,7 +37,7 @@
     "husky": "^9.0.11",
     "lerna": "^8.1.5",
     "lint-staged": "^15.2.7",
-    "replace-in-file": "^7.2.0",
+    "replace-in-file": "^8.0.1",
     "typescript": "^5.5.2"
   }
 }
