@@ -34,10 +34,10 @@
     "@commercelayer/eslint-config-ts": "^1.4.5",
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
-    "husky": "^9.0.11",
-    "lerna": "^8.1.5",
-    "lint-staged": "^15.2.7",
-    "replace-in-file": "^8.0.1",
-    "typescript": "^5.5.2"
+    "husky": "^9.1.5",
+    "lerna": "^8.1.8",
+    "lint-staged": "^15.2.9",
+    "replace-in-file": "^8.1.0",
+    "typescript": "^5.5.4"
   }
 }
