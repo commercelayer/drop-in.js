@@ -139,8 +139,8 @@ importers:
         specifier: ^6.9.1
         version: 6.9.1
       '@types/lodash':
-        specifier: ^4.17.5
-        version: 4.17.5
+        specifier: ^4.17.6
+        version: 4.17.6
       iframe-resizer:
         specifier: 4.4.2
         version: 4.4.2
@@ -155,11 +155,11 @@ importers:
         version: 4.20.1
     devDependencies:
       '@stencil/core':
-        specifier: ^4.19.0
-        version: 4.19.0
+        specifier: ^4.19.1
+        version: 4.19.1
       '@stencil/sass':
         specifier: ^3.0.12
-        version: 3.0.12(@stencil/core@4.19.0)
+        version: 3.0.12(@stencil/core@4.19.1)
       '@types/iframe-resizer':
         specifier: ^3.5.13
         version: 3.5.13
@@ -1601,8 +1601,8 @@ packages:
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
 
-  '@stencil/core@4.19.0':
-    resolution: {integrity: sha512-Lky99+K9guu5fFMi3ows9q6p0/gjuZmfmVHxcPMQa5QZKSwG+D19u7G1xcd3p6I+xIfwk71gFxrmcKU1gaOCdg==}
+  '@stencil/core@4.19.1':
+    resolution: {integrity: sha512-fjSBctHrobeSL2+XcuX7GVk/eaUhZ/lvIu21RJmzHAPcNyueuSAEv7J/Isn4UlYNk70o+yOK72H0FTlNkUibvw==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
@@ -2014,6 +2014,9 @@ packages:
 
   '@types/lodash@4.17.5':
     resolution: {integrity: sha512-MBIOHVZqVqgfro1euRDWX7OO0fBVUUMrN6Pwm8LQsz8cWhEpihlvR70ENj3f40j58TNxZaWv2ndSkInykNBBJw==}
+
+  '@types/lodash@4.17.6':
+    resolution: {integrity: sha512-OpXEVoCKSS3lQqjx9GGGOapBeuW5eUboYHRlHP9urXPX25IKZ6AnP5ZRxtVf63iieUbsHxLn8NQ5Nlftc6yzAA==}
 
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
@@ -8720,11 +8723,11 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@stencil/core@4.19.0': {}
+  '@stencil/core@4.19.1': {}
 
-  '@stencil/sass@3.0.12(@stencil/core@4.19.0)':
+  '@stencil/sass@3.0.12(@stencil/core@4.19.1)':
     dependencies:
-      '@stencil/core': 4.19.0
+      '@stencil/core': 4.19.1
 
   '@storybook/addon-actions@8.1.11':
     dependencies:
@@ -9588,6 +9591,8 @@ snapshots:
   '@types/json5@0.0.29': {}
 
   '@types/lodash@4.17.5': {}
+
+  '@types/lodash@4.17.6': {}
 
   '@types/mdast@4.0.4':
     dependencies:
