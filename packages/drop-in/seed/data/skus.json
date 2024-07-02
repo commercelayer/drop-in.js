@@ -56,6 +56,7 @@
     "name": "Black Duffle Bag with White Logo",
     "description": "The perfect spacious bag no matter the occasion. It’s great for packing exercise gear when heading to the gym, or throwing in necessities and going on an adventure.",
     "image_url": "https://data.commercelayer.app/seed/images/skus/DUFFLBAG000000FFFFFFXXXX_FLAT.png",
+    "do_not_ship": true,
     "shipping_category": "shipping_category_1"
   },
   {
