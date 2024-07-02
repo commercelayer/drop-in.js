@@ -17,8 +17,10 @@ const Template: StoryFn<Args> = (args) => {
   return create(
     html`
       <cl-availability kind=${args.kind ?? nothing} code=${args.code ?? nothing} rule=${args.rule ?? nothing}>
-        <cl-availability-status type="available">
-          <span style="color: green;">• available</span>
+        <cl-availability-status type="available" style="color: green;">
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="available-with-info">
           ready to be shipped in
           <cl-availability-info type="min-days"></cl-availability-info
           // eslint-disable-next-line prettier/prettier
