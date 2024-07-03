@@ -142,5 +142,17 @@
     "sku_code": "TSHIRTMSFFFFFF000000XLXX",
     "quantity": 166,
     "stock_location": "stock_location_2"
+  },
+  {
+    "reference": "stock_item_501",
+    "sku_code": "EBOOKECOMPLAYBOOKED1XXXX",
+    "quantity": 500,
+    "stock_location": "stock_location_1"
+  },
+  {
+    "reference": "stock_item_502",
+    "sku_code": "EBOOKECOMPLAYBOOKED1XXXX",
+    "quantity": 500,
+    "stock_location": "stock_location_2"
   }
 ]

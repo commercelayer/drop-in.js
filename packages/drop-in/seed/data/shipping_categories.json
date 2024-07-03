@@ -2,5 +2,9 @@
   {
     "reference": "shipping_category_1",
     "name": "Merchandising"
+  },
+  {
+    "reference": "shipping_category_2",
+    "name": "Digital"
   }
 ]

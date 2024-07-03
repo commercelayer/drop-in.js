@@ -56,7 +56,6 @@
     "name": "Black Duffle Bag with White Logo",
     "description": "The perfect spacious bag no matter the occasion. It’s great for packing exercise gear when heading to the gym, or throwing in necessities and going on an adventure.",
     "image_url": "https://data.commercelayer.app/seed/images/skus/DUFFLBAG000000FFFFFFXXXX_FLAT.png",
-    "do_not_ship": true,
     "shipping_category": "shipping_category_1"
   },
   {
@@ -122,5 +121,14 @@
     "description": "This is THE classic t-shirt. Its fine jersey cotton construction makes it extremely soft and comfortable to wear, so it's a good choice for a day-to-day outfit — it's durable and can withstand several washings while retaining its shape and color.",
     "image_url": "https://data.commercelayer.app/seed/images/skus/TSHIRTMSFFFFFF000000XLXX_FLAT.png",
     "shipping_category": "shipping_category_1"
+  },
+  {
+    "reference": "sku_251",
+    "code": "EBOOKECOMPLAYBOOKED1XXXX",
+    "name": "The Ecommerce Playbook (Ebook ed.1)",
+    "description": "How to get started with a composable commerce approach, powered by Commerce Layer. Download the ebook for free.",
+    "image_url": "https://data.commercelayer.app/seed/images/skus/EBOOKECOMPLAYBOOKED1XXXX_FLAT.png",
+    "do_not_ship": true,
+    "shipping_category": "shipping_category_2"
   }
 ]

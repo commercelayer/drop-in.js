@@ -5,18 +5,24 @@ import { create } from '../../utils'
 import { codes } from '../assets/constants'
 
 type Args = DropInArgs['cl-availability-info'] & {
-  ['Use an available product']: boolean
+  ['Product availability']: string
 }
 
 const meta: Meta<Args> = {
   title: 'Components/Availability/cl-availability-info',
   component: 'cl-availability-info',
   argTypes: {
-    'Use an available product': {
+    'Product availability': {
       description:
-        'Toggle this switch to swap from an out-of-stock to an available product in the example above.',
-      type: {
-        name: 'boolean'
+        'Select one of the options to swap between products with different availability in the example above.',
+      options: [codes.available, codes.digitalProduct, codes.outOfStock],
+      control: {
+        type: 'select',
+        labels: {
+          [codes.available]: 'Shippable product',
+          [codes.digitalProduct]: 'Digital product',
+          [codes.outOfStock]: 'Out of stock product'
+        }
       },
       table: {
         category: 'storybook'
@@ -29,17 +35,17 @@ export default meta
 
 export const Basic: StoryFn<Args> = (args) => {
   return create(html`
-    <cl-availability
-      code=${args['Use an available product']
-        ? codes.available
-        : codes.outOfStock}
-    >
-      <cl-availability-info type=${args.type ?? nothing}></cl-availability-info>
+    <cl-availability code=${args['Product availability']}>
+      <cl-availability-status type="available-with-info">
+        <cl-availability-info
+          type=${args.type ?? nothing}
+        ></cl-availability-info>
+      </cl-availability-status>
     </cl-availability>
   `)
 }
 Basic.args = {
-  'Use an available product': true,
+  'Product availability': codes.available,
   type: 'min-days'
 }
 
