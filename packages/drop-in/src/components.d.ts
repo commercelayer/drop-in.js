@@ -57,7 +57,10 @@ export namespace Components {
         /**
           * The product availability status. It determines the visibility of the inner message.
          */
-        "type": 'available' | 'unavailable' | undefined;
+        "type": | 'available'
+    | 'available-with-info'
+    | 'unavailable'
+    | undefined;
     }
     interface ClCart {
         /**
@@ -278,7 +281,10 @@ declare namespace LocalJSX {
         /**
           * The product availability status. It determines the visibility of the inner message.
          */
-        "type": 'available' | 'unavailable' | undefined;
+        "type": | 'available'
+    | 'available-with-info'
+    | 'unavailable'
+    | undefined;
     }
     interface ClCart {
         /**

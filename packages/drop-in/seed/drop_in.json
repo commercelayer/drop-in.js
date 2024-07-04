@@ -69,7 +69,8 @@
   {
     "resourceType": "shipping_categories",
     "referenceKeys": [
-      "shipping_category_1"
+      "shipping_category_1",
+      "shipping_category_2"
     ]
   },
   {

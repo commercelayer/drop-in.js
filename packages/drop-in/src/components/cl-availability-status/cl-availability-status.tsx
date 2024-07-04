@@ -28,15 +28,24 @@ export class ClAvailabilityStatus {
    * The product availability status.
    * It determines the visibility of the inner message.
    */
-  @Prop({ reflect: true }) type!: 'available' | 'unavailable' | undefined
+  @Prop({ reflect: true }) type!:
+    | 'available'
+    | 'available-with-info'
+    | 'unavailable'
+    | undefined
 
   @State() available: boolean | undefined
+
+  @State() hasDeliveryLeadTimes: boolean | undefined
 
   @Listen('availabilityUpdate')
   availabilityUpdateHandler(
     event: CustomEvent<AvailabilityUpdateEventPayload>
   ): void {
     this.available = event.detail?.sku?.inventory?.available
+    this.hasDeliveryLeadTimes =
+      (event.detail?.sku?.inventory?.levels?.[0]?.delivery_lead_times?.length ??
+        0) > 0
   }
 
   async componentWillLoad(): Promise<void> {
@@ -55,7 +64,10 @@ export class ClAvailabilityStatus {
   render(): JSX.Element {
     if (
       (this.type === 'available' && this.available === true) ||
-      (this.type === 'unavailable' && this.available === false)
+      (this.type === 'unavailable' && this.available === false) ||
+      (this.type === 'available-with-info' &&
+        this.available === true &&
+        this.hasDeliveryLeadTimes === true)
     ) {
       return <slot></slot>
     }

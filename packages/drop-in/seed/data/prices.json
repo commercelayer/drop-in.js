@@ -313,5 +313,26 @@
     "amount_cents": 3110,
     "compare_at_amount_cents": 3550,
     "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_751",
+    "sku_code": "EBOOKECOMPLAYBOOKED1XXXX",
+    "amount_cents": 3110,
+    "compare_at_amount_cents": 3550,
+    "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_752",
+    "sku_code": "EBOOKECOMPLAYBOOKED1XXXX",
+    "amount_cents": 3110,
+    "compare_at_amount_cents": 3550,
+    "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_753",
+    "sku_code": "EBOOKECOMPLAYBOOKED1XXXX",
+    "amount_cents": 3110,
+    "compare_at_amount_cents": 3550,
+    "price_list": "price_list_3"
   }
 ]
