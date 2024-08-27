@@ -4,7 +4,7 @@
   "description": "Transform any plain HTML page into an enterprise-grade static commerce website, with almost no coding required.",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install",
+    "prepare": "husky",
     "build": "pnpm -r build && cp -r packages/drop-in/www/drop-in.js/demo packages/docs/storybook-static",
     "build:drop-in": "pnpm --filter drop-in.js build",
     "start:drop-in": "pnpm --filter drop-in.js start",
