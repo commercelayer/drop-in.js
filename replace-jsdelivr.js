@@ -6,7 +6,7 @@
  * 
  * @example https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.esm.js
  * @example `drop-in.js@2`
- * @example `drop-in.js@2.4.4`
+ * @example `drop-in.js@2.5.0`
  */
 
 import { replaceInFileSync } from 'replace-in-file'
