@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "description": "Transform any plain HTML page into an enterprise-grade static commerce website, with almost no coding required.",
   "scripts": {
     "preinstall": "npx only-allow pnpm",

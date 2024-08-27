@@ -9,10 +9,10 @@
  * @example `drop-in.js@2.4.4`
  */
 
-const { sync } = require('replace-in-file')
-const { version } = require('./lerna.json')
+import { replaceInFileSync } from 'replace-in-file'
+import lernaJson from './lerna.json' assert { type: 'json' }
 
-const [major, minor, patch] = version.split('.')
+const [major, minor, patch] = lernaJson.version.split('.')
 
 /** @type { Pick<import('replace-in-file').ReplaceInFileConfig, 'from' | 'to'>[] } */
 const tasks = [
@@ -26,16 +26,16 @@ const tasks = [
   },
   {
     from: /`(drop-in.js@)([0-9]+\.[0-9]+\.[0-9a-z\-]+)`/g,
-    to: `\`$1${version}\``
+    to: `\`$1${lernaJson.version}\``
   },
   {
     from: /({\/\* DO NOT REMOVE - replace version \*\/}v)([0-9a-z\.\-]+)/g,
-    to: `$1${version}`
+    to: `$1${lernaJson.version}`
   }
 ]
 
 try {
-  const results = tasks.flatMap(task => sync({
+  const results = tasks.flatMap(task => replaceInFileSync({
     dry: false,
     ignore: [
       './node_modules/**',
