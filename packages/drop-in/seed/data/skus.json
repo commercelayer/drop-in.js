@@ -4,7 +4,7 @@
     "code": "5PANECAP000000FFFFFFXXXX",
     "name": "Black Five-Panel Cap with White Logo",
     "description": "Soft-structured, five-panel, low-profile cap. 100% cotton, metal eyelets, nylon strap clip closure.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/5PANECAP000000FFFFFFXXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/5PANECAP000000FFFFFFXXXX_FLAT.png",
     "do_not_track": true,
     "shipping_category": "shipping_category_1"
   },
@@ -13,7 +13,7 @@
     "code": "5PANECAP9D9CA1FFFFFFXXXX",
     "name": "Gray Five-Panel Cap with White Logo",
     "description": "Soft-structured, five-panel, low-profile cap. 100% cotton, metal eyelets, nylon strap clip closure.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/5PANECAP9D9CA1FFFFFFXXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/5PANECAP9D9CA1FFFFFFXXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
@@ -21,7 +21,7 @@
     "code": "BACKPACK000000FFFFFFXXXX",
     "name": "Black Backpack with White Logo",
     "description": "Medium size backpack with plenty of room plus a big inner pocket, a separate section for a 15'' laptop, a front pocket, and a hidden pocket at the back. Made of a water-resistant material. The soft, padded mesh material on the back and the black handles make it perfect for daily use or sports activities.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/BACKPACK000000FFFFFFXXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/BACKPACK000000FFFFFFXXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
@@ -29,7 +29,7 @@
     "code": "BACKPACK818488000000XXXX",
     "name": "Gray Backpack with Black Logo",
     "description": "Two-color backpack made from a water-resistant material. It has a soft, padded back and a top carry handle, making it the perfect small size backpack for daily use or sports. Embroidered logo.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/BACKPACK818488000000XXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/BACKPACK818488000000XXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
@@ -37,7 +37,7 @@
     "code": "BACKPACKFFFFFF000000XXXX",
     "name": "White Backpack with Black Logo",
     "description": "Medium size backpack with plenty of room plus a big inner pocket, a separate section for a 15'' laptop, a front pocket, and a hidden pocket at the back. Made of a water-resistant material. The soft, padded mesh material on the back and the black handles make it perfect for daily use or sports activities.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/BACKPACKFFFFFF000000XXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/BACKPACKFFFFFF000000XXXX_FLAT.png",
     "do_not_track": true,
     "shipping_category": "shipping_category_1"
   },
@@ -46,7 +46,7 @@
     "code": "BOTT17OZFFFFFF000000XXXX",
     "name": "White Water Bottle with Black Logo (17oz)",
     "description": "Beautifully designed water bottle, made from high-grade stainless steel. Its double-wall construction makes it perfect for storing both hot and cold liquids.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/BOTT17OZFFFFFF000000XXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/BOTT17OZFFFFFF000000XXXX_FLAT.png",
     "do_not_track": true,
     "shipping_category": "shipping_category_1"
   },
@@ -55,7 +55,7 @@
     "code": "DUFFLBAG000000FFFFFFXXXX",
     "name": "Black Duffle Bag with White Logo",
     "description": "The perfect spacious bag no matter the occasion. It’s great for packing exercise gear when heading to the gym, or throwing in necessities and going on an adventure.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/DUFFLBAG000000FFFFFFXXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/DUFFLBAG000000FFFFFFXXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
@@ -63,63 +63,63 @@
     "code": "GMUG11OZFFFFFF000000XXXX",
     "name": "White Glossy Mug with Black Logo (11oz)",
     "description": "This sturdy mug is perfect for your morning coffee, afternoon tea, or whatever hot beverage you enjoy. It's glossy white and yields vivid prints that retain their quality when dish-washed and microwaved.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/GMUG11OZFFFFFF000000XXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/GMUG11OZFFFFFF000000XXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
     "reference": "sku_107",
     "code": "POLOMXXX000000FFFFFFLXXX",
-    "name": "Black Men Polo with White Logo (L)",
+    "name": "Men's Black Polo with White Logo (L)",
     "description": "Thanks to the quarter-turned cotton fabric, this polo shirt has a comfortable, relaxed fit. It's pre-shrunk and maintains its shape after washing, so it can be a favorite in your wardrobe for a long time.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/POLOMXXX000000FFFFFFLXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/POLOMXXX000000FFFFFFLXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
     "reference": "sku_108",
     "code": "POLOMXXX000000FFFFFFMXXX",
-    "name": "Black Men Polo with White Logo (M)",
+    "name": "Men's Black Polo with White Logo (M)",
     "description": "Thanks to the quarter-turned cotton fabric, this polo shirt has a comfortable, relaxed fit. It's pre-shrunk and maintains its shape after washing, so it can be a favorite in your wardrobe for a long time.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/POLOMXXX000000FFFFFFMXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/POLOMXXX000000FFFFFFMXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
     "reference": "sku_109",
     "code": "POLOMXXX000000FFFFFFSXXX",
-    "name": "Black Men Polo with White Logo (S)",
+    "name": "Men's Black Polo with White Logo (S)",
     "description": "Thanks to the quarter-turned cotton fabric, this polo shirt has a comfortable, relaxed fit. It's pre-shrunk and maintains its shape after washing, so it can be a favorite in your wardrobe for a long time.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/POLOMXXX000000FFFFFFSXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/POLOMXXX000000FFFFFFSXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
     "reference": "sku_223",
     "code": "TSHIRTMSFFFFFF000000LXXX",
-    "name": "White Men T-Shirt with Black Logo (L)",
+    "name": "Men's White T-Shirt with Black Logo (L)",
     "description": "This is THE classic t-shirt. Its fine jersey cotton construction makes it extremely soft and comfortable to wear, so it's a good choice for a day-to-day outfit — it's durable and can withstand several washings while retaining its shape and color.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/TSHIRTMSFFFFFF000000LXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/TSHIRTMSFFFFFF000000LXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
     "reference": "sku_224",
     "code": "TSHIRTMSFFFFFF000000MXXX",
-    "name": "White Men T-Shirt with Black Logo (M)",
+    "name": "Men's White T-Shirt with Black Logo (M)",
     "description": "This is THE classic t-shirt. Its fine jersey cotton construction makes it extremely soft and comfortable to wear, so it's a good choice for a day-to-day outfit — it's durable and can withstand several washings while retaining its shape and color.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/TSHIRTMSFFFFFF000000MXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/TSHIRTMSFFFFFF000000MXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
     "reference": "sku_225",
     "code": "TSHIRTMSFFFFFF000000SXXX",
-    "name": "White Men T-Shirt with Black Logo (S)",
+    "name": "Men's White T-Shirt with Black Logo (S)",
     "description": "This is THE classic t-shirt. Its fine jersey cotton construction makes it extremely soft and comfortable to wear, so it's a good choice for a day-to-day outfit — it's durable and can withstand several washings while retaining its shape and color.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/TSHIRTMSFFFFFF000000SXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/TSHIRTMSFFFFFF000000SXXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
     "reference": "sku_226",
     "code": "TSHIRTMSFFFFFF000000XLXX",
-    "name": "White Men T-Shirt with Black Logo (XL)",
+    "name": "Men's White T-Shirt with Black Logo (XL)",
     "description": "This is THE classic t-shirt. Its fine jersey cotton construction makes it extremely soft and comfortable to wear, so it's a good choice for a day-to-day outfit — it's durable and can withstand several washings while retaining its shape and color.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/TSHIRTMSFFFFFF000000XLXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/TSHIRTMSFFFFFF000000XLXX_FLAT.png",
     "shipping_category": "shipping_category_1"
   },
   {
@@ -127,7 +127,7 @@
     "code": "EBOOKECOMPLAYBOOKED1XXXX",
     "name": "The Ecommerce Playbook (Ebook ed.1)",
     "description": "How to get started with a composable commerce approach, powered by Commerce Layer. Download the ebook for free.",
-    "image_url": "https://data.commercelayer.app/seed/images/skus/EBOOKECOMPLAYBOOKED1XXXX_FLAT.png",
+    "image_url": "https://data.commercelayer.app/seeder/images/skus/EBOOKECOMPLAYBOOKED1XXXX_FLAT.png",
     "do_not_ship": true,
     "shipping_category": "shipping_category_2"
   }
