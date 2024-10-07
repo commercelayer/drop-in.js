@@ -7,11 +7,6 @@ import { getSelectedScopeValue } from './addon-scope-selector/constants'
 
 import customElements, { type JsonDocsProp } from '@commercelayer/drop-in.js/dist/custom-elements'
 
-export const globals = {
-  [DROP_IN_CSS_PARAM_KEY]: true,
-  [MINICART_CSS_PARAM_KEY]: true,
-}
-
 const preview: Preview = {
   argTypesEnhancers: [
     // Add StencilJS custom-elements manifest
@@ -68,13 +63,14 @@ const preview: Preview = {
         {
           ...value,
           table: {
-            ...value.table ?? {},
+            ...(value.table ?? {}),
             category: value.table?.category ?? 'attributes'
           }
         }
       ])
     ),
   ],
+
   parameters: {
     docs: {
       canvas: { sourceState: 'shown' },
@@ -122,6 +118,7 @@ const preview: Preview = {
       },
     }
   },
+
   decorators: [
     (story, context) => {
       const dropInCssEnabled = context.globals[DROP_IN_CSS_PARAM_KEY]
@@ -159,7 +156,14 @@ const preview: Preview = {
       defineCustomElements()
       return story()
     },
-  ]
+  ],
+
+  tags: ['autodocs'],
+
+  initialGlobals: {
+    [DROP_IN_CSS_PARAM_KEY]: true,
+    [MINICART_CSS_PARAM_KEY]: true,
+  }
 };
 
 export default preview
