@@ -1,5 +1,5 @@
 import { getAccessToken } from '#apis/commercelayer/client'
-import { getConfig } from '#apis/commercelayer/config'
+import { getConfig, getOrganizationConfig } from '#apis/commercelayer/config'
 import { getClosestLocationHref } from '#utils/url'
 
 export async function getMyAccountUrl(): Promise<string | undefined> {
@@ -10,7 +10,10 @@ export async function getMyAccountUrl(): Promise<string | undefined> {
     return undefined
   }
 
-  return `${config.appEndpoint}/my-account?accessToken=${accessToken}`
+  const organizationConfig = await getOrganizationConfig()
+  const hostedUrl = `${config.appEndpoint}/my-account`
+
+  return `${organizationConfig?.links?.my_account ?? hostedUrl}?accessToken=${accessToken}`
 }
 
 export async function getIdentityUrl(
@@ -22,7 +25,10 @@ export async function getIdentityUrl(
     return '#'
   }
 
-  return `${config.appEndpoint}/identity/${type}?clientId=${
+  const organizationConfig = await getOrganizationConfig()
+  const hostedUrl = `${config.appEndpoint}/identity`
+
+  return `${organizationConfig?.links?.identity ?? hostedUrl}/${type}?clientId=${
     config.clientId
   }&scope=${config.scope}&returnUrl=${getClosestLocationHref()}`
 }
