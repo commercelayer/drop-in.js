@@ -1,4 +1,5 @@
 import * as cart from '#apis/commercelayer/cart'
+import * as config from '#apis/commercelayer/config'
 import * as client from '#apis/commercelayer/client'
 import type { CommerceLayerClient } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
@@ -16,6 +17,8 @@ describe('cl-cart-link.spec', () => {
       accessToken: 'token-123',
       scope: 'market:code:usa'
     })
+
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({})
 
     const { root, waitForChanges } = await newSpecPage({
       components: [CLCartLink],
@@ -45,6 +48,7 @@ describe('cl-cart-link.spec', () => {
       accessToken: 'token-123',
       scope: 'market:code:usa'
     })
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({})
     jest.spyOn(cart, 'getCart').mockResolvedValue({
       type: 'orders',
       id: 'order-123',
@@ -86,6 +90,7 @@ describe('cl-cart-link.spec', () => {
       accessToken: 'token-123',
       scope: 'market:code:usa'
     })
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({})
     jest.spyOn(cart, 'getCart').mockResolvedValue(null)
     jest
       .spyOn(client, 'createClient')

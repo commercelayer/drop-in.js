@@ -1,4 +1,5 @@
 import * as client from '#apis/commercelayer/client'
+import * as config from '#apis/commercelayer/config'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClIdentityLink } from './cl-identity-link'
 import * as logger from '#utils/logger'
@@ -13,6 +14,8 @@ beforeEach(() => {
     accessToken: 'token-123',
     scope: 'market:code:usa'
   })
+
+  jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({})
 
   log = jest.spyOn(logger, 'log')
 })

@@ -1,3 +1,9 @@
+import { jwtDecode, jwtIsSalesChannel } from '@commercelayer/js-auth'
+import { createClient, getAccessToken } from './client'
+import { getConfig as mergeConfig } from '@commercelayer/organization-config'
+import { getCart } from './cart'
+import { memoize } from '#utils/utils'
+
 export interface CommerceLayerConfig {
   /**
    * Client ID is the application unique identifier. You can find it in your dashboard.
@@ -106,4 +112,40 @@ export function getConfig(): Config {
     endpoint,
     appEndpoint
   }
+}
+
+const getOrganization = memoize(async () => {
+  const config = getConfig()
+  const client = await createClient(config)
+  return await client.organization.retrieve({
+    fields: {
+      // @ts-expect-error This is the resource name
+      organizations: ['config']
+    }
+  })
+})
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export async function getOrganizationConfig() {
+  const config = getConfig()
+  const { accessToken } = await getAccessToken(config)
+  const jwt = jwtDecode(accessToken)
+  const cart = await getCart()
+
+  const organization = await getOrganization()
+
+  const mergeConfigOptions: Parameters<typeof mergeConfig>[0] = {
+    jsonConfig: organization.config ?? {},
+    market:
+      jwtIsSalesChannel(jwt.payload) && jwt.payload.market?.id[0] != null
+        ? `market:id:${jwt.payload.market.id[0]}`
+        : undefined,
+    params: {
+      accessToken,
+      orderId: cart?.id,
+      lang: 'en'
+    }
+  }
+
+  return mergeConfig(mergeConfigOptions)
 }

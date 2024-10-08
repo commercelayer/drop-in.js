@@ -1,4 +1,5 @@
 import * as client from '#apis/commercelayer/client'
+import * as config from '#apis/commercelayer/config'
 import { fireEvent } from '#apis/event'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClMyAccountLink } from './cl-my-account-link'
@@ -14,6 +15,8 @@ describe('cl-my-account-link.spec', () => {
       accessToken: 'token-123',
       scope: 'market:code:usa'
     })
+
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({})
 
     const { root, waitForChanges } = await newSpecPage({
       components: [ClMyAccountLink],
@@ -37,6 +40,8 @@ describe('cl-my-account-link.spec', () => {
       accessToken: 'token-123',
       scope: 'market:code:usa'
     })
+
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({})
 
     const { root, waitForChanges } = await newSpecPage({
       components: [ClMyAccountLink],
@@ -62,6 +67,8 @@ describe('cl-my-account-link.spec', () => {
       scope: 'market:code:usa'
     })
 
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({})
+
     const { root, waitForChanges } = await newSpecPage({
       components: [ClMyAccountLink],
       html: '<cl-my-account-link target="_blank">My Account</cl-my-account-link>'
@@ -85,6 +92,8 @@ describe('cl-my-account-link.spec', () => {
       accessToken: 'token-123',
       scope: 'market:code:usa'
     })
+
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({})
 
     const { root, waitForChanges } = await newSpecPage({
       components: [ClMyAccountLink],

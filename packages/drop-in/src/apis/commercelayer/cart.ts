@@ -1,5 +1,5 @@
 import { createClient, getAccessToken } from '#apis/commercelayer/client'
-import { getConfig } from '#apis/commercelayer/config'
+import { getConfig, getOrganizationConfig } from '#apis/commercelayer/config'
 import { fireEvent } from '#apis/event'
 import { getKeyForCart } from '#apis/storage'
 import type {
@@ -87,9 +87,10 @@ export async function getCartUrl(
     cartId = cart.id
   }
 
-  return `${config.appEndpoint}/cart/${
-    cartId ?? 'null'
-  }?accessToken=${accessToken}`
+  const organizationConfig = await getOrganizationConfig()
+  const hostedUrl = `${config.appEndpoint}/cart/${cartId ?? 'null'}`
+
+  return `${organizationConfig?.links?.cart ?? hostedUrl}?accessToken=${accessToken}`
 }
 
 export async function getCheckoutUrl(): Promise<string | undefined> {
@@ -101,9 +102,10 @@ export async function getCheckoutUrl(): Promise<string | undefined> {
     return undefined
   }
 
-  return `${config.appEndpoint}/checkout/${
-    cart.id ?? 'null'
-  }?accessToken=${accessToken}`
+  const organizationConfig = await getOrganizationConfig()
+  const hostedUrl = `${config.appEndpoint}/checkout/${cart.id ?? 'null'}`
+
+  return `${organizationConfig?.links?.checkout ?? hostedUrl}?accessToken=${accessToken}`
 }
 
 export async function _getCart(): Promise<Order | null> {
