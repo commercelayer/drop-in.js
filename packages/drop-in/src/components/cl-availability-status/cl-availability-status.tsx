@@ -21,6 +21,7 @@ export class ClAvailabilityStatus {
 
   private readonly typeList: Array<NonNullable<typeof this.type>> = [
     'available',
+    'available-with-info',
     'unavailable'
   ]
 
