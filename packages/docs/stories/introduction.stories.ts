@@ -72,7 +72,7 @@ export const Basic: StoryFn = () => {
           <cl-availability code="${codes.outOfStock}" class="my-2 text-sm">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
-            <cl-availability-status type="available" class="block">
+            <cl-availability-status type="available-with-info" class="block">
               ready to be shipped in
               <cl-availability-info type="min-days"></cl-availability-info
               // eslint-disable-next-line prettier/prettier
@@ -102,7 +102,7 @@ export const Basic: StoryFn = () => {
           <cl-availability code="${codes.noDiscount}" class="my-2 text-sm">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
-            <cl-availability-status type="available" class="block">
+            <cl-availability-status type="available-with-info" class="block">
               ready to be shipped in
               <cl-availability-info type="min-days"></cl-availability-info
               // eslint-disable-next-line prettier/prettier
@@ -132,7 +132,7 @@ export const Basic: StoryFn = () => {
           <cl-availability kind="bundle" code="${codes.bundleAvailable}" class="my-2 text-sm">
             <cl-availability-status type="available" class="text-green-400">available</cl-availability-status>
             <cl-availability-status type="unavailable" class="text-red-400">unavailable</cl-availability-status>
-            <cl-availability-status type="available" class="block">
+            <cl-availability-status type="available-with-info" class="block">
               ready to be shipped in
               <cl-availability-info type="min-days"></cl-availability-info
               // eslint-disable-next-line prettier/prettier
