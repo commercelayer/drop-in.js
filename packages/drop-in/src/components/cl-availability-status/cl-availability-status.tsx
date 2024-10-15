@@ -44,8 +44,9 @@ export class ClAvailabilityStatus {
   ): void {
     this.available = event.detail?.sku?.inventory?.available
     this.hasDeliveryLeadTimes =
-      (event.detail?.sku?.inventory?.levels?.[0]?.delivery_lead_times?.length ??
-        0) > 0
+      (event.detail?.sku?.inventory?.levels.find(
+        (level) => level.delivery_lead_times.length > 0
+      )?.delivery_lead_times?.length ?? 0) > 0
   }
 
   async componentWillLoad(): Promise<void> {
