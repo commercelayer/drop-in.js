@@ -54,9 +54,8 @@ export class ClAvailabilityInfo {
       return
     }
 
-    const deliveryLeadTimes = event.detail?.sku?.inventory?.levels.find(
-      (level) => level.delivery_lead_times.length > 0
-    )?.delivery_lead_times
+    const deliveryLeadTimes =
+      event.detail?.sku?.inventory?.levels?.[0]?.delivery_lead_times
 
     const deliveryLeadTime =
       event.detail.rule === 'cheapest'
