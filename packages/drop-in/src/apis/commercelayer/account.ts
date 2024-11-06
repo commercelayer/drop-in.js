@@ -11,9 +11,9 @@ export async function getMyAccountUrl(): Promise<string | undefined> {
   }
 
   const organizationConfig = await getOrganizationConfig()
-  const hostedUrl = `${config.appEndpoint}/my-account`
+  const hostedUrl = `${config.appEndpoint}/my-account?accessToken=${accessToken}`
 
-  return `${organizationConfig?.links?.my_account ?? hostedUrl}?accessToken=${accessToken}`
+  return organizationConfig?.links?.my_account ?? hostedUrl
 }
 
 export async function getIdentityUrl(

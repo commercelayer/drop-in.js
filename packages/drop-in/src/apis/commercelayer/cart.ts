@@ -24,7 +24,8 @@ async function createEmptyCart(): Promise<Order> {
   const token = await getAccessToken(config)
 
   const order = await client.orders.create({
-    return_url: config.orderReturnUrl
+    return_url: config.orderReturnUrl,
+    language_code: config.languageCode
   })
 
   if (token.type === 'guest') {
@@ -87,10 +88,10 @@ export async function getCartUrl(
     cartId = cart.id
   }
 
-  const organizationConfig = await getOrganizationConfig()
-  const hostedUrl = `${config.appEndpoint}/cart/${cartId ?? 'null'}`
+  const organizationConfig = await getOrganizationConfig({ orderId: cartId })
+  const hostedUrl = `${config.appEndpoint}/cart/${cartId ?? 'null'}?accessToken=${accessToken}`
 
-  return `${organizationConfig?.links?.cart ?? hostedUrl}?accessToken=${accessToken}`
+  return organizationConfig?.links?.cart ?? hostedUrl
 }
 
 export async function getCheckoutUrl(): Promise<string | undefined> {
@@ -102,10 +103,10 @@ export async function getCheckoutUrl(): Promise<string | undefined> {
     return undefined
   }
 
-  const organizationConfig = await getOrganizationConfig()
-  const hostedUrl = `${config.appEndpoint}/checkout/${cart.id ?? 'null'}`
+  const organizationConfig = await getOrganizationConfig({ orderId: cart.id })
+  const hostedUrl = `${config.appEndpoint}/checkout/${cart.id ?? 'null'}?accessToken=${accessToken}`
 
-  return `${organizationConfig?.links?.checkout ?? hostedUrl}?accessToken=${accessToken}`
+  return organizationConfig?.links?.checkout ?? hostedUrl
 }
 
 export async function _getCart(): Promise<Order | null> {

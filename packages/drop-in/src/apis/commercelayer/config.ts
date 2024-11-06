@@ -1,8 +1,10 @@
-import { jwtDecode, jwtIsSalesChannel } from '@commercelayer/js-auth'
-import { createClient, getAccessToken } from './client'
-import { getConfig as mergeConfig } from '@commercelayer/organization-config'
-import { getCart } from './cart'
 import { memoize } from '#utils/utils'
+import { jwtDecode, jwtIsSalesChannel } from '@commercelayer/js-auth'
+import {
+  type DefaultConfig,
+  getConfig as mergeConfig
+} from '@commercelayer/organization-config'
+import { createClient, getAccessToken } from './client'
 
 export interface CommerceLayerConfig {
   /**
@@ -40,10 +42,20 @@ export interface CommerceLayerConfig {
    * @default 'commercelayer.io'
    */
   domain?: string
+
+  /**
+   * The preferred language code (ISO 639-1) to be used when communicating with the customer.
+   * This can be useful when sending the order to 3rd party marketing tools and CRMs.
+   *
+   * If the language is supported, the hosted checkout will be localized accordingly.
+   * @default 'en'
+   */
+  languageCode?: string
 }
 
 export type Config = CommerceLayerConfig & {
   debug: Exclude<CommerceLayerConfig['debug'], undefined>
+  languageCode: Exclude<CommerceLayerConfig['languageCode'], undefined>
   endpoint: string
   appEndpoint: string
 }
@@ -101,6 +113,8 @@ export function getConfig(): Config {
   }
 
   const debug: Config['debug'] = commercelayerConfig.debug ?? 'none'
+  const languageCode: Config['languageCode'] =
+    commercelayerConfig.languageCode ?? 'en'
   const endpoint: Config['endpoint'] = `https://${commercelayerConfig.slug}.${commercelayerConfig.domain}`
   const appEndpoint = `https://${commercelayerConfig.slug}${
     commercelayerConfig.domain === 'commercelayer.co' ? '.stg' : ''
@@ -109,6 +123,7 @@ export function getConfig(): Config {
   return {
     ...commercelayerConfig,
     debug,
+    languageCode,
     endpoint,
     appEndpoint
   }
@@ -125,12 +140,12 @@ const getOrganization = memoize(async () => {
   })
 })
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export async function getOrganizationConfig() {
+export async function getOrganizationConfig(
+  params?: Omit<ConfigParams, 'accessToken' | 'lang'>
+): Promise<DefaultConfig | null> {
   const config = getConfig()
   const { accessToken } = await getAccessToken(config)
   const jwt = jwtDecode(accessToken)
-  const cart = await getCart()
 
   const organization = await getOrganization()
 
@@ -141,11 +156,13 @@ export async function getOrganizationConfig() {
         ? `market:id:${jwt.payload.market.id[0]}`
         : undefined,
     params: {
+      ...params,
       accessToken,
-      orderId: cart?.id,
-      lang: 'en'
+      lang: config.languageCode
     }
   }
 
   return mergeConfig(mergeConfigOptions)
 }
+
+type ConfigParams = NonNullable<Parameters<typeof mergeConfig>[0]['params']>
