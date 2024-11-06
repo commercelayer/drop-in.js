@@ -14,9 +14,9 @@ export const codes = {
 // // stg
 // // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 // export const createConfig = (scope: string) => ({
-//   clientId: '2oh-47l4PN_yb8p4mp7AxUsb-Ue3e7tBqteoZcQM-nU',
+//   clientId: 'gQMSINLyMm2TrZo0UGEEdubC7uSgm9-',
 //   slug: 'drop-in-js-stg',
-//   scope: 'market:545',
+//   scope,
 //   debug: 'all',
 //   domain: 'commercelayer.co'
 // })
