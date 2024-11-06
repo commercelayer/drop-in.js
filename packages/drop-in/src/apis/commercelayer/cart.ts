@@ -8,6 +8,7 @@ import type {
   TriggerHostedCartUpdate
 } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
+import { jwtDecode } from '@commercelayer/js-auth'
 import type { Order, QueryParamsRetrieve } from '@commercelayer/sdk'
 import Cookies from 'js-cookie'
 import memoize from 'lodash/memoize'
@@ -133,9 +134,16 @@ export async function _getCart(): Promise<Order | null> {
     return order
   }
 
+  const jwt = jwtDecode(token.accessToken)
+
+  if (!('market' in jwt.payload) || jwt.payload.market?.id == null) {
+    return null
+  }
+
   const [order = null] = await client.customers.orders(token.customerId, {
     ...orderParams,
     filters: {
+      market_id_in: jwt.payload.market.id.join(','),
       guest_false: true,
       editable_true: true,
       status_eq: 'pending'
