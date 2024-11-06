@@ -15,7 +15,16 @@ beforeEach(() => {
     scope: 'market:code:usa'
   })
 
-  jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({})
+  jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({
+    links: {
+      my_account:
+        'https://drop-in-js.commercelayer.app/my-account?accessToken=:access_token',
+      identity: 'https://drop-in-js.commercelayer.app/identity',
+      cart: 'https://drop-in-js.commercelayer.app/cart/:order_id?accessToken=:access_token',
+      checkout:
+        'https://drop-in-js.commercelayer.app/checkout/:order_id?accessToken=:access_token'
+    }
+  })
 
   log = jest.spyOn(logger, 'log')
 })

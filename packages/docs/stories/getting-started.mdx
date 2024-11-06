@@ -12,13 +12,14 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
 1. Import the library from the [CDN](https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.esm.js).
 2. Declare a global variable called `commercelayerConfig` and set the following attributes.
 
-| Attribute            | Type   | Required | Description                                                                                                                                                                                                      |
-|----------------------|--------|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **`clientId`**       | String |     ✓    | Your [sales channel](https://docs.commercelayer.io/core/applications#sales-channel) client ID. You can find it in your application details page on your dashboard.                                                                                                                | 
-| **`slug`**           | String |     ✓    | Your organization slug (i.e. the subdomain of your base endpoint, usually the slugified version of your organization's name). You can find the base endpoint in your application details page on your dashboard. |
-| **`scope`**          | String |     ✓    | Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (use it to restrict the dataset of your application). You can find the allowed scopes in your application details page on your dashboard.                                                |
-| `debug`              | String |          | The debug level. Can be one of `none` or `all`. Default is `none`.                                                                                                                                               |
-| `orderReturnUrl`     | String |          | The URL the cart's *Continue shopping* button points to. This is also used in the thank you page.                                                                                                           |
+| Attribute            | Type   | Required | Description                                                                                                                                                                                                                                    |
+|----------------------|--------|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`clientId`**       | String |     ✓    | Your [sales channel](https://docs.commercelayer.io/core/applications#sales-channel) client ID. You can find it in your application details page on your dashboard.                                                                             |
+| **`slug`**           | String |     ✓    | Your organization slug (i.e. the subdomain of your base endpoint, usually the slugified version of your organization's name). You can find the base endpoint in your application details page on your dashboard.                               |
+| **`scope`**          | String |     ✓    | Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (use it to restrict the dataset of your application). You can find the allowed scopes in your application details page on your dashboard.   |
+| `debug`              | String |          | The debug level. Can be one of `none` or `all`. Default is `none`.                                                                                                                                                                             |
+| `languageCode`       | String |          | The preferred language code (ISO 639-1) to be used when communicating with the customer. If the language is supported, the hosted checkout will be localized accordingly. Default is `en`.                                                     |
+| `orderReturnUrl`     | String |          | The URL the cart's *Continue shopping* button points to. This is also used in the thank you page.                                                                                                                                              |
 
 
  The final result should be similar to the code snippet below:
@@ -32,6 +33,7 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
     slug: 'drop-in-js',
     scope: '${getSelectedScopeValue()}',
     debug: 'all', // default is 'none'
+    languageCode: 'it', // default is 'en'
     orderReturnUrl: 'https://example.com' // optional
   }
 </script>

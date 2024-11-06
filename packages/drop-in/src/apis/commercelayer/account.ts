@@ -4,16 +4,15 @@ import { getClosestLocationHref } from '#utils/url'
 
 export async function getMyAccountUrl(): Promise<string | undefined> {
   const config = getConfig()
-  const { accessToken, type } = await getAccessToken(config)
+  const { type } = await getAccessToken(config)
 
   if (type === 'guest') {
     return undefined
   }
 
   const organizationConfig = await getOrganizationConfig()
-  const hostedUrl = `${config.appEndpoint}/my-account?accessToken=${accessToken}`
 
-  return organizationConfig?.links?.my_account ?? hostedUrl
+  return organizationConfig.links.my_account
 }
 
 export async function getIdentityUrl(
@@ -26,9 +25,8 @@ export async function getIdentityUrl(
   }
 
   const organizationConfig = await getOrganizationConfig()
-  const hostedUrl = `${config.appEndpoint}/identity`
 
-  return `${organizationConfig?.links?.identity ?? hostedUrl}/${type}?clientId=${
+  return `${organizationConfig.links.identity}/${type}?clientId=${
     config.clientId
   }&scope=${config.scope}&returnUrl=${getClosestLocationHref()}`
 }

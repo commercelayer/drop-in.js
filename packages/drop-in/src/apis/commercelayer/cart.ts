@@ -79,8 +79,6 @@ export async function isValidUrl(url: string): Promise<boolean> {
 export async function getCartUrl(
   forceCartToExist: boolean = false
 ): Promise<string> {
-  const config = getConfig()
-  const { accessToken } = await getAccessToken(config)
   let cartId = (await getCart())?.id
 
   if (cartId === undefined && forceCartToExist) {
@@ -88,25 +86,25 @@ export async function getCartUrl(
     cartId = cart.id
   }
 
-  const organizationConfig = await getOrganizationConfig({ orderId: cartId })
-  const hostedUrl = `${config.appEndpoint}/cart/${cartId ?? 'null'}?accessToken=${accessToken}`
+  const organizationConfig = await getOrganizationConfig({
+    orderId: cartId ?? 'null'
+  })
 
-  return organizationConfig?.links?.cart ?? hostedUrl
+  return organizationConfig.links.cart
 }
 
 export async function getCheckoutUrl(): Promise<string | undefined> {
-  const config = getConfig()
-  const { accessToken } = await getAccessToken(config)
   const cart = await getCart()
 
   if (cart === null || !isValidForCheckout(cart)) {
     return undefined
   }
 
-  const organizationConfig = await getOrganizationConfig({ orderId: cart.id })
-  const hostedUrl = `${config.appEndpoint}/checkout/${cart.id ?? 'null'}?accessToken=${accessToken}`
+  const organizationConfig = await getOrganizationConfig({
+    orderId: cart.id ?? 'null'
+  })
 
-  return organizationConfig?.links?.checkout ?? hostedUrl
+  return organizationConfig.links.checkout
 }
 
 export async function _getCart(): Promise<Order | null> {

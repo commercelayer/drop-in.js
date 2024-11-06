@@ -4,6 +4,8 @@ import {
   type DefaultConfig,
   getConfig as mergeConfig
 } from '@commercelayer/organization-config'
+import merge from 'lodash/merge'
+import type { OmitDeep, SetRequired } from 'type-fest'
 import { createClient, getAccessToken } from './client'
 
 export interface CommerceLayerConfig {
@@ -140,17 +142,35 @@ const getOrganization = memoize(async () => {
   })
 })
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function getOrganizationConfig(
   params?: Omit<ConfigParams, 'accessToken' | 'lang'>
-): Promise<DefaultConfig | null> {
+) {
   const config = getConfig()
   const { accessToken } = await getAccessToken(config)
   const jwt = jwtDecode(accessToken)
 
   const organization = await getOrganization()
 
+  const defaultConfig: ConfigJSONWithRequiredLinks = {
+    mfe: {
+      default: {
+        links: {
+          cart: `${config.appEndpoint}/cart/:order_id?accessToken=:access_token`,
+          checkout: `${config.appEndpoint}/checkout/:order_id?accessToken=:access_token`,
+          my_account: `${config.appEndpoint}/my-account?accessToken=:access_token`,
+          identity: `${config.appEndpoint}/identity`
+        }
+      }
+    }
+  }
+
   const mergeConfigOptions: Parameters<typeof mergeConfig>[0] = {
-    jsonConfig: organization.config ?? {},
+    jsonConfig: merge<ConfigJSON, ConfigJSON, typeof organization.config>(
+      {},
+      defaultConfig,
+      organization.config
+    ),
     market:
       jwtIsSalesChannel(jwt.payload) && jwt.payload.market?.id[0] != null
         ? `market:id:${jwt.payload.market.id[0]}`
@@ -162,7 +182,23 @@ export async function getOrganizationConfig(
     }
   }
 
-  return mergeConfig(mergeConfigOptions)
+  return mergeConfig(mergeConfigOptions) as Omit<DefaultConfig, 'links'> & {
+    links: RequiredLinks
+  }
 }
 
+type ConfigLink = NonNullable<DefaultConfig['links']>
 type ConfigParams = NonNullable<Parameters<typeof mergeConfig>[0]['params']>
+type ConfigJSON = NonNullable<Parameters<typeof mergeConfig>[0]['jsonConfig']>
+type RequiredLinks = SetRequired<
+  ConfigLink,
+  'cart' | 'checkout' | 'identity' | 'my_account'
+>
+
+type ConfigJSONWithRequiredLinks = OmitDeep<ConfigJSON, 'mfe.default.links'> & {
+  mfe: {
+    default: {
+      links: RequiredLinks
+    }
+  }
+}
