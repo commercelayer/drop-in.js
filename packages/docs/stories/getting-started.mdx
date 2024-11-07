@@ -33,7 +33,7 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
     slug: 'drop-in-js',
     scope: '${getSelectedScopeValue()}',
     debug: 'all', // default is 'none'
-    languageCode: 'it', // default is 'en'
+    languageCode: 'en', // default is 'en'
     orderReturnUrl: 'https://example.com' // optional
   }
 </script>
@@ -44,6 +44,13 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
   We recommend using the latest major version, `drop-in.js@2`, to benefit from the newest improvements and fixes as they become available.
   Alternatively, you can lock in a specific version. The latest release is `drop-in.js@2.5.0`.
 </Alert>
+
+## Micro frontends configuration
+
+Our hosted micro frontend applications can be forked and configured independently.
+
+The Provisioning API allows you to partially configure them at the organization level by properly passing the `mfe` object in the `config` attribute.
+For more information, please refer to [our documentation](https://docs.commercelayer.io/provisioning/api-reference/organizations#micro-frontends-configuration).
 
 ## Styling
 
