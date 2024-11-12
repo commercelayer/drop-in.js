@@ -1,4 +1,5 @@
 import * as client from '#apis/commercelayer/client'
+import * as config from '#apis/commercelayer/config'
 import { fireEvent } from '#apis/event'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClMyAccountLink } from './cl-my-account-link'
@@ -13,6 +14,17 @@ describe('cl-my-account-link.spec', () => {
       type: 'guest',
       accessToken: 'token-123',
       scope: 'market:code:usa'
+    })
+
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({
+      links: {
+        my_account:
+          'https://drop-in-js.commercelayer.app/my-account?accessToken=token-123',
+        identity: 'https://drop-in-js.commercelayer.app/identity',
+        cart: 'https://drop-in-js.commercelayer.app/cart/:order_id?accessToken=token-123',
+        checkout:
+          'https://drop-in-js.commercelayer.app/checkout/:order_id?accessToken=token-123'
+      }
     })
 
     const { root, waitForChanges } = await newSpecPage({
@@ -36,6 +48,17 @@ describe('cl-my-account-link.spec', () => {
       type: 'guest',
       accessToken: 'token-123',
       scope: 'market:code:usa'
+    })
+
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({
+      links: {
+        my_account:
+          'https://drop-in-js.commercelayer.app/my-account?accessToken=token-123',
+        identity: 'https://drop-in-js.commercelayer.app/identity',
+        cart: 'https://drop-in-js.commercelayer.app/cart/:order_id?accessToken=token-123',
+        checkout:
+          'https://drop-in-js.commercelayer.app/checkout/:order_id?accessToken=token-123'
+      }
     })
 
     const { root, waitForChanges } = await newSpecPage({
@@ -62,6 +85,17 @@ describe('cl-my-account-link.spec', () => {
       scope: 'market:code:usa'
     })
 
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({
+      links: {
+        my_account:
+          'https://drop-in-js.commercelayer.app/my-account?accessToken=token-123',
+        identity: 'https://drop-in-js.commercelayer.app/identity',
+        cart: 'https://drop-in-js.commercelayer.app/cart/:order_id?accessToken=token-123',
+        checkout:
+          'https://drop-in-js.commercelayer.app/checkout/:order_id?accessToken=token-123'
+      }
+    })
+
     const { root, waitForChanges } = await newSpecPage({
       components: [ClMyAccountLink],
       html: '<cl-my-account-link target="_blank">My Account</cl-my-account-link>'
@@ -84,6 +118,17 @@ describe('cl-my-account-link.spec', () => {
       customerId: '1234',
       accessToken: 'token-123',
       scope: 'market:code:usa'
+    })
+
+    jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({
+      links: {
+        my_account:
+          'https://drop-in-js.commercelayer.app/my-account?accessToken=token-123',
+        identity: 'https://drop-in-js.commercelayer.app/identity',
+        cart: 'https://drop-in-js.commercelayer.app/cart/:order_id?accessToken=token-123',
+        checkout:
+          'https://drop-in-js.commercelayer.app/checkout/:order_id?accessToken=token-123'
+      }
     })
 
     const { root, waitForChanges } = await newSpecPage({

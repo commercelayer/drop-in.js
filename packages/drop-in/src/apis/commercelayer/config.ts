@@ -1,3 +1,13 @@
+import { memoize } from '#utils/utils'
+import { jwtDecode, jwtIsSalesChannel } from '@commercelayer/js-auth'
+import {
+  type DefaultConfig,
+  getConfig as mergeConfig
+} from '@commercelayer/organization-config'
+import merge from 'lodash/merge'
+import type { OmitDeep, SetRequired } from 'type-fest'
+import { createClient, getAccessToken } from './client'
+
 export interface CommerceLayerConfig {
   /**
    * Client ID is the application unique identifier. You can find it in your dashboard.
@@ -34,10 +44,20 @@ export interface CommerceLayerConfig {
    * @default 'commercelayer.io'
    */
   domain?: string
+
+  /**
+   * The preferred language code (ISO 639-1) to be used when communicating with the customer.
+   * This can be useful when sending the order to 3rd party marketing tools and CRMs.
+   *
+   * If the language is supported, the hosted checkout will be localized accordingly.
+   * @default 'en'
+   */
+  languageCode?: string
 }
 
 export type Config = CommerceLayerConfig & {
   debug: Exclude<CommerceLayerConfig['debug'], undefined>
+  languageCode: Exclude<CommerceLayerConfig['languageCode'], undefined>
   endpoint: string
   appEndpoint: string
 }
@@ -95,6 +115,8 @@ export function getConfig(): Config {
   }
 
   const debug: Config['debug'] = commercelayerConfig.debug ?? 'none'
+  const languageCode: Config['languageCode'] =
+    commercelayerConfig.languageCode ?? 'en'
   const endpoint: Config['endpoint'] = `https://${commercelayerConfig.slug}.${commercelayerConfig.domain}`
   const appEndpoint = `https://${commercelayerConfig.slug}${
     commercelayerConfig.domain === 'commercelayer.co' ? '.stg' : ''
@@ -103,7 +125,80 @@ export function getConfig(): Config {
   return {
     ...commercelayerConfig,
     debug,
+    languageCode,
     endpoint,
     appEndpoint
+  }
+}
+
+const getOrganization = memoize(async () => {
+  const config = getConfig()
+  const client = await createClient(config)
+  return await client.organization.retrieve({
+    fields: {
+      // @ts-expect-error This is the resource name
+      organizations: ['config']
+    }
+  })
+})
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export async function getOrganizationConfig(
+  params?: Omit<ConfigParams, 'accessToken' | 'lang'>
+) {
+  const config = getConfig()
+  const { accessToken } = await getAccessToken(config)
+  const jwt = jwtDecode(accessToken)
+
+  const organization = await getOrganization()
+
+  const defaultConfig: ConfigJSONWithRequiredLinks = {
+    mfe: {
+      default: {
+        links: {
+          cart: `${config.appEndpoint}/cart/:order_id?accessToken=:access_token`,
+          checkout: `${config.appEndpoint}/checkout/:order_id?accessToken=:access_token`,
+          my_account: `${config.appEndpoint}/my-account?accessToken=:access_token`,
+          identity: `${config.appEndpoint}/identity`
+        }
+      }
+    }
+  }
+
+  const mergeConfigOptions: Parameters<typeof mergeConfig>[0] = {
+    jsonConfig: merge<ConfigJSON, ConfigJSON, typeof organization.config>(
+      {},
+      defaultConfig,
+      organization.config
+    ),
+    market:
+      jwtIsSalesChannel(jwt.payload) && jwt.payload.market?.id[0] != null
+        ? `market:id:${jwt.payload.market.id[0]}`
+        : undefined,
+    params: {
+      ...params,
+      accessToken,
+      lang: config.languageCode
+    }
+  }
+
+  return mergeConfig(mergeConfigOptions) as Omit<DefaultConfig, 'links'> & {
+    links: RequiredLinks
+  }
+}
+
+type ConfigLink = NonNullable<DefaultConfig['links']>
+type ConfigParams = NonNullable<Parameters<typeof mergeConfig>[0]['params']>
+type ConfigJSON = NonNullable<Parameters<typeof mergeConfig>[0]['jsonConfig']>
+type RequiredLinks = SetRequired<
+  ConfigLink,
+  'cart' | 'checkout' | 'identity' | 'my_account'
+>
+
+type ConfigJSONWithRequiredLinks = OmitDeep<ConfigJSON, 'mfe.default.links'> & {
+  mfe: {
+    default: {
+      links: RequiredLinks
+    }
   }
 }

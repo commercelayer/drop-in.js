@@ -1,5 +1,5 @@
 import { createClient, getAccessToken } from '#apis/commercelayer/client'
-import { getConfig } from '#apis/commercelayer/config'
+import { getConfig, getOrganizationConfig } from '#apis/commercelayer/config'
 import { fireEvent } from '#apis/event'
 import { getKeyForCart } from '#apis/storage'
 import type {
@@ -24,7 +24,8 @@ async function createEmptyCart(): Promise<Order> {
   const token = await getAccessToken(config)
 
   const order = await client.orders.create({
-    return_url: config.orderReturnUrl
+    return_url: config.orderReturnUrl,
+    language_code: config.languageCode
   })
 
   if (token.type === 'guest') {
@@ -78,8 +79,6 @@ export async function isValidUrl(url: string): Promise<boolean> {
 export async function getCartUrl(
   forceCartToExist: boolean = false
 ): Promise<string> {
-  const config = getConfig()
-  const { accessToken } = await getAccessToken(config)
   let cartId = (await getCart())?.id
 
   if (cartId === undefined && forceCartToExist) {
@@ -87,23 +86,25 @@ export async function getCartUrl(
     cartId = cart.id
   }
 
-  return `${config.appEndpoint}/cart/${
-    cartId ?? 'null'
-  }?accessToken=${accessToken}`
+  const organizationConfig = await getOrganizationConfig({
+    orderId: cartId ?? 'null'
+  })
+
+  return organizationConfig.links.cart
 }
 
 export async function getCheckoutUrl(): Promise<string | undefined> {
-  const config = getConfig()
-  const { accessToken } = await getAccessToken(config)
   const cart = await getCart()
 
   if (cart === null || !isValidForCheckout(cart)) {
     return undefined
   }
 
-  return `${config.appEndpoint}/checkout/${
-    cart.id ?? 'null'
-  }?accessToken=${accessToken}`
+  const organizationConfig = await getOrganizationConfig({
+    orderId: cart.id ?? 'null'
+  })
+
+  return organizationConfig.links.checkout
 }
 
 export async function _getCart(): Promise<Order | null> {

@@ -1,4 +1,5 @@
 import * as client from '#apis/commercelayer/client'
+import * as config from '#apis/commercelayer/config'
 import { newSpecPage } from '@stencil/core/testing'
 import { ClIdentityLink } from './cl-identity-link'
 import * as logger from '#utils/logger'
@@ -12,6 +13,17 @@ beforeEach(() => {
     type: 'guest',
     accessToken: 'token-123',
     scope: 'market:code:usa'
+  })
+
+  jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({
+    links: {
+      my_account:
+        'https://drop-in-js.commercelayer.app/my-account?accessToken=:access_token',
+      identity: 'https://drop-in-js.commercelayer.app/identity',
+      cart: 'https://drop-in-js.commercelayer.app/cart/:order_id?accessToken=:access_token',
+      checkout:
+        'https://drop-in-js.commercelayer.app/checkout/:order_id?accessToken=:access_token'
+    }
   })
 
   log = jest.spyOn(logger, 'log')

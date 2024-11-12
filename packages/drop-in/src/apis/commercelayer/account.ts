@@ -1,16 +1,18 @@
 import { getAccessToken } from '#apis/commercelayer/client'
-import { getConfig } from '#apis/commercelayer/config'
+import { getConfig, getOrganizationConfig } from '#apis/commercelayer/config'
 import { getClosestLocationHref } from '#utils/url'
 
 export async function getMyAccountUrl(): Promise<string | undefined> {
   const config = getConfig()
-  const { accessToken, type } = await getAccessToken(config)
+  const { type } = await getAccessToken(config)
 
   if (type === 'guest') {
     return undefined
   }
 
-  return `${config.appEndpoint}/my-account?accessToken=${accessToken}`
+  const organizationConfig = await getOrganizationConfig()
+
+  return organizationConfig.links.my_account
 }
 
 export async function getIdentityUrl(
@@ -22,7 +24,9 @@ export async function getIdentityUrl(
     return '#'
   }
 
-  return `${config.appEndpoint}/identity/${type}?clientId=${
+  const organizationConfig = await getOrganizationConfig()
+
+  return `${organizationConfig.links.identity}/${type}?clientId=${
     config.clientId
   }&scope=${config.scope}&returnUrl=${getClosestLocationHref()}`
 }
