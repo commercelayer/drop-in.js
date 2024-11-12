@@ -229,11 +229,14 @@
 
 <script>
   (function() {
-    const url = new URL(window.parent.location.href)
+    // This hack is to remove the access token from the URL after the user has been redirected back to the docs (only for storybook use-case).
+    setTimeout(() => {
+      const url = new URL(window.parent.location.href)
 
-    url.searchParams.delete('accessToken')
-    url.searchParams.delete('scope')
+      url.searchParams.delete('accessToken')
+      url.searchParams.delete('scope')
 
-    window.parent.history.replaceState({}, '', url.toString())
+      window.parent.history.replaceState({}, '', decodeURIComponent(url.toString()))
+    }, 500)
   })()
 </script>
