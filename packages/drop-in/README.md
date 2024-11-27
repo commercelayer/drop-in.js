@@ -39,9 +39,9 @@ For a constantly updated list of the available and soon-to-come micro frontends 
 
 ## Need help?
 
-- Join [Commerce Layer's Slack community](https://slack.commercelayer.app).
+- Join [Commerce Layer's Discord community](https://discord.gg/commercelayer).
 - Open a new [Q&A discussion](https://github.com/commercelayer/drop-in.js/discussions/categories/q-a).
-- Ping us on [X](https://x.com/commercelayer).
+- Ping us on [Bluesky](https://bsky.app/profile/commercelayer.io), [X (formerly Twitter)](https://x.com/commercelayer), or [LinkedIn](https://www.linkedin.com/company/commerce-layer).
 - Is there a bug? Create an [issue](https://github.com/commercelayer/drop-in.js/issues) on this repository.
 
 ## License
