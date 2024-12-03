@@ -181,6 +181,7 @@ export async function createClient(
 
   return CommerceLayer({
     accessToken: token.accessToken,
+    organization: config.slug,
     domain: config.domain
   })
 }

@@ -33,12 +33,6 @@ export interface CommerceLayerConfig {
   orderReturnUrl?: string
 
   /**
-   * API domain
-   * @default 'commercelayer.io'
-   */
-  domain?: string
-
-  /**
    * The preferred language code (ISO 639-1) to be used when communicating with the customer.
    * This can be useful when sending the order to 3rd party marketing tools and CRMs.
    *
@@ -46,6 +40,20 @@ export interface CommerceLayerConfig {
    * @default 'en'
    */
   languageCode?: string
+
+  /**
+   * Organization slug
+   * _(only for development purpose)_.
+   * @default extracted from the access token.
+   */
+  slug?: string
+
+  /**
+   * API domain
+   * _(only for development purpose)_.
+   * @default 'commercelayer.io'
+   */
+  domain?: string
 }
 
 export type Config = CommerceLayerConfig & {
@@ -136,7 +144,7 @@ export async function getOrganizationConfig(
 
   const organization = await getOrganization()
 
-  const slug = jwt.payload.organization.slug
+  const slug = config.slug ?? jwt.payload.organization.slug
   const domainPrefix = config.domain === 'commercelayer.co' ? '.stg' : ''
   const appEndpoint = `https://${slug}${domainPrefix}.commercelayer.app`
 
