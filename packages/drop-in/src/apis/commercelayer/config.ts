@@ -42,13 +42,6 @@ export interface CommerceLayerConfig {
   languageCode?: string
 
   /**
-   * Organization slug
-   * _(only for development purpose)_.
-   * @default extracted from the access token.
-   */
-  slug?: string
-
-  /**
    * API domain
    * _(only for development purpose)_.
    * @default 'commercelayer.io'
@@ -144,7 +137,7 @@ export async function getOrganizationConfig(
 
   const organization = await getOrganization()
 
-  const slug = config.slug ?? jwt.payload.organization.slug
+  const slug = jwt.payload.organization.slug
   const domainPrefix = config.domain === 'commercelayer.co' ? '.stg' : ''
   const appEndpoint = `https://${slug}${domainPrefix}.commercelayer.app`
 
