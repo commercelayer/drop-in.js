@@ -15,7 +15,6 @@ export const codes = {
 // // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 // export const createConfig = (scope: string) => ({
 //   clientId: 'gQMSINLyMm2TrZo0UGEEdubC7uSgm9-',
-//   slug: 'drop-in-js-stg',
 //   scope,
 //   debug: 'all',
 //   domain: 'commercelayer.co'
@@ -25,7 +24,6 @@ export const codes = {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createConfig = (scope: string) => ({
   clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
-  slug: 'drop-in-js',
   scope,
   debug: 'all'
 })

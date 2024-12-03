@@ -16,13 +16,6 @@ export interface CommerceLayerConfig {
   clientId: string
 
   /**
-   * Slug for your organization. You can find it in your dashboard. Slug is the subdomain of your base endpoint.
-   * @example
-   * Given the base endpoint `https://drop-in-js.commercelayer.io`, the slug is `drop-in-js`.
-   */
-  slug: string
-
-  /**
    * Restrict the dataset of your application by specifying allowed scopes. You can find them in your dashboard.
    * @example 'market:code:usa'
    */
@@ -58,8 +51,6 @@ export interface CommerceLayerConfig {
 export type Config = CommerceLayerConfig & {
   debug: Exclude<CommerceLayerConfig['debug'], undefined>
   languageCode: Exclude<CommerceLayerConfig['languageCode'], undefined>
-  endpoint: string
-  appEndpoint: string
 }
 
 const documentationLink =
@@ -77,12 +68,6 @@ export function getConfig(): Config {
   if (typeof commercelayerConfig.clientId !== 'string') {
     throw new Error(
       `"window.commercelayerConfig.clientId" is required.\n${documentationLink}\n`
-    )
-  }
-
-  if (typeof commercelayerConfig.slug !== 'string') {
-    throw new Error(
-      `"window.commercelayerConfig.slug" is required.\n${documentationLink}\n`
     )
   }
 
@@ -117,17 +102,11 @@ export function getConfig(): Config {
   const debug: Config['debug'] = commercelayerConfig.debug ?? 'none'
   const languageCode: Config['languageCode'] =
     commercelayerConfig.languageCode ?? 'en'
-  const endpoint: Config['endpoint'] = `https://${commercelayerConfig.slug}.${commercelayerConfig.domain}`
-  const appEndpoint = `https://${commercelayerConfig.slug}${
-    commercelayerConfig.domain === 'commercelayer.co' ? '.stg' : ''
-  }.commercelayer.app`
 
   return {
     ...commercelayerConfig,
     debug,
-    languageCode,
-    endpoint,
-    appEndpoint
+    languageCode
   }
 }
 
@@ -136,7 +115,6 @@ const getOrganization = memoize(async () => {
   const client = await createClient(config)
   return await client.organization.retrieve({
     fields: {
-      // @ts-expect-error This is the resource name
       organizations: ['config']
     }
   })
@@ -150,16 +128,26 @@ export async function getOrganizationConfig(
   const { accessToken } = await getAccessToken(config)
   const jwt = jwtDecode(accessToken)
 
+  if (!('organization' in jwt.payload)) {
+    throw new Error(
+      'The access token does not contain the organization information.'
+    )
+  }
+
   const organization = await getOrganization()
+
+  const slug = jwt.payload.organization.slug
+  const domainPrefix = config.domain === 'commercelayer.co' ? '.stg' : ''
+  const appEndpoint = `https://${slug}${domainPrefix}.commercelayer.app`
 
   const defaultConfig: ConfigJSONWithRequiredLinks = {
     mfe: {
       default: {
         links: {
-          cart: `${config.appEndpoint}/cart/:order_id?accessToken=:access_token`,
-          checkout: `${config.appEndpoint}/checkout/:order_id?accessToken=:access_token`,
-          my_account: `${config.appEndpoint}/my-account?accessToken=:access_token`,
-          identity: `${config.appEndpoint}/identity`
+          cart: `${appEndpoint}/cart/:order_id?accessToken=:access_token`,
+          checkout: `${appEndpoint}/checkout/:order_id?accessToken=:access_token`,
+          my_account: `${appEndpoint}/my-account?accessToken=:access_token`,
+          identity: `${appEndpoint}/identity`
         }
       }
     }

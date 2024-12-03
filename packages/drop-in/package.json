@@ -47,18 +47,18 @@
   "dependencies": {
     "@commercelayer/js-auth": "^6.7.0",
     "@commercelayer/organization-config": "^1.4.11",
-    "@commercelayer/sdk": "^6.25.0",
+    "@commercelayer/sdk": "^6.25.2",
     "@types/lodash": "^4.17.13",
     "iframe-resizer": "4.4.2",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
-    "type-fest": "^4.26.1"
+    "type-fest": "^4.29.1"
   },
   "peerDependencies": {
     "@stencil/core": "^4.0.0"
   },
   "devDependencies": {
-    "@stencil/core": "^4.22.2",
+    "@stencil/core": "^4.22.3",
     "@stencil/sass": "^3.0.12",
     "@types/iframe-resizer": "^3.5.13",
     "@types/jest": "^29.5.14",
@@ -67,10 +67,10 @@
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
     "nodemon": "^3.1.7",
-    "puppeteer": "23.7.1",
-    "sass": "^1.80.6",
+    "puppeteer": "23.9.0",
+    "sass": "^1.81.0",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   },
   "license": "MIT",
   "engines": {

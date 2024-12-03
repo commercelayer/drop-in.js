@@ -1,6 +1,7 @@
 import * as cart from '#apis/commercelayer/cart'
 import * as client from '#apis/commercelayer/client'
 import { newSpecPage } from '@stencil/core/testing'
+import { mockedAccessToken } from 'jest.spec.helpers'
 import { ClCheckoutLink } from './cl-checkout-link'
 
 beforeEach(() => {
@@ -11,7 +12,7 @@ describe('cl-checkout-link.spec', () => {
   it('renders the checkout url without a cartId during the first load', async () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 

@@ -2,6 +2,7 @@ import * as cart from '#apis/commercelayer/cart'
 import * as client from '#apis/commercelayer/client'
 import { CLCartLink } from '#components/cl-cart-link/cl-cart-link'
 import { newSpecPage } from '@stencil/core/testing'
+import { mockedAccessToken } from 'jest.spec.helpers'
 import { ClCart } from './cl-cart'
 
 beforeEach(() => {
@@ -12,7 +13,7 @@ describe('cl-cart.spec', () => {
   it('renders', async () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 
