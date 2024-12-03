@@ -1,4 +1,4 @@
-import type { Price } from '@commercelayer/sdk'
+import type { Core } from '@commercelayer/js-sdk'
 import {
   Component,
   Host,
@@ -19,10 +19,10 @@ export class CLPriceAmount {
    */
   @Prop({ reflect: true }) type: 'price' | 'compare-at' = 'price'
 
-  @State() price: Price | undefined
+  @State() price: Core.Price | undefined
 
   @Listen('priceUpdate')
-  priceUpdateHandler(event: CustomEvent<Price | undefined>): void {
+  priceUpdateHandler(event: CustomEvent<Core.Price | undefined>): void {
     this.price = event.detail
   }
 

@@ -12,6 +12,14 @@ function mockSkuListItem(
     updated_at: time,
     id: `123`,
     quantity: skuListItem.quantity,
+    sku_list: {
+      type: 'sku_lists',
+      created_at: time,
+      updated_at: time,
+      id: '123',
+      name: '123',
+      slug: '123'
+    },
     sku: {
       code: '123',
       created_at: time,
@@ -19,7 +27,14 @@ function mockSkuListItem(
       id: `123`,
       name: '123',
       type: 'skus',
-      inventory: skuListItem.sku.inventory
+      inventory: skuListItem.sku.inventory,
+      shipping_category: {
+        type: 'shipping_categories',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        id: 'SC1',
+        name: 'Merchandise'
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import { getCart } from '#apis/commercelayer/cart'
 import { listenTo } from '#apis/event'
-import type { Order } from '@commercelayer/sdk'
+import type { Core } from '@commercelayer/js-sdk'
 import { Component, Host, Prop, State, h, type JSX } from '@stencil/core'
 
 @Component({
@@ -27,7 +27,7 @@ export class ClCartCount {
     await this.updateCart(await getCart())
   }
 
-  private async updateCart(cart: Order | null): Promise<void> {
+  private async updateCart(cart: Core.Order | null): Promise<void> {
     const itemCount = cart?.line_items
       ?.filter(
         (item) => item.item_type === 'skus' || item.item_type === 'bundles'

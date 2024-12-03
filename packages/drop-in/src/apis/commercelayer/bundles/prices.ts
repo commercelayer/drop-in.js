@@ -1,6 +1,6 @@
 import { fireEvent } from '#apis/event'
 import type { GetBundlePrice } from '#apis/types'
-import type { Price } from '@commercelayer/sdk'
+import type { Core } from '@commercelayer/js-sdk'
 import { memoize } from '../../../utils/utils'
 import { _getBundleViaList } from './list'
 
@@ -10,7 +10,7 @@ const getMemoizedPrice = memoize<GetBundlePrice>(async (code) => {
       return undefined
     }
 
-    const price: Price = {
+    const price: Core.Price = {
       amount_cents: bundle.price_amount_cents,
       amount_float: bundle.price_amount_float,
       compare_at_amount_cents: bundle.compare_at_amount_cents,
@@ -22,7 +22,7 @@ const getMemoizedPrice = memoize<GetBundlePrice>(async (code) => {
       type: 'prices',
       updated_at: bundle.updated_at,
       currency_code: bundle.currency_code
-    }
+    } as unknown as Core.Price
 
     return price
   })

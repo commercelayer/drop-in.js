@@ -47,7 +47,7 @@
   "dependencies": {
     "@commercelayer/js-auth": "^6.7.0",
     "@commercelayer/organization-config": "^1.4.11",
-    "@commercelayer/sdk": "^6.25.2",
+    "@commercelayer/js-sdk": "https://pkg.pr.new/commercelayer/poc-core-sdk/@commercelayer/poc-javascript-sdk@88f2fd0",
     "@types/lodash": "^4.17.13",
     "iframe-resizer": "4.4.2",
     "js-cookie": "^3.0.5",

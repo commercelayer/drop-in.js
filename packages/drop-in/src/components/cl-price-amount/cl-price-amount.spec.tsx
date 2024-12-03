@@ -1,4 +1,4 @@
-import type { Price } from '@commercelayer/sdk'
+import type { Core } from '@commercelayer/js-sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { CLPriceAmount } from './cl-price-amount'
 
@@ -28,7 +28,7 @@ describe('cl-price-amount.spec', () => {
       </cl-price-amount>
     `)
 
-    const priceUpdateEvent: Price = {
+    const priceUpdateEvent: Core.Price = {
       id: 'ABC123',
       type: 'prices',
       amount_cents: 1200,
@@ -39,10 +39,10 @@ describe('cl-price-amount.spec', () => {
       updated_at: new Date().toISOString(),
       formatted_amount: '€ 12.00',
       formatted_compare_at_amount: '€ 28.50'
-    }
+    } as unknown as Core.Price
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
+      new CustomEvent<Core.Price>('priceUpdate', {
         detail: priceUpdateEvent
       })
     )
@@ -70,7 +70,7 @@ describe('cl-price-amount.spec', () => {
       </cl-price-amount>
     `)
 
-    const priceUpdateEvent: Price = {
+    const priceUpdateEvent: Core.Price = {
       id: 'ABC123',
       type: 'prices',
       amount_cents: 1200,
@@ -81,10 +81,10 @@ describe('cl-price-amount.spec', () => {
       updated_at: new Date().toISOString(),
       formatted_amount: '€ 12.00',
       formatted_compare_at_amount: '€ 28.50'
-    }
+    } as unknown as Core.Price
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
+      new CustomEvent<Core.Price>('priceUpdate', {
         detail: priceUpdateEvent
       })
     )
@@ -112,7 +112,7 @@ describe('cl-price-amount.spec', () => {
       </cl-price-amount>
     `)
 
-    const priceUpdateEvent: Price = {
+    const priceUpdateEvent: Core.Price = {
       id: 'ABC123',
       type: 'prices',
       amount_cents: 1200,
@@ -123,10 +123,10 @@ describe('cl-price-amount.spec', () => {
       updated_at: new Date().toISOString(),
       formatted_amount: '€ 12.00',
       formatted_compare_at_amount: '€ 12.00'
-    }
+    } as unknown as Core.Price
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
+      new CustomEvent<Core.Price>('priceUpdate', {
         detail: priceUpdateEvent
       })
     )
@@ -152,7 +152,7 @@ describe('cl-price-amount.spec', () => {
       </cl-price-amount>
     `)
 
-    const priceUpdateEvent: Price = {
+    const priceUpdateEvent: Core.Price = {
       id: 'ABC123',
       type: 'prices',
       amount_cents: 1200,
@@ -163,10 +163,10 @@ describe('cl-price-amount.spec', () => {
       updated_at: new Date().toISOString(),
       formatted_amount: '€ 12.00',
       formatted_compare_at_amount: '€ 28.50'
-    }
+    } as unknown as Core.Price
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
+      new CustomEvent<Core.Price>('priceUpdate', {
         detail: priceUpdateEvent
       })
     )
@@ -174,7 +174,7 @@ describe('cl-price-amount.spec', () => {
     await waitForChanges()
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
+      new CustomEvent<Core.Price>('priceUpdate', {
         detail: undefined
       })
     )

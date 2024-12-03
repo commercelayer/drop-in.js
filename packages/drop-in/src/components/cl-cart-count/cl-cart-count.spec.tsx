@@ -74,7 +74,13 @@ describe('cl-cart-count.spec', () => {
                   quantity: 6,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'skus'
+                  item_type: 'skus',
+                  order: {
+                    type: 'orders',
+                    id: 'ABC123',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                  }
                 },
                 {
                   type: 'line_items',
@@ -84,7 +90,13 @@ describe('cl-cart-count.spec', () => {
                   quantity: 2,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'bundles'
+                  item_type: 'bundles',
+                  order: {
+                    type: 'orders',
+                    id: 'ABC123',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                  }
                 },
                 {
                   type: 'line_items',
@@ -94,7 +106,13 @@ describe('cl-cart-count.spec', () => {
                   quantity: 15,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'payment_methods'
+                  item_type: 'payment_methods',
+                  order: {
+                    type: 'orders',
+                    id: 'ABC123',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                  }
                 },
                 {
                   type: 'line_items',
@@ -104,7 +122,13 @@ describe('cl-cart-count.spec', () => {
                   quantity: 4,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'skus'
+                  item_type: 'skus',
+                  order: {
+                    type: 'orders',
+                    id: 'ABC123',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                  }
                 }
               ]
             }
@@ -155,7 +179,13 @@ describe('cl-cart-count.spec', () => {
                   quantity: 6,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'skus'
+                  item_type: 'skus',
+                  order: {
+                    type: 'orders',
+                    id: 'ABC123',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                  }
                 },
                 {
                   type: 'line_items',
@@ -165,7 +195,13 @@ describe('cl-cart-count.spec', () => {
                   quantity: 2,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'bundles'
+                  item_type: 'bundles',
+                  order: {
+                    type: 'orders',
+                    id: 'ABC123',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                  }
                 },
                 {
                   type: 'line_items',
@@ -175,7 +211,13 @@ describe('cl-cart-count.spec', () => {
                   quantity: 15,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'payment_methods'
+                  item_type: 'payment_methods',
+                  order: {
+                    type: 'orders',
+                    id: 'ABC123',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                  }
                 },
                 {
                   type: 'line_items',
@@ -185,7 +227,13 @@ describe('cl-cart-count.spec', () => {
                   quantity: 4,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'skus'
+                  item_type: 'skus',
+                  order: {
+                    type: 'orders',
+                    id: 'ABC123',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                  }
                 }
               ]
             }

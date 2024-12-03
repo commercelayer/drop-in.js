@@ -6,7 +6,7 @@ import {
   logUnion,
   unionToTuple
 } from '#utils/validation-helpers'
-import type { Price } from '@commercelayer/sdk'
+import type { Core } from '@commercelayer/js-sdk'
 import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
 import debounce from 'lodash/debounce'
 
@@ -62,7 +62,7 @@ export class CLPrice {
     kind: typeof this.kind,
     code: typeof this.code
   ): Promise<void> => {
-    let price: Price | undefined
+    let price: Core.Price | undefined
 
     if (isValidCode(code)) {
       switch (kind) {
@@ -79,7 +79,7 @@ export class CLPrice {
 
     this.host.querySelectorAll('cl-price-amount').forEach((element) => {
       element.dispatchEvent(
-        new CustomEvent<Price>('priceUpdate', { detail: price })
+        new CustomEvent<Core.Price>('priceUpdate', { detail: price })
       )
     })
   }

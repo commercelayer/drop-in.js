@@ -1,6 +1,7 @@
 import type { Bundle } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
+import { core } from '@commercelayer/js-sdk'
 import { chunk, memoize, uniq } from '../../../utils/utils'
 import { createClient } from '../client'
 import { getConfig } from '../config'
@@ -26,25 +27,32 @@ const _getBundlesViaList = async (codes: string[]): Promise<BundleViaList> => {
   const response = (
     await Promise.all(
       chunkedCodes.map(async (codes) => {
-        return await client.bundles.list({
-          pageSize,
-          filters: { code_in: codes.join(',') },
-          fields: {
-            bundles: [
-              'id',
-              'code',
-              'compare_at_amount_cents',
-              'compare_at_amount_float',
-              'created_at',
-              'currency_code',
-              'formatted_compare_at_amount',
-              'formatted_price_amount',
-              'price_amount_cents',
-              'price_amount_float',
-              'updated_at'
-            ]
-          }
-        })
+        return await client.request(
+          core.readItems('bundles', {
+            pageSize,
+            filters: [
+              {
+                or: ['code'],
+                matcher: { in: codes.join(',') }
+              }
+            ],
+            fields: {
+              bundles: [
+                'id',
+                'code',
+                'compare_at_amount_cents',
+                'compare_at_amount_float',
+                'created_at',
+                'currency_code',
+                'formatted_compare_at_amount',
+                'formatted_price_amount',
+                'price_amount_cents',
+                'price_amount_float',
+                'updated_at'
+              ]
+            }
+          })
+        )
       })
     )
   ).flat()

@@ -1,12 +1,14 @@
 import * as client from '#apis/commercelayer/client'
 import * as skus from '#apis/commercelayer/skus'
 import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
-import type { Price } from '@commercelayer/sdk'
+import type { Core } from '@commercelayer/js-sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { mockedAccessToken, waitForMs } from 'jest.spec.helpers'
 import { CLPrice } from './cl-price'
 
-const fakePrices: { [sku: string]: Price } = {
+const fakePrices: {
+  [sku: string]: Core.Price
+} = {
   ABC123: {
     id: 'ABC123',
     type: 'prices',
@@ -18,7 +20,7 @@ const fakePrices: { [sku: string]: Price } = {
     updated_at: new Date().toISOString(),
     formatted_amount: '€ 12.00',
     formatted_compare_at_amount: '€ 28.50'
-  },
+  } as unknown as Core.Price,
   DEF456: {
     id: 'DEF456',
     type: 'prices',
@@ -30,7 +32,7 @@ const fakePrices: { [sku: string]: Price } = {
     updated_at: new Date().toISOString(),
     formatted_amount: '€ 31.00',
     formatted_compare_at_amount: '€ 43.00'
-  }
+  } as unknown as Core.Price
 }
 
 describe('cl-price.spec', () => {

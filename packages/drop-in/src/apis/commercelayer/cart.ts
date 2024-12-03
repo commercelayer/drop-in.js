@@ -9,7 +9,7 @@ import type {
 } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { jwtDecode } from '@commercelayer/js-auth'
-import type { Order, QueryParamsRetrieve } from '@commercelayer/sdk'
+import { type Core, core } from '@commercelayer/js-sdk'
 import Cookies from 'js-cookie'
 import memoize from 'lodash/memoize'
 
@@ -18,15 +18,17 @@ import memoize from 'lodash/memoize'
  * @see https://docs.commercelayer.io/core/v/how-tos/shopping-cart/create-a-shopping-cart
  * @returns Returns the created draft order.
  */
-async function createEmptyCart(): Promise<Order> {
+async function createEmptyCart(): Promise<Core.Order> {
   const config = getConfig()
   const client = await createClient(config)
   const token = await getAccessToken(config)
 
-  const order = await client.orders.create({
-    return_url: config.orderReturnUrl,
-    language_code: config.languageCode
-  })
+  const order = await client.request(
+    core.createItem('orders', {
+      return_url: config.orderReturnUrl,
+      language_code: config.languageCode
+    })
+  )
 
   if (token.type === 'guest') {
     setCartId(order.id)
@@ -40,7 +42,7 @@ async function createEmptyCart(): Promise<Order> {
 const LINE_ITEMS_SHIPPABLE = ['skus', 'bundles'] as const
 const LINE_ITEMS_SHOPPABLE = [...LINE_ITEMS_SHIPPABLE, 'gift_cards'] as const
 
-export function isValidForCheckout(order: Order): boolean {
+export function isValidForCheckout(order: Core.Order): boolean {
   return (
     order.line_items?.find((lineItem) => {
       return LINE_ITEMS_SHOPPABLE.includes(
@@ -107,13 +109,20 @@ export async function getCheckoutUrl(): Promise<string | undefined> {
   return organizationConfig.links.checkout
 }
 
-export async function _getCart(): Promise<Order | null> {
+export async function _getCart(): Promise<Core.Order | null> {
   const config = getConfig()
   const client = await createClient(config)
   const token = await getAccessToken(config)
 
-  const orderParams: QueryParamsRetrieve = {
-    include: ['line_items.item', 'line_items.line_item_options.sku_option']
+  const orderParams: Core.ReadItemQuery<'orders'> = {
+    include: {
+      line_items: {
+        line_item_options: {
+          sku_option: {}
+        },
+        item: {}
+      }
+    }
   }
 
   if (token.type === 'guest') {
@@ -123,9 +132,9 @@ export async function _getCart(): Promise<Order | null> {
       return null
     }
 
-    const order = await client.orders
-      .retrieve(orderId, orderParams)
-      .catch(() => null)
+    const order = await client.request(
+      core.readItem('orders', orderId, orderParams)
+    )
 
     if (order?.editable === false) {
       removeCartId()
@@ -141,19 +150,25 @@ export async function _getCart(): Promise<Order | null> {
     return null
   }
 
-  const [order = null] = await client.customers.orders(token.customerId, {
-    ...orderParams,
-    filters: {
-      market_id_in: jwt.payload.market.id.join(','),
-      guest_false: true,
-      editable_true: true,
-      status_eq: 'pending'
-    },
-    sort: {
-      updated_at: 'desc'
-    },
-    pageSize: 1
-  })
+  const [order = null] = await client.request(
+    core.readRelationships('customers', token.customerId, 'orders', {
+      ...orderParams,
+      filters: [
+        {
+          or: [{ market: 'id' }],
+          matcher: { in: jwt.payload.market.id.join(',') }
+        },
+        { or: ['guest'], matcher: { false: 'true' } },
+        // @ts-expect-error // TODO: double check this `editable` field
+        { or: ['editable'], matcher: { true: 'true' } },
+        { or: ['status'], matcher: { eq: 'pending' } }
+      ],
+      sort: {
+        updated_at: 'desc'
+      },
+      pageSize: 1
+    })
+  )
 
   return order
 }
@@ -192,16 +207,20 @@ export const addItem: AddItem = async (kind, code, quantity, options = {}) => {
   const client = await createClient(getConfig())
   const orderId = (await getCart())?.id ?? (await createEmptyCart()).id
 
-  const lineItem = await client.line_items.create({
-    ...options,
-    order: {
-      id: orderId,
-      type: 'orders'
-    },
-    quantity,
-    ...(kind === 'sku' ? { sku_code: code } : { bundle_code: code }),
-    _update_quantity: true
-  })
+  const lineItem = await client.request(
+    core.createItem('line_items', {
+      ...options,
+      quantity,
+      ...(kind === 'sku' ? { sku_code: code } : { bundle_code: code }),
+      _update_quantity: true,
+      relationships: {
+        order: {
+          id: orderId,
+          type: 'orders'
+        }
+      }
+    })
+  )
 
   fireEvent('cl-cart-additem', [kind, code, quantity, options], lineItem)
 
@@ -224,9 +243,11 @@ export async function updateCartUrl(cartUrl: string): Promise<void> {
 
   if (cart !== null && cart.cart_url !== cartUrl) {
     const client = await createClient(getConfig())
-    await client.orders.update({
-      id: cart.id,
-      cart_url: cartUrl
-    })
+
+    await client.request(
+      core.updateItem('orders', cart.id, {
+        cart_url: cartUrl
+      })
+    )
   }
 }

@@ -7,6 +7,7 @@ import {
 import merge from 'lodash/merge'
 import type { OmitDeep, SetRequired } from 'type-fest'
 import { createClient, getAccessToken } from './client'
+import { core } from '@commercelayer/js-sdk'
 
 export interface CommerceLayerConfig {
   /**
@@ -114,11 +115,14 @@ export function getConfig(): Config {
 const getOrganization = memoize(async () => {
   const config = getConfig()
   const client = await createClient(config)
-  return await client.organization.retrieve({
-    fields: {
-      organizations: ['config']
-    }
-  })
+
+  return await client.request(
+    core.readSingleton('organization', {
+      fields: {
+        organizations: ['config']
+      }
+    })
+  )
 })
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

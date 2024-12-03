@@ -2,6 +2,7 @@ import type { Sku } from '#apis/types'
 import { pDebounce } from '#utils/debounce'
 import { logGroup } from '#utils/logger'
 import { chunk, memoize, uniq } from '#utils/utils'
+import { core } from '@commercelayer/js-sdk'
 import { createClient } from '../client'
 import { getConfig } from '../config'
 
@@ -26,13 +27,15 @@ const _getSkusViaList = async (codes: string[]): Promise<SkuViaList> => {
   const response = (
     await Promise.all(
       chunkedCodes.map(async (codes) => {
-        return await client.skus.list({
-          pageSize,
-          filters: { code_in: codes.join(',') },
-          fields: {
-            skus: ['id', 'code']
-          }
-        })
+        return await client.request(
+          core.readItems('skus', {
+            pageSize,
+            filters: [{ or: ['code'], matcher: { in: codes.join(',') } }],
+            fields: {
+              skus: ['id', 'code']
+            }
+          })
+        )
       })
     )
   ).flat()

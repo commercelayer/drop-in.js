@@ -6,7 +6,7 @@ import {
 } from '#apis/commercelayer/cart'
 import { listenTo } from '#apis/event'
 import { getClosestLocationHref } from '#utils/url'
-import { type Order } from '@commercelayer/sdk'
+import type { Core } from '@commercelayer/js-sdk'
 import {
   Component,
   Element,
@@ -24,7 +24,7 @@ interface IframeData {
   message:
     | {
         type: 'update'
-        payload?: Order
+        payload?: Core.Order
       }
     | {
         type: 'close'

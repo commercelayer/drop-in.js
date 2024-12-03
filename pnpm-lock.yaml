@@ -141,12 +141,12 @@ importers:
       '@commercelayer/js-auth':
         specifier: ^6.7.0
         version: 6.7.0
+      '@commercelayer/js-sdk':
+        specifier: https://pkg.pr.new/commercelayer/poc-core-sdk/@commercelayer/poc-javascript-sdk@88f2fd0
+        version: '@commercelayer/poc-javascript-sdk@https://pkg.pr.new/commercelayer/poc-core-sdk/@commercelayer/poc-javascript-sdk@88f2fd0'
       '@commercelayer/organization-config':
         specifier: ^1.4.11
         version: 1.4.11
-      '@commercelayer/sdk':
-        specifier: ^6.25.2
-        version: 6.25.2
       '@types/lodash':
         specifier: ^4.17.13
         version: 4.17.13
@@ -849,9 +849,10 @@ packages:
     resolution: {integrity: sha512-yh96gmOaY31P4Y6ycUCapJiQYRAqrkKmbZLa7q0hso51mQHuij13B/3Ox2jXdSlf4SuUh+K8iCK+Ccv2gBVA3w==}
     engines: {node: '>=18', pnpm: '>=7'}
 
-  '@commercelayer/sdk@6.25.2':
-    resolution: {integrity: sha512-n+uxPBa+BUcSKdmcVhzooHw+8Re+im0K+krC/rUMwJHA8Uk/s6RTrYYz4u7kWnpPN5/JgITMdHJbQ7J14bkIhg==}
-    engines: {node: '>=20'}
+  '@commercelayer/poc-javascript-sdk@https://pkg.pr.new/commercelayer/poc-core-sdk/@commercelayer/poc-javascript-sdk@88f2fd0':
+    resolution: {tarball: https://pkg.pr.new/commercelayer/poc-core-sdk/@commercelayer/poc-javascript-sdk@88f2fd0}
+    version: 0.0.24
+    engines: {node: '>=18.13.0'}
 
   '@emnapi/core@1.3.1':
     resolution: {integrity: sha512-pVGjBIt1Y6gg3EJN8jTcfpP/+uuRksIo055oE/OBkDNcjZqVbfkWCksG1Jp4yZnj3iKWyWX8fdG/j6UDYPbFog==}
@@ -2891,8 +2892,8 @@ packages:
     resolution: {integrity: sha512-zIHwmZPRshsCdpMDyVsqGmgyP0yT8GAgXUnkdAoJisxvf33k7yO6OuoKmcTGuXPWSsm8Oh88nZicRLA9Y0rUeA==}
     engines: {node: '>=12'}
 
-  dotenv@16.4.6:
-    resolution: {integrity: sha512-JhcR/+KIjkkjiU8yEpaB/USlzVi3i5whwOjpIRNGi9svKEXZSe+Qp6IWAjFjv+2GViAoDRCUv/QLNziQxsLqDg==}
+  dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
 
   duplexer@0.1.2:
@@ -4198,8 +4199,8 @@ packages:
     resolution: {integrity: sha512-26zzwoBNAvX9AWOPiqqF6FG4HrSCPsHFkQm7nT+xU1ggAujL/eae81RnCv4CJ2In9q9fh10B88sYSzKCUh/Ghg==}
     engines: {node: ^16.14.0 || >=18.0.0}
 
-  lilconfig@3.1.2:
-    resolution: {integrity: sha512-eop+wDAvpItUys0FWkHIKeC9ybYrTGbU41U5K7+bttZZeohvnY7M9dZ5kB21GNWiFT2q1OoPTvncPCgSOVO5ow==}
+  lilconfig@3.1.3:
+    resolution: {integrity: sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==}
     engines: {node: '>=14'}
 
   lines-and-columns@1.2.4:
@@ -5559,8 +5560,8 @@ packages:
       prettier:
         optional: true
 
-  streamx@2.20.2:
-    resolution: {integrity: sha512-aDGDLU+j9tJcUdPGOaHmVF1u/hhI+CsGkT02V3OKlHDV7IukOI+nTWAGkiZEKCO35rWN1wIr4tS7YFr1f4qSvA==}
+  streamx@2.21.0:
+    resolution: {integrity: sha512-Qz6MsDZXJ6ur9u+b+4xCG18TluU7PGlRfXVAAjNiGsFrBUt/ioyLkxbFaKJygoPs+/kW4VyBj0bSj89Qu0IGyg==}
 
   string-argv@0.3.2:
     resolution: {integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==}
@@ -7055,7 +7056,9 @@ snapshots:
     dependencies:
       merge-anything: 5.1.7
 
-  '@commercelayer/sdk@6.25.2': {}
+  '@commercelayer/poc-javascript-sdk@https://pkg.pr.new/commercelayer/poc-core-sdk/@commercelayer/poc-javascript-sdk@88f2fd0':
+    dependencies:
+      type-fest: 4.30.0
 
   '@emnapi/core@1.3.1':
     dependencies:
@@ -8911,7 +8914,7 @@ snapshots:
 
   bare-stream@2.4.2:
     dependencies:
-      streamx: 2.20.2
+      streamx: 2.21.0
     optional: true
 
   base64-js@1.5.1: {}
@@ -9490,9 +9493,9 @@ snapshots:
 
   dotenv-expand@11.0.7:
     dependencies:
-      dotenv: 16.4.6
+      dotenv: 16.4.7
 
-  dotenv@16.4.6: {}
+  dotenv@16.4.7: {}
 
   duplexer@0.1.2: {}
 
@@ -11209,7 +11212,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  lilconfig@3.1.2: {}
+  lilconfig@3.1.3: {}
 
   lines-and-columns@1.2.4: {}
 
@@ -11221,7 +11224,7 @@ snapshots:
       commander: 12.1.0
       debug: 4.3.7(supports-color@5.5.0)
       execa: 8.0.1
-      lilconfig: 3.1.2
+      lilconfig: 3.1.3
       listr2: 8.2.5
       micromatch: 4.0.8
       pidtree: 0.6.0
@@ -11958,7 +11961,7 @@ snapshots:
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       cliui: 8.0.1
-      dotenv: 16.4.6
+      dotenv: 16.4.7
       dotenv-expand: 11.0.7
       enquirer: 2.3.6
       figures: 3.2.0
@@ -12062,7 +12065,7 @@ snapshots:
   ora@5.3.0:
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       is-interactive: 1.0.0
@@ -12897,7 +12900,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  streamx@2.20.2:
+  streamx@2.21.0:
     dependencies:
       fast-fifo: 1.3.2
       queue-tick: 1.0.1
@@ -13036,7 +13039,7 @@ snapshots:
     dependencies:
       b4a: 1.6.7
       fast-fifo: 1.3.2
-      streamx: 2.20.2
+      streamx: 2.21.0
 
   tar@6.2.1:
     dependencies:

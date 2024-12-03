@@ -1,5 +1,6 @@
 import { fireEvent } from '#apis/event'
 import type { Bundle, GetBundle, Inventory } from '#apis/types'
+import { core } from '@commercelayer/js-sdk'
 import { memoize } from '../../../utils/utils'
 import { createClient } from '../client'
 import { getConfig } from '../config'
@@ -41,9 +42,17 @@ const getMemoizedBundle = memoize<GetBundle>(async (code) => {
 
   const client = await createClient(getConfig())
 
-  const bundle = (await client.bundles.retrieve(id, {
-    include: ['sku_list.sku_list_items.sku']
-  })) as Bundle
+  const bundle = (await client.request(
+    core.readItem('bundles', id, {
+      include: {
+        sku_list: {
+          sku_list_items: {
+            sku: {}
+          }
+        }
+      }
+    })
+  )) as Bundle
 
   return {
     ...bundle,
