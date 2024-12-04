@@ -3,7 +3,6 @@ import { log } from './logger'
 
 function injectConfig({
   clientId = '1234',
-  slug = 'example',
   scope = 'market:code:usa',
   debug,
   orderReturnUrl
@@ -11,7 +10,6 @@ function injectConfig({
   Object.defineProperty(window, 'commercelayerConfig', {
     value: {
       clientId,
-      slug,
       scope,
       debug,
       orderReturnUrl

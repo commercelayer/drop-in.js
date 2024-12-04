@@ -1,13 +1,14 @@
 import * as client from '#apis/commercelayer/client'
 import type { CLCustomEventDetailMap } from '#apis/event'
 import { newSpecPage } from '@stencil/core/testing'
+import { mockedAccessToken } from 'jest.spec.helpers'
 import { ClCartCount } from './cl-cart-count'
 
 describe('cl-cart-count.spec', () => {
   it('renders', async () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 
@@ -26,7 +27,7 @@ describe('cl-cart-count.spec', () => {
   it('renders without content when "hide-when-empty" attribute is set to `true`', async () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 

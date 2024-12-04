@@ -1,8 +1,9 @@
-import { fireEvent } from '#apis/event'
-import { newSpecPage } from '@stencil/core/testing'
-import { ClIdentityStatus } from './cl-identity-status'
 import * as client from '#apis/commercelayer/client'
+import { fireEvent } from '#apis/event'
 import * as logger from '#utils/logger'
+import { newSpecPage } from '@stencil/core/testing'
+import { mockedAccessToken } from 'jest.spec.helpers'
+import { ClIdentityStatus } from './cl-identity-status'
 
 let log: jest.SpyInstance
 
@@ -36,7 +37,7 @@ describe('cl-identity-status.spec', () => {
   it('renders as guest when user is guest', async () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 
@@ -76,7 +77,7 @@ describe('cl-identity-status.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'customer',
       customerId: '1234',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 
@@ -115,7 +116,7 @@ describe('cl-identity-status.spec', () => {
   it('renders as customer when user logged in', async () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 
@@ -179,7 +180,7 @@ describe('cl-identity-status.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'customer',
       customerId: '1234',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 

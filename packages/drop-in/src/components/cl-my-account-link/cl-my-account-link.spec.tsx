@@ -2,6 +2,7 @@ import * as client from '#apis/commercelayer/client'
 import * as config from '#apis/commercelayer/config'
 import { fireEvent } from '#apis/event'
 import { newSpecPage } from '@stencil/core/testing'
+import { mockedAccessToken } from 'jest.spec.helpers'
 import { ClMyAccountLink } from './cl-my-account-link'
 
 beforeEach(() => {
@@ -12,7 +13,7 @@ describe('cl-my-account-link.spec', () => {
   it('renders the my-account without href when guest', async () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 
@@ -46,7 +47,7 @@ describe('cl-my-account-link.spec', () => {
   it('renders the my-account with a defined target', async () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'guest',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 
@@ -81,7 +82,7 @@ describe('cl-my-account-link.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'customer',
       customerId: '1234',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 
@@ -116,7 +117,7 @@ describe('cl-my-account-link.spec', () => {
     jest.spyOn(client, 'getAccessToken').mockResolvedValue({
       type: 'customer',
       customerId: '1234',
-      accessToken: 'token-123',
+      accessToken: mockedAccessToken,
       scope: 'market:code:usa'
     })
 

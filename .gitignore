@@ -107,3 +107,7 @@ dist-*
 
 # Act 
 .secrets
+
+# JWT keys
+private.key
+public.key

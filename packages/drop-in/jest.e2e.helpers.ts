@@ -6,14 +6,12 @@ type Cookie = Awaited<ReturnType<E2EPage['cookies']>>[number]
 
 export function getCommerceLayerConfiguration({
   clientId = 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
-  slug = 'drop-in-js',
   scope = 'market:code:usa'
 }: Partial<CommerceLayerConfig> = {}): string {
   return `
     <script>
       commercelayerConfig = {
         clientId: '${clientId}',
-        slug: '${slug}',
         scope: '${scope}'
       }
     </script>
