@@ -137,9 +137,8 @@ export async function getOrganizationConfig(
 
   const organization = await getOrganization()
 
-  const slug = jwt.payload.organization.slug
   const domainPrefix = config.domain === 'commercelayer.co' ? '.stg' : ''
-  const appEndpoint = `https://${slug}${domainPrefix}.commercelayer.app`
+  const appEndpoint = `https://:slug${domainPrefix}.commercelayer.app`
 
   const defaultConfig: ConfigJSONWithRequiredLinks = {
     mfe: {
@@ -167,6 +166,7 @@ export async function getOrganizationConfig(
     params: {
       ...params,
       accessToken,
+      slug: jwt.payload.organization.slug,
       lang: config.languageCode
     }
   }
