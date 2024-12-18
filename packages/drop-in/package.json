@@ -49,7 +49,7 @@
     "@commercelayer/organization-config": "^1.4.12",
     "@commercelayer/sdk": "^6.25.2",
     "@types/lodash": "^4.17.13",
-    "iframe-resizer": "4.4.2",
+    "iframe-resizer": "4.3.11",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "type-fest": "^4.30.0"

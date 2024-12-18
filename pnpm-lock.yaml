@@ -151,8 +151,8 @@ importers:
         specifier: ^4.17.13
         version: 4.17.13
       iframe-resizer:
-        specifier: 4.4.2
-        version: 4.4.2
+        specifier: 4.3.11
+        version: 4.3.11
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
@@ -3633,8 +3633,8 @@ packages:
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
-  iframe-resizer@4.4.2:
-    resolution: {integrity: sha512-2SupFCq9V9osWac4q+PodF0E9QdWY5A9VdCpKrrE7HlDrcIsaTp7D6k14mkGXWoWMS9jCavYusik25wTc0YB2Q==}
+  iframe-resizer@4.3.11:
+    resolution: {integrity: sha512-5QtnsmfH11GDsuC7Gxd/eNzojudX3346Gb0E+Ku8ln8AtfSq+cWCZtnhCrthrtE7f1CI2/kwHkZ9G4sFYzHP7A==}
     engines: {node: '>=0.8.0'}
 
   ignore-by-default@1.0.1:
@@ -10397,7 +10397,7 @@ snapshots:
 
   ieee754@1.2.1: {}
 
-  iframe-resizer@4.4.2: {}
+  iframe-resizer@4.3.11: {}
 
   ignore-by-default@1.0.1: {}
 
