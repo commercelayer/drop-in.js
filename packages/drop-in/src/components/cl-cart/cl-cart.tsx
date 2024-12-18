@@ -227,8 +227,6 @@ export class ClCart {
       {
         checkOrigin: false,
 
-        bodyPadding: '20px',
-
         // 'messageCallback' has been renamed 'onMessage'. The old method will be removed in the next major version.
         // @ts-expect-error We are using the latest version for 'iframe-resized' but unfortunately types are not updated.
         onMessage
@@ -273,9 +271,10 @@ export class ClCart {
             src={this.href}
             style={{
               width: '1px',
-              'min-width': '100%',
+              'min-width': 'calc(100% - 40px)',
               'min-height': '100%',
-              border: 'none'
+              border: 'none',
+              margin: '20px'
             }}
           ></iframe>
         </div>
