@@ -36,7 +36,7 @@ describe('cl-cart.spec', () => {
               id="iFrameResizer0"
               allow="payment"
               src="https://example.com/checkout-url"
-              style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
+              style="width: 1px; min-width: calc(100% - 40px); min-height: 100%; border: none; margin: 20px; overflow: hidden;"
             ></iframe>
           </div>
         </mock:shadow-root>
@@ -70,7 +70,7 @@ describe('cl-cart.spec', () => {
                 title="My Cart"
                 id="iFrameResizer1"
                 allow="payment"
-                style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
+                style="width: 1px; min-width: calc(100% - 40px); min-height: 100%; border: none; margin: 20px; overflow: hidden;"
               ></iframe>
             </div>
           </mock:shadow-root>
@@ -93,7 +93,7 @@ describe('cl-cart.spec', () => {
                 id="iFrameResizer1"
                 allow="payment"
                 src="https://example.com/checkout-url"
-                style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
+                style="width: 1px; min-width: calc(100% - 40px); min-height: 100%; border: none; margin: 20px; overflow: hidden;"
               ></iframe>
             </div>
           </mock:shadow-root>
