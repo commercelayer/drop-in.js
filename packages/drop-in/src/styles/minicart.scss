@@ -51,12 +51,14 @@ cl-cart[type="mini"] {
   }
 
   &, &::after {
-    right: calc(var(--cl-cart-mini-modal-width) * -1 + 1px);
+    right: calc(var(--cl-cart-mini-modal-width) * -1 + 21px);
     transition: right var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function), opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
+    opacity: 0;
   }
 
   &[open]:not([open="false"]) {
     right: 0;
+    opacity: 1;
     pointer-events: initial;
 
     &::before {
