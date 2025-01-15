@@ -206,6 +206,62 @@ describe('cl-add-to-cart.spec', () => {
     `)
   })
 
+  it('renders properly when "name" attribute is set', async () => {
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
+
+    const { root, waitForChanges } = await newSpecPage({
+      components: [CLAddToCart],
+      html: '<cl-add-to-cart code="AVAILABLE123" name="Custom name">Add to cart</cl-add-to-cart>'
+    })
+
+    root?.setAttribute('name', 'Nome personalizzato')
+
+    await waitForMs(11)
+
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-add-to-cart kind="sku" code="AVAILABLE123" name="Nome personalizzato" quantity="1" role="button" tabindex="0">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        Add to cart
+      </cl-add-to-cart>
+    `)
+  })
+
+  it('renders properly when "image-url" attribute is set', async () => {
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
+
+    const { root, waitForChanges } = await newSpecPage({
+      components: [CLAddToCart],
+      html: '<cl-add-to-cart code="AVAILABLE123" image-url="https://example.com/image-1">Add to cart</cl-add-to-cart>'
+    })
+
+    root?.setAttribute('image-url', 'https://example.com/image-2')
+
+    await waitForMs(11)
+
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-add-to-cart kind="sku" code="AVAILABLE123" image-url="https://example.com/image-2" quantity="1" role="button" tabindex="0">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        Add to cart
+      </cl-add-to-cart>
+    `)
+  })
+
   it('renders disabled when item is out of stock', async () => {
     jest
       .spyOn(skus, 'getSku')

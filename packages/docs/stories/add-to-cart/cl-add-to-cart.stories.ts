@@ -19,6 +19,8 @@ const Template: StoryFn<Args> = (args) => {
       kind=${args.kind ?? nothing}
       code=${args.code ?? nothing}
       quantity=${args.quantity ?? nothing}
+      name=${args.name ?? nothing}
+      image-url=${args['image-url'] ?? nothing}
       frequency=${args.frequency ?? nothing}
     >
       Add to cart
