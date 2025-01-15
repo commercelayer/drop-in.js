@@ -16,9 +16,11 @@
 
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"iframe"` |             |
+| Part             | Description |
+| ---------------- | ----------- |
+| `"close-button"` |             |
+| `"container"`    |             |
+| `"iframe"`       |             |
 
 
 ----------------------------------------------
