@@ -142,6 +142,7 @@
                   <option value="BOTT17OZFFFFFF000000XXXX">Do Not Track</option>
                   <option value="EBOOKECOMPLAYBOOKED1XXXX">Digital Product</option>
                   <option value="POLOMXXX000000FFFFFFMXXX" data-quantity="2" data-frequency="three-month">Subscription (3 months)</option>
+                  <option value="5PANECAP000000FFFFFFXXXX" data-name="Amazing cap" data-image-url="https://i.ibb.co/TqQGpn6/Baseball-Cap.png">Custom name and image</option>
                   <option value="SKU1234">Non-Existing SKU</option>
                   <option value="">Without Attributes</option>
                 </select>
@@ -193,6 +194,8 @@
                 {
                   code: option.value,
                   quantity: parseInt(option.dataset.quantity),
+                  name: option.dataset.name,
+                  imageUrl: option.dataset.imageUrl,
                   frequency: option.dataset.frequency,
                   kind: option.dataset.kind,
                 }
@@ -204,9 +207,9 @@
             console.groupEnd()
 
             /**
-             * @type {(productCard: Element, options: { code: string; quantity?: number; frequency?: string; kind?: 'bundle' | 'sku'; description?: string; }) => void}
+             * @type {(productCard: Element, options: { code: string; quantity?: number; name?: string; imageUrl?: string; frequency?: string; kind?: 'bundle' | 'sku'; description?: string; }) => void}
              */
-            function updateProductCard(productCard, { code, quantity, description, frequency, kind }) {
+            function updateProductCard(productCard, { code, quantity, description, name, imageUrl, frequency, kind }) {
               productCard.querySelector('[data-id="pc--sku"]').innerText = code;
               productCard.querySelector('[data-id="pc--img"]').src = kind === 'bundle'
                 ? 'https://res.cloudinary.com/commercelayer/image/upload/v1681465805/demo-store/assets/white-glossy-mug-15oz-valentines-day.png'
@@ -217,6 +220,8 @@
               productCard.querySelector('cl-add-to-cart').code = code;
               productCard.querySelector('cl-add-to-cart').quantity = isNaN(quantity) || quantity == null ? 1 : quantity;
               productCard.querySelector('[data-id="pc--quantity"]').value = isNaN(quantity) || quantity == null ? 1 : quantity;
+              productCard.querySelector('cl-add-to-cart').name = name;
+              productCard.querySelector('cl-add-to-cart').imageUrl = imageUrl;
               productCard.querySelector('cl-add-to-cart').frequency = frequency;
               productCard.querySelector('cl-availability').kind = kind ?? null;
               productCard.querySelector('cl-availability').code = code;
@@ -250,10 +255,12 @@
             select.addEventListener('change', function (event) {
               const code = event.currentTarget.value;
               const quantity = parseInt(event.currentTarget.selectedOptions[0].dataset.quantity)
+              const name = event.currentTarget.selectedOptions[0].dataset.name
+              const imageUrl = event.currentTarget.selectedOptions[0].dataset.imageUrl
               const frequency = event.currentTarget.selectedOptions[0].dataset.frequency
               const kind = event.currentTarget.selectedOptions[0].dataset.kind
 
-              updateProductCard(productCard, { code, quantity, frequency, kind })
+              updateProductCard(productCard, { code, quantity, name, imageUrl, frequency, kind })
             })
           </script>
         </div>
@@ -263,9 +270,9 @@
         </div>
 
         <script>
-          // codes.forEach(([description, { code, quantity, frequency, kind }]) => {
+          // codes.forEach(([description, { code, quantity, name, imageUrl, frequency, kind }]) => {
           //   const newProductCard = productCard.cloneNode(true)
-          //   updateProductCard(newProductCard, { code, quantity, description, frequency, kind })
+          //   updateProductCard(newProductCard, { code, quantity, description, name, imageUrl, frequency, kind })
           //   document.getElementById('product-list').append(newProductCard)
           // })
         </script>

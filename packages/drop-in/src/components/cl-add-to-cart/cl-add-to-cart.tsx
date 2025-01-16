@@ -52,6 +52,18 @@ export class CLAddToCart {
   @Prop({ reflect: true, mutable: true }) quantity: number = 1
 
   /**
+   * A custom name for the product or bundle that will be added to the cart.
+   * If not provided, the name will be taken from the item being added.
+   */
+  @Prop({ reflect: true }) name: string | undefined
+
+  /**
+   * A custom image URL for the product or bundle that will be added to the cart.
+   * If not provided, the image URL will be taken from the item being added.
+   */
+  @Prop({ reflect: true }) imageUrl: string | undefined
+
+  /**
    * The frequency which generates a [subscription](https://docs.commercelayer.io/core/v/how-tos/placing-orders/subscriptions). The value must be supported by the associated subscription model.
    */
   @Prop({ reflect: true }) frequency: string | undefined
@@ -136,6 +148,8 @@ export class CLAddToCart {
     if (this.code !== undefined && this.canBeSold() && !this.busy) {
       this.busy = true
       addItem(this.kind ?? this.kindDefault, this.code, this.quantity, {
+        name: this.name,
+        image_url: this.imageUrl,
         frequency: this.frequency
       }).catch((error) => {
         throw error

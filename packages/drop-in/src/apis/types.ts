@@ -63,7 +63,7 @@ export type AddItem = (
   kind: 'bundle' | 'sku',
   code: string,
   quantity: number,
-  options?: Partial<Pick<LineItem, 'frequency'>>
+  options?: Partial<Pick<LineItem, 'name' | 'image_url' | 'frequency'>>
 ) => Promise<LineItem>
 
 export type GetToken = () => Promise<Token>
