@@ -223,8 +223,6 @@ export class ClCart {
       {
         checkOrigin: false,
 
-        // 'messageCallback' has been renamed 'onMessage'. The old method will be removed in the next major version.
-        // @ts-expect-error We are using the latest version for 'iframe-resized' but unfortunately types are not updated.
         onMessage
       },
       this.iframe

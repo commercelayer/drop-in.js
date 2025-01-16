@@ -37,7 +37,7 @@
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
     "lerna": "^8.1.9",
-    "lint-staged": "^15.3.0",
+    "lint-staged": "^15.4.0",
     "replace-in-file": "^8.3.0",
     "typescript": "^5.7.3"
   }
