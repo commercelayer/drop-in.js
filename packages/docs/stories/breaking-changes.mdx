@@ -1,0 +1,67 @@
+import { linkTo } from '@storybook/addon-links'
+import { Canvas, Meta, Source, Story } from '@storybook/blocks'
+import { Alert } from './assets/components'
+
+<Meta title="Breaking changes" />
+
+# Breaking changes
+
+List of breaking changes in `drop-in.js`. Follow this guide to update your code safetely.
+
+
+## From version 2.x to 3.x
+
+<Alert title="Upcoming release" type="info">
+  `v3.0` has not been released yet. This section will be updated over time as new information becomes available.
+</Alert>
+
+### `languageCode` and `orderReturnUrl` have been moved to `defaultAttributes.orders`
+
+In `v2.9` [we introduced](https://github.com/commercelayer/drop-in.js/pull/91) the `defaultAttributes.orders` option to set custom order attributes when creating the order and we deprecated the `languageCode` and `orderReturnUrl` options.
+
+<Source language='diff' dark code={`
+window.commercelayerConfig = {
+  clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+  scope: 'market:code:europe',
+- languageCode: 'en',
+- orderReturnUrl: 'https://example.com'
++ defaultAttributes: {
++   orders: {
++     language_code: 'en',
++     return_url: 'https://example.com'
++   }
++ }
+}
+`} />
+
+
+## From version 1.x to 2.x
+
+https://github.com/commercelayer/drop-in.js/releases/tag/v2.0.0
+
+### `returnUrl` option has been renamed to `orderReturnUrl`
+
+The `orderReturnUrl` option is the URL the cart's *Continue shopping* button points to. It is also used in the thank you page.
+
+<Source language='diff' dark code={`
+window.commercelayerConfig = {
+  clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+  slug: 'drop-in-js',
+  scope: 'market:code:europe',
+- returnUrl: 'https://example.com'
++ orderReturnUrl: 'https://example.com'
+}
+`} />
+
+### The `accessToken` is now stored as a "JSON.stringified" object
+
+If you were using the `accessToken` stored in the cookie, you need to know that the cookie value is now a "JSON.stringified" object.\
+Below is an example:
+
+<Source language='json' dark code={`
+{
+  "type": "guest",
+  "accessToken": "eyJhbGciOiJIUzUxMiJ9...",
+  "scope": "market:code:europe"
+}
+`} />

@@ -16,6 +16,7 @@
     "email": "marco.montalbano@commercelayer.io"
   },
   "devDependencies": {
+    "@types/react-syntax-highlighter": "^15.5.13",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
@@ -40,8 +41,9 @@
     "common-tags": "^1.8.2",
     "http-server": "^14.1.1",
     "nodemon": "^3.1.9",
-    "react": "^19",
     "react-dom": "^19",
+    "react-syntax-highlighter": "^15.6.1",
+    "react": "^19",
     "remark-gfm": "^4.0.0",
     "sass": "^1.83.4",
     "storybook": "^8.5.0",
