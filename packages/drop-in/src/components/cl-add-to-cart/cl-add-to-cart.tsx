@@ -1,7 +1,6 @@
 import { getBundle } from '#apis/commercelayer/bundles'
 import { addItem } from '#apis/commercelayer/cart'
 import { getSku } from '#apis/commercelayer/skus'
-import { listenTo } from '#apis/event'
 import type { Inventory } from '#apis/types'
 import { log } from '#utils/logger'
 import {
@@ -70,19 +69,9 @@ export class CLAddToCart {
 
   @State() inventory: Inventory | undefined
 
-  /**
-   * The item is currently being added to the cart.
-   * @default false
-   */
-  @State() busy: boolean = false
-
   async componentWillLoad(): Promise<void> {
     await this.updateSku(this.code)
     await this.updateQuantity(this.quantity)
-
-    listenTo('cl-cart-hostedcartupdate', async () => {
-      this.busy = false
-    })
   }
 
   @Watch('kind')
@@ -145,8 +134,7 @@ export class CLAddToCart {
   }
 
   handleAddItem(): void {
-    if (this.code !== undefined && this.canBeSold() && !this.busy) {
-      this.busy = true
+    if (this.code !== undefined && this.canBeSold()) {
       addItem(this.kind ?? this.kindDefault, this.code, this.quantity, {
         name: this.name,
         image_url: this.imageUrl,
@@ -180,8 +168,7 @@ export class CLAddToCart {
       <Host
         role='button'
         tabindex='0'
-        aria-disabled={this.canBeSold() && !this.busy ? undefined : 'true'}
-        aria-busy={this.busy ? 'true' : undefined}
+        aria-disabled={this.canBeSold() ? undefined : 'true'}
         onKeyPress={(event: KeyboardEvent) => {
           this.handleKeyPress(event)
         }}
