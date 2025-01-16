@@ -43,10 +43,6 @@ const hostedCartIframeUpdateEvent = { type: 'update' } as const
       display: none;
     }
 
-    :host([type='mini']) > div {
-      background: var(--cl-cart-mini-modal-bg);
-    }
-
     :host > div {
       overflow: auto;
       width: 100%;
@@ -242,7 +238,7 @@ export class ClCart {
     }
   }
 
-  private handleCloseMinicart(event: Event): void {
+  private handleCloseMinicart(event: MouseEvent | KeyboardEvent): void {
     event.stopPropagation()
     this.open = false
   }
@@ -257,12 +253,26 @@ export class ClCart {
               'aria-hidden': !this.open ? 'true' : undefined,
               tabindex: !this.open ? '-1' : undefined,
               onClick: (event: MouseEvent) => {
-                this.handleCloseMinicart(event)
+                if (event.offsetX < 0 || event.offsetY < 0) {
+                  this.handleCloseMinicart(event)
+                }
               }
             }
           : {})}
       >
-        <div>
+        <div part='container'>
+          {this.type === 'mini' ? (
+            <button
+              type='button'
+              aria-label='Close'
+              part='close-button'
+              onClick={(event) => {
+                this.handleCloseMinicart(event)
+              }}
+            >
+              Close
+            </button>
+          ) : null}
           <iframe
             part='iframe'
             title='My Cart'
@@ -271,10 +281,9 @@ export class ClCart {
             src={this.href}
             style={{
               width: '1px',
-              'min-width': 'calc(100% - 40px)',
+              'min-width': '100%',
               'min-height': '100%',
-              border: 'none',
-              margin: '20px'
+              border: 'none'
             }}
           ></iframe>
         </div>

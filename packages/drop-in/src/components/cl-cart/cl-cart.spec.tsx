@@ -29,14 +29,14 @@ describe('cl-cart.spec', () => {
     expect(page.root).toEqualHtml(`
       <cl-cart>
         <mock:shadow-root>
-          <div>
+          <div part="container">
             <iframe
               part="iframe"
               title="My Cart"
               id="iFrameResizer0"
               allow="payment"
               src="https://example.com/checkout-url"
-              style="width: 1px; min-width: calc(100% - 40px); min-height: 100%; border: none; margin: 20px; overflow: hidden;"
+              style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
             ></iframe>
           </div>
         </mock:shadow-root>
@@ -64,13 +64,16 @@ describe('cl-cart.spec', () => {
       <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
         <cl-cart type="mini" aria-hidden="true" tabindex="-1">
           <mock:shadow-root>
-            <div>
+            <div part="container">
+              <button aria-label="Close" part="close-button" type="button">
+                Close
+              </button>
               <iframe
                 part="iframe"
                 title="My Cart"
                 id="iFrameResizer1"
                 allow="payment"
-                style="width: 1px; min-width: calc(100% - 40px); min-height: 100%; border: none; margin: 20px; overflow: hidden;"
+                style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
               ></iframe>
             </div>
           </mock:shadow-root>
@@ -86,14 +89,17 @@ describe('cl-cart.spec', () => {
       <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
         <cl-cart type="mini" open role="alertdialog" aria-modal="true">
           <mock:shadow-root>
-            <div>
+            <div part="container">
+              <button aria-label="Close" part="close-button" type="button">
+                Close
+              </button>
               <iframe
                 part="iframe"
                 title="My Cart"
                 id="iFrameResizer1"
                 allow="payment"
                 src="https://example.com/checkout-url"
-                style="width: 1px; min-width: calc(100% - 40px); min-height: 100%; border: none; margin: 20px; overflow: hidden;"
+                style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
               ></iframe>
             </div>
           </mock:shadow-root>
