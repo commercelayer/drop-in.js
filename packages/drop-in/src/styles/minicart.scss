@@ -57,13 +57,12 @@ cl-cart[type="mini"] {
 
   &, &::after {
     right: calc(var(--cl-cart-mini-modal-width) * -1 + var(--cl-cart-mini-padding-x) + 1px);
+    transition: right var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function), opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
+    opacity: 0;
 
     @media (max-width: $modal-width) {
       right: calc(100% * -1 + var(--cl-cart-mini-padding-x) + 1px);
     }
-
-    transition: right var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function), opacity var(--cl-cart-mini-transition-duration) var(--cl-cart-mini-transition-timing-function);
-    opacity: 0;
   }
 
   &[open]:not([open="false"]) {
