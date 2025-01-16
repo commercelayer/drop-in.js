@@ -23,10 +23,9 @@ async function createEmptyCart(): Promise<Order> {
   const client = await createClient(config)
   const token = await getAccessToken(config)
 
-  const order = await client.orders.create({
-    return_url: config.orderReturnUrl,
-    language_code: config.languageCode
-  })
+  const order = await client.orders.create(
+    config.defaultAttributes?.orders ?? {}
+  )
 
   if (token.type === 'guest') {
     setCartId(order.id)

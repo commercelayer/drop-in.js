@@ -147,7 +147,6 @@ const preview: Preview = {
       return story()
     },
     (story) => {
-      // @ts-expect-error
       window.commercelayerConfig = createConfig(getSelectedScopeValue())
 
       return story()
