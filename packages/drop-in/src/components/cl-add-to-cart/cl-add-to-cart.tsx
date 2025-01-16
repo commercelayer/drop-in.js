@@ -140,7 +140,6 @@ export class CLAddToCart {
         image_url: this.imageUrl,
         frequency: this.frequency
       }).catch((error) => {
-        this.busy = false
         throw error
       })
     }
