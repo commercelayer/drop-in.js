@@ -12,16 +12,15 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
 1. Import the library from the [CDN](https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.esm.js).
 2. Declare a global variable called `commercelayerConfig` and set the following attributes.
 
-| Attribute            | Type   | Required | Description                                                                                                                                                                                                                                    |
-|----------------------|--------|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **`clientId`**       | String |     ✓    | Your [sales channel](https://docs.commercelayer.io/core/applications#sales-channel) client ID. You can find it in your application details page on your dashboard.                                                                             |
-| **`scope`**          | String |     ✓    | Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (use it to restrict the dataset of your application). You can find the allowed scopes in your application details page on your dashboard.   |
-| `debug`              | String |          | The debug level. Can be one of `none` or `all`. Default is `none`.                                                                                                                                                                             |
-| `languageCode`       | String |          | The preferred language code (ISO 639-1) to be used when communicating with the customer. If the language is supported, the hosted checkout will be localized accordingly. Default is `en`.                                                     |
-| `orderReturnUrl`     | String |          | The URL the cart's *Continue shopping* button points to. This is also used in the thank you page.                                                                                                                                              |
+| Attribute                   | Type   | Required | Description                                                                                                                                                                                                                                    |
+|-----------------------------|--------|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`clientId`**              | String |     ✓    | Your [sales channel](https://docs.commercelayer.io/core/applications#sales-channel) client ID. You can find it in your application details page on your dashboard.                                                                             |
+| **`scope`**                 | String |     ✓    | Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (use it to restrict the dataset of your application). You can find the allowed scopes in your application details page on your dashboard.   |
+| `debug`                     | String |          | The debug level. Can be one of `none` or `all`. Default is `none`.                                                                                                                                                                             |
+| `defaultAttributes.orders`  | Object |          | Default [attributes](https://docs.commercelayer.io/core/api-reference/orders/object) when creating an `orders` resource type. See the snippet below for a working example.                                                                     |
 
 
- The final result should be similar to the code snippet below:
+The final result should be similar to the code snippet below:
 
 <Source language='html' dark code={`
 <script type="module" src="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.esm.js"></script>
@@ -31,8 +30,21 @@ Assuming you already have a Commerce Layer account ([sign up](https://dashboard.
     clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
     scope: '${getSelectedScopeValue()}',
     debug: 'all', // default is 'none'
-    languageCode: 'en', // default is 'en'
-    orderReturnUrl: 'https://example.com' // optional
+    defaultAttributes: {
+      orders: {
+        /**
+         * The preferred language code (ISO 639-1) to be used when communicating with the customer.
+         * If the language is supported, the hosted checkout will be localized accordingly.
+         * @default 'en'
+         */
+        language_code: 'en',
+        /**
+         * The URL the cart's *Continue shopping* button points to. This is also used in the thank you page.
+         * @optional
+         */
+        return_url: 'https://example.com'
+      }
+    }
   }
 </script>
 `} />
@@ -74,9 +86,9 @@ The [minicart](?path=/docs/components-cart-cl-cart-minicart--docs) version of th
 
 ## Need help?
 
-- Join [Commerce Layer's Slack community](https://slack.commercelayer.app).
-- Open a new [Q&A discussion](https://github.com/commercelayer/drop-in.js/discussions/categories/q-a)
-- Ping us [on Twitter](https://twitter.com/commercelayer).
+- Join [Commerce Layer's Discord community](https://discord.gg/commercelayer).
+- Open a new [Q&A discussion](https://github.com/commercelayer/drop-in.js/discussions/categories/q-a).
+- Ping us on [Bluesky](https://bsky.app/profile/commercelayer.io), [X](https://x.com/commercelayer), or [LinkedIn](https://www.linkedin.com/company/commerce-layer).
 - Is there a bug? Create an [issue](https://github.com/commercelayer/drop-in.js/issues) on this repository.
 
 

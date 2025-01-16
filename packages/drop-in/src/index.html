@@ -48,12 +48,16 @@
     <script>
       // // stg
       // window.commercelayerConfig = {
-      //     domain: 'commercelayer.co',
-      //     clientId: '',
-      //     scope: 'market:code:usa',
-      //     debug: 'all',
-      //     orderReturnUrl: 'https://example.com'
-      //     // validScopes: ['market:545', 'market:1234', ''],
+      //   domain: 'commercelayer.co',
+      //   clientId: '',
+      //   scope: 'market:code:usa',
+      //   debug: 'all',
+      //   defaultAttributes: {
+      //     orders: {
+      //       return_url: 'https://example.com'
+      //     }
+      //   }
+      //   // validScopes: ['market:545', 'market:1234', ''],
       // };
 
       // prd
@@ -61,7 +65,11 @@
         clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
         scope: 'market:code:usa',
         debug: 'all',
-        orderReturnUrl: 'https://example.com',
+        defaultAttributes: {
+          orders: {
+            return_url: 'https://example.com'
+          }
+        }
       };
     </script>
   </head>

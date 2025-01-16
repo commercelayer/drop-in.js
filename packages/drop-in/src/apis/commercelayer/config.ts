@@ -4,8 +4,9 @@ import {
   type DefaultConfig,
   getConfig as mergeConfig
 } from '@commercelayer/organization-config'
+import type { OrderCreate, ResourceRel } from '@commercelayer/sdk'
 import merge from 'lodash/merge'
-import type { OmitDeep, SetRequired } from 'type-fest'
+import type { ConditionalExcept, OmitDeep, SetRequired } from 'type-fest'
 import { createClient, getAccessToken } from './client'
 
 export interface CommerceLayerConfig {
@@ -28,18 +29,32 @@ export interface CommerceLayerConfig {
   debug?: 'none' | 'all'
 
   /**
-   * Url used in the Hosted Cart to point to "Continue Shopping". This is also used in the thank you page.
+   * The URL the cart's *Continue shopping* button points to. This is also used in the thank you page.
+   * @deprecated Use `defaultAttributes.orders.return_url` instead.
    */
   orderReturnUrl?: string
 
   /**
    * The preferred language code (ISO 639-1) to be used when communicating with the customer.
-   * This can be useful when sending the order to 3rd party marketing tools and CRMs.
-   *
    * If the language is supported, the hosted checkout will be localized accordingly.
    * @default 'en'
+   * @deprecated Use `defaultAttributes.orders.language_code` instead.
    */
   languageCode?: string
+
+  /**
+   * Default attributes when creating a resource.
+   */
+  defaultAttributes?: {
+    /**
+     * Default attributes when creating an `orders` resource type.
+     * @see https://docs.commercelayer.io/core/api-reference/orders/object
+     */
+    orders?: ConditionalExcept<
+      OrderCreate,
+      ResourceRel | ResourceRel[] | null | undefined
+    >
+  }
 
   /**
    * API domain
@@ -51,11 +66,12 @@ export interface CommerceLayerConfig {
 
 export type Config = CommerceLayerConfig & {
   debug: Exclude<CommerceLayerConfig['debug'], undefined>
-  languageCode: Exclude<CommerceLayerConfig['languageCode'], undefined>
 }
 
 const documentationLink =
   'Read more here: https://commercelayer.github.io/drop-in.js/?path=/docs/getting-started--docs'
+
+const defaultLanguageCode = 'en'
 
 export function getConfig(): Config {
   if (!('commercelayerConfig' in window)) {
@@ -85,15 +101,6 @@ export function getConfig(): Config {
   }
 
   if (
-    commercelayerConfig.orderReturnUrl !== undefined &&
-    typeof commercelayerConfig.orderReturnUrl !== 'string'
-  ) {
-    throw new Error(
-      `"window.commercelayerConfig.orderReturnUrl" is set but not a string.\n${documentationLink}\n`
-    )
-  }
-
-  if (
     typeof commercelayerConfig.domain !== 'string' ||
     commercelayerConfig.domain === ''
   ) {
@@ -101,13 +108,19 @@ export function getConfig(): Config {
   }
 
   const debug: Config['debug'] = commercelayerConfig.debug ?? 'none'
-  const languageCode: Config['languageCode'] =
-    commercelayerConfig.languageCode ?? 'en'
+
+  // START-BLOCK // TODO: Remove deprecated properties in the next major version.
+  commercelayerConfig.defaultAttributes ??= {}
+  commercelayerConfig.defaultAttributes.orders ??= {}
+  commercelayerConfig.defaultAttributes.orders.language_code ??=
+    commercelayerConfig.languageCode ?? defaultLanguageCode
+  commercelayerConfig.defaultAttributes.orders.return_url ??=
+    commercelayerConfig.orderReturnUrl
+  // END-BLOCK
 
   return {
     ...commercelayerConfig,
-    debug,
-    languageCode
+    debug
   }
 }
 
@@ -167,7 +180,8 @@ export async function getOrganizationConfig(
       ...params,
       accessToken,
       slug: jwt.payload.organization.slug,
-      lang: config.languageCode
+      lang:
+        config.defaultAttributes?.orders?.language_code ?? defaultLanguageCode
     }
   }
 

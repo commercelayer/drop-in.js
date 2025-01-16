@@ -4,15 +4,13 @@ import { log } from './logger'
 function injectConfig({
   clientId = '1234',
   scope = 'market:code:usa',
-  debug,
-  orderReturnUrl
+  debug
 }: Partial<Config>): void {
   Object.defineProperty(window, 'commercelayerConfig', {
     value: {
       clientId,
       scope,
-      debug,
-      orderReturnUrl
+      debug
     }
   })
 }

@@ -1,3 +1,5 @@
+import type { CommerceLayerConfig } from '@commercelayer/drop-in.js'
+
 export const codes = {
   nonexisting: 'NONEXISTINGSKU',
   available: '5PANECAP000000FFFFFFXXXX',
@@ -12,8 +14,7 @@ export const codes = {
 }
 
 // // stg
-// // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-// export const createConfig = (scope: string) => ({
+// export const createConfig = (scope: string): CommerceLayerConfig => ({
 //   clientId: 'gQMSINLyMm2TrZo0UGEEdubC7uSgm9-',
 //   scope,
 //   debug: 'all',
@@ -21,8 +22,7 @@ export const codes = {
 // })
 
 // prd
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createConfig = (scope: string) => ({
+export const createConfig = (scope: string): CommerceLayerConfig => ({
   clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
   scope,
   debug: 'all'

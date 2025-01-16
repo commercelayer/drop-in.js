@@ -37,7 +37,11 @@
         clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
         scope: 'market:code:usa',
         debug: 'all',
-        orderReturnUrl: 'https://example.com'
+        defaultAttributes: {
+          orders: {
+            return_url: 'https://example.com'
+          }
+        }
       }
     </script>
 
