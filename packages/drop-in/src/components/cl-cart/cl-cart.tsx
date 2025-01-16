@@ -87,7 +87,6 @@ export class ClCart {
   readonly openDirective = 'cl-cart--open' as const
 
   private flag_listenForHostedCartUpdateResponse: boolean = true
-  private flag_justAddedToCart: boolean = false
 
   async componentWillLoad(): Promise<void> {
     listenTo('cl-cart-hostedcartupdate', (event) => {
@@ -99,10 +98,13 @@ export class ClCart {
     })
 
     listenTo('cl-cart-update', async () => {
-      this.flag_justAddedToCart = true
       this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
 
       await this.updateUrl(this.openOnAdd)
+
+      if (this.type === 'mini' && this.openOnAdd) {
+        this.open = true
+      }
     })
 
     await updateCartUrl(this.getCartPageUrl())
@@ -192,16 +194,6 @@ export class ClCart {
               data.message.payload ?? null
             )
           }
-
-          if (
-            this.type === 'mini' &&
-            this.openOnAdd &&
-            this.flag_justAddedToCart
-          ) {
-            this.open = true
-          }
-
-          this.flag_justAddedToCart = false
           this.flag_listenForHostedCartUpdateResponse = true
           break
 
