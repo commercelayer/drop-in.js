@@ -32,12 +32,12 @@
   },
   "packageManager": "pnpm@9.12.3",
   "devDependencies": {
-    "@commercelayer/eslint-config-ts": "^1.4.5",
+    "@commercelayer/eslint-config-ts": "^2.0.1",
     "concurrently": "^9.1.2",
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
     "lerna": "^8.1.9",
-    "lint-staged": "^15.4.0",
+    "lint-staged": "^15.4.3",
     "replace-in-file": "^8.3.0",
     "typescript": "^5.7.3"
   }

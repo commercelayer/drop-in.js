@@ -1,8 +1,8 @@
 import { memoize } from '#utils/utils'
 import { jwtDecode, jwtIsSalesChannel } from '@commercelayer/js-auth'
 import {
-  type DefaultConfig,
-  getConfig as mergeConfig
+  type DefaultMfeConfig,
+  getMfeConfig as mergeConfig
 } from '@commercelayer/organization-config'
 import type { OrderCreate, ResourceRel } from '@commercelayer/sdk'
 import merge from 'lodash/merge'
@@ -185,12 +185,12 @@ export async function getOrganizationConfig(
     }
   }
 
-  return mergeConfig(mergeConfigOptions) as Omit<DefaultConfig, 'links'> & {
+  return mergeConfig(mergeConfigOptions) as Omit<DefaultMfeConfig, 'links'> & {
     links: RequiredLinks
   }
 }
 
-type ConfigLink = NonNullable<DefaultConfig['links']>
+type ConfigLink = NonNullable<DefaultMfeConfig['links']>
 type ConfigParams = NonNullable<Parameters<typeof mergeConfig>[0]['params']>
 type ConfigJSON = NonNullable<Parameters<typeof mergeConfig>[0]['jsonConfig']>
 type RequiredLinks = SetRequired<
