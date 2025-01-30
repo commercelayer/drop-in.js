@@ -43,6 +43,17 @@ export interface CommerceLayerConfig {
   languageCode?: string
 
   /**
+   * The suffix appended to the storage key for the order.
+   * This is especially useful for differentiating carts when the `clientId` and `scope` are the same.
+   *
+   * By default, the storage key is `commercelayer_order-id-<clientId>-<scope>`.
+   * When set, the storage key follows this format: `commercelayer_order-id-<clientId>-<scope>-<suffix>`.
+   *
+   * @example 'my-suffix'
+   */
+  storageOrderKeySuffix?: string
+
+  /**
    * Default attributes when creating a resource.
    */
   defaultAttributes?: {
