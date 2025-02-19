@@ -27,12 +27,12 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=20",
-    "pnpm": "9.12.3"
+    "node": ">=20.5",
+    "pnpm": "10.4.0"
   },
-  "packageManager": "pnpm@9.12.3",
+  "packageManager": "pnpm@10.4.0",
   "devDependencies": {
-    "@commercelayer/eslint-config-ts": "^2.0.1",
+    "@commercelayer/eslint-config-ts": "^2.1.0",
     "concurrently": "^9.1.2",
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
