@@ -1,6 +1,6 @@
 import * as cart from '#apis/commercelayer/cart'
 import * as client from '#apis/commercelayer/client'
-import { CLCartLink } from '#components/cl-cart-link/cl-cart-link'
+import { ClCartLink } from '#components/cl-cart-link/cl-cart-link'
 import { newSpecPage } from '@stencil/core/testing'
 import { mockedAccessToken } from 'jest.spec.helpers'
 import { ClCart } from './cl-cart'
@@ -50,7 +50,7 @@ describe('cl-cart.spec', () => {
       .mockResolvedValue('https://example.com/checkout-url')
 
     const page = await newSpecPage({
-      components: [ClCart, CLCartLink],
+      components: [ClCart, ClCartLink],
       html: `
         <cl-cart-link>
           <cl-cart></cl-cart>

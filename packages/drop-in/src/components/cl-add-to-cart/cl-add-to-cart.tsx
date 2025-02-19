@@ -28,8 +28,8 @@ import debounce from 'lodash/debounce'
   tag: 'cl-add-to-cart',
   shadow: true
 })
-export class CLAddToCart {
-  @Element() host!: HTMLElement
+export class ClAddToCart {
+  @Element() host!: HTMLClAddToCartElement
 
   private readonly kindList = unionToTuple<typeof this.kind>()('sku', 'bundle')
 

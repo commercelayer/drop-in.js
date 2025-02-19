@@ -14,8 +14,8 @@ import {
   tag: 'cl-cart-link',
   shadow: false
 })
-export class CLCartLink {
-  @Element() host!: HTMLElement
+export class ClCartLink {
+  @Element() host!: HTMLClCartLinkElement
 
   /**
    * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).

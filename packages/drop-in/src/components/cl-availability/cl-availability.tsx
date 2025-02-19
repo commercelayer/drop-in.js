@@ -25,7 +25,7 @@ import debounce from 'lodash/debounce'
   shadow: true
 })
 export class ClAvailability {
-  @Element() host!: HTMLElement
+  @Element() host!: HTMLClAvailabilityElement
 
   private readonly kindList = unionToTuple<typeof this.kind>()('sku', 'bundle')
 

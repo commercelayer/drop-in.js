@@ -13,7 +13,7 @@ import {
   tag: 'cl-price-amount',
   shadow: true
 })
-export class CLPriceAmount {
+export class ClPriceAmount {
   /**
    * The type of price amount to be displayed.
    */

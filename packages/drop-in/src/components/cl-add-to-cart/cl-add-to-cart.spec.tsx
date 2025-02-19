@@ -4,7 +4,7 @@ import type { Sku } from '#apis/types'
 import { type Order } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { waitForMs } from 'jest.spec.helpers'
-import { CLAddToCart } from './cl-add-to-cart'
+import { ClAddToCart } from './cl-add-to-cart'
 
 const baseSku = (id: string): Sku => {
   return {
@@ -47,7 +47,7 @@ const skuList: { [code: string]: Sku } = {
 describe('cl-add-to-cart.spec', () => {
   it('renders as disabled when created without attributes', async () => {
     const { root } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart>Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
@@ -68,7 +68,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
@@ -89,7 +89,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123" quantity="-3">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
@@ -110,7 +110,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123" quantity="8">Add to cart</cl-add-to-cart>'
     })
     expect(root).toEqualHtml(`
@@ -131,7 +131,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123" quantity="8">Add to cart</cl-add-to-cart>'
     })
 
@@ -160,7 +160,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123" quantity="8">Add to cart</cl-add-to-cart>'
     })
 
@@ -188,7 +188,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123" frequency="three-month">Add to cart</cl-add-to-cart>'
     })
 
@@ -216,7 +216,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123" name="Custom name">Add to cart</cl-add-to-cart>'
     })
 
@@ -244,7 +244,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123" image-url="https://example.com/image-1">Add to cart</cl-add-to-cart>'
     })
 
@@ -272,7 +272,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="UNAVAILABLE789">Add to cart</cl-add-to-cart>'
     })
 
@@ -296,7 +296,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123" quantity="99">Add to cart</cl-add-to-cart>'
     })
 
@@ -334,7 +334,7 @@ describe('cl-add-to-cart.spec', () => {
     )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="AVAILABLE123" quantity="90">Add to cart</cl-add-to-cart>'
     })
 
@@ -358,7 +358,7 @@ describe('cl-add-to-cart.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLAddToCart],
+      components: [ClAddToCart],
       html: '<cl-add-to-cart code="DONOTTRACK456" quantity="99">Add to cart</cl-add-to-cart>'
     })
 

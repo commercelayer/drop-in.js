@@ -18,7 +18,7 @@ import {
   shadow: true
 })
 export class ClIdentityStatus {
-  @Element() host!: HTMLElement
+  @Element() host!: HTMLClIdentityStatusElement
 
   private readonly typeList = unionToTuple<typeof this.type>()(
     'guest',

@@ -1,11 +1,11 @@
 import type { Price } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
-import { CLPriceAmount } from './cl-price-amount'
+import { ClPriceAmount } from './cl-price-amount'
 
 describe('cl-price-amount.spec', () => {
   it('renders without any arguments', async () => {
     const { root } = await newSpecPage({
-      components: [CLPriceAmount],
+      components: [ClPriceAmount],
       html: '<cl-price-amount></cl-price-amount>'
     })
 
@@ -18,7 +18,7 @@ describe('cl-price-amount.spec', () => {
 
   it('renders as formatted_amount when `type="price"`', async () => {
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLPriceAmount],
+      components: [ClPriceAmount],
       html: '<cl-price-amount type="price"></cl-price-amount>'
     })
 
@@ -60,7 +60,7 @@ describe('cl-price-amount.spec', () => {
 
   it('renders as formatted_compare_at_amount when `type="compare-at"`', async () => {
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLPriceAmount],
+      components: [ClPriceAmount],
       html: '<cl-price-amount type="compare-at"></cl-price-amount>'
     })
 
@@ -102,7 +102,7 @@ describe('cl-price-amount.spec', () => {
 
   it('renders as empty box when `type="compare-at"` and there is no a compare-at amount', async () => {
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLPriceAmount],
+      components: [ClPriceAmount],
       html: '<cl-price-amount type="compare-at"></cl-price-amount>'
     })
 
@@ -142,7 +142,7 @@ describe('cl-price-amount.spec', () => {
 
   it('renders as empty when the Price is undefined', async () => {
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLPriceAmount],
+      components: [ClPriceAmount],
       html: '<cl-price-amount type="price"></cl-price-amount>'
     })
 

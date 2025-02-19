@@ -18,8 +18,8 @@ export interface Props {
   tag: 'cl-price',
   shadow: true
 })
-export class CLPrice {
-  @Element() host!: HTMLElement
+export class ClPrice {
+  @Element() host!: HTMLClPriceElement
 
   private readonly kindList = unionToTuple<typeof this.kind>()('sku', 'bundle')
 

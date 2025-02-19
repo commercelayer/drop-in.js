@@ -17,7 +17,7 @@ import {
   shadow: false
 })
 export class ClIdentityLink {
-  @Element() host!: HTMLElement
+  @Element() host!: HTMLClIdentityLinkElement
 
   private readonly typeList = unionToTuple<typeof this.type>()(
     'login',

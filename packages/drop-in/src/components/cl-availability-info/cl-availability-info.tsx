@@ -18,7 +18,7 @@ import minBy from 'lodash/minBy'
   shadow: true
 })
 export class ClAvailabilityInfo {
-  @Element() host!: HTMLElement
+  @Element() host!: HTMLClAvailabilityInfoElement
 
   private readonly typeList = unionToTuple<typeof this.type>()(
     'min-days',

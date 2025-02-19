@@ -3,7 +3,7 @@ import * as client from '#apis/commercelayer/client'
 import type { CommerceLayerClient } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { waitFor } from 'jest.spec.helpers'
-import { CLCartLink } from './cl-cart-link'
+import { ClCartLink } from './cl-cart-link'
 
 afterEach(() => {
   jest.restoreAllMocks()
@@ -23,7 +23,7 @@ describe('cl-cart-link.spec', () => {
     } as unknown as CommerceLayerClient)
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLCartLink],
+      components: [ClCartLink],
       html: '<cl-cart-link>Cart</cl-cart-link>'
     })
 
@@ -65,7 +65,7 @@ describe('cl-cart-link.spec', () => {
     })
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLCartLink],
+      components: [ClCartLink],
       html: '<cl-cart-link>Cart</cl-cart-link>'
     })
 
@@ -93,7 +93,7 @@ describe('cl-cart-link.spec', () => {
     } as unknown as CommerceLayerClient)
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLCartLink],
+      components: [ClCartLink],
       html: '<cl-cart-link>Cart</cl-cart-link>'
     })
 

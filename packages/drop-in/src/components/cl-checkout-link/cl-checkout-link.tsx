@@ -15,7 +15,7 @@ import {
   shadow: false
 })
 export class ClCheckoutLink {
-  @Element() host!: HTMLElement
+  @Element() host!: HTMLClCheckoutLinkElement
 
   /**
    * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).

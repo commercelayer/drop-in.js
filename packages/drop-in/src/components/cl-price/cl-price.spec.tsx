@@ -1,10 +1,10 @@
 import * as client from '#apis/commercelayer/client'
 import * as skus from '#apis/commercelayer/skus'
-import { CLPriceAmount } from '#components/cl-price-amount/cl-price-amount'
+import { ClPriceAmount } from '#components/cl-price-amount/cl-price-amount'
 import type { Price } from '@commercelayer/sdk'
 import { newSpecPage } from '@stencil/core/testing'
 import { mockedAccessToken, waitForMs } from 'jest.spec.helpers'
-import { CLPrice } from './cl-price'
+import { ClPrice } from './cl-price'
 
 const fakePrices: { [sku: string]: Price } = {
   ABC123: {
@@ -42,7 +42,7 @@ describe('cl-price.spec', () => {
     })
 
     const { root } = await newSpecPage({
-      components: [CLPrice],
+      components: [ClPrice],
       html: '<cl-price></cl-price>'
     })
     expect(root).toEqualHtml(`
@@ -62,7 +62,7 @@ describe('cl-price.spec', () => {
       )
 
     const { root } = await newSpecPage({
-      components: [CLPrice],
+      components: [ClPrice],
       html: '<cl-price code="SKU1234"></cl-price>'
     })
     expect(root).toEqualHtml(`
@@ -82,7 +82,7 @@ describe('cl-price.spec', () => {
       )
 
     const { root } = await newSpecPage({
-      components: [CLPrice, CLPriceAmount],
+      components: [ClPrice, ClPriceAmount],
       html: `
         <cl-price code="ABC123">
           <cl-price-amount></cl-price-amount>
@@ -114,7 +114,7 @@ describe('cl-price.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLPrice, CLPriceAmount],
+      components: [ClPrice, ClPriceAmount],
       html: `
         <cl-price code="ABC123">
           <cl-price-amount></cl-price-amount>
@@ -152,7 +152,7 @@ describe('cl-price.spec', () => {
       )
 
     const { root, waitForChanges } = await newSpecPage({
-      components: [CLPrice, CLPriceAmount],
+      components: [ClPrice, ClPriceAmount],
       html: `
         <cl-price code="ABC123">
           <cl-price-amount></cl-price-amount>

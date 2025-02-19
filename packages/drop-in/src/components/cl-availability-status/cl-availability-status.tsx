@@ -17,7 +17,7 @@ import {
   shadow: true
 })
 export class ClAvailabilityStatus {
-  @Element() host!: HTMLElement
+  @Element() host!: HTMLClAvailabilityStatusElement
 
   private readonly typeList: Array<NonNullable<typeof this.type>> = [
     'available',
