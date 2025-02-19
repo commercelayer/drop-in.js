@@ -1,6 +1,7 @@
 import { getBundle } from '#apis/commercelayer/bundles'
-import { addItem } from '#apis/commercelayer/cart'
+import { addItem, getCart, getCartQuantity } from '#apis/commercelayer/cart'
 import { getSku } from '#apis/commercelayer/skus'
+import { listenTo } from '#apis/event'
 import type { Inventory } from '#apis/types'
 import { log } from '#utils/logger'
 import {
@@ -10,6 +11,7 @@ import {
   logUnion,
   unionToTuple
 } from '#utils/validation-helpers'
+import { type Order } from '@commercelayer/sdk'
 import {
   Component,
   Element,
@@ -69,9 +71,21 @@ export class CLAddToCart {
 
   @State() inventory: Inventory | undefined
 
+  @State() cart: Order | undefined
+
   async componentWillLoad(): Promise<void> {
     await this.updateSku(this.code)
     await this.updateQuantity(this.quantity)
+
+    this.cart = (await getCart()) ?? undefined
+
+    listenTo('cl-cart-update', (event) => {
+      this.cart = event.detail.response
+    })
+
+    listenTo('cl-cart-hostedcartupdate', (event) => {
+      this.cart = event.detail.response
+    })
   }
 
   @Watch('kind')
@@ -150,9 +164,11 @@ export class CLAddToCart {
    * @returns Returns true when item is soldable.
    */
   canBeSold(): boolean {
+    const cartQuantity = getCartQuantity(this.cart, this.kind, this.code)
+
     const hasQuantity =
       this.inventory?.quantity === undefined ||
-      this.quantity <= this.inventory?.quantity
+      this.quantity <= this.inventory.quantity - cartQuantity
 
     return (
       isValidCode(this.code) &&

@@ -70,7 +70,8 @@ describe('cl-availability-status.spec', () => {
         new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: {
             sku,
-            rule: 'cheapest'
+            rule: 'cheapest',
+            cartQuantity: 0
           }
         })
       )
@@ -194,7 +195,8 @@ describe('cl-availability-status.spec', () => {
         new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: {
             sku,
-            rule: 'cheapest'
+            rule: 'cheapest',
+            cartQuantity: 0
           }
         })
       )
@@ -278,7 +280,91 @@ describe('cl-availability-status.spec', () => {
         new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: {
             sku,
-            rule: 'cheapest'
+            rule: 'cheapest',
+            cartQuantity: 0
+          }
+        })
+      )
+    )
+
+    await waitForChanges()
+
+    expect(body).toEqualHtml(`
+      <div>
+        <cl-availability-status type="available" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="available-with-info" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • available with info
+        </cl-availability-status>
+        <cl-availability-status type="unavailable">
+          <mock:shadow-root>
+            <slot></slot>
+          </mock:shadow-root>
+          • out of stock
+        </cl-availability-status>
+      </div>
+    `)
+  })
+
+  it('renders as unavailable when item has less than available quantity (considering items in the cart)', async () => {
+    const { body, waitForChanges } = await newSpecPage({
+      components: [ClAvailabilityStatus],
+      html: `
+        <div>
+          <cl-availability-status type="available">
+            • available
+          </cl-availability-status>
+          <cl-availability-status type="available-with-info">
+            • available with info
+          </cl-availability-status>
+          <cl-availability-status type="unavailable">
+            • out of stock
+          </cl-availability-status>
+        </div>
+      `
+    })
+
+    expect(body).toEqualHtml(`
+      <div>
+        <cl-availability-status type="available" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="available-with-info" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • available with info
+        </cl-availability-status>
+        <cl-availability-status type="unavailable" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • out of stock
+        </cl-availability-status>
+      </div>
+    `)
+
+    const sku: Sku = {
+      id: 'ABC123',
+      code: 'ABC123',
+      name: 'ABC123',
+      type: 'skus',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      inventory: {
+        available: true,
+        quantity: 98,
+        levels: []
+      }
+    }
+
+    body.querySelectorAll('cl-availability-status').forEach((element) =>
+      element.dispatchEvent(
+        new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
+          detail: {
+            sku,
+            rule: 'cheapest',
+            cartQuantity: 98
           }
         })
       )
@@ -360,7 +446,8 @@ describe('cl-availability-status.spec', () => {
         new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: {
             sku,
-            rule: 'cheapest'
+            rule: 'cheapest',
+            cartQuantity: 0
           }
         })
       )

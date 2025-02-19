@@ -54,7 +54,7 @@ Nonexisting.args = {
 export const OversellingPrevention = Template.bind({})
 OversellingPrevention.args = {
   code: codes.noOverselling,
-  quantity: 100
+  quantity: 200
 }
 
 export const BundleOversellingPrevention = Template.bind({})

@@ -229,3 +229,28 @@ export async function updateCartUrl(cartUrl: string): Promise<void> {
     })
   }
 }
+
+/**
+ * Get quantity of a specific item in the cart, by reading the `line_items`.
+ */
+export function getCartQuantity(
+  cart: Order | undefined,
+  kind: 'sku' | 'bundle' | undefined,
+  code: string | undefined
+): number {
+  return (
+    cart?.line_items
+      ?.filter((item) => {
+        switch (kind) {
+          case 'bundle':
+            return item.bundle_code === code
+
+          case 'sku':
+          default:
+            return item.sku_code === code
+        }
+      })
+      .map((item) => item.quantity)
+      .reduce((acc, val) => acc + val, 0) ?? 0
+  )
+}

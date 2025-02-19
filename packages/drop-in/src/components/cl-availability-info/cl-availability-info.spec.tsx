@@ -114,7 +114,8 @@ describe('cl-availability-info.spec', () => {
         new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: {
             sku,
-            rule: 'cheapest'
+            rule: 'cheapest',
+            cartQuantity: 0
           }
         })
       )
@@ -245,7 +246,8 @@ describe('cl-availability-info.spec', () => {
         new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: {
             sku,
-            rule: 'fastest'
+            rule: 'fastest',
+            cartQuantity: 0
           }
         })
       )
@@ -334,7 +336,8 @@ describe('cl-availability-info.spec', () => {
         new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: {
             sku,
-            rule: 'cheapest'
+            rule: 'cheapest',
+            cartQuantity: 0
           }
         })
       )
@@ -447,7 +450,8 @@ describe('cl-availability-info.spec', () => {
         new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: {
             sku,
-            rule: 'cheapest'
+            rule: 'cheapest',
+            cartQuantity: 0
           }
         })
       )
@@ -460,7 +464,8 @@ describe('cl-availability-info.spec', () => {
         new CustomEvent<AvailabilityUpdateEventPayload>('availabilityUpdate', {
           detail: {
             sku: undefined,
-            rule: 'cheapest'
+            rule: 'cheapest',
+            cartQuantity: 0
           }
         })
       )
