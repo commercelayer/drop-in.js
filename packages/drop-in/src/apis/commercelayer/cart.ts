@@ -1,6 +1,6 @@
 import { createClient, getAccessToken } from '#apis/commercelayer/client'
 import { getConfig, getOrganizationConfig } from '#apis/commercelayer/config'
-import { fireEvent } from '#apis/event'
+import { type EventTypes, fireEvent } from '#apis/event'
 import { getKeyForCart } from '#apis/storage'
 import type {
   AddItem,
@@ -162,11 +162,13 @@ export const getCart = memoize(pDebounce(_getCart, { wait: 10, maxWait: 50 }))
 /**
  * Trigger the `cartUpdate` event.
  */
-export const triggerCartUpdate: TriggerCartUpdate = async () => {
+export const triggerCartUpdate: TriggerCartUpdate = async (
+  ...args: Parameters<EventTypes['cl-cart-additem']> | []
+) => {
   const order = await getCart()
 
   if (order !== null) {
-    fireEvent('cl-cart-update', [], order)
+    fireEvent('cl-cart-update', args, order)
   }
 
   return order
@@ -208,7 +210,7 @@ export const addItem: AddItem = async (kind, code, quantity, options = {}) => {
     getCart.cache.clear()
   }
 
-  await triggerCartUpdate()
+  await triggerCartUpdate(kind, code, quantity, options)
 
   return lineItem
 }

@@ -73,7 +73,9 @@ export type TriggerHostedCartUpdate = (
   order: Order | null
 ) => Promise<Order | null>
 
-export type TriggerCartUpdate = () => Promise<Order | null>
+export type TriggerCartUpdate = (
+  ...args: Parameters<AddItem> | []
+) => Promise<Order | null>
 
 // Event types
 

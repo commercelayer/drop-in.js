@@ -69,6 +69,12 @@ export class CLAddToCart {
    */
   @Prop({ reflect: true }) frequency: string | undefined
 
+  /**
+   * The item is currently being added to the cart.
+   * @default false
+   */
+  @State() busy: boolean = false
+
   @State() inventory: Inventory | undefined
 
   @State() cart: Order | undefined
@@ -80,7 +86,13 @@ export class CLAddToCart {
     this.cart = (await getCart()) ?? undefined
 
     listenTo('cl-cart-update', (event) => {
+      const [kind, code] = event.detail.request.args
+
       this.cart = event.detail.response
+
+      if (kind === this.kind && code === this.code) {
+        this.busy = false
+      }
     })
 
     listenTo('cl-cart-hostedcartupdate', (event) => {
@@ -148,12 +160,14 @@ export class CLAddToCart {
   }
 
   handleAddItem(): void {
-    if (this.code !== undefined && this.canBeSold()) {
+    if (this.code !== undefined && this.canBeSold() && !this.busy) {
+      this.busy = true
       addItem(this.kind ?? this.kindDefault, this.code, this.quantity, {
         name: this.name,
         image_url: this.imageUrl,
         frequency: this.frequency
       }).catch((error) => {
+        this.busy = false
         throw error
       })
     }
@@ -183,7 +197,8 @@ export class CLAddToCart {
       <Host
         role='button'
         tabindex='0'
-        aria-disabled={this.canBeSold() ? undefined : 'true'}
+        aria-disabled={this.canBeSold() && !this.busy ? undefined : 'true'}
+        aria-busy={this.busy ? 'true' : undefined}
         onKeyPress={(event: KeyboardEvent) => {
           this.handleKeyPress(event)
         }}
