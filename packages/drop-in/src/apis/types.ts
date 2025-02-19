@@ -78,6 +78,7 @@ export type TriggerCartUpdate = () => Promise<Order | null>
 // Event types
 
 export interface AvailabilityUpdateEventPayload {
+  cartQuantity: number
   sku: Sku | undefined
   rule: 'cheapest' | 'fastest'
 }

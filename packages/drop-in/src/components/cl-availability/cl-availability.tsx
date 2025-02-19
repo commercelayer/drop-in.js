@@ -1,4 +1,6 @@
+import { getCart, getCartQuantity } from '#apis/commercelayer/cart'
 import { getSku } from '#apis/commercelayer/skus'
+import { listenTo } from '#apis/event'
 import type { AvailabilityUpdateEventPayload, Sku } from '#apis/types'
 import {
   isValidCode,
@@ -6,7 +8,16 @@ import {
   logUnion,
   unionToTuple
 } from '#utils/validation-helpers'
-import { Component, Element, Prop, Watch, h, type JSX } from '@stencil/core'
+import { type Order } from '@commercelayer/sdk'
+import {
+  Component,
+  Element,
+  Prop,
+  State,
+  Watch,
+  h,
+  type JSX
+} from '@stencil/core'
 import debounce from 'lodash/debounce'
 
 @Component({
@@ -41,9 +52,23 @@ export class ClAvailability {
    */
   @Prop({ reflect: true }) rule: 'cheapest' | 'fastest' = 'cheapest'
 
+  @State() cart: Order | undefined
+
   async componentWillLoad(): Promise<void> {
     logCode(this.host, this.code)
     await this.updateAvailability(this.kind, this.code)
+
+    this.cart = (await getCart()) ?? undefined
+
+    listenTo('cl-cart-update', (event) => {
+      this.cart = event.detail.response
+      void this.updateAvailability(this.kind, this.code)
+    })
+
+    listenTo('cl-cart-hostedcartupdate', (event) => {
+      this.cart = event.detail.response
+      void this.updateAvailability(this.kind, this.code)
+    })
   }
 
   @Watch('kind')
@@ -80,7 +105,11 @@ export class ClAvailability {
           new CustomEvent<AvailabilityUpdateEventPayload>(
             'availabilityUpdate',
             {
-              detail: { sku, rule: this.rule }
+              detail: {
+                sku,
+                rule: this.rule,
+                cartQuantity: getCartQuantity(this.cart, kind, code)
+              }
             }
           )
         )

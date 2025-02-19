@@ -2,14 +2,14 @@ import type { AvailabilityUpdateEventPayload } from '#apis/types'
 import { logUnion } from '#utils/validation-helpers'
 import {
   Component,
+  Element,
   Host,
   Listen,
   Prop,
   State,
+  Watch,
   h,
-  type JSX,
-  Element,
-  Watch
+  type JSX
 } from '@stencil/core'
 
 @Component({
@@ -43,7 +43,15 @@ export class ClAvailabilityStatus {
   availabilityUpdateHandler(
     event: CustomEvent<AvailabilityUpdateEventPayload>
   ): void {
-    this.available = event.detail?.sku?.inventory?.available
+    const hasQuantity =
+      event.detail?.sku?.inventory?.quantity === undefined ||
+      event.detail.sku.inventory.quantity - event.detail.cartQuantity > 0
+
+    this.available =
+      event.detail?.sku?.inventory?.available == null
+        ? undefined
+        : event.detail.sku.inventory.available && hasQuantity
+
     this.hasDeliveryLeadTimes =
       (event.detail?.sku?.inventory?.levels?.[0]?.delivery_lead_times?.length ??
         0) > 0

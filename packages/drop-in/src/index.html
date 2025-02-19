@@ -76,7 +76,7 @@
   </head>
   <body>
     <div class="container mx-auto p-6">
-      <nav class="flex mb-12">
+      <nav id="header" class="flex mb-12">
         <menu id="main-navigation">
             <div>
               <cl-identity-status type="guest">
@@ -140,7 +140,7 @@
           <div data-id="product-card" class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2 border border-gray-100">
             <div data-id="pc--selector" class="mb-4">
               <code>
-                <select>
+                <select name="code" aria-label="Select a product">
                   <option value="5PANECAP000000FFFFFFXXXX">Available</option>
                   <option value="CLGETTINGSTARTED" data-kind="bundle">Bundle</option>
                   <option value="CLOUTOFSTOCK" data-kind="bundle">Bundle - Out Of Stock</option>
@@ -158,6 +158,7 @@
               </code>
             </div>
             <img
+              alt="product picture"
               data-id="pc--img"
               src="https://data.commercelayer.app/seed/images/skus/5PANECAP000000FFFFFFXXXX_FLAT.png"
               class="w-2/3 mx-auto"
@@ -167,7 +168,7 @@
               <cl-price-amount type="compare-at"></cl-price-amount>
               <cl-price-amount></cl-price-amount>
             </cl-price>
-            <input data-id="pc--quantity" type="number" max="101" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+            <input aria-label="Select a quantity" data-id="pc--quantity" type="number" max="101" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
             <cl-add-to-cart code="5PANECAP000000FFFFFFXXXX">Add to cart</cl-add-to-cart>
             <cl-availability code="5PANECAP000000FFFFFFXXXX" class="text-sm">
               <cl-availability-status type="available" style="color: #1fda8a">available<br /></cl-availability-status>
@@ -250,7 +251,7 @@
               })
             }
 
-            productCard.querySelector('[data-id="pc--quantity"]').addEventListener('keyup', function (event) {
+            productCard.querySelector('[data-id="pc--quantity"]').addEventListener('input', function (event) {
               const qnt = parseInt(event.currentTarget.value)
               productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : qnt < -101 ? -101 : qnt
               if (qnt > 101) {

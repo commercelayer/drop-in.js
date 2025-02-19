@@ -1,8 +1,10 @@
-import { newSpecPage } from '@stencil/core/testing'
-import { CLAddToCart } from './cl-add-to-cart'
+import * as cart from '#apis/commercelayer/cart'
 import * as skus from '#apis/commercelayer/skus'
 import type { Sku } from '#apis/types'
+import { type Order } from '@commercelayer/sdk'
+import { newSpecPage } from '@stencil/core/testing'
 import { waitForMs } from 'jest.spec.helpers'
+import { CLAddToCart } from './cl-add-to-cart'
 
 const baseSku = (id: string): Sku => {
   return {
@@ -302,6 +304,44 @@ describe('cl-add-to-cart.spec', () => {
 
     expect(root).toEqualHtml(`
       <cl-add-to-cart kind="sku" code="AVAILABLE123" quantity="99" aria-disabled="true" role="button" tabindex="0">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        Add to cart
+      </cl-add-to-cart>
+    `)
+  })
+
+  it('renders disabled when item has less than available quantity (considering items in the cart)', async () => {
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
+
+    jest.spyOn(cart, 'getCart').mockImplementation(
+      async () =>
+        await Promise.resolve({
+          line_items: [
+            {
+              id: 'line-item-id',
+              type: 'line_items',
+              quantity: 9,
+              sku_code: 'AVAILABLE123'
+            }
+          ]
+        } as unknown as Order)
+    )
+
+    const { root, waitForChanges } = await newSpecPage({
+      components: [CLAddToCart],
+      html: '<cl-add-to-cart code="AVAILABLE123" quantity="90">Add to cart</cl-add-to-cart>'
+    })
+
+    await waitForChanges()
+
+    expect(root).toEqualHtml(`
+      <cl-add-to-cart kind="sku" code="AVAILABLE123" quantity="90" aria-disabled="true" role="button" tabindex="0">
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
