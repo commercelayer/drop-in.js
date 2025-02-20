@@ -997,7 +997,19 @@ describe('index.e2e', () => {
      * ADDING "AVAILABLE" TO CART
      */
 
+    expect(await availableElements.addToCart(page)).not.toHaveAttribute(
+      'aria-disabled'
+    )
+    expect(await availableElements.addToCart(page)).not.toHaveAttribute(
+      'aria-busy'
+    )
+
     await (await availableElements.addToCart(page)).click()
+
+    expect(await availableElements.addToCart(page)).toHaveAttribute(
+      'aria-disabled'
+    )
+    expect(await availableElements.addToCart(page)).toHaveAttribute('aria-busy')
 
     await waitAndExpectForLineItems(page, {
       code: codes.available,
@@ -1005,6 +1017,13 @@ describe('index.e2e', () => {
     })
 
     await page.waitForNetworkIdle()
+
+    expect(await availableElements.addToCart(page)).not.toHaveAttribute(
+      'aria-disabled'
+    )
+    expect(await availableElements.addToCart(page)).not.toHaveAttribute(
+      'aria-busy'
+    )
 
     const cartId = (await getCartId(page)) ?? 'null'
     expect(await getCartLink(page)).toEqualHtml(`
