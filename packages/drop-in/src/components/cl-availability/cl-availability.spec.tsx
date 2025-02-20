@@ -1,10 +1,12 @@
+import * as cart from '#apis/commercelayer/cart'
 import * as skus from '#apis/commercelayer/skus'
 import type { Sku } from '#apis/types'
-import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-availability-status'
 import { ClAvailabilityInfo } from '#components/cl-availability-info/cl-availability-info'
+import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-availability-status'
 import { newSpecPage } from '@stencil/core/testing'
-import { ClAvailability } from './cl-availability'
 import { waitForMs } from 'jest.spec.helpers'
+import { ClAvailability } from './cl-availability'
+import { type Order } from '@commercelayer/sdk'
 
 const baseSku = (id: string): Sku => {
   return {
@@ -109,8 +111,10 @@ describe('cl-availability.spec', () => {
           <cl-availability-status></cl-availability-status>
           <cl-availability-status type="available">• available</cl-availability-status>
           <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
-          <cl-availability-info type="min-days"></cl-availability-info>
-          <cl-availability-info type="max-days"></cl-availability-info>
+          <cl-availability-status type="available-with-info">
+            <cl-availability-info type="min-days"></cl-availability-info>
+            <cl-availability-info type="max-days"></cl-availability-info>
+          </cl-availability-status>
           <another-tag></another-tag>
         </cl-availability>
       `
@@ -134,12 +138,86 @@ describe('cl-availability.spec', () => {
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>
-        <cl-availability-info type="min-days">
-          <mock:shadow-root>1</mock:shadow-root>
-        </cl-availability-info>
-        <cl-availability-info type="max-days">
-          <mock:shadow-root>2</mock:shadow-root>
-        </cl-availability-info>
+        <cl-availability-status type="available-with-info">
+          <mock:shadow-root>
+            <slot></slot>
+          </mock:shadow-root>
+          <cl-availability-info type="min-days">
+            <mock:shadow-root>1</mock:shadow-root>
+          </cl-availability-info>
+          <cl-availability-info type="max-days">
+            <mock:shadow-root>2</mock:shadow-root>
+          </cl-availability-info>
+        </cl-availability-status>
+        <another-tag></another-tag>
+    </cl-availability>
+    `)
+  })
+
+  it('should pass-throw "unavailable" when product is out-of-stock', async () => {
+    jest
+      .spyOn(skus, 'getSku')
+      .mockImplementation(
+        async (sku: string) => await Promise.resolve(skuList[sku])
+      )
+
+    jest.spyOn(cart, 'getCart').mockImplementation(
+      async () =>
+        await Promise.resolve({
+          line_items: [
+            {
+              id: 'line-item-id',
+              type: 'line_items',
+              quantity: 98,
+              sku_code: 'AVAILABLE123'
+            }
+          ]
+        } as unknown as Order)
+    )
+
+    const { root } = await newSpecPage({
+      components: [ClAvailability, ClAvailabilityStatus, ClAvailabilityInfo],
+      html: `
+        <cl-availability code="AVAILABLE123">
+          <cl-availability-status></cl-availability-status>
+          <cl-availability-status type="available">• available</cl-availability-status>
+          <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
+          <cl-availability-status type="available-with-info">
+            <cl-availability-info type="min-days"></cl-availability-info>
+            <cl-availability-info type="max-days"></cl-availability-info>
+          </cl-availability-status>
+          <another-tag></another-tag>
+        </cl-availability>
+      `
+    })
+
+    expect(root).toEqualHtml(`
+      <cl-availability kind="sku" code="AVAILABLE123" rule="cheapest">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        <cl-availability-status aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+        </cl-availability-status>
+        <cl-availability-status type="available" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="unavailable">
+          <mock:shadow-root>
+            <slot></slot>
+          </mock:shadow-root>
+          • out of stock
+        </cl-availability-status>
+        <cl-availability-status type="available-with-info" aria-disabled="true">
+          <mock:shadow-root></mock:shadow-root>
+          <cl-availability-info type="min-days">
+            <mock:shadow-root>1</mock:shadow-root>
+          </cl-availability-info>
+          <cl-availability-info type="max-days">
+            <mock:shadow-root>2</mock:shadow-root>
+          </cl-availability-info>
+        </cl-availability-status>
         <another-tag></another-tag>
     </cl-availability>
     `)
