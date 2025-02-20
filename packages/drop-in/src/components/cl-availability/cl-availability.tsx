@@ -56,9 +56,9 @@ export class ClAvailability {
 
   async componentWillLoad(): Promise<void> {
     logCode(this.host, this.code)
-    await this.updateAvailability(this.kind, this.code)
 
     this.cart = (await getCart()) ?? undefined
+    await this.updateAvailability(this.kind, this.code)
 
     listenTo('cl-cart-update', (event) => {
       this.cart = event.detail.response
