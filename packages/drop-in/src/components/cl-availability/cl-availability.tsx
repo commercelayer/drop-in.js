@@ -122,6 +122,6 @@ export class ClAvailability {
   )
 
   render(): JSX.Element {
-    return <slot></slot>
+    return <slot />
   }
 }

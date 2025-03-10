@@ -14,7 +14,7 @@ describe("cl-cart-count.spec", () => {
 
     const { root } = await newSpecPage({
       components: [ClCartCount],
-      html: `<cl-cart-count></cl-cart-count>`,
+      html: "<cl-cart-count></cl-cart-count>",
     })
 
     expect(root).toEqualHtml(`
@@ -46,7 +46,7 @@ describe("cl-cart-count.spec", () => {
   it('renders with updated quantity when "cl-cart-update" is triggered with order details', async () => {
     const { root, waitForChanges, doc } = await newSpecPage({
       components: [ClCartCount],
-      html: `<cl-cart-count></cl-cart-count>`,
+      html: "<cl-cart-count></cl-cart-count>",
     })
 
     doc.dispatchEvent(
@@ -127,7 +127,7 @@ describe("cl-cart-count.spec", () => {
   it('renders as empty when "cl-cart-update" is triggered with empty order', async () => {
     const { root, waitForChanges, doc } = await newSpecPage({
       components: [ClCartCount],
-      html: `<cl-cart-count></cl-cart-count>`,
+      html: "<cl-cart-count></cl-cart-count>",
     })
 
     doc.dispatchEvent(

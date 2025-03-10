@@ -37,7 +37,7 @@ export class ClMyAccountLink {
     return (
       <Host aria-disabled={this.href !== undefined ? undefined : "true"}>
         <a target={this.target} href={this.href}>
-          <slot></slot>
+          <slot />
         </a>
       </Host>
     )

@@ -244,8 +244,6 @@ export function getCartQuantity(
         switch (kind) {
           case "bundle":
             return item.bundle_code === code
-
-          case "sku":
           default:
             return item.sku_code === code
         }

@@ -133,8 +133,6 @@ export class ClAddToCart {
             log("warn", `Cannot find code ${code}.`, this.host)
           }
           break
-
-        case "sku":
         default:
           this.inventory = (await getSku(code))?.inventory
           if (this.inventory === undefined) {
@@ -206,7 +204,7 @@ export class ClAddToCart {
           this.handleAddItem()
         }}
       >
-        <slot></slot>
+        <slot />
       </Host>
     )
   }

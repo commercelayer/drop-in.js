@@ -5,7 +5,7 @@ import { create } from "../../utils"
 import { codes } from "../assets/constants"
 
 type Args = DropInArgs["cl-availability-info"] & {
-  ["Product availability"]: string
+  "Product availability": string
 }
 
 const meta: Meta<Args> = {

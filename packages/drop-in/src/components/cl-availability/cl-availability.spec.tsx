@@ -66,7 +66,7 @@ describe("cl-availability.spec", () => {
   it("renders without attributes", async () => {
     const page = await newSpecPage({
       components: [ClAvailability],
-      html: `<cl-availability></cl-availability>`,
+      html: "<cl-availability></cl-availability>",
     })
     expect(page.root).toEqualHtml(`
       <cl-availability kind="sku" rule="cheapest">

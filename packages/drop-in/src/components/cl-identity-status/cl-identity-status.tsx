@@ -59,9 +59,9 @@ export class ClIdentityStatus {
       isValidUnion(this.status, this.typeList) &&
       this.type === this.status
     ) {
-      return <slot></slot>
+      return <slot />
     }
 
-    return <Host aria-disabled="true"></Host>
+    return <Host aria-disabled="true" />
   }
 }

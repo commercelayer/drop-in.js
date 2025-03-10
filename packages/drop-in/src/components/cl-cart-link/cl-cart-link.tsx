@@ -78,7 +78,7 @@ export class ClCartLink {
             this.handleOpenMinicart()
           }}
         >
-          <slot></slot>
+          <slot />
         </Host>
       )
     }
@@ -94,7 +94,7 @@ export class ClCartLink {
             })
           }}
         >
-          <slot></slot>
+          <slot />
         </a>
       </Host>
     )

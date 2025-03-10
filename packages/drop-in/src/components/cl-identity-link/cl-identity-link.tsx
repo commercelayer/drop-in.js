@@ -76,7 +76,7 @@ export class ClIdentityLink {
             }
           }}
         >
-          <slot></slot>
+          <slot />
         </a>
       </Host>
     )

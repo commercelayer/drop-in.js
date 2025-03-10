@@ -275,7 +275,7 @@ export class ClCart {
               "min-height": "100%",
               border: "none",
             }}
-          ></iframe>
+          />
         </div>
       </Host>
     )

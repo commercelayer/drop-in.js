@@ -69,8 +69,6 @@ export class ClPrice {
         case "bundle":
           price = await getBundlePrice(code)
           break
-
-        case "sku":
         default:
           price = await getSkuPrice(code)
           break
@@ -87,6 +85,6 @@ export class ClPrice {
   private readonly debouncedUpdatePrice = debounce(this.updatePrice, 10)
 
   render(): JSX.Element {
-    return <slot></slot>
+    return <slot />
   }
 }

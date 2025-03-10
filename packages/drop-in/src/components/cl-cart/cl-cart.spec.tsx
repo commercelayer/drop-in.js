@@ -23,7 +23,7 @@ describe("cl-cart.spec", () => {
 
     const page = await newSpecPage({
       components: [ClCart],
-      html: `<cl-cart></cl-cart>`,
+      html: "<cl-cart></cl-cart>",
     })
 
     expect(page.root).toEqualHtml(`

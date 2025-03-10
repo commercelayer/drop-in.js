@@ -78,9 +78,9 @@ export class ClAvailabilityStatus {
         this.available === true &&
         this.hasDeliveryLeadTimes === true)
     ) {
-      return <slot></slot>
+      return <slot />
     }
 
-    return <Host aria-disabled="true"></Host>
+    return <Host aria-disabled="true" />
   }
 }

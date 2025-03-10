@@ -17,7 +17,7 @@ describe("cl-identity-status.spec", () => {
   it("renders without any arguments", async () => {
     const { root } = await newSpecPage({
       components: [ClIdentityStatus],
-      html: `<cl-identity-status></cl-identity-status>`,
+      html: "<cl-identity-status></cl-identity-status>",
     })
 
     expect(root).toEqualHtml(`

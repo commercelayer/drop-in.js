@@ -6,7 +6,7 @@ describe("cl-availability-info.spec", () => {
   it("renders without attributes", async () => {
     const page = await newSpecPage({
       components: [ClAvailabilityInfo],
-      html: `<cl-availability-info></cl-availability-info>`,
+      html: "<cl-availability-info></cl-availability-info>",
     })
     expect(page.root).toEqualHtml(`
       <cl-availability-info>
