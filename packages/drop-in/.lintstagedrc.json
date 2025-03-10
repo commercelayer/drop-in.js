@@ -1,7 +1,7 @@
 {
   "*.{js,jsx,ts,tsx}": [
     "bash -c \"tsc -p ./tsconfig.json --noEmit\"",
-    "pnpm biome check --write",
+    "pnpm biome check --write --no-errors-on-unmatched",
     "bash -c \"pnpm test\""
   ]
 }
