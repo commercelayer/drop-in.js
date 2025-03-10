@@ -27,18 +27,18 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=20.5",
+    "node": ">=20.10",
     "pnpm": "10.4.0"
   },
   "packageManager": "pnpm@10.4.0",
   "devDependencies": {
-    "@commercelayer/eslint-config-ts": "^2.1.0",
+    "@commercelayer/eslint-config-ts": "^2.2.0",
     "concurrently": "^9.1.2",
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
-    "lerna": "^8.1.9",
+    "lerna": "^8.2.1",
     "lint-staged": "^15.4.3",
     "replace-in-file": "^8.3.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   }
 }
