@@ -1,29 +1,29 @@
-import * as cart from '#apis/commercelayer/cart'
-import * as client from '#apis/commercelayer/client'
-import { ClCartLink } from '#components/cl-cart-link/cl-cart-link'
-import { newSpecPage } from '@stencil/core/testing'
-import { mockedAccessToken } from 'jest.spec.helpers'
-import { ClCart } from './cl-cart'
+import { newSpecPage } from "@stencil/core/testing"
+import { mockedAccessToken } from "jest.spec.helpers"
+import * as cart from "#apis/commercelayer/cart"
+import * as client from "#apis/commercelayer/client"
+import { ClCartLink } from "#components/cl-cart-link/cl-cart-link"
+import { ClCart } from "./cl-cart"
 
 beforeEach(() => {
   jest.resetAllMocks()
 })
 
-describe('cl-cart.spec', () => {
-  it('renders', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-      type: 'guest',
+describe("cl-cart.spec", () => {
+  it("renders", async () => {
+    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+      type: "guest",
       accessToken: mockedAccessToken,
-      scope: 'market:code:usa'
+      scope: "market:code:usa",
     })
 
     jest
-      .spyOn(cart, 'getCartUrl')
-      .mockResolvedValue('https://example.com/checkout-url')
+      .spyOn(cart, "getCartUrl")
+      .mockResolvedValue("https://example.com/checkout-url")
 
     const page = await newSpecPage({
       components: [ClCart],
-      html: `<cl-cart></cl-cart>`
+      html: `<cl-cart></cl-cart>`,
     })
 
     expect(page.root).toEqualHtml(`
@@ -44,10 +44,10 @@ describe('cl-cart.spec', () => {
     `)
   })
 
-  it('renders as minicart when used inside a `cl-cart-link`.', async () => {
+  it("renders as minicart when used inside a `cl-cart-link`.", async () => {
     jest
-      .spyOn(cart, 'getCartUrl')
-      .mockResolvedValue('https://example.com/checkout-url')
+      .spyOn(cart, "getCartUrl")
+      .mockResolvedValue("https://example.com/checkout-url")
 
     const page = await newSpecPage({
       components: [ClCart, ClCartLink],
@@ -55,7 +55,7 @@ describe('cl-cart.spec', () => {
         <cl-cart-link>
           <cl-cart></cl-cart>
         </cl-cart-link>
-      `
+      `,
     })
 
     await page.waitForChanges()

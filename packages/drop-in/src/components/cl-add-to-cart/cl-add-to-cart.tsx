@@ -1,45 +1,45 @@
-import { getBundle } from '#apis/commercelayer/bundles'
-import { addItem, getCart, getCartQuantity } from '#apis/commercelayer/cart'
-import { getSku } from '#apis/commercelayer/skus'
-import { listenTo } from '#apis/event'
-import type { Inventory } from '#apis/types'
-import { log } from '#utils/logger'
+import type { Order } from "@commercelayer/sdk"
+import {
+  Component,
+  Element,
+  Host,
+  type JSX,
+  Prop,
+  State,
+  Watch,
+  h,
+} from "@stencil/core"
+import debounce from "lodash/debounce"
+import { getBundle } from "#apis/commercelayer/bundles"
+import { addItem, getCart, getCartQuantity } from "#apis/commercelayer/cart"
+import { getSku } from "#apis/commercelayer/skus"
+import { listenTo } from "#apis/event"
+import type { Inventory } from "#apis/types"
+import { log } from "#utils/logger"
 import {
   isValidCode,
   isValidQuantity,
   logCode,
   logUnion,
-  unionToTuple
-} from '#utils/validation-helpers'
-import { type Order } from '@commercelayer/sdk'
-import {
-  Component,
-  Element,
-  Host,
-  Prop,
-  State,
-  Watch,
-  h,
-  type JSX
-} from '@stencil/core'
-import debounce from 'lodash/debounce'
+  unionToTuple,
+} from "#utils/validation-helpers"
 
 @Component({
-  tag: 'cl-add-to-cart',
-  shadow: true
+  tag: "cl-add-to-cart",
+  shadow: true,
 })
 export class ClAddToCart {
   @Element() host!: HTMLClAddToCartElement
 
-  private readonly kindList = unionToTuple<typeof this.kind>()('sku', 'bundle')
+  private readonly kindList = unionToTuple<typeof this.kind>()("sku", "bundle")
 
-  private readonly kindDefault: NonNullable<typeof this.kind> = 'sku'
+  private readonly kindDefault: NonNullable<typeof this.kind> = "sku"
 
   /**
    * Indicates whether the code refers to a `sku` or a `bundle`.
    * @default sku
    */
-  @Prop({ reflect: true, mutable: true }) kind?: 'sku' | 'bundle' = 'sku'
+  @Prop({ reflect: true, mutable: true }) kind?: "sku" | "bundle" = "sku"
 
   /**
    * The SKU or bundle code (i.e. the unique identifier of the product or bundle you want to add to the shopping cart).
@@ -50,7 +50,7 @@ export class ClAddToCart {
    * The number of units of the selected product you want to add to the shopping cart.
    * @default 1
    */
-  @Prop({ reflect: true, mutable: true }) quantity: number = 1
+  @Prop({ reflect: true, mutable: true }) quantity = 1
 
   /**
    * A custom name for the product or bundle that will be added to the cart.
@@ -73,7 +73,7 @@ export class ClAddToCart {
    * The item is currently being added to the cart.
    * @default false
    */
-  @State() busy: boolean = false
+  @State() busy = false
 
   @State() inventory: Inventory | undefined
 
@@ -85,7 +85,7 @@ export class ClAddToCart {
 
     this.cart = (await getCart()) ?? undefined
 
-    listenTo('cl-cart-update', (event) => {
+    listenTo("cl-cart-update", (event) => {
       const [kind, code] = event.detail.request.args
 
       this.cart = event.detail.response
@@ -95,50 +95,50 @@ export class ClAddToCart {
       }
     })
 
-    listenTo('cl-cart-hostedcartupdate', (event) => {
+    listenTo("cl-cart-hostedcartupdate", (event) => {
       this.cart = event.detail.response
     })
   }
 
-  @Watch('kind')
+  @Watch("kind")
   async watchKindHandler(newValue: typeof this.kind): Promise<void> {
     if (newValue == null) {
       this.kind = this.kindDefault
       return
     }
 
-    logUnion(this.host, 'kind', newValue, this.kindList)
+    logUnion(this.host, "kind", newValue, this.kindList)
   }
 
-  @Watch('code')
+  @Watch("code")
   async watchCodeHandler(newValue: typeof this.code): Promise<void> {
     await this.debouncedUpdateSku(newValue)
   }
 
-  @Watch('quantity')
+  @Watch("quantity")
   async watchQuantityHandler(newValue: typeof this.quantity): Promise<void> {
     await this.updateQuantity(newValue)
   }
 
   private readonly updateSku = async (
-    code: typeof this.code
+    code: typeof this.code,
   ): Promise<void> => {
     logCode(this.host, code)
 
     if (isValidCode(code)) {
       switch (this.kind) {
-        case 'bundle':
+        case "bundle":
           this.inventory = (await getBundle(code))?.inventory
           if (this.inventory === undefined) {
-            log('warn', `Cannot find code ${code}.`, this.host)
+            log("warn", `Cannot find code ${code}.`, this.host)
           }
           break
 
-        case 'sku':
+        case "sku":
         default:
           this.inventory = (await getSku(code))?.inventory
           if (this.inventory === undefined) {
-            log('warn', `Cannot find code ${code}.`, this.host)
+            log("warn", `Cannot find code ${code}.`, this.host)
           }
           break
       }
@@ -154,7 +154,7 @@ export class ClAddToCart {
   }
 
   handleKeyPress(event: KeyboardEvent): void {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       this.handleAddItem()
     }
   }
@@ -165,7 +165,7 @@ export class ClAddToCart {
       addItem(this.kind ?? this.kindDefault, this.code, this.quantity, {
         name: this.name,
         image_url: this.imageUrl,
-        frequency: this.frequency
+        frequency: this.frequency,
       }).catch((error) => {
         this.busy = false
         throw error
@@ -195,10 +195,10 @@ export class ClAddToCart {
   render(): JSX.Element {
     return (
       <Host
-        role='button'
-        tabindex='0'
-        aria-disabled={this.canBeSold() && !this.busy ? undefined : 'true'}
-        aria-busy={this.busy ? 'true' : undefined}
+        role="button"
+        tabindex="0"
+        aria-disabled={this.canBeSold() && !this.busy ? undefined : "true"}
+        aria-busy={this.busy ? "true" : undefined}
         onKeyPress={(event: KeyboardEvent) => {
           this.handleKeyPress(event)
         }}

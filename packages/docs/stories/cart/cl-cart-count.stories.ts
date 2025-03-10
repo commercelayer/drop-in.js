@@ -1,13 +1,13 @@
-import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
-import { type Meta, type StoryFn } from '@storybook/html'
-import { html, nothing } from 'lit-html'
-import { create } from '../../utils'
+import type { DropInArgs } from "@commercelayer/drop-in.js/dist/custom-elements-args"
+import type { Meta, StoryFn } from "@storybook/html"
+import { html, nothing } from "lit-html"
+import { create } from "../../utils"
 
-type Args = DropInArgs['cl-cart-count']
+type Args = DropInArgs["cl-cart-count"]
 
 const meta: Meta<Args> = {
-  title: 'Components/Cart/cl-cart-count',
-  component: 'cl-cart-count'
+  title: "Components/Cart/cl-cart-count",
+  component: "cl-cart-count",
 }
 
 export default meta
@@ -15,7 +15,7 @@ export default meta
 export const Basic: StoryFn<Args> = (args) => {
   return create(html`
     <cl-cart-count
-      hide-when-empty=${args['hide-when-empty'] ?? nothing}
+      hide-when-empty=${args["hide-when-empty"] ?? nothing}
     ></cl-cart-count>
   `)
 }
@@ -55,7 +55,7 @@ export const WithIcon: StoryFn<Args> = (args) => {
       </svg>
 
       <cl-cart-count
-        hide-when-empty=${args['hide-when-empty'] ?? nothing}
+        hide-when-empty=${args["hide-when-empty"] ?? nothing}
       ></cl-cart-count>
     </cl-cart-link>
   `)
@@ -66,7 +66,7 @@ export const WithText: StoryFn<Args> = (args) => {
     <cl-cart-link target="_blank">
       View cart
       <cl-cart-count
-        hide-when-empty=${args['hide-when-empty'] ?? nothing}
+        hide-when-empty=${args["hide-when-empty"] ?? nothing}
       ></cl-cart-count>
     </cl-cart-link>
   `)
@@ -77,7 +77,7 @@ export const LinkWithStyle: StoryFn<Args> = (args) => {
     <a class="cl-cart-link" target="_blank" href="https://example.com/my-cart">
       View cart
       <cl-cart-count
-        hide-when-empty=${args['hide-when-empty'] ?? nothing}
+        hide-when-empty=${args["hide-when-empty"] ?? nothing}
       ></cl-cart-count>
     </a>
   `)

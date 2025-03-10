@@ -1,27 +1,27 @@
-import * as cart from '#apis/commercelayer/cart'
-import * as skus from '#apis/commercelayer/skus'
-import type { Sku } from '#apis/types'
-import { ClAvailabilityInfo } from '#components/cl-availability-info/cl-availability-info'
-import { ClAvailabilityStatus } from '#components/cl-availability-status/cl-availability-status'
-import { newSpecPage } from '@stencil/core/testing'
-import { waitForMs } from 'jest.spec.helpers'
-import { ClAvailability } from './cl-availability'
-import { type Order } from '@commercelayer/sdk'
+import type { Order } from "@commercelayer/sdk"
+import { newSpecPage } from "@stencil/core/testing"
+import { waitForMs } from "jest.spec.helpers"
+import * as cart from "#apis/commercelayer/cart"
+import * as skus from "#apis/commercelayer/skus"
+import type { Sku } from "#apis/types"
+import { ClAvailabilityInfo } from "#components/cl-availability-info/cl-availability-info"
+import { ClAvailabilityStatus } from "#components/cl-availability-status/cl-availability-status"
+import { ClAvailability } from "./cl-availability"
 
 const baseSku = (id: string): Sku => {
   return {
     id,
     code: id,
     name: id,
-    type: 'skus',
+    type: "skus",
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   } as const
 }
 
 const skuList: { [code: string]: Sku } = {
   AVAILABLE123: {
-    ...baseSku('AVAILABLE123'),
+    ...baseSku("AVAILABLE123"),
     inventory: {
       levels: [
         {
@@ -29,44 +29,44 @@ const skuList: { [code: string]: Sku } = {
             {
               min: {
                 days: 1,
-                hours: 1 * 24
+                hours: 1 * 24,
               },
               max: {
                 days: 2,
-                hours: 2 * 24
+                hours: 2 * 24,
               },
               shipping_method: {
-                name: 'Standard',
-                reference: 'reference-1',
+                name: "Standard",
+                reference: "reference-1",
                 price_amount_cents: 700,
-                formatted_price_amount: '$7.00',
+                formatted_price_amount: "$7.00",
                 formatted_free_over_amount: null,
-                free_over_amount_cents: null
-              }
-            }
+                free_over_amount_cents: null,
+              },
+            },
           ],
-          quantity: 98
-        }
+          quantity: 98,
+        },
       ],
       available: true,
-      quantity: 98
-    }
+      quantity: 98,
+    },
   },
   NOTAVAILABLE456: {
-    ...baseSku('NOTAVAILABLE456'),
+    ...baseSku("NOTAVAILABLE456"),
     inventory: {
       levels: [],
       available: false,
-      quantity: 0
-    }
-  }
+      quantity: 0,
+    },
+  },
 }
 
-describe('cl-availability.spec', () => {
-  it('renders without attributes', async () => {
+describe("cl-availability.spec", () => {
+  it("renders without attributes", async () => {
     const page = await newSpecPage({
       components: [ClAvailability],
-      html: `<cl-availability></cl-availability>`
+      html: `<cl-availability></cl-availability>`,
     })
     expect(page.root).toEqualHtml(`
       <cl-availability kind="sku" rule="cheapest">
@@ -77,16 +77,16 @@ describe('cl-availability.spec', () => {
     `)
   })
 
-  it('renders with a code', async () => {
+  it("renders with a code", async () => {
     jest
-      .spyOn(skus, 'getSku')
+      .spyOn(skus, "getSku")
       .mockImplementation(
-        async (sku: string) => await Promise.resolve(skuList[sku])
+        async (sku: string) => await Promise.resolve(skuList[sku]),
       )
 
     const { root } = await newSpecPage({
       components: [ClAvailability],
-      html: '<cl-availability code="AVAILABLE123"></cl-availability>'
+      html: '<cl-availability code="AVAILABLE123"></cl-availability>',
     })
     expect(root).toEqualHtml(`
       <cl-availability kind="sku" code="AVAILABLE123" rule="cheapest">
@@ -99,9 +99,9 @@ describe('cl-availability.spec', () => {
 
   it('should pass-throw the "availabilityUpdate" event to children', async () => {
     jest
-      .spyOn(skus, 'getSku')
+      .spyOn(skus, "getSku")
       .mockImplementation(
-        async (sku: string) => await Promise.resolve(skuList[sku])
+        async (sku: string) => await Promise.resolve(skuList[sku]),
       )
 
     const { root } = await newSpecPage({
@@ -117,7 +117,7 @@ describe('cl-availability.spec', () => {
           </cl-availability-status>
           <another-tag></another-tag>
         </cl-availability>
-      `
+      `,
     })
 
     expect(root).toEqualHtml(`
@@ -156,23 +156,23 @@ describe('cl-availability.spec', () => {
 
   it('should pass-throw "unavailable" when product is out-of-stock', async () => {
     jest
-      .spyOn(skus, 'getSku')
+      .spyOn(skus, "getSku")
       .mockImplementation(
-        async (sku: string) => await Promise.resolve(skuList[sku])
+        async (sku: string) => await Promise.resolve(skuList[sku]),
       )
 
-    jest.spyOn(cart, 'getCart').mockImplementation(
+    jest.spyOn(cart, "getCart").mockImplementation(
       async () =>
         await Promise.resolve({
           line_items: [
             {
-              id: 'line-item-id',
-              type: 'line_items',
+              id: "line-item-id",
+              type: "line_items",
               quantity: 98,
-              sku_code: 'AVAILABLE123'
-            }
-          ]
-        } as unknown as Order)
+              sku_code: "AVAILABLE123",
+            },
+          ],
+        } as unknown as Order),
     )
 
     const { root } = await newSpecPage({
@@ -188,7 +188,7 @@ describe('cl-availability.spec', () => {
           </cl-availability-status>
           <another-tag></another-tag>
         </cl-availability>
-      `
+      `,
     })
 
     expect(root).toEqualHtml(`
@@ -225,9 +225,9 @@ describe('cl-availability.spec', () => {
 
   it('should fetch the new availability when "code" changes', async () => {
     jest
-      .spyOn(skus, 'getSku')
+      .spyOn(skus, "getSku")
       .mockImplementation(
-        async (sku: string) => await Promise.resolve(skuList[sku])
+        async (sku: string) => await Promise.resolve(skuList[sku]),
       )
 
     const { root, waitForChanges } = await newSpecPage({
@@ -239,10 +239,10 @@ describe('cl-availability.spec', () => {
           <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
           <another-tag></another-tag>
         </cl-availability>
-      `
+      `,
     })
 
-    root?.setAttribute('code', 'NOTAVAILABLE456')
+    root?.setAttribute("code", "NOTAVAILABLE456")
 
     await waitForMs(11)
 
@@ -271,11 +271,11 @@ describe('cl-availability.spec', () => {
     `)
   })
 
-  it('should empty the text when the there are no results', async () => {
+  it("should empty the text when the there are no results", async () => {
     jest
-      .spyOn(skus, 'getSku')
+      .spyOn(skus, "getSku")
       .mockImplementation(
-        async (sku: string) => await Promise.resolve(skuList[sku])
+        async (sku: string) => await Promise.resolve(skuList[sku]),
       )
 
     const { root, waitForChanges } = await newSpecPage({
@@ -287,10 +287,10 @@ describe('cl-availability.spec', () => {
           <cl-availability-status type="unavailable">• out of stock</cl-availability-status>
           <another-tag></another-tag>
         </cl-availability>
-      `
+      `,
     })
 
-    root?.setAttribute('code', 'NONEXISTING')
+    root?.setAttribute("code", "NONEXISTING")
 
     await waitForMs(11)
 

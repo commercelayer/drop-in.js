@@ -1,14 +1,14 @@
-import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
-import { type Meta, type StoryFn } from '@storybook/html'
-import { html, nothing } from 'lit-html'
-import { create } from '../../utils'
-import { codes } from '../assets/constants'
+import type { DropInArgs } from "@commercelayer/drop-in.js/dist/custom-elements-args"
+import type { Meta, StoryFn } from "@storybook/html"
+import { html, nothing } from "lit-html"
+import { create } from "../../utils"
+import { codes } from "../assets/constants"
 
-type Args = DropInArgs['cl-price-amount']
+type Args = DropInArgs["cl-price-amount"]
 
 const meta: Meta<Args> = {
-  title: 'Components/Price/cl-price-amount',
-  component: 'cl-price-amount'
+  title: "Components/Price/cl-price-amount",
+  component: "cl-price-amount",
 }
 
 export default meta

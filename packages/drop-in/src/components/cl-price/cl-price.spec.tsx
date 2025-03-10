@@ -1,49 +1,49 @@
-import * as client from '#apis/commercelayer/client'
-import * as skus from '#apis/commercelayer/skus'
-import { ClPriceAmount } from '#components/cl-price-amount/cl-price-amount'
-import type { Price } from '@commercelayer/sdk'
-import { newSpecPage } from '@stencil/core/testing'
-import { mockedAccessToken, waitForMs } from 'jest.spec.helpers'
-import { ClPrice } from './cl-price'
+import type { Price } from "@commercelayer/sdk"
+import { newSpecPage } from "@stencil/core/testing"
+import { mockedAccessToken, waitForMs } from "jest.spec.helpers"
+import * as client from "#apis/commercelayer/client"
+import * as skus from "#apis/commercelayer/skus"
+import { ClPriceAmount } from "#components/cl-price-amount/cl-price-amount"
+import { ClPrice } from "./cl-price"
 
 const fakePrices: { [sku: string]: Price } = {
   ABC123: {
-    id: 'ABC123',
-    type: 'prices',
+    id: "ABC123",
+    type: "prices",
     amount_cents: 1200,
     amount_float: 12,
     compare_at_amount_cents: 2850,
     compare_at_amount_float: 28.5,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    formatted_amount: '€ 12.00',
-    formatted_compare_at_amount: '€ 28.50'
+    formatted_amount: "€ 12.00",
+    formatted_compare_at_amount: "€ 28.50",
   },
   DEF456: {
-    id: 'DEF456',
-    type: 'prices',
+    id: "DEF456",
+    type: "prices",
     amount_cents: 3100,
     amount_float: 31,
     compare_at_amount_cents: 4300,
     compare_at_amount_float: 43,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    formatted_amount: '€ 31.00',
-    formatted_compare_at_amount: '€ 43.00'
-  }
+    formatted_amount: "€ 31.00",
+    formatted_compare_at_amount: "€ 43.00",
+  },
 }
 
-describe('cl-price.spec', () => {
-  it('renders without attributes', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-      type: 'guest',
+describe("cl-price.spec", () => {
+  it("renders without attributes", async () => {
+    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+      type: "guest",
       accessToken: mockedAccessToken,
-      scope: 'market:code:usa'
+      scope: "market:code:usa",
     })
 
     const { root } = await newSpecPage({
       components: [ClPrice],
-      html: '<cl-price></cl-price>'
+      html: "<cl-price></cl-price>",
     })
     expect(root).toEqualHtml(`
       <cl-price kind="sku">
@@ -54,16 +54,16 @@ describe('cl-price.spec', () => {
     `)
   })
 
-  it('renders with a code', async () => {
+  it("renders with a code", async () => {
     jest
-      .spyOn(skus, 'getPrice')
+      .spyOn(skus, "getPrice")
       .mockImplementation(
-        async (sku: string) => await Promise.resolve(fakePrices[sku])
+        async (sku: string) => await Promise.resolve(fakePrices[sku]),
       )
 
     const { root } = await newSpecPage({
       components: [ClPrice],
-      html: '<cl-price code="SKU1234"></cl-price>'
+      html: '<cl-price code="SKU1234"></cl-price>',
     })
     expect(root).toEqualHtml(`
       <cl-price kind="sku" code="SKU1234">
@@ -76,9 +76,9 @@ describe('cl-price.spec', () => {
 
   it('should pass-throw the "priceUpdate" event to children', async () => {
     jest
-      .spyOn(skus, 'getPrice')
+      .spyOn(skus, "getPrice")
       .mockImplementation(
-        async (sku: string) => await Promise.resolve(fakePrices[sku])
+        async (sku: string) => await Promise.resolve(fakePrices[sku]),
       )
 
     const { root } = await newSpecPage({
@@ -88,7 +88,7 @@ describe('cl-price.spec', () => {
           <cl-price-amount></cl-price-amount>
           <another-tag></another-tag>
         </cl-price>
-      `
+      `,
     })
 
     expect(root).toEqualHtml(`
@@ -108,9 +108,9 @@ describe('cl-price.spec', () => {
 
   it('should fetch the new price when "code" changes', async () => {
     jest
-      .spyOn(skus, 'getPrice')
+      .spyOn(skus, "getPrice")
       .mockImplementation(
-        async (sku: string) => await Promise.resolve(fakePrices[sku])
+        async (sku: string) => await Promise.resolve(fakePrices[sku]),
       )
 
     const { root, waitForChanges } = await newSpecPage({
@@ -120,10 +120,10 @@ describe('cl-price.spec', () => {
           <cl-price-amount></cl-price-amount>
           <another-tag></another-tag>
         </cl-price>
-      `
+      `,
     })
 
-    root?.setAttribute('code', 'DEF456')
+    root?.setAttribute("code", "DEF456")
 
     await waitForMs(11)
 
@@ -144,11 +144,11 @@ describe('cl-price.spec', () => {
     `)
   })
 
-  it('should empty the price when the there are no results', async () => {
+  it("should empty the price when the there are no results", async () => {
     jest
-      .spyOn(skus, 'getPrice')
+      .spyOn(skus, "getPrice")
       .mockImplementation(
-        async (sku: string) => await Promise.resolve(fakePrices[sku])
+        async (sku: string) => await Promise.resolve(fakePrices[sku]),
       )
 
     const { root, waitForChanges } = await newSpecPage({
@@ -158,10 +158,10 @@ describe('cl-price.spec', () => {
           <cl-price-amount></cl-price-amount>
           <another-tag></another-tag>
         </cl-price>
-      `
+      `,
     })
 
-    root?.setAttribute('code', 'ABC456')
+    root?.setAttribute("code", "ABC456")
 
     await waitForMs(11)
 

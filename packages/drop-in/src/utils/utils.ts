@@ -4,7 +4,7 @@
  * @param size The length of each chunk.
  * @returns Returns the new array of chunks.
  */
-export function chunk<T>(array: T[], size: number = 1): T[][] {
+export function chunk<T>(array: T[], size = 1): T[][] {
   if (size < 1) {
     return []
   }
@@ -43,7 +43,7 @@ export function uniq<T>(array: T[]): T[] {
  * @returns Returns the new memoized function.
  */
 export const memoize = <T extends (...args: any) => any>(
-  func: T
+  func: T,
 ): ((...args: Parameters<T>) => ReturnType<T>) => {
   const cache: { [key: string]: any } = {}
 

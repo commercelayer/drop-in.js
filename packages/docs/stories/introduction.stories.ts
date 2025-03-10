@@ -1,10 +1,10 @@
-import type { Meta, StoryFn } from '@storybook/html'
-import { html } from 'lit-html'
-import { create } from '../utils'
-import { codes } from './assets/constants'
+import type { Meta, StoryFn } from "@storybook/html"
+import { html } from "lit-html"
+import { create } from "../utils"
+import { codes } from "./assets/constants"
 
 const meta: Meta = {
-  title: 'Introduction'
+  title: "Introduction",
 }
 
 export default meta
@@ -149,6 +149,6 @@ export const Basic: StoryFn = () => {
           <img class="object-contain position-top max-h-[470px]" src="welcomeback-h.jpg" />
         </cl-identity-status>
       </div>
-    `
+    `,
   )
 }

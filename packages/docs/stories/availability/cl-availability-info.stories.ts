@@ -1,41 +1,41 @@
-import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
-import { type Meta, type StoryFn } from '@storybook/html'
-import { html, nothing } from 'lit-html'
-import { create } from '../../utils'
-import { codes } from '../assets/constants'
+import type { DropInArgs } from "@commercelayer/drop-in.js/dist/custom-elements-args"
+import type { Meta, StoryFn } from "@storybook/html"
+import { html, nothing } from "lit-html"
+import { create } from "../../utils"
+import { codes } from "../assets/constants"
 
-type Args = DropInArgs['cl-availability-info'] & {
-  ['Product availability']: string
+type Args = DropInArgs["cl-availability-info"] & {
+  ["Product availability"]: string
 }
 
 const meta: Meta<Args> = {
-  title: 'Components/Availability/cl-availability-info',
-  component: 'cl-availability-info',
+  title: "Components/Availability/cl-availability-info",
+  component: "cl-availability-info",
   argTypes: {
-    'Product availability': {
+    "Product availability": {
       description:
-        'Select one of the options to swap between products with different availability in the example above.',
+        "Select one of the options to swap between products with different availability in the example above.",
       options: [codes.available, codes.digitalProduct, codes.outOfStock],
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          [codes.available]: 'Shippable product',
-          [codes.digitalProduct]: 'Digital product',
-          [codes.outOfStock]: 'Out of stock product'
-        }
+          [codes.available]: "Shippable product",
+          [codes.digitalProduct]: "Digital product",
+          [codes.outOfStock]: "Out of stock product",
+        },
       },
       table: {
-        category: 'storybook'
-      }
-    }
-  }
+        category: "storybook",
+      },
+    },
+  },
 }
 
 export default meta
 
 export const Basic: StoryFn<Args> = (args) => {
   return create(html`
-    <cl-availability code=${args['Product availability']}>
+    <cl-availability code=${args["Product availability"]}>
       <cl-availability-status type="available-with-info">
         <cl-availability-info
           type=${args.type ?? nothing}
@@ -45,8 +45,8 @@ export const Basic: StoryFn<Args> = (args) => {
   `)
 }
 Basic.args = {
-  'Product availability': codes.available,
-  type: 'min-days'
+  "Product availability": codes.available,
+  type: "min-days",
 }
 
 export const Message: StoryFn<Args> = () => {
@@ -62,6 +62,6 @@ export const Message: StoryFn<Args> = () => {
           (<cl-availability-info type="shipping-method-price"></cl-availability-info>)
         </cl-availability-status>
       </cl-availability>
-    `
+    `,
   )
 }

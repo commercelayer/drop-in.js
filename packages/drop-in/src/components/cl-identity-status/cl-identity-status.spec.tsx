@@ -1,23 +1,23 @@
-import * as client from '#apis/commercelayer/client'
-import { fireEvent } from '#apis/event'
-import * as logger from '#utils/logger'
-import { newSpecPage } from '@stencil/core/testing'
-import { mockedAccessToken } from 'jest.spec.helpers'
-import { ClIdentityStatus } from './cl-identity-status'
+import { newSpecPage } from "@stencil/core/testing"
+import { mockedAccessToken } from "jest.spec.helpers"
+import * as client from "#apis/commercelayer/client"
+import { fireEvent } from "#apis/event"
+import * as logger from "#utils/logger"
+import { ClIdentityStatus } from "./cl-identity-status"
 
 let log: jest.SpyInstance
 
 beforeEach(() => {
   jest.resetAllMocks()
 
-  log = jest.spyOn(logger, 'log')
+  log = jest.spyOn(logger, "log")
 })
 
-describe('cl-identity-status.spec', () => {
-  it('renders without any arguments', async () => {
+describe("cl-identity-status.spec", () => {
+  it("renders without any arguments", async () => {
     const { root } = await newSpecPage({
       components: [ClIdentityStatus],
-      html: `<cl-identity-status></cl-identity-status>`
+      html: `<cl-identity-status></cl-identity-status>`,
     })
 
     expect(root).toEqualHtml(`
@@ -28,17 +28,17 @@ describe('cl-identity-status.spec', () => {
 
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
-      'warn',
+      "warn",
       '"type" attribute should be one of "guest", "customer". Received: "undefined"',
-      root
+      root,
     )
   })
 
-  it('renders as guest when user is guest', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-      type: 'guest',
+  it("renders as guest when user is guest", async () => {
+    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+      type: "guest",
       accessToken: mockedAccessToken,
-      scope: 'market:code:usa'
+      scope: "market:code:usa",
     })
 
     const { body } = await newSpecPage({
@@ -52,7 +52,7 @@ describe('cl-identity-status.spec', () => {
             • i'm a customer
           </cl-identity-status>
         </div>
-      `
+      `,
     })
 
     expect(body).toEqualHtml(`
@@ -73,12 +73,12 @@ describe('cl-identity-status.spec', () => {
     expect(log).not.toHaveBeenCalled()
   })
 
-  it('renders as customer when user is customer', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-      type: 'customer',
-      customerId: '1234',
+  it("renders as customer when user is customer", async () => {
+    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+      type: "customer",
+      customerId: "1234",
       accessToken: mockedAccessToken,
-      scope: 'market:code:usa'
+      scope: "market:code:usa",
     })
 
     const { body } = await newSpecPage({
@@ -92,7 +92,7 @@ describe('cl-identity-status.spec', () => {
             • i'm a customer
           </cl-identity-status>
         </div>
-      `
+      `,
     })
 
     expect(body).toEqualHtml(`
@@ -113,11 +113,11 @@ describe('cl-identity-status.spec', () => {
     expect(log).not.toHaveBeenCalled()
   })
 
-  it('renders as customer when user logged in', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-      type: 'guest',
+  it("renders as customer when user logged in", async () => {
+    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+      type: "guest",
       accessToken: mockedAccessToken,
-      scope: 'market:code:usa'
+      scope: "market:code:usa",
     })
 
     const { body, waitForChanges } = await newSpecPage({
@@ -131,7 +131,7 @@ describe('cl-identity-status.spec', () => {
             • i'm a customer
           </cl-identity-status>
         </div>
-      `
+      `,
     })
 
     expect(body).toEqualHtml(`
@@ -149,11 +149,11 @@ describe('cl-identity-status.spec', () => {
       </div>
     `)
 
-    fireEvent('cl-identity-gettoken', [], {
-      type: 'customer',
-      customerId: '12as',
-      accessToken: 'token-1234',
-      scope: 'market:code:usa'
+    fireEvent("cl-identity-gettoken", [], {
+      type: "customer",
+      customerId: "12as",
+      accessToken: "token-1234",
+      scope: "market:code:usa",
     })
 
     await waitForChanges()
@@ -176,12 +176,12 @@ describe('cl-identity-status.spec', () => {
     expect(log).not.toHaveBeenCalled()
   })
 
-  it('renders as guest when user logged out', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-      type: 'customer',
-      customerId: '1234',
+  it("renders as guest when user logged out", async () => {
+    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+      type: "customer",
+      customerId: "1234",
       accessToken: mockedAccessToken,
-      scope: 'market:code:usa'
+      scope: "market:code:usa",
     })
 
     const { body, waitForChanges } = await newSpecPage({
@@ -195,7 +195,7 @@ describe('cl-identity-status.spec', () => {
             • i'm a customer
           </cl-identity-status>
         </div>
-      `
+      `,
     })
 
     expect(body).toEqualHtml(`
@@ -213,10 +213,10 @@ describe('cl-identity-status.spec', () => {
       </div>
     `)
 
-    fireEvent('cl-identity-gettoken', [], {
-      type: 'guest',
-      accessToken: 'token-1234',
-      scope: 'market:code:usa'
+    fireEvent("cl-identity-gettoken", [], {
+      type: "guest",
+      accessToken: "token-1234",
+      scope: "market:code:usa",
     })
 
     await waitForChanges()

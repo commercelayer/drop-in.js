@@ -1,40 +1,40 @@
-import { getIdentityUrl } from '#apis/commercelayer/account'
-import { logout } from '#apis/commercelayer/client'
-import { isValidUnion, logUnion, unionToTuple } from '#utils/validation-helpers'
 import {
   Component,
   Element,
   Host,
+  type JSX,
   Prop,
   State,
   Watch,
   h,
-  type JSX
-} from '@stencil/core'
+} from "@stencil/core"
+import { getIdentityUrl } from "#apis/commercelayer/account"
+import { logout } from "#apis/commercelayer/client"
+import { isValidUnion, logUnion, unionToTuple } from "#utils/validation-helpers"
 
 @Component({
-  tag: 'cl-identity-link',
-  shadow: false
+  tag: "cl-identity-link",
+  shadow: false,
 })
 export class ClIdentityLink {
   @Element() host!: HTMLClIdentityLinkElement
 
   private readonly typeList = unionToTuple<typeof this.type>()(
-    'login',
-    'signup',
-    'logout'
+    "login",
+    "signup",
+    "logout",
   )
 
   /**
    * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
    */
-  @Prop({ reflect: true }) target: '_self' | '_blank' | '_parent' | '_top' =
-    '_self'
+  @Prop({ reflect: true }) target: "_self" | "_blank" | "_parent" | "_top" =
+    "_self"
 
   /**
    * The user account access action.
    */
-  @Prop({ reflect: true }) type!: 'login' | 'signup' | 'logout' | undefined
+  @Prop({ reflect: true }) type!: "login" | "signup" | "logout" | undefined
 
   @State() href: string | undefined
 
@@ -42,7 +42,7 @@ export class ClIdentityLink {
     await this.updateUrl(this.type)
   }
 
-  @Watch('type')
+  @Watch("type")
   async watchTypeHandler(newValue: typeof this.type): Promise<void> {
     await this.updateUrl(newValue)
   }
@@ -52,7 +52,7 @@ export class ClIdentityLink {
       ? await getIdentityUrl(type)
       : undefined
 
-    logUnion(this.host, 'type', type, this.typeList)
+    logUnion(this.host, "type", type, this.typeList)
   }
 
   render(): JSX.Element {
@@ -61,14 +61,14 @@ export class ClIdentityLink {
         aria-disabled={
           isValidUnion(this.type, this.typeList) && this.href !== undefined
             ? undefined
-            : 'true'
+            : "true"
         }
       >
         <a
           target={this.target}
           href={this.href}
           onClick={(event) => {
-            if (this.type === 'logout') {
+            if (this.type === "logout") {
               event.preventDefault()
               void logout().then(() => {
                 location.reload()

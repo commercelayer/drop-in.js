@@ -1,39 +1,49 @@
-import { defineCustomElements } from '@commercelayer/drop-in.js/dist/loader'
-import { Preview } from '@storybook/html'
-import { createConfig } from '../stories/assets/constants'
-import { FILENAME as DROP_IN_CSS_FILENAME, PARAM_KEY as DROP_IN_CSS_PARAM_KEY } from './addon-drop-in-css/constants'
-import { FILENAME as MINICART_CSS_FILENAME, PARAM_KEY as MINICART_CSS_PARAM_KEY } from './addon-minicart-css/constants'
-import { getSelectedScopeValue } from './addon-scope-selector/constants'
-import customElements, { type JsonDocsProp } from '@commercelayer/drop-in.js/dist/custom-elements'
+import customElements, {
+  type JsonDocsProp,
+} from "@commercelayer/drop-in.js/dist/custom-elements"
+import { defineCustomElements } from "@commercelayer/drop-in.js/dist/loader"
+import type { Preview } from "@storybook/html"
+import { createConfig } from "../stories/assets/constants"
+import {
+  FILENAME as DROP_IN_CSS_FILENAME,
+  PARAM_KEY as DROP_IN_CSS_PARAM_KEY,
+} from "./addon-drop-in-css/constants"
+import {
+  FILENAME as MINICART_CSS_FILENAME,
+  PARAM_KEY as MINICART_CSS_PARAM_KEY,
+} from "./addon-minicart-css/constants"
+import { getSelectedScopeValue } from "./addon-scope-selector/constants"
 
-import { SyntaxHighlighter } from '@storybook/components'
-import diff from 'react-syntax-highlighter/dist/esm/languages/prism/diff'
+import { SyntaxHighlighter } from "@storybook/components"
+import diff from "react-syntax-highlighter/dist/esm/languages/prism/diff"
 
-SyntaxHighlighter.registerLanguage('diff', diff)
+SyntaxHighlighter.registerLanguage("diff", diff)
 
 const preview: Preview = {
   argTypesEnhancers: [
     // Add StencilJS custom-elements manifest
     (context) => {
-      const customElement = customElements.components.find(c => c.tag === context.component)
+      const customElement = customElements.components.find(
+        (c) => c.tag === context.component,
+      )
 
       function getType(prop: JsonDocsProp) {
-        const values = prop.values.filter(v => v.type !== 'undefined')
+        const values = prop.values.filter((v) => v.type !== "undefined")
         if (values.length > 1 || values[0].value != null) {
           return {
-            name: 'enum',
-            value: values.map(v => v.value),
-            required: prop.required
+            name: "enum",
+            value: values.map((v) => v.value),
+            required: prop.required,
           }
         }
 
         return {
           name: values[0].type,
-          required: prop.required
+          required: prop.required,
         }
       }
 
-      const argTypes = customElement?.props.map(prop => {
+      const argTypes = customElement?.props.map((prop) => {
         const type = getType(prop)
         return [
           prop.attr,
@@ -42,87 +52,81 @@ const preview: Preview = {
             description: prop.docs,
             type,
             control: {
-              type: type.name === 'enum' ? 'select' : undefined
+              type: type.name === "enum" ? "select" : undefined,
             },
             table: {
-              ...('default' in prop ? {
-                defaultValue: {
-                  summary: prop.default
-                }
-              } : {})
-            }
-          }
+              ...("default" in prop
+                ? {
+                    defaultValue: {
+                      summary: prop.default,
+                    },
+                  }
+                : {}),
+            },
+          },
         ]
       })
 
       return {
         ...context.argTypes,
-        ...(argTypes != null ? Object.fromEntries(argTypes) : {})
+        ...(argTypes != null ? Object.fromEntries(argTypes) : {}),
       }
     },
     // Add default category
-    (context) => Object.fromEntries(
-      Object.entries(context.argTypes).map(([name, value]) => [
-        name,
-        {
-          ...value,
-          table: {
-            ...(value.table ?? {}),
-            category: value.table?.category ?? 'attributes'
-          }
-        }
-      ])
-    ),
+    (context) =>
+      Object.fromEntries(
+        Object.entries(context.argTypes).map(([name, value]) => [
+          name,
+          {
+            ...value,
+            table: {
+              ...(value.table ?? {}),
+              category: value.table?.category ?? "attributes",
+            },
+          },
+        ]),
+      ),
   ],
 
   parameters: {
     docs: {
-      canvas: { sourceState: 'shown' },
+      canvas: { sourceState: "shown" },
     },
     backgrounds: {
       disable: true,
-      grid: { disable: true }
+      grid: { disable: true },
     },
     options: {
       storySort: {
         order: [
-          'Introduction',
-          'Getting started',
-          'Events',
-          'Breaking changes',
-          'Components', [
-            'Price', [
-              'cl-price',
-              'cl-price-amount'
+          "Introduction",
+          "Getting started",
+          "Events",
+          "Breaking changes",
+          "Components",
+          [
+            "Price",
+            ["cl-price", "cl-price-amount"],
+            "Availability",
+            [
+              "cl-availability",
+              "cl-availability-status",
+              "cl-availability-info",
             ],
-            'Availability', [
-              'cl-availability',
-              'cl-availability-status',
-              'cl-availability-info'
-            ],
-            'Add to cart', [
-              'cl-add-to-cart'
-            ],
-            'Cart', [
-              'cl-cart',
-              'cl-cart-link',
-              'cl-cart (minicart)',
-              'cl-cart-count',
-            ],
-            'Checkout', [
-              'cl-checkout-link'
-            ],
-            'Identity', [
-              'cl-identity-link',
-              'cl-identity-status'
-            ],
-            'My account', [
-              'cl-my-account-link'
-            ]
-          ]
-        ]
+            "Add to cart",
+            ["cl-add-to-cart"],
+            "Cart",
+            ["cl-cart", "cl-cart-link", "cl-cart (minicart)", "cl-cart-count"],
+            "Checkout",
+            ["cl-checkout-link"],
+            "Identity",
+            ["cl-identity-link", "cl-identity-status"],
+            "My account",
+            ["cl-my-account-link"],
+          ],
+        ],
       },
-    }
+    },
   },
 
   decorators: [
@@ -131,23 +135,27 @@ const preview: Preview = {
       const minicartCssEnabled = context.globals[MINICART_CSS_PARAM_KEY]
 
       if (dropInCssEnabled) {
-        const link = document.createElement('link')
+        const link = document.createElement("link")
         link.href = DROP_IN_CSS_FILENAME
-        link.rel = 'stylesheet'
+        link.rel = "stylesheet"
         document.head.appendChild(link)
       } else {
-        const links = document.querySelectorAll(`[href="${DROP_IN_CSS_FILENAME}"]`)
-        links.forEach(link => link.remove())
+        const links = document.querySelectorAll(
+          `[href="${DROP_IN_CSS_FILENAME}"]`,
+        )
+        links.forEach((link) => link.remove())
       }
 
       if (minicartCssEnabled) {
-        const link = document.createElement('link')
+        const link = document.createElement("link")
         link.href = MINICART_CSS_FILENAME
-        link.rel = 'stylesheet'
+        link.rel = "stylesheet"
         document.head.appendChild(link)
       } else {
-        const links = document.querySelectorAll(`[href="${MINICART_CSS_FILENAME}"]`)
-        links.forEach(link => link.remove())
+        const links = document.querySelectorAll(
+          `[href="${MINICART_CSS_FILENAME}"]`,
+        )
+        links.forEach((link) => link.remove())
       }
 
       return story()
@@ -163,12 +171,12 @@ const preview: Preview = {
     },
   ],
 
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 
   initialGlobals: {
     [DROP_IN_CSS_PARAM_KEY]: true,
     [MINICART_CSS_PARAM_KEY]: true,
-  }
-};
+  },
+}
 
 export default preview

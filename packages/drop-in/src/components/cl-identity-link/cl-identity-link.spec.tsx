@@ -1,40 +1,40 @@
-import * as client from '#apis/commercelayer/client'
-import * as config from '#apis/commercelayer/config'
-import * as logger from '#utils/logger'
-import { newSpecPage } from '@stencil/core/testing'
-import { mockedAccessToken } from 'jest.spec.helpers'
-import { ClIdentityLink } from './cl-identity-link'
+import { newSpecPage } from "@stencil/core/testing"
+import { mockedAccessToken } from "jest.spec.helpers"
+import * as client from "#apis/commercelayer/client"
+import * as config from "#apis/commercelayer/config"
+import * as logger from "#utils/logger"
+import { ClIdentityLink } from "./cl-identity-link"
 
 let log: jest.SpyInstance
 
 beforeEach(() => {
   jest.resetAllMocks()
 
-  jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-    type: 'guest',
+  jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    type: "guest",
     accessToken: mockedAccessToken,
-    scope: 'market:code:usa'
+    scope: "market:code:usa",
   })
 
-  jest.spyOn(config, 'getOrganizationConfig').mockResolvedValue({
+  jest.spyOn(config, "getOrganizationConfig").mockResolvedValue({
     links: {
       my_account:
-        'https://drop-in-js.commercelayer.app/my-account?accessToken=:access_token',
-      identity: 'https://drop-in-js.commercelayer.app/identity',
-      cart: 'https://drop-in-js.commercelayer.app/cart/:order_id?accessToken=:access_token',
+        "https://drop-in-js.commercelayer.app/my-account?accessToken=:access_token",
+      identity: "https://drop-in-js.commercelayer.app/identity",
+      cart: "https://drop-in-js.commercelayer.app/cart/:order_id?accessToken=:access_token",
       checkout:
-        'https://drop-in-js.commercelayer.app/checkout/:order_id?accessToken=:access_token'
-    }
+        "https://drop-in-js.commercelayer.app/checkout/:order_id?accessToken=:access_token",
+    },
   })
 
-  log = jest.spyOn(logger, 'log')
+  log = jest.spyOn(logger, "log")
 })
 
-describe('cl-identity-link.spec', () => {
-  it('renders empty when type is not specified', async () => {
+describe("cl-identity-link.spec", () => {
+  it("renders empty when type is not specified", async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClIdentityLink],
-      html: '<cl-identity-link>Login</cl-identity-link>'
+      html: "<cl-identity-link>Login</cl-identity-link>",
     })
 
     await waitForChanges()
@@ -49,16 +49,16 @@ describe('cl-identity-link.spec', () => {
 
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
-      'warn',
+      "warn",
       '"type" attribute should be one of "login", "signup", "logout". Received: "undefined"',
-      root
+      root,
     )
   })
 
   it('renders the identity link when type="login"', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClIdentityLink],
-      html: '<cl-identity-link type="login">Login</cl-identity-link>'
+      html: '<cl-identity-link type="login">Login</cl-identity-link>',
     })
 
     await waitForChanges()
@@ -78,7 +78,7 @@ describe('cl-identity-link.spec', () => {
   it('renders the identity link when type="signup"', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClIdentityLink],
-      html: '<cl-identity-link type="signup">Sign Up</cl-identity-link>'
+      html: '<cl-identity-link type="signup">Sign Up</cl-identity-link>',
     })
 
     await waitForChanges()
@@ -98,7 +98,7 @@ describe('cl-identity-link.spec', () => {
   it('renders the identity link when type="logout"', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClIdentityLink],
-      html: '<cl-identity-link type="logout">Logout</cl-identity-link>'
+      html: '<cl-identity-link type="logout">Logout</cl-identity-link>',
     })
 
     await waitForChanges()
@@ -115,15 +115,15 @@ describe('cl-identity-link.spec', () => {
     expect(log).not.toHaveBeenCalled()
   })
 
-  it('renders the identity link when type changes from invalid to a valid value', async () => {
+  it("renders the identity link when type changes from invalid to a valid value", async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClIdentityLink],
-      html: '<cl-identity-link>Login</cl-identity-link>'
+      html: "<cl-identity-link>Login</cl-identity-link>",
     })
 
     await waitForChanges()
 
-    root?.setAttribute('type', 'login')
+    root?.setAttribute("type", "login")
     await waitForChanges()
 
     expect(root).toEqualHtml(`
@@ -136,21 +136,21 @@ describe('cl-identity-link.spec', () => {
 
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
-      'warn',
+      "warn",
       '"type" attribute should be one of "login", "signup", "logout". Received: "undefined"',
-      root
+      root,
     )
   })
 
-  it('renders empty when type changes from valid to an invalid value', async () => {
+  it("renders empty when type changes from valid to an invalid value", async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClIdentityLink],
-      html: '<cl-identity-link type="login">Login</cl-identity-link>'
+      html: '<cl-identity-link type="login">Login</cl-identity-link>',
     })
 
     await waitForChanges()
 
-    root?.setAttribute('type', 'john')
+    root?.setAttribute("type", "john")
     await waitForChanges()
 
     expect(root).toEqualHtml(`
@@ -163,21 +163,21 @@ describe('cl-identity-link.spec', () => {
 
     expect(log).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith(
-      'warn',
+      "warn",
       '"type" attribute should be one of "login", "signup", "logout". Received: "john"',
-      root
+      root,
     )
   })
 
-  it('renders empty when type changes from invalid to an invalid value', async () => {
+  it("renders empty when type changes from invalid to an invalid value", async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClIdentityLink],
-      html: '<cl-identity-link>Login</cl-identity-link>'
+      html: "<cl-identity-link>Login</cl-identity-link>",
     })
 
     await waitForChanges()
 
-    root?.setAttribute('type', 'john')
+    root?.setAttribute("type", "john")
     await waitForChanges()
 
     expect(root).toEqualHtml(`
@@ -191,15 +191,15 @@ describe('cl-identity-link.spec', () => {
     expect(log).toHaveBeenCalledTimes(2)
 
     expect(log).toHaveBeenCalledWith(
-      'warn',
+      "warn",
       '"type" attribute should be one of "login", "signup", "logout". Received: "undefined"',
-      root
+      root,
     )
 
     expect(log).toHaveBeenCalledWith(
-      'warn',
+      "warn",
       '"type" attribute should be one of "login", "signup", "logout". Received: "john"',
-      root
+      root,
     )
   })
 })

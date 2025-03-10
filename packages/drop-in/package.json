@@ -10,9 +10,7 @@
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/drop-in/drop-in.esm.js",
-  "files": [
-    "dist/"
-  ],
+  "files": ["dist/"],
   "homepage": "https://commercelayer.github.io/drop-in.js",
   "repository": {
     "type": "git",

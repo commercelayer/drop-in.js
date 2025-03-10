@@ -1,21 +1,21 @@
-import type { Config } from '#apis/commercelayer/config'
-import { log } from './logger'
+import type { Config } from "#apis/commercelayer/config"
+import { log } from "./logger"
 
 function injectConfig({
-  clientId = '1234',
-  scope = 'market:code:usa',
-  debug
+  clientId = "1234",
+  scope = "market:code:usa",
+  debug,
 }: Partial<Config>): void {
-  Object.defineProperty(window, 'commercelayerConfig', {
+  Object.defineProperty(window, "commercelayerConfig", {
     value: {
       clientId,
       scope,
-      debug
-    }
+      debug,
+    },
   })
 }
 
-describe('logger', () => {
+describe("logger", () => {
   let consoleError: jest.SpyInstance<
     void,
     [message?: any, ...optionalParams: any[]]
@@ -42,13 +42,13 @@ describe('logger', () => {
   >
 
   beforeEach(() => {
-    consoleError = jest.spyOn(console, 'error').mockImplementation(() => {})
-    consoleInfo = jest.spyOn(console, 'info').mockImplementation(() => {})
-    consoleLog = jest.spyOn(console, 'log').mockImplementation(() => {})
-    consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {})
-    consoleGroup = jest.spyOn(console, 'group').mockImplementation(() => {})
+    consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    consoleInfo = jest.spyOn(console, "info").mockImplementation(() => {})
+    consoleLog = jest.spyOn(console, "log").mockImplementation(() => {})
+    consoleWarn = jest.spyOn(console, "warn").mockImplementation(() => {})
+    consoleGroup = jest.spyOn(console, "group").mockImplementation(() => {})
     consoleGroupEnd = jest
-      .spyOn(console, 'groupEnd')
+      .spyOn(console, "groupEnd")
       .mockImplementation(() => {})
   })
 
@@ -67,10 +67,10 @@ describe('logger', () => {
   it('should not send anything to console when debug is not define (default to "none")', () => {
     injectConfig({})
 
-    log('error', 'This is a "error" message', 'with a second argument')
-    log('info', 'This is a "info" message', 'with a second argument')
-    log('log', 'This is a "log" message', 'with a second argument')
-    log('warn', 'This is a "warn" message', 'with a second argument')
+    log("error", 'This is a "error" message', "with a second argument")
+    log("info", 'This is a "info" message', "with a second argument")
+    log("log", 'This is a "log" message', "with a second argument")
+    log("warn", 'This is a "warn" message', "with a second argument")
 
     expect(consoleError).toHaveBeenCalledTimes(0)
     expect(consoleInfo).toHaveBeenCalledTimes(0)
@@ -81,12 +81,12 @@ describe('logger', () => {
   })
 
   it('should not send anything to console when debug is set to "none"', () => {
-    injectConfig({ debug: 'none' })
+    injectConfig({ debug: "none" })
 
-    log('error', 'This is a "error" message', 'with a second argument')
-    log('info', 'This is a "info" message', 'with a second argument')
-    log('log', 'This is a "log" message', 'with a second argument')
-    log('warn', 'This is a "warn" message', 'with a second argument')
+    log("error", 'This is a "error" message', "with a second argument")
+    log("info", 'This is a "info" message', "with a second argument")
+    log("log", 'This is a "log" message', "with a second argument")
+    log("warn", 'This is a "warn" message', "with a second argument")
 
     expect(consoleError).toHaveBeenCalledTimes(0)
     expect(consoleInfo).toHaveBeenCalledTimes(0)
@@ -97,10 +97,10 @@ describe('logger', () => {
   })
 
   describe('when debug is set to "all"', () => {
-    it('should pass-through the information to console.error', () => {
-      injectConfig({ debug: 'all' })
+    it("should pass-through the information to console.error", () => {
+      injectConfig({ debug: "all" })
 
-      log('error', 'This is a "error" message', 'with a second argument')
+      log("error", 'This is a "error" message', "with a second argument")
 
       expect(consoleError).toHaveBeenCalledTimes(1)
       expect(consoleInfo).toHaveBeenCalledTimes(0)
@@ -111,14 +111,14 @@ describe('logger', () => {
 
       expect(consoleError).toHaveBeenCalledWith(
         'This is a "error" message',
-        'with a second argument'
+        "with a second argument",
       )
     })
 
-    it('should pass-through the information to console.info', () => {
-      injectConfig({ debug: 'all' })
+    it("should pass-through the information to console.info", () => {
+      injectConfig({ debug: "all" })
 
-      log('info', 'This is a "info" message', 'with a second argument')
+      log("info", 'This is a "info" message', "with a second argument")
 
       expect(consoleError).toHaveBeenCalledTimes(0)
       expect(consoleInfo).toHaveBeenCalledTimes(1)
@@ -129,14 +129,14 @@ describe('logger', () => {
 
       expect(consoleInfo).toHaveBeenCalledWith(
         'This is a "info" message',
-        'with a second argument'
+        "with a second argument",
       )
     })
 
-    it('should pass-through the information to console.log', () => {
-      injectConfig({ debug: 'all' })
+    it("should pass-through the information to console.log", () => {
+      injectConfig({ debug: "all" })
 
-      log('log', 'This is a "log" message', 'with a second argument')
+      log("log", 'This is a "log" message', "with a second argument")
 
       expect(consoleError).toHaveBeenCalledTimes(0)
       expect(consoleInfo).toHaveBeenCalledTimes(0)
@@ -147,14 +147,14 @@ describe('logger', () => {
 
       expect(consoleLog).toHaveBeenCalledWith(
         'This is a "log" message',
-        'with a second argument'
+        "with a second argument",
       )
     })
 
-    it('should pass-through the information to console.warn', () => {
-      injectConfig({ debug: 'all' })
+    it("should pass-through the information to console.warn", () => {
+      injectConfig({ debug: "all" })
 
-      log('warn', 'This is a "warn" message', 'with a second argument')
+      log("warn", 'This is a "warn" message', "with a second argument")
 
       expect(consoleError).toHaveBeenCalledTimes(0)
       expect(consoleInfo).toHaveBeenCalledTimes(0)
@@ -165,14 +165,14 @@ describe('logger', () => {
 
       expect(consoleWarn).toHaveBeenCalledWith(
         'This is a "warn" message',
-        'with a second argument'
+        "with a second argument",
       )
     })
 
-    it('should pass-through the information to console.group', () => {
-      injectConfig({ debug: 'all' })
+    it("should pass-through the information to console.group", () => {
+      injectConfig({ debug: "all" })
 
-      log('group', 'This is a "group" message', 'with a second argument')
+      log("group", 'This is a "group" message', "with a second argument")
 
       expect(consoleError).toHaveBeenCalledTimes(0)
       expect(consoleInfo).toHaveBeenCalledTimes(0)
@@ -183,14 +183,14 @@ describe('logger', () => {
 
       expect(consoleGroup).toHaveBeenCalledWith(
         'This is a "group" message',
-        'with a second argument'
+        "with a second argument",
       )
     })
 
-    it('should pass-through the information to console.groupEnd', () => {
-      injectConfig({ debug: 'all' })
+    it("should pass-through the information to console.groupEnd", () => {
+      injectConfig({ debug: "all" })
 
-      log('groupEnd', 'This is a "groupEnd" message', 'with a second argument')
+      log("groupEnd", 'This is a "groupEnd" message', "with a second argument")
 
       expect(consoleError).toHaveBeenCalledTimes(0)
       expect(consoleInfo).toHaveBeenCalledTimes(0)
@@ -201,7 +201,7 @@ describe('logger', () => {
 
       expect(consoleGroupEnd).toHaveBeenCalledWith(
         'This is a "groupEnd" message',
-        'with a second argument'
+        "with a second argument",
       )
     })
   })

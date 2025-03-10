@@ -1,13 +1,13 @@
-import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
-import { type Meta, type StoryFn } from '@storybook/html'
-import { html, nothing } from 'lit-html'
-import { create } from '../../utils'
+import type { DropInArgs } from "@commercelayer/drop-in.js/dist/custom-elements-args"
+import type { Meta, StoryFn } from "@storybook/html"
+import { html, nothing } from "lit-html"
+import { create } from "../../utils"
 
-type Args = DropInArgs['cl-cart-link']
+type Args = DropInArgs["cl-cart-link"]
 
 const meta: Meta<Args> = {
-  title: 'Components/Cart/cl-cart-link',
-  component: 'cl-cart-link'
+  title: "Components/Cart/cl-cart-link",
+  component: "cl-cart-link",
 }
 
 export default meta
@@ -18,7 +18,7 @@ export const Basic: StoryFn<Args> = (args) => {
   `)
 }
 Basic.args = {
-  target: '_blank'
+  target: "_blank",
 }
 
 export const WithIcon: StoryFn<Args> = (args) => {
@@ -64,5 +64,5 @@ export const WithIcon: StoryFn<Args> = (args) => {
   `)
 }
 WithIcon.args = {
-  target: '_blank'
+  target: "_blank",
 }

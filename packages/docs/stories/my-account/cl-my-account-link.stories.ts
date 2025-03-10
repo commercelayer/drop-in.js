@@ -1,13 +1,13 @@
-import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
-import { type Meta, type StoryFn } from '@storybook/html'
-import { html, nothing } from 'lit-html'
-import { create } from '../../utils'
+import type { DropInArgs } from "@commercelayer/drop-in.js/dist/custom-elements-args"
+import type { Meta, StoryFn } from "@storybook/html"
+import { html, nothing } from "lit-html"
+import { create } from "../../utils"
 
-type Args = DropInArgs['cl-my-account-link']
+type Args = DropInArgs["cl-my-account-link"]
 
 const meta: Meta<Args> = {
-  title: 'Components/My account/cl-my-account-link',
-  component: 'cl-my-account-link'
+  title: "Components/My account/cl-my-account-link",
+  component: "cl-my-account-link",
 }
 
 export default meta
@@ -22,5 +22,5 @@ const Template: StoryFn<Args> = (args) => {
 
 export const Basic = Template.bind({})
 Basic.args = {
-  target: '_blank'
+  target: "_blank",
 }

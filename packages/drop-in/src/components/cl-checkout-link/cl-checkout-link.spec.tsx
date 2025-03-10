@@ -1,24 +1,24 @@
-import * as cart from '#apis/commercelayer/cart'
-import * as client from '#apis/commercelayer/client'
-import { newSpecPage } from '@stencil/core/testing'
-import { mockedAccessToken } from 'jest.spec.helpers'
-import { ClCheckoutLink } from './cl-checkout-link'
+import { newSpecPage } from "@stencil/core/testing"
+import { mockedAccessToken } from "jest.spec.helpers"
+import * as cart from "#apis/commercelayer/cart"
+import * as client from "#apis/commercelayer/client"
+import { ClCheckoutLink } from "./cl-checkout-link"
 
 beforeEach(() => {
   jest.resetAllMocks()
 })
 
-describe('cl-checkout-link.spec', () => {
-  it('renders the checkout url without a cartId during the first load', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-      type: 'guest',
+describe("cl-checkout-link.spec", () => {
+  it("renders the checkout url without a cartId during the first load", async () => {
+    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+      type: "guest",
       accessToken: mockedAccessToken,
-      scope: 'market:code:usa'
+      scope: "market:code:usa",
     })
 
     const { root, waitForChanges } = await newSpecPage({
       components: [ClCheckoutLink],
-      html: '<cl-checkout-link>Checkout</cl-checkout-link>'
+      html: "<cl-checkout-link>Checkout</cl-checkout-link>",
     })
 
     await waitForChanges()
@@ -32,12 +32,12 @@ describe('cl-checkout-link.spec', () => {
     `)
   })
 
-  it('renders the checkout url with a defined checkoutUrl', async () => {
-    jest.spyOn(cart, 'getCheckoutUrl').mockResolvedValue('https://checkout.url')
+  it("renders the checkout url with a defined checkoutUrl", async () => {
+    jest.spyOn(cart, "getCheckoutUrl").mockResolvedValue("https://checkout.url")
 
     const { root, waitForChanges } = await newSpecPage({
       components: [ClCheckoutLink],
-      html: '<cl-checkout-link>Checkout</cl-checkout-link>'
+      html: "<cl-checkout-link>Checkout</cl-checkout-link>",
     })
 
     await waitForChanges()
