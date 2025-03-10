@@ -1,5 +1,5 @@
 {
   "*.{js,jsx,ts,tsx}": [
-    "eslint ./ --ext ts,tsx --fix"
+    "pnpm biome check --write"
   ]
 }

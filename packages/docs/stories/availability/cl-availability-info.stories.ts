@@ -56,7 +56,6 @@ export const Message: StoryFn<Args> = () => {
         <cl-availability-status type="available-with-info">
           ready to be shipped in
           <cl-availability-info type="min-days"></cl-availability-info
-          // eslint-disable-next-line prettier/prettier
           >-<cl-availability-info type="max-days"></cl-availability-info>
           days with
           <cl-availability-info type="shipping-method-name"></cl-availability-info>

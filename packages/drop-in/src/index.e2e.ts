@@ -1,62 +1,85 @@
 import {
   type E2EElement,
   type E2EPage,
-  newE2EPage
-} from '@stencil/core/testing'
+  newE2EPage,
+} from "@stencil/core/testing"
 import {
-  waitAndExpectForLineItems,
   getAccessToken,
+  getCartId,
   getCommerceLayerConfiguration,
-  getCartId
-} from 'jest.e2e.helpers'
+  waitAndExpectForLineItems,
+} from "jest.e2e.helpers"
 
 const codes = {
-  nonexisting: 'NONEXISTINGSKU',
-  available: '5PANECAP000000FFFFFFXXXX',
-  noOverselling: 'GMUG11OZFFFFFF000000XXXX',
-  noDiscount: 'BACKPACKFFFFFF000000XXXX',
-  outOfStock: '5PANECAP9D9CA1FFFFFFXXXX',
-  doNotTrack: 'BOTT17OZFFFFFF000000XXXX',
-  digitalProduct: 'EBOOKECOMPLAYBOOKED1XXXX',
-  subscription: 'POLOMXXX000000FFFFFFMXXX',
-  bundleAvailable: 'CLGETTINGSTARTED',
-  bundleOutOfStock: 'CLOUTOFSTOCK'
+  nonexisting: "NONEXISTINGSKU",
+  available: "5PANECAP000000FFFFFFXXXX",
+  noOverselling: "GMUG11OZFFFFFF000000XXXX",
+  noDiscount: "BACKPACKFFFFFF000000XXXX",
+  outOfStock: "5PANECAP9D9CA1FFFFFFXXXX",
+  doNotTrack: "BOTT17OZFFFFFF000000XXXX",
+  digitalProduct: "EBOOKECOMPLAYBOOKED1XXXX",
+  subscription: "POLOMXXX000000FFFFFFMXXX",
+  bundleAvailable: "CLGETTINGSTARTED",
+  bundleOutOfStock: "CLOUTOFSTOCK",
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const getCodeElements = (code: string) => {
-  // eslint-disable-next-line prettier/prettier
-  const addToCart = async (page: E2EPage): Promise<E2EElement> => await page.find(`cl-add-to-cart[code="${code}"]`)
+  const addToCart = async (page: E2EPage): Promise<E2EElement> =>
+    await page.find(`cl-add-to-cart[code="${code}"]`)
 
-  // eslint-disable-next-line prettier/prettier
-  const getPrice = async (page: E2EPage): Promise<E2EElement> => await page.find(`cl-price[code="${code}"]`)
+  const getPrice = async (page: E2EPage): Promise<E2EElement> =>
+    await page.find(`cl-price[code="${code}"]`)
 
-  // eslint-disable-next-line prettier/prettier
-  const getPriceAmount = async (page: E2EPage): Promise<E2EElement> => await (await getPrice(page)).find('cl-price-amount[type="price"]')
+  const getPriceAmount = async (page: E2EPage): Promise<E2EElement> =>
+    await (await getPrice(page)).find('cl-price-amount[type="price"]')
 
-  // eslint-disable-next-line prettier/prettier
-  const getPriceCompareAtAmount = async (page: E2EPage): Promise<E2EElement> => await (await getPrice(page)).find('cl-price-amount[type="compare-at"]')
+  const getPriceCompareAtAmount = async (page: E2EPage): Promise<E2EElement> =>
+    await (await getPrice(page)).find('cl-price-amount[type="compare-at"]')
 
-  // eslint-disable-next-line prettier/prettier
-  const getAvailability = async (page: E2EPage): Promise<E2EElement> => await page.find(`cl-availability[code="${code}"]`)
+  const getAvailability = async (page: E2EPage): Promise<E2EElement> =>
+    await page.find(`cl-availability[code="${code}"]`)
 
-  // eslint-disable-next-line prettier/prettier
-  const getAvailabilityStatusAvailable = async (page: E2EPage): Promise<E2EElement> => await (await getAvailability(page)).find('cl-availability-status[type="available"]')
+  const getAvailabilityStatusAvailable = async (
+    page: E2EPage,
+  ): Promise<E2EElement> =>
+    await (await getAvailability(page)).find(
+      'cl-availability-status[type="available"]',
+    )
 
-  // eslint-disable-next-line prettier/prettier
-  const getAvailabilityStatusUnavailable = async (page: E2EPage): Promise<E2EElement> => await (await getAvailability(page)).find('cl-availability-status[type="unavailable"]')
+  const getAvailabilityStatusUnavailable = async (
+    page: E2EPage,
+  ): Promise<E2EElement> =>
+    await (await getAvailability(page)).find(
+      'cl-availability-status[type="unavailable"]',
+    )
 
-  // eslint-disable-next-line prettier/prettier
-  const getAvailabilityInfoMinDays = async (page: E2EPage): Promise<E2EElement> => await (await getAvailability(page)).find('cl-availability-info[type="min-days"]')
+  const getAvailabilityInfoMinDays = async (
+    page: E2EPage,
+  ): Promise<E2EElement> =>
+    await (await getAvailability(page)).find(
+      'cl-availability-info[type="min-days"]',
+    )
 
-  // eslint-disable-next-line prettier/prettier
-  const getAvailabilityInfoMaxDays = async (page: E2EPage): Promise<E2EElement> => await (await getAvailability(page)).find('cl-availability-info[type="max-days"]')
+  const getAvailabilityInfoMaxDays = async (
+    page: E2EPage,
+  ): Promise<E2EElement> =>
+    await (await getAvailability(page)).find(
+      'cl-availability-info[type="max-days"]',
+    )
 
-  // eslint-disable-next-line prettier/prettier
-  const getAvailabilityInfoShippingMethodName = async (page: E2EPage): Promise<E2EElement> => await (await getAvailability(page)).find('cl-availability-info[type="shipping-method-name"]')
+  const getAvailabilityInfoShippingMethodName = async (
+    page: E2EPage,
+  ): Promise<E2EElement> =>
+    await (await getAvailability(page)).find(
+      'cl-availability-info[type="shipping-method-name"]',
+    )
 
-  // eslint-disable-next-line prettier/prettier
-  const getAvailabilityInfoShippingMethodPrice = async (page: E2EPage): Promise<E2EElement> => await (await getAvailability(page)).find('cl-availability-info[type="shipping-method-price"]')
+  const getAvailabilityInfoShippingMethodPrice = async (
+    page: E2EPage,
+  ): Promise<E2EElement> =>
+    await (await getAvailability(page)).find(
+      'cl-availability-info[type="shipping-method-price"]',
+    )
 
   return {
     addToCart,
@@ -69,7 +92,7 @@ const getCodeElements = (code: string) => {
     getAvailabilityInfoMinDays,
     getAvailabilityInfoMaxDays,
     getAvailabilityInfoShippingMethodName,
-    getAvailabilityInfoShippingMethodPrice
+    getAvailabilityInfoShippingMethodPrice,
   }
 }
 
@@ -82,20 +105,19 @@ const subscriptionElements = getCodeElements(codes.subscription)
 const bundleAvailableElements = getCodeElements(codes.bundleAvailable)
 const bundleOutOfStockElements = getCodeElements(codes.bundleOutOfStock)
 
-// eslint-disable-next-line prettier/prettier
-const getCartLink = async (page: E2EPage): Promise<E2EElement> => await page.find('cl-cart-link')
+const getCartLink = async (page: E2EPage): Promise<E2EElement> =>
+  await page.find("cl-cart-link")
 
-// eslint-disable-next-line prettier/prettier
-const getCartCount = async (page: E2EPage): Promise<E2EElement> => await page.find('cl-cart-link cl-cart-count')
+const getCartCount = async (page: E2EPage): Promise<E2EElement> =>
+  await page.find("cl-cart-link cl-cart-count")
 
-// eslint-disable-next-line prettier/prettier
-const getCheckoutLink = async (page: E2EPage): Promise<E2EElement> => await page.find('cl-checkout-link')
+const getCheckoutLink = async (page: E2EPage): Promise<E2EElement> =>
+  await page.find("cl-checkout-link")
 
-
-describe('index.e2e', () => {
-  it('renders', async () => {
+describe("index.e2e", () => {
+  it("renders", async () => {
     const page = await newE2EPage({
-      waitUntil: 'networkidle0',
+      waitUntil: "networkidle0",
       html: `
         ${getCommerceLayerConfiguration()}
         <div id="container">
@@ -298,14 +320,14 @@ describe('index.e2e', () => {
             </cl-availability>
           </div>
         </div>
-      `
+      `,
     })
 
     await page.waitForChanges()
 
-    const accessToken = (await getAccessToken(page))?.accessToken ?? 'null'
+    const accessToken = (await getAccessToken(page))?.accessToken ?? "null"
 
-    expect(await page.find('#container')).toEqualHtml(`
+    expect(await page.find("#container")).toEqualHtml(`
       <div id="container">
         <cl-cart-link target="_blank" cl-hydrated>
           <!---->
@@ -514,8 +536,9 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await availableElements.getAvailabilityInfoMinDays(page))
-      .toEqualHtml(`
+    expect(
+      await availableElements.getAvailabilityInfoMinDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root>
           4
@@ -523,8 +546,9 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await availableElements.getAvailabilityInfoMaxDays(page))
-      .toEqualHtml(`
+    expect(
+      await availableElements.getAvailabilityInfoMaxDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root>
           6
@@ -532,8 +556,9 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await availableElements.getAvailabilityInfoShippingMethodName(page))
-      .toEqualHtml(`
+    expect(
+      await availableElements.getAvailabilityInfoShippingMethodName(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root>
           Standard Shipping
@@ -541,8 +566,9 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await availableElements.getAvailabilityInfoShippingMethodPrice(page))
-      .toEqualHtml(`
+    expect(
+      await availableElements.getAvailabilityInfoShippingMethodPrice(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-price">
         <mock:shadow-root>
           $7.00
@@ -568,8 +594,9 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await noDiscountElements.getAvailabilityInfoMinDays(page))
-      .toEqualHtml(`
+    expect(
+      await noDiscountElements.getAvailabilityInfoMinDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root>
           4
@@ -577,8 +604,9 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await noDiscountElements.getAvailabilityInfoMaxDays(page))
-      .toEqualHtml(`
+    expect(
+      await noDiscountElements.getAvailabilityInfoMaxDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root>
           6
@@ -586,8 +614,9 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await noDiscountElements.getAvailabilityInfoShippingMethodName(page))
-      .toEqualHtml(`
+    expect(
+      await noDiscountElements.getAvailabilityInfoShippingMethodName(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root>
           Standard Shipping
@@ -596,7 +625,7 @@ describe('index.e2e', () => {
     `)
 
     expect(
-      await noDiscountElements.getAvailabilityInfoShippingMethodPrice(page)
+      await noDiscountElements.getAvailabilityInfoShippingMethodPrice(page),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-price">
         <mock:shadow-root>
@@ -627,29 +656,32 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await outOfStockElements.getAvailabilityInfoMinDays(page))
-      .toEqualHtml(`
+    expect(
+      await outOfStockElements.getAvailabilityInfoMinDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
-    expect(await outOfStockElements.getAvailabilityInfoMaxDays(page))
-      .toEqualHtml(`
+    expect(
+      await outOfStockElements.getAvailabilityInfoMaxDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
-    expect(await outOfStockElements.getAvailabilityInfoShippingMethodName(page))
-      .toEqualHtml(`
+    expect(
+      await outOfStockElements.getAvailabilityInfoShippingMethodName(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await outOfStockElements.getAvailabilityInfoShippingMethodPrice(page)
+      await outOfStockElements.getAvailabilityInfoShippingMethodPrice(page),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-price">
         <mock:shadow-root></mock:shadow-root>
@@ -678,8 +710,9 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await doNotTrackElements.getAvailabilityInfoMinDays(page))
-      .toEqualHtml(`
+    expect(
+      await doNotTrackElements.getAvailabilityInfoMinDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root>
           4
@@ -687,8 +720,9 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await doNotTrackElements.getAvailabilityInfoMaxDays(page))
-      .toEqualHtml(`
+    expect(
+      await doNotTrackElements.getAvailabilityInfoMaxDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root>
           6
@@ -696,8 +730,9 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await doNotTrackElements.getAvailabilityInfoShippingMethodName(page))
-      .toEqualHtml(`
+    expect(
+      await doNotTrackElements.getAvailabilityInfoShippingMethodName(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root>
           Standard Shipping
@@ -706,7 +741,7 @@ describe('index.e2e', () => {
     `)
 
     expect(
-      await doNotTrackElements.getAvailabilityInfoShippingMethodPrice(page)
+      await doNotTrackElements.getAvailabilityInfoShippingMethodPrice(page),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-price">
         <mock:shadow-root>
@@ -727,8 +762,9 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await digitalProductElements.getPriceCompareAtAmount(page))
-      .toEqualHtml(`
+    expect(
+      await digitalProductElements.getPriceCompareAtAmount(page),
+    ).toEqualHtml(`
       <cl-price-amount cl-hydrated type="compare-at">
         <mock:shadow-root>
           <s part="strikethrough">
@@ -738,22 +774,24 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await digitalProductElements.getAvailabilityInfoMinDays(page))
-      .toEqualHtml(`
+    expect(
+      await digitalProductElements.getAvailabilityInfoMinDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
-    expect(await digitalProductElements.getAvailabilityInfoMaxDays(page))
-      .toEqualHtml(`
+    expect(
+      await digitalProductElements.getAvailabilityInfoMaxDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await digitalProductElements.getAvailabilityInfoShippingMethodName(page)
+      await digitalProductElements.getAvailabilityInfoShippingMethodName(page),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root></mock:shadow-root>
@@ -761,7 +799,7 @@ describe('index.e2e', () => {
     `)
 
     expect(
-      await digitalProductElements.getAvailabilityInfoShippingMethodPrice(page)
+      await digitalProductElements.getAvailabilityInfoShippingMethodPrice(page),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-price">
         <mock:shadow-root></mock:shadow-root>
@@ -780,8 +818,9 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await subscriptionElements.getPriceCompareAtAmount(page))
-      .toEqualHtml(`
+    expect(
+      await subscriptionElements.getPriceCompareAtAmount(page),
+    ).toEqualHtml(`
       <cl-price-amount cl-hydrated type="compare-at">
         <mock:shadow-root>
           <s part="strikethrough">
@@ -791,8 +830,9 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await subscriptionElements.getAvailabilityInfoMinDays(page))
-      .toEqualHtml(`
+    expect(
+      await subscriptionElements.getAvailabilityInfoMinDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root>
           4
@@ -800,8 +840,9 @@ describe('index.e2e', () => {
       </cl-availability-info>
     `)
 
-    expect(await subscriptionElements.getAvailabilityInfoMaxDays(page))
-      .toEqualHtml(`
+    expect(
+      await subscriptionElements.getAvailabilityInfoMaxDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root>
           6
@@ -810,7 +851,7 @@ describe('index.e2e', () => {
     `)
 
     expect(
-      await subscriptionElements.getAvailabilityInfoShippingMethodName(page)
+      await subscriptionElements.getAvailabilityInfoShippingMethodName(page),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root>
@@ -820,7 +861,7 @@ describe('index.e2e', () => {
     `)
 
     expect(
-      await subscriptionElements.getAvailabilityInfoShippingMethodPrice(page)
+      await subscriptionElements.getAvailabilityInfoShippingMethodPrice(page),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-price">
         <mock:shadow-root>
@@ -841,8 +882,9 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await bundleAvailableElements.getPriceCompareAtAmount(page))
-      .toEqualHtml(`
+    expect(
+      await bundleAvailableElements.getPriceCompareAtAmount(page),
+    ).toEqualHtml(`
       <cl-price-amount cl-hydrated type="compare-at">
         <mock:shadow-root>
           <s part="strikethrough">
@@ -852,22 +894,24 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await bundleAvailableElements.getAvailabilityInfoMinDays(page))
-      .toEqualHtml(`
+    expect(
+      await bundleAvailableElements.getAvailabilityInfoMinDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
-    expect(await bundleAvailableElements.getAvailabilityInfoMaxDays(page))
-      .toEqualHtml(`
+    expect(
+      await bundleAvailableElements.getAvailabilityInfoMaxDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await bundleAvailableElements.getAvailabilityInfoShippingMethodName(page)
+      await bundleAvailableElements.getAvailabilityInfoShippingMethodName(page),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root></mock:shadow-root>
@@ -875,7 +919,9 @@ describe('index.e2e', () => {
     `)
 
     expect(
-      await bundleAvailableElements.getAvailabilityInfoShippingMethodPrice(page)
+      await bundleAvailableElements.getAvailabilityInfoShippingMethodPrice(
+        page,
+      ),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-price">
         <mock:shadow-root></mock:shadow-root>
@@ -894,29 +940,34 @@ describe('index.e2e', () => {
       </cl-price-amount>
     `)
 
-    expect(await bundleOutOfStockElements.getPriceCompareAtAmount(page))
-      .toEqualHtml(`
+    expect(
+      await bundleOutOfStockElements.getPriceCompareAtAmount(page),
+    ).toEqualHtml(`
       <cl-price-amount cl-hydrated type="compare-at">
         <mock:shadow-root></mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(await bundleOutOfStockElements.getAvailabilityInfoMinDays(page))
-      .toEqualHtml(`
+    expect(
+      await bundleOutOfStockElements.getAvailabilityInfoMinDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="min-days">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
-    expect(await bundleOutOfStockElements.getAvailabilityInfoMaxDays(page))
-      .toEqualHtml(`
+    expect(
+      await bundleOutOfStockElements.getAvailabilityInfoMaxDays(page),
+    ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="max-days">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await bundleOutOfStockElements.getAvailabilityInfoShippingMethodName(page)
+      await bundleOutOfStockElements.getAvailabilityInfoShippingMethodName(
+        page,
+      ),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-name">
         <mock:shadow-root></mock:shadow-root>
@@ -925,8 +976,8 @@ describe('index.e2e', () => {
 
     expect(
       await bundleOutOfStockElements.getAvailabilityInfoShippingMethodPrice(
-        page
-      )
+        page,
+      ),
     ).toEqualHtml(`
       <cl-availability-info cl-hydrated type="shipping-method-price">
         <mock:shadow-root></mock:shadow-root>
@@ -998,34 +1049,34 @@ describe('index.e2e', () => {
      */
 
     expect(await availableElements.addToCart(page)).not.toHaveAttribute(
-      'aria-disabled'
+      "aria-disabled",
     )
     expect(await availableElements.addToCart(page)).not.toHaveAttribute(
-      'aria-busy'
+      "aria-busy",
     )
 
     await (await availableElements.addToCart(page)).click()
 
     expect(await availableElements.addToCart(page)).toHaveAttribute(
-      'aria-disabled'
+      "aria-disabled",
     )
-    expect(await availableElements.addToCart(page)).toHaveAttribute('aria-busy')
+    expect(await availableElements.addToCart(page)).toHaveAttribute("aria-busy")
 
     await waitAndExpectForLineItems(page, {
       code: codes.available,
-      quantity: 1
+      quantity: 1,
     })
 
     await page.waitForNetworkIdle()
 
     expect(await availableElements.addToCart(page)).not.toHaveAttribute(
-      'aria-disabled'
+      "aria-disabled",
     )
     expect(await availableElements.addToCart(page)).not.toHaveAttribute(
-      'aria-busy'
+      "aria-busy",
     )
 
-    const cartId = (await getCartId(page)) ?? 'null'
+    const cartId = (await getCartId(page)) ?? "null"
     expect(await getCartLink(page)).toEqualHtml(`
       <cl-cart-link target="_blank" cl-hydrated>
         <!---->
@@ -1067,7 +1118,7 @@ describe('index.e2e', () => {
 
     await waitAndExpectForLineItems(page, {
       code: codes.noDiscount,
-      quantity: 5
+      quantity: 5,
     })
 
     await page.waitForNetworkIdle()
@@ -1113,7 +1164,7 @@ describe('index.e2e', () => {
 
     await waitAndExpectForLineItems(page, {
       code: codes.doNotTrack,
-      quantity: 9999
+      quantity: 9999,
     })
 
     await page.waitForNetworkIdle()

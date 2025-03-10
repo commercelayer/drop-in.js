@@ -1,6 +1,4 @@
-/* eslint-disable prettier/prettier */
-
-import { type Meta, type StoryFn } from '@storybook/html'
+import type { Meta, StoryFn } from '@storybook/html'
 import { html } from 'lit-html'
 import { create } from '../utils'
 import { codes } from './assets/constants'
@@ -75,7 +73,6 @@ export const Basic: StoryFn = () => {
             <cl-availability-status type="available-with-info" class="block">
               ready to be shipped in
               <cl-availability-info type="min-days"></cl-availability-info
-              // eslint-disable-next-line prettier/prettier
               >-<cl-availability-info type="max-days"></cl-availability-info>
               days
             </cl-availability-status>
@@ -105,7 +102,6 @@ export const Basic: StoryFn = () => {
             <cl-availability-status type="available-with-info" class="block">
               ready to be shipped in
               <cl-availability-info type="min-days"></cl-availability-info
-              // eslint-disable-next-line prettier/prettier
               >-<cl-availability-info type="max-days"></cl-availability-info>
               days
             </cl-availability-status>
@@ -135,7 +131,6 @@ export const Basic: StoryFn = () => {
             <cl-availability-status type="available-with-info" class="block">
               ready to be shipped in
               <cl-availability-info type="min-days"></cl-availability-info
-              // eslint-disable-next-line prettier/prettier
               >-<cl-availability-info type="max-days"></cl-availability-info>
               days
             </cl-availability-status>

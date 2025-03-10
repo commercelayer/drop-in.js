@@ -1,24 +1,24 @@
-import { fireEvent } from '#apis/event'
-import { getKeyForCustomerToken, getKeyForGuestToken } from '#apis/storage'
 import {
+  type AuthenticateOptions,
+  type AuthenticateReturn,
   authenticate,
   jwtDecode,
   jwtIsSalesChannel,
   revoke,
-  type AuthenticateOptions,
-  type AuthenticateReturn
-} from '@commercelayer/js-auth'
-import CommerceLayer, { type CommerceLayerClient } from '@commercelayer/sdk'
-import Cookies from 'js-cookie'
-import memoize from 'lodash/memoize'
-import { getConfig, type Config } from './config'
+} from "@commercelayer/js-auth"
+import CommerceLayer, { type CommerceLayerClient } from "@commercelayer/sdk"
+import Cookies from "js-cookie"
+import memoize from "lodash/memoize"
+import { fireEvent } from "#apis/event"
+import { getKeyForCustomerToken, getKeyForGuestToken } from "#apis/storage"
+import { type Config, getConfig } from "./config"
 
 export type Token = (
   | {
-      type: 'guest'
+      type: "guest"
     }
   | {
-      type: 'customer'
+      type: "customer"
       customerId: string
     }
 ) & {
@@ -49,24 +49,24 @@ function getToken(key: string): Token | undefined {
 }
 
 async function revokeToken(
-  clientCredentials: AuthenticateOptions<'client_credentials'>,
-  accessToken: string
+  clientCredentials: AuthenticateOptions<"client_credentials">,
+  accessToken: string,
 ): Promise<boolean> {
   const res = await revoke({
     clientId: clientCredentials.clientId,
-    token: accessToken
+    token: accessToken,
   })
 
   return res.errors == null
 }
 
 async function getSalesChannelToken(
-  clientCredentials: AuthenticateOptions<'client_credentials'>
-): Promise<AuthenticateReturn<'client_credentials'> | null> {
-  return await authenticate('client_credentials', {
+  clientCredentials: AuthenticateOptions<"client_credentials">,
+): Promise<AuthenticateReturn<"client_credentials"> | null> {
+  return await authenticate("client_credentials", {
     clientId: clientCredentials.clientId,
     scope: clientCredentials.scope,
-    domain: clientCredentials.domain
+    domain: clientCredentials.domain,
   }).then((res) => (res.errors == null ? res : null))
 }
 
@@ -76,21 +76,21 @@ const getCustomerInfoFromUrl = (): {
 } => {
   const url = new URL(window.location.href)
   const { searchParams } = url
-  const accessToken = searchParams.get('accessToken') ?? undefined
-  const scope = searchParams.get('scope') ?? undefined
+  const accessToken = searchParams.get("accessToken") ?? undefined
+  const scope = searchParams.get("scope") ?? undefined
 
-  searchParams.delete('accessToken')
-  searchParams.delete('scope')
-  window.history.replaceState({}, '', url.toString())
+  searchParams.delete("accessToken")
+  searchParams.delete("scope")
+  window.history.replaceState({}, "", url.toString())
 
   return {
     accessToken,
-    scope
+    scope,
   }
 }
 
 async function readCustomerToken(
-  clientCredentials: AuthenticateOptions<'client_credentials'>
+  clientCredentials: AuthenticateOptions<"client_credentials">,
 ): Promise<Token | null> {
   const cookieName = getKeyForCustomerToken(clientCredentials)
   const cookieValue = getToken(cookieName) ?? null
@@ -109,10 +109,10 @@ async function readCustomerToken(
 
   if (jwtIsSalesChannel(jwt.payload) && jwt.payload.owner != null) {
     const token: Token = {
-      type: 'customer',
+      type: "customer",
       customerId: jwt.payload.owner.id,
       accessToken,
-      scope
+      scope,
     }
 
     setToken(cookieName, token, new Date(jwt.payload.exp * 1000))
@@ -124,7 +124,7 @@ async function readCustomerToken(
 }
 
 async function readGuestToken(
-  clientCredentials: AuthenticateOptions<'client_credentials'>
+  clientCredentials: AuthenticateOptions<"client_credentials">,
 ): Promise<Token> {
   const cookieName = getKeyForGuestToken(clientCredentials)
   const value = getToken(cookieName)
@@ -136,22 +136,21 @@ async function readGuestToken(
   const salesChannelToken = await getSalesChannelToken(clientCredentials).catch(
     (error) => {
       throw new Error(
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `Cannot get a sales channel token. ${error.body.error}. ${error.body.error_description}`
+        `Cannot get a sales channel token. ${error.body.error}. ${error.body.error_description}`,
       )
-    }
+    },
   )
 
   if (salesChannelToken == null) {
-    throw new Error('Unable to get a valid sales channel token.')
+    throw new Error("Unable to get a valid sales channel token.")
   }
 
   const { accessToken, expires } = salesChannelToken
 
   const token: Token = {
-    type: 'guest',
+    type: "guest",
     accessToken,
-    scope: clientCredentials.scope
+    scope: clientCredentials.scope,
   }
   setToken(cookieName, token, expires)
 
@@ -159,29 +158,29 @@ async function readGuestToken(
 }
 
 export const getAccessToken = memoize(
-  async function (
-    clientCredentials: AuthenticateOptions<'client_credentials'>
-  ): Promise<Token> {
+  async (
+    clientCredentials: AuthenticateOptions<"client_credentials">,
+  ): Promise<Token> => {
     let token = await readCustomerToken(clientCredentials)
 
     if (token == null) {
       token = await readGuestToken(clientCredentials)
     }
 
-    fireEvent('cl-identity-gettoken', [], token)
+    fireEvent("cl-identity-gettoken", [], token)
     return token
   },
-  (clientCredentials) => JSON.stringify(clientCredentials)
+  (clientCredentials) => JSON.stringify(clientCredentials),
 )
 
 export async function createClient(
-  config: Config
+  config: Config,
 ): Promise<CommerceLayerClient> {
   const token = await getAccessToken(config)
 
   return CommerceLayer({
     accessToken: token.accessToken,
-    domain: config.domain
+    domain: config.domain,
   })
 }
 
@@ -189,7 +188,7 @@ export async function logout(): Promise<void> {
   const config = getConfig()
   const token = await getAccessToken(config)
 
-  if (token.type === 'customer') {
+  if (token.type === "customer") {
     const cookieName = getKeyForCustomerToken(config)
     clearToken(cookieName)
 
