@@ -6,7 +6,8 @@
 export function getClosestLocationHref(): string {
   const currentUrl = window.location.href
 
-  let parentUrl
+  let parentUrl: string | undefined
+
   try {
     parentUrl = window.parent.location.href
   } catch (error) {}

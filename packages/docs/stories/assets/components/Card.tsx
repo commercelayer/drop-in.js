@@ -20,6 +20,7 @@ export const Card: React.FC<Props> = ({ title, icon, onClick, children }) => {
   return React.createElement(
     "button",
     {
+      type: "button",
       onClick,
     },
     svgs[icon],
