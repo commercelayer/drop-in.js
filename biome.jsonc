@@ -11,7 +11,7 @@
     "ignore": [
       "packages/drop-in/.stencil",
       "packages/docs/storybook-static",
-      "packages/docs/public/dist",
+      "packages/docs/public",
       "packages/drop-in/.build",
       "packages/drop-in/dist",
       "packages/drop-in/www",
@@ -20,7 +20,8 @@
       "packages/drop-in/jest.setup.ts",
       "*.d.ts",
       "replace-jsdelivr.js",
-      "node_modules"
+      "node_modules",
+      "package.json"
     ]
   },
   "formatter": {
