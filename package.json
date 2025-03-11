@@ -39,5 +39,8 @@
     "lint-staged": "^15.4.3",
     "replace-in-file": "^8.3.0",
     "typescript": "^5.8.2"
+  },
+  "resolutions": {
+    "@octokit/request": "^9.2.2"
   }
 }
