@@ -17,8 +17,8 @@
     "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
     "dep:minor": "pnpm dep:major -t minor",
     "ts:check": "pnpm -r --sequential ts:check",
-    "lint": "pnpm -r exec eslint ./ --ext ts,tsx",
-    "lint:fix": "pnpm lint --fix",
+    "lint": "pnpm biome check",
+    "lint:fix": "pnpm biome check --write",
     "version": "node replace-jsdelivr.js && git add ."
   },
   "author": {
@@ -32,9 +32,8 @@
   },
   "packageManager": "pnpm@10.4.0",
   "devDependencies": {
-    "@commercelayer/eslint-config-ts": "^2.2.0",
+    "@biomejs/biome": "1.9.4",
     "concurrently": "^9.1.2",
-    "eslint": "^8.57.1",
     "husky": "^9.1.7",
     "lerna": "^8.2.1",
     "lint-staged": "^15.4.3",

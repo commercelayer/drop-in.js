@@ -1,18 +1,18 @@
-import { getCartUrl, isValidUrl } from '#apis/commercelayer/cart'
-import { listenTo } from '#apis/event'
 import {
   Component,
   Element,
   Host,
+  type JSX,
   Prop,
   State,
   h,
-  type JSX
-} from '@stencil/core'
+} from "@stencil/core"
+import { getCartUrl, isValidUrl } from "#apis/commercelayer/cart"
+import { listenTo } from "#apis/event"
 
 @Component({
-  tag: 'cl-cart-link',
-  shadow: false
+  tag: "cl-cart-link",
+  shadow: false,
 })
 export class ClCartLink {
   @Element() host!: HTMLClCartLinkElement
@@ -20,21 +20,21 @@ export class ClCartLink {
   /**
    * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
    */
-  @Prop({ reflect: true }) target: '_self' | '_blank' | '_parent' | '_top' =
-    '_self'
+  @Prop({ reflect: true }) target: "_self" | "_blank" | "_parent" | "_top" =
+    "_self"
 
   @State() minicart: HTMLClCartElement | null = null
   @State() href: string | undefined
 
   componentWillLoad(): void {
-    this.host.setAttribute('cl-hydrated', '')
-    this.minicart = this.host.querySelector('cl-cart')
+    this.host.setAttribute("cl-hydrated", "")
+    this.minicart = this.host.querySelector("cl-cart")
 
     if (this.minicart !== null) {
-      this.minicart.type = 'mini'
+      this.minicart.type = "mini"
     }
 
-    listenTo('cl-cart-update', async () => {
+    listenTo("cl-cart-update", async () => {
       if (this.href === undefined || !(await isValidUrl(this.href))) {
         this.href = await getCartUrl()
       }
@@ -54,7 +54,7 @@ export class ClCartLink {
   }
 
   handleKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       this.handleOpenMinicart()
     }
   }
@@ -69,8 +69,8 @@ export class ClCartLink {
     if (this.minicart !== null) {
       return (
         <Host
-          role='button'
-          tabindex='0'
+          role="button"
+          tabindex="0"
           onKeyDown={(event: KeyboardEvent) => {
             this.handleKeyDown(event)
           }}
@@ -78,13 +78,13 @@ export class ClCartLink {
             this.handleOpenMinicart()
           }}
         >
-          <slot></slot>
+          <slot />
         </Host>
       )
     }
 
     return (
-      <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
+      <Host aria-disabled={this.href !== undefined ? undefined : "true"}>
         <a
           target={this.target}
           href={this.href}
@@ -94,7 +94,7 @@ export class ClCartLink {
             })
           }}
         >
-          <slot></slot>
+          <slot />
         </a>
       </Host>
     )

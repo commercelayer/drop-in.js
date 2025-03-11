@@ -23,7 +23,7 @@ export namespace Components {
           * Indicates whether the code refers to a `sku` or a `bundle`.
           * @default sku
          */
-        "kind"?: 'sku' | 'bundle';
+        "kind"?: "sku" | "bundle";
         /**
           * A custom name for the product or bundle that will be added to the cart. If not provided, the name will be taken from the item being added.
          */
@@ -43,31 +43,31 @@ export namespace Components {
           * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` is not fully implemented._
           * @default sku
          */
-        "kind"?: 'sku' | 'bundle';
+        "kind"?: "sku" | "bundle";
         /**
           * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
          */
-        "rule": 'cheapest' | 'fastest';
+        "rule": "cheapest" | "fastest";
     }
     interface ClAvailabilityInfo {
         /**
           * The type of information to be displayed.
          */
-        "type": | 'min-days'
-    | 'max-days'
-    | 'min-hours'
-    | 'max-hours'
-    | 'shipping-method-name'
-    | 'shipping-method-price'
+        "type": | "min-days"
+    | "max-days"
+    | "min-hours"
+    | "max-hours"
+    | "shipping-method-name"
+    | "shipping-method-price"
     | undefined;
     }
     interface ClAvailabilityStatus {
         /**
           * The product availability status. It determines the visibility of the inner message.
          */
-        "type": | 'available'
-    | 'available-with-info'
-    | 'unavailable'
+        "type": | "available"
+    | "available-with-info"
+    | "unavailable"
     | undefined;
     }
     interface ClCart {
@@ -82,7 +82,7 @@ export namespace Components {
         /**
           * By default the `cl-cart` is directly displayed in-place. Setting the `type` to `mini` will change the behavior to be a minicart.
          */
-        "type": 'mini' | undefined;
+        "type": "mini" | undefined;
     }
     interface ClCartCount {
         /**
@@ -94,35 +94,35 @@ export namespace Components {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
-        "target": '_self' | '_blank' | '_parent' | '_top';
+        "target": "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClCheckoutLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
-        "target": '_self' | '_blank' | '_parent' | '_top';
+        "target": "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClIdentityLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
-        "target": '_self' | '_blank' | '_parent' | '_top';
+        "target": "_self" | "_blank" | "_parent" | "_top";
         /**
           * The user account access action.
          */
-        "type": 'login' | 'signup' | 'logout' | undefined;
+        "type": "login" | "signup" | "logout" | undefined;
     }
     interface ClIdentityStatus {
         /**
           * The user identity status (logged in or not logged in). It determines the visibility of the inner message based on the stored token.
          */
-        "type": 'guest' | 'customer' | undefined;
+        "type": "guest" | "customer" | undefined;
     }
     interface ClMyAccountLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
-        "target": '_self' | '_blank' | '_parent' | '_top';
+        "target": "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClPrice {
         /**
@@ -133,13 +133,13 @@ export namespace Components {
           * Indicates whether the code refers to a `sku` or a `bundle`.
           * @default sku
          */
-        "kind"?: 'sku' | 'bundle';
+        "kind"?: "sku" | "bundle";
     }
     interface ClPriceAmount {
         /**
           * The type of price amount to be displayed.
          */
-        "type": 'price' | 'compare-at';
+        "type": "price" | "compare-at";
     }
 }
 declare global {
@@ -255,7 +255,7 @@ declare namespace LocalJSX {
           * Indicates whether the code refers to a `sku` or a `bundle`.
           * @default sku
          */
-        "kind"?: 'sku' | 'bundle';
+        "kind"?: "sku" | "bundle";
         /**
           * A custom name for the product or bundle that will be added to the cart. If not provided, the name will be taken from the item being added.
          */
@@ -275,31 +275,31 @@ declare namespace LocalJSX {
           * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` is not fully implemented._
           * @default sku
          */
-        "kind"?: 'sku' | 'bundle';
+        "kind"?: "sku" | "bundle";
         /**
           * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
          */
-        "rule"?: 'cheapest' | 'fastest';
+        "rule"?: "cheapest" | "fastest";
     }
     interface ClAvailabilityInfo {
         /**
           * The type of information to be displayed.
          */
-        "type": | 'min-days'
-    | 'max-days'
-    | 'min-hours'
-    | 'max-hours'
-    | 'shipping-method-name'
-    | 'shipping-method-price'
+        "type": | "min-days"
+    | "max-days"
+    | "min-hours"
+    | "max-hours"
+    | "shipping-method-name"
+    | "shipping-method-price"
     | undefined;
     }
     interface ClAvailabilityStatus {
         /**
           * The product availability status. It determines the visibility of the inner message.
          */
-        "type": | 'available'
-    | 'available-with-info'
-    | 'unavailable'
+        "type": | "available"
+    | "available-with-info"
+    | "unavailable"
     | undefined;
     }
     interface ClCart {
@@ -314,7 +314,7 @@ declare namespace LocalJSX {
         /**
           * By default the `cl-cart` is directly displayed in-place. Setting the `type` to `mini` will change the behavior to be a minicart.
          */
-        "type"?: 'mini' | undefined;
+        "type"?: "mini" | undefined;
     }
     interface ClCartCount {
         /**
@@ -326,35 +326,35 @@ declare namespace LocalJSX {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
-        "target"?: '_self' | '_blank' | '_parent' | '_top';
+        "target"?: "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClCheckoutLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
-        "target"?: '_self' | '_blank' | '_parent' | '_top';
+        "target"?: "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClIdentityLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
-        "target"?: '_self' | '_blank' | '_parent' | '_top';
+        "target"?: "_self" | "_blank" | "_parent" | "_top";
         /**
           * The user account access action.
          */
-        "type": 'login' | 'signup' | 'logout' | undefined;
+        "type": "login" | "signup" | "logout" | undefined;
     }
     interface ClIdentityStatus {
         /**
           * The user identity status (logged in or not logged in). It determines the visibility of the inner message based on the stored token.
          */
-        "type": 'guest' | 'customer' | undefined;
+        "type": "guest" | "customer" | undefined;
     }
     interface ClMyAccountLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
-        "target"?: '_self' | '_blank' | '_parent' | '_top';
+        "target"?: "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClPrice {
         /**
@@ -365,13 +365,13 @@ declare namespace LocalJSX {
           * Indicates whether the code refers to a `sku` or a `bundle`.
           * @default sku
          */
-        "kind"?: 'sku' | 'bundle';
+        "kind"?: "sku" | "bundle";
     }
     interface ClPriceAmount {
         /**
           * The type of price amount to be displayed.
          */
-        "type"?: 'price' | 'compare-at';
+        "type"?: "price" | "compare-at";
     }
     interface IntrinsicElements {
         "cl-add-to-cart": ClAddToCart;

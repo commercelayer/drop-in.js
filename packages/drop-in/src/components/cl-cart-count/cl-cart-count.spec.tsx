@@ -1,20 +1,20 @@
-import * as client from '#apis/commercelayer/client'
-import type { CLCustomEventDetailMap } from '#apis/event'
-import { newSpecPage } from '@stencil/core/testing'
-import { mockedAccessToken } from 'jest.spec.helpers'
-import { ClCartCount } from './cl-cart-count'
+import { newSpecPage } from "@stencil/core/testing"
+import { mockedAccessToken } from "jest.spec.helpers"
+import * as client from "#apis/commercelayer/client"
+import type { CLCustomEventDetailMap } from "#apis/event"
+import { ClCartCount } from "./cl-cart-count"
 
-describe('cl-cart-count.spec', () => {
-  it('renders', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-      type: 'guest',
+describe("cl-cart-count.spec", () => {
+  it("renders", async () => {
+    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+      type: "guest",
       accessToken: mockedAccessToken,
-      scope: 'market:code:usa'
+      scope: "market:code:usa",
     })
 
     const { root } = await newSpecPage({
       components: [ClCartCount],
-      html: `<cl-cart-count></cl-cart-count>`
+      html: "<cl-cart-count></cl-cart-count>",
     })
 
     expect(root).toEqualHtml(`
@@ -25,15 +25,15 @@ describe('cl-cart-count.spec', () => {
   })
 
   it('renders without content when "hide-when-empty" attribute is set to `true`', async () => {
-    jest.spyOn(client, 'getAccessToken').mockResolvedValue({
-      type: 'guest',
+    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+      type: "guest",
       accessToken: mockedAccessToken,
-      scope: 'market:code:usa'
+      scope: "market:code:usa",
     })
 
     const { root } = await newSpecPage({
       components: [ClCartCount],
-      html: `<cl-cart-count hide-when-empty="true"></cl-cart-count>`
+      html: `<cl-cart-count hide-when-empty="true"></cl-cart-count>`,
     })
 
     expect(root).toEqualHtml(`
@@ -46,71 +46,71 @@ describe('cl-cart-count.spec', () => {
   it('renders with updated quantity when "cl-cart-update" is triggered with order details', async () => {
     const { root, waitForChanges, doc } = await newSpecPage({
       components: [ClCartCount],
-      html: `<cl-cart-count></cl-cart-count>`
+      html: "<cl-cart-count></cl-cart-count>",
     })
 
     doc.dispatchEvent(
-      new CustomEvent<CLCustomEventDetailMap['cl-cart-update']>(
-        'cl-cart-update',
+      new CustomEvent<CLCustomEventDetailMap["cl-cart-update"]>(
+        "cl-cart-update",
         {
           detail: {
             request: {
-              args: []
+              args: [],
             },
             response: {
-              id: 'ABC123',
-              type: 'orders',
+              id: "ABC123",
+              type: "orders",
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
-              status: 'approved',
-              fulfillment_status: 'fulfilled',
-              payment_status: 'paid',
+              status: "approved",
+              fulfillment_status: "fulfilled",
+              payment_status: "paid",
               line_items: [
                 {
-                  type: 'line_items',
+                  type: "line_items",
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString(),
-                  id: 'LI1',
+                  id: "LI1",
                   quantity: 6,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'skus'
+                  item_type: "skus",
                 },
                 {
-                  type: 'line_items',
+                  type: "line_items",
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString(),
-                  id: 'LI2',
+                  id: "LI2",
                   quantity: 2,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'bundles'
+                  item_type: "bundles",
                 },
                 {
-                  type: 'line_items',
+                  type: "line_items",
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString(),
-                  id: 'LI3',
+                  id: "LI3",
                   quantity: 15,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'payment_methods'
+                  item_type: "payment_methods",
                 },
                 {
-                  type: 'line_items',
+                  type: "line_items",
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString(),
-                  id: 'LI4',
+                  id: "LI4",
                   quantity: 4,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'skus'
-                }
-              ]
-            }
-          }
-        }
-      )
+                  item_type: "skus",
+                },
+              ],
+            },
+          },
+        },
+      ),
     )
 
     await waitForChanges()
@@ -127,96 +127,96 @@ describe('cl-cart-count.spec', () => {
   it('renders as empty when "cl-cart-update" is triggered with empty order', async () => {
     const { root, waitForChanges, doc } = await newSpecPage({
       components: [ClCartCount],
-      html: `<cl-cart-count></cl-cart-count>`
+      html: "<cl-cart-count></cl-cart-count>",
     })
 
     doc.dispatchEvent(
-      new CustomEvent<CLCustomEventDetailMap['cl-cart-update']>(
-        'cl-cart-update',
+      new CustomEvent<CLCustomEventDetailMap["cl-cart-update"]>(
+        "cl-cart-update",
         {
           detail: {
             request: {
-              args: []
+              args: [],
             },
             response: {
-              id: 'ABC123',
-              type: 'orders',
+              id: "ABC123",
+              type: "orders",
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
-              status: 'approved',
-              fulfillment_status: 'fulfilled',
-              payment_status: 'paid',
+              status: "approved",
+              fulfillment_status: "fulfilled",
+              payment_status: "paid",
               line_items: [
                 {
-                  type: 'line_items',
+                  type: "line_items",
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString(),
-                  id: 'LI1',
+                  id: "LI1",
                   quantity: 6,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'skus'
+                  item_type: "skus",
                 },
                 {
-                  type: 'line_items',
+                  type: "line_items",
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString(),
-                  id: 'LI2',
+                  id: "LI2",
                   quantity: 2,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'bundles'
+                  item_type: "bundles",
                 },
                 {
-                  type: 'line_items',
+                  type: "line_items",
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString(),
-                  id: 'LI3',
+                  id: "LI3",
                   quantity: 15,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'payment_methods'
+                  item_type: "payment_methods",
                 },
                 {
-                  type: 'line_items',
+                  type: "line_items",
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString(),
-                  id: 'LI4',
+                  id: "LI4",
                   quantity: 4,
                   tax_amount_float: 12,
                   total_amount_float: 12,
-                  item_type: 'skus'
-                }
-              ]
-            }
-          }
-        }
-      )
+                  item_type: "skus",
+                },
+              ],
+            },
+          },
+        },
+      ),
     )
 
     await waitForChanges()
 
     doc.dispatchEvent(
-      new CustomEvent<CLCustomEventDetailMap['cl-cart-update']>(
-        'cl-cart-update',
+      new CustomEvent<CLCustomEventDetailMap["cl-cart-update"]>(
+        "cl-cart-update",
         {
           detail: {
             request: {
-              args: []
+              args: [],
             },
             response: {
-              id: 'ABC123',
-              type: 'orders',
+              id: "ABC123",
+              type: "orders",
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
-              status: 'approved',
-              fulfillment_status: 'fulfilled',
-              payment_status: 'paid',
-              line_items: []
-            }
-          }
-        }
-      )
+              status: "approved",
+              fulfillment_status: "fulfilled",
+              payment_status: "paid",
+              line_items: [],
+            },
+          },
+        },
+      ),
     )
 
     await waitForChanges()

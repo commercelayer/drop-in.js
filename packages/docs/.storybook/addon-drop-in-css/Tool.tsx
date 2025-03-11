@@ -1,12 +1,18 @@
-import { useGlobals, useStorybookApi } from '@storybook/manager-api'
-import { IconButton } from '@storybook/components'
-import { MarkupIcon } from '@storybook/icons'
-import React, { useCallback, useEffect } from 'react'
-import { ADDON_ID, ADDON_TITLE, FILENAME, PARAM_KEY, TOOL_ID } from './constants'
+import { IconButton } from "@storybook/components"
+import { MarkupIcon } from "@storybook/icons"
+import { useGlobals, useStorybookApi } from "@storybook/manager-api"
+import React, { useCallback, useEffect } from "react"
+import {
+  ADDON_ID,
+  ADDON_TITLE,
+  FILENAME,
+  PARAM_KEY,
+  TOOL_ID,
+} from "./constants"
 
 export const Tool = () => {
   const [globals, updateGlobals] = useGlobals()
-  const active = globals[PARAM_KEY] === true || globals[PARAM_KEY] === 'true'
+  const active = globals[PARAM_KEY] === true || globals[PARAM_KEY] === "true"
   const api = useStorybookApi()
 
   const toggle = useCallback(
@@ -14,13 +20,13 @@ export const Tool = () => {
       updateGlobals({
         [PARAM_KEY]: !active,
       }),
-    [updateGlobals, active]
+    [updateGlobals, active],
   )
 
   useEffect(() => {
     api.setAddonShortcut(ADDON_ID, {
       label: `Toggle \`${FILENAME}\` [D]`,
-      defaultShortcut: ['D'],
+      defaultShortcut: ["D"],
       actionName: FILENAME,
       showInMenu: false,
       action: toggle,

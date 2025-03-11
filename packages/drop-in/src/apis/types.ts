@@ -1,13 +1,13 @@
 import type {
-  Bundle as SdkBundle,
   LineItem,
   Order,
   Price,
+  Bundle as SdkBundle,
   Sku as SdkSku,
   SkuList,
-  SkuListItem
-} from '@commercelayer/sdk'
-import { type Token } from './commercelayer/client'
+  SkuListItem,
+} from "@commercelayer/sdk"
+import type { Token } from "./commercelayer/client"
 
 interface DeliveryLeadTime {
   shipping_method: {
@@ -40,14 +40,14 @@ export interface Inventory {
 }
 
 // TODO: move this at sdk level
-export type Sku = Omit<SdkSku, 'inventory'> & {
+export type Sku = Omit<SdkSku, "inventory"> & {
   inventory?: Inventory
 }
 
-export type Bundle = Omit<SdkBundle, 'skus' | 'sku_list'> & {
+export type Bundle = Omit<SdkBundle, "skus" | "sku_list"> & {
   skus?: Sku[] | null
-  sku_list: Omit<SkuList, 'sku_list_items'> & {
-    sku_list_items: Array<Omit<SkuListItem, 'sku'> & { sku: Sku }>
+  sku_list: Omit<SkuList, "sku_list_items"> & {
+    sku_list_items: Array<Omit<SkuListItem, "sku"> & { sku: Sku }>
   }
 }
 
@@ -55,22 +55,22 @@ export type GetSku = (code: string) => Promise<Sku | undefined>
 export type GetSkuPrice = (code: string) => Promise<Price | undefined>
 
 export type GetBundle = (
-  code: string
-) => Promise<(Bundle & Pick<Sku, 'inventory'>) | undefined>
+  code: string,
+) => Promise<(Bundle & Pick<Sku, "inventory">) | undefined>
 export type GetBundlePrice = (code: string) => Promise<Price | undefined>
 
 export type AddItem = (
-  kind: 'bundle' | 'sku',
+  kind: "bundle" | "sku",
   code: string,
   quantity: number,
-  options?: Partial<Pick<LineItem, 'name' | 'image_url' | 'frequency'>>
+  options?: Partial<Pick<LineItem, "name" | "image_url" | "frequency">>,
 ) => Promise<LineItem>
 
 export type GetToken = () => Promise<Token>
 
 export type TriggerHostedCartUpdate = (
   iframeId: string,
-  order: Order | null
+  order: Order | null,
 ) => Promise<Order | null>
 
 export type TriggerCartUpdate = (
@@ -82,5 +82,5 @@ export type TriggerCartUpdate = (
 export interface AvailabilityUpdateEventPayload {
   cartQuantity: number
   sku: Sku | undefined
-  rule: 'cheapest' | 'fastest'
+  rule: "cheapest" | "fastest"
 }

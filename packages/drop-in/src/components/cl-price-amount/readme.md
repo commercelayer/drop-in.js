@@ -9,7 +9,7 @@
 
 | Property | Attribute | Description                               | Type                      | Default   |
 | -------- | --------- | ----------------------------------------- | ------------------------- | --------- |
-| `type`   | `type`    | The type of price amount to be displayed. | `"compare-at" \| "price"` | `'price'` |
+| `type`   | `type`    | The type of price amount to be displayed. | `"compare-at" \| "price"` | `"price"` |
 
 
 ## Shadow Parts

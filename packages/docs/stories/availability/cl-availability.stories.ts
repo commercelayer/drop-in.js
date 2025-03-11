@@ -1,14 +1,14 @@
-import type { DropInArgs } from '@commercelayer/drop-in.js/dist/custom-elements-args'
-import { type Meta, type StoryFn } from '@storybook/html'
-import { html, nothing } from 'lit-html'
-import { create } from '../../utils'
-import { codes } from '../assets/constants'
+import type { DropInArgs } from "@commercelayer/drop-in.js/dist/custom-elements-args"
+import type { Meta, StoryFn } from "@storybook/html"
+import { html, nothing } from "lit-html"
+import { create } from "../../utils"
+import { codes } from "../assets/constants"
 
-type Args = DropInArgs['cl-availability']
+type Args = DropInArgs["cl-availability"]
 
 const meta: Meta<Args> = {
-  title: 'Components/Availability/cl-availability',
-  component: 'cl-availability'
+  title: "Components/Availability/cl-availability",
+  component: "cl-availability",
 }
 
 export default meta
@@ -23,7 +23,6 @@ const Template: StoryFn<Args> = (args) => {
         <cl-availability-status type="available-with-info">
           ready to be shipped in
           <cl-availability-info type="min-days"></cl-availability-info
-          // eslint-disable-next-line prettier/prettier
           >-<cl-availability-info type="max-days"></cl-availability-info> days
           with <cl-availability-info type="shipping-method-name"></cl-availability-info> (<cl-availability-info type="shipping-method-price"></cl-availability-info>)
         </cl-availability-status>
@@ -31,13 +30,13 @@ const Template: StoryFn<Args> = (args) => {
           • out of stock
         </cl-availability-status>
       </cl-availability>
-    `
+    `,
   )
 }
 
 export const Basic = Template.bind({})
 Basic.args = {
-  code: codes.available
+  code: codes.available,
 }
 
 export const WithoutAttributes = Template.bind({})

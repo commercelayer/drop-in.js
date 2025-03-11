@@ -1,18 +1,18 @@
-import { getCheckoutUrl } from '#apis/commercelayer/cart'
-import { listenTo } from '#apis/event'
 import {
   Component,
   Element,
   Host,
+  type JSX,
   Prop,
   State,
   h,
-  type JSX
-} from '@stencil/core'
+} from "@stencil/core"
+import { getCheckoutUrl } from "#apis/commercelayer/cart"
+import { listenTo } from "#apis/event"
 
 @Component({
-  tag: 'cl-checkout-link',
-  shadow: false
+  tag: "cl-checkout-link",
+  shadow: false,
 })
 export class ClCheckoutLink {
   @Element() host!: HTMLClCheckoutLinkElement
@@ -20,13 +20,13 @@ export class ClCheckoutLink {
   /**
    * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
    */
-  @Prop({ reflect: true }) target: '_self' | '_blank' | '_parent' | '_top' =
-    '_self'
+  @Prop({ reflect: true }) target: "_self" | "_blank" | "_parent" | "_top" =
+    "_self"
 
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
-    listenTo('cl-cart-update', async (event) => {
+    listenTo("cl-cart-update", async (event) => {
       if (
         this.href === undefined &&
         event.detail.response.skus_count != null &&
@@ -36,7 +36,7 @@ export class ClCheckoutLink {
       }
     })
 
-    listenTo('cl-cart-hostedcartupdate', (event) => {
+    listenTo("cl-cart-hostedcartupdate", (event) => {
       if (
         event.detail.response.skus_count === undefined ||
         event.detail.response.skus_count === 0
@@ -50,9 +50,9 @@ export class ClCheckoutLink {
 
   render(): JSX.Element {
     return (
-      <Host aria-disabled={this.href !== undefined ? undefined : 'true'}>
+      <Host aria-disabled={this.href !== undefined ? undefined : "true"}>
         <a target={this.target} href={this.href}>
-          <slot></slot>
+          <slot />
         </a>
       </Host>
     )

@@ -1,5 +1,3 @@
 {
-  "*.{js,jsx,ts,tsx}": [
-    "eslint ./ --ext ts,tsx --fix"
-  ]
+  "*.{js,jsx,ts,tsx}": ["pnpm biome check --write --no-errors-on-unmatched"]
 }

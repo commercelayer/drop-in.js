@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,8 +14,5 @@
     "isolatedModules": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "stories/**/*",
-    ".storybook/**/*"
-  ]
+  "include": ["stories/**/*", ".storybook/**/*"]
 }

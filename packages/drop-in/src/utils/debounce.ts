@@ -1,6 +1,6 @@
-import type { DebouncedFunc, DebounceSettings } from 'lodash'
-import debounce from 'lodash/debounce'
-import memoize from 'lodash/memoize'
+import type { DebounceSettings, DebouncedFunc } from "lodash"
+import debounce from "lodash/debounce"
+import memoize from "lodash/memoize"
 
 interface Options {
   wait: number
@@ -13,7 +13,7 @@ type PromiseDebouncedFunc<T extends (...args: any[]) => any> = (
 
 export const pDebounce = <T extends (arg: any[]) => any>(
   input: T,
-  options?: Options
+  options?: Options,
 ): PromiseDebouncedFunc<T> => {
   const incrementalArgs: Array<Parameters<T>> = []
   const incrementalResolve: any[] = []
@@ -30,7 +30,7 @@ export const pDebounce = <T extends (arg: any[]) => any>(
   const debounced = debounce(fn, options?.wait, { maxWait: options?.maxWait })
 
   return async (
-    item: Array<Parameters<T>> | undefined
+    item: Array<Parameters<T>> | undefined,
   ): Promise<Awaited<ReturnType<T>>> => {
     if (item !== undefined) {
       incrementalArgs.push(...item)
@@ -59,11 +59,11 @@ export function memoDebounce<F extends (...args: any[]) => any>(
   wait = 0,
   options: DebounceSettings = {},
   resolver: (...args: Parameters<F>) => unknown = (...args: Parameters<F>) =>
-    JSON.stringify(args)
+    JSON.stringify(args),
 ): DebouncedFunc<F> {
   const debounceMemo = memoize<(...args: Parameters<F>) => DebouncedFunc<F>>(
     (..._args: Parameters<F>) => debounce(func, wait, options),
-    resolver
+    resolver,
   )
 
   function wrappedFunction(...args: Parameters<F>): ReturnType<F> | undefined {

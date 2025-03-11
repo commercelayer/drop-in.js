@@ -1,13 +1,13 @@
-import { memoize } from '#utils/utils'
-import { jwtDecode, jwtIsSalesChannel } from '@commercelayer/js-auth'
+import { jwtDecode, jwtIsSalesChannel } from "@commercelayer/js-auth"
 import {
   type DefaultMfeConfig,
-  getMfeConfig as mergeConfig
-} from '@commercelayer/organization-config'
-import type { OrderCreate, ResourceRel } from '@commercelayer/sdk'
-import merge from 'lodash/merge'
-import type { ConditionalExcept, OmitDeep, SetRequired } from 'type-fest'
-import { createClient, getAccessToken } from './client'
+  getMfeConfig as mergeConfig,
+} from "@commercelayer/organization-config"
+import type { OrderCreate, ResourceRel } from "@commercelayer/sdk"
+import merge from "lodash/merge"
+import type { ConditionalExcept, OmitDeep, SetRequired } from "type-fest"
+import { memoize } from "#utils/utils"
+import { createClient, getAccessToken } from "./client"
 
 export interface CommerceLayerConfig {
   /**
@@ -26,7 +26,7 @@ export interface CommerceLayerConfig {
    * Define the debug level.
    * @default 'none'
    */
-  debug?: 'none' | 'all'
+  debug?: "none" | "all"
 
   /**
    * The URL the cart's *Continue shopping* button points to. This is also used in the thank you page.
@@ -76,49 +76,49 @@ export interface CommerceLayerConfig {
 }
 
 export type Config = CommerceLayerConfig & {
-  debug: Exclude<CommerceLayerConfig['debug'], undefined>
+  debug: Exclude<CommerceLayerConfig["debug"], undefined>
 }
 
 const documentationLink =
-  'Read more here: https://commercelayer.github.io/drop-in.js/?path=/docs/getting-started--docs'
+  "Read more here: https://commercelayer.github.io/drop-in.js/?path=/docs/getting-started--docs"
 
-const defaultLanguageCode = 'en'
+const defaultLanguageCode = "en"
 
 export function getConfig(): Config {
-  if (!('commercelayerConfig' in window)) {
+  if (!("commercelayerConfig" in window)) {
     throw new Error(
-      `"window.commercelayerConfig" is required.\n${documentationLink}\n`
+      `"window.commercelayerConfig" is required.\n${documentationLink}\n`,
     )
   }
 
   const commercelayerConfig: CommerceLayerConfig = window.commercelayerConfig
 
-  if (typeof commercelayerConfig.clientId !== 'string') {
+  if (typeof commercelayerConfig.clientId !== "string") {
     throw new Error(
-      `"window.commercelayerConfig.clientId" is required.\n${documentationLink}\n`
+      `"window.commercelayerConfig.clientId" is required.\n${documentationLink}\n`,
     )
   }
 
-  if (typeof commercelayerConfig.scope !== 'string') {
+  if (typeof commercelayerConfig.scope !== "string") {
     throw new Error(
-      `"window.commercelayerConfig.scope" is required.\n${documentationLink}\n`
+      `"window.commercelayerConfig.scope" is required.\n${documentationLink}\n`,
     )
   }
 
-  if (![undefined, 'none', 'all'].includes(commercelayerConfig.debug)) {
+  if (![undefined, "none", "all"].includes(commercelayerConfig.debug)) {
     throw new Error(
-      `"window.commercelayerConfig.debug" should one of 'none' (default) or 'all'.\n${documentationLink}\n`
+      `"window.commercelayerConfig.debug" should one of 'none' (default) or 'all'.\n${documentationLink}\n`,
     )
   }
 
   if (
-    typeof commercelayerConfig.domain !== 'string' ||
-    commercelayerConfig.domain === ''
+    typeof commercelayerConfig.domain !== "string" ||
+    commercelayerConfig.domain === ""
   ) {
-    commercelayerConfig.domain = 'commercelayer.io'
+    commercelayerConfig.domain = "commercelayer.io"
   }
 
-  const debug: Config['debug'] = commercelayerConfig.debug ?? 'none'
+  const debug: Config["debug"] = commercelayerConfig.debug ?? "none"
 
   // START-BLOCK // TODO: Remove deprecated properties in the next major version.
   commercelayerConfig.defaultAttributes ??= {}
@@ -131,7 +131,7 @@ export function getConfig(): Config {
 
   return {
     ...commercelayerConfig,
-    debug
+    debug,
   }
 }
 
@@ -140,28 +140,27 @@ const getOrganization = memoize(async () => {
   const client = await createClient(config)
   return await client.organization.retrieve({
     fields: {
-      organizations: ['config']
-    }
+      organizations: ["config"],
+    },
   })
 })
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function getOrganizationConfig(
-  params?: Omit<ConfigParams, 'accessToken' | 'lang'>
+  params?: Omit<ConfigParams, "accessToken" | "lang">,
 ) {
   const config = getConfig()
   const { accessToken } = await getAccessToken(config)
   const jwt = jwtDecode(accessToken)
 
-  if (!('organization' in jwt.payload)) {
+  if (!("organization" in jwt.payload)) {
     throw new Error(
-      'The access token does not contain the organization information.'
+      "The access token does not contain the organization information.",
     )
   }
 
   const organization = await getOrganization()
 
-  const domainPrefix = config.domain === 'commercelayer.co' ? '.stg' : ''
+  const domainPrefix = config.domain === "commercelayer.co" ? ".stg" : ""
   const appEndpoint = `https://:slug${domainPrefix}.commercelayer.app`
 
   const defaultConfig: ConfigJSONWithRequiredLinks = {
@@ -171,17 +170,17 @@ export async function getOrganizationConfig(
           cart: `${appEndpoint}/cart/:order_id?accessToken=:access_token`,
           checkout: `${appEndpoint}/checkout/:order_id?accessToken=:access_token`,
           my_account: `${appEndpoint}/my-account?accessToken=:access_token`,
-          identity: `${appEndpoint}/identity`
-        }
-      }
-    }
+          identity: `${appEndpoint}/identity`,
+        },
+      },
+    },
   }
 
   const mergeConfigOptions: Parameters<typeof mergeConfig>[0] = {
     jsonConfig: merge<ConfigJSON, ConfigJSON, typeof organization.config>(
       {},
       defaultConfig,
-      organization.config
+      organization.config,
     ),
     market:
       jwtIsSalesChannel(jwt.payload) && jwt.payload.market?.id[0] != null
@@ -192,24 +191,24 @@ export async function getOrganizationConfig(
       accessToken,
       slug: jwt.payload.organization.slug,
       lang:
-        config.defaultAttributes?.orders?.language_code ?? defaultLanguageCode
-    }
+        config.defaultAttributes?.orders?.language_code ?? defaultLanguageCode,
+    },
   }
 
-  return mergeConfig(mergeConfigOptions) as Omit<DefaultMfeConfig, 'links'> & {
+  return mergeConfig(mergeConfigOptions) as Omit<DefaultMfeConfig, "links"> & {
     links: RequiredLinks
   }
 }
 
-type ConfigLink = NonNullable<DefaultMfeConfig['links']>
-type ConfigParams = NonNullable<Parameters<typeof mergeConfig>[0]['params']>
-type ConfigJSON = NonNullable<Parameters<typeof mergeConfig>[0]['jsonConfig']>
+type ConfigLink = NonNullable<DefaultMfeConfig["links"]>
+type ConfigParams = NonNullable<Parameters<typeof mergeConfig>[0]["params"]>
+type ConfigJSON = NonNullable<Parameters<typeof mergeConfig>[0]["jsonConfig"]>
 type RequiredLinks = SetRequired<
   ConfigLink,
-  'cart' | 'checkout' | 'identity' | 'my_account'
+  "cart" | "checkout" | "identity" | "my_account"
 >
 
-type ConfigJSONWithRequiredLinks = OmitDeep<ConfigJSON, 'mfe.default.links'> & {
+type ConfigJSONWithRequiredLinks = OmitDeep<ConfigJSON, "mfe.default.links"> & {
   mfe: {
     default: {
       links: RequiredLinks

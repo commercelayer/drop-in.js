@@ -1,28 +1,28 @@
-import { memoDebounce } from '#utils/debounce'
-import type { Expand } from '#utils/utility-types'
+import { memoDebounce } from "#utils/debounce"
+import type { Expand } from "#utils/utility-types"
 import type {
   AddItem,
   GetBundle,
   GetBundlePrice,
-  GetSkuPrice,
   GetSku,
+  GetSkuPrice,
   GetToken,
   TriggerCartUpdate,
-  TriggerHostedCartUpdate
-} from './types'
+  TriggerHostedCartUpdate,
+} from "./types"
 
 export interface EventTypes {
-  'cl-identity-gettoken': GetToken
-  'cl-skus-getsku': GetSku
-  'cl-skus-getprice': GetSkuPrice
-  'cl-bundles-getbundle': GetBundle
-  'cl-bundles-getprice': GetBundlePrice
-  'cl-cart-additem': AddItem
-  'cl-cart-hostedcartupdate': NonNullableReturnType<TriggerHostedCartUpdate>
-  'cl-cart-update': NonNullableReturnType<TriggerCartUpdate>
+  "cl-identity-gettoken": GetToken
+  "cl-skus-getsku": GetSku
+  "cl-skus-getprice": GetSkuPrice
+  "cl-bundles-getbundle": GetBundle
+  "cl-bundles-getprice": GetBundlePrice
+  "cl-cart-additem": AddItem
+  "cl-cart-hostedcartupdate": NonNullableReturnType<TriggerHostedCartUpdate>
+  "cl-cart-update": NonNullableReturnType<TriggerCartUpdate>
 
   /** @deprecated Use `cl-skus-getprice` instead. This will be removed in a future version. */
-  'cl-prices-getprice': GetSkuPrice
+  "cl-prices-getprice": GetSkuPrice
 }
 
 export type CLCustomEventDetailMap = {
@@ -49,27 +49,27 @@ interface CLCustomEventDetail<Func extends (...args: any) => any> {
  */
 const _fireEvent = <
   Type extends keyof EventTypes,
-  Func extends EventTypes[Type]
+  Func extends EventTypes[Type],
 >(
   type: Type,
   args: Parameters<Func>,
-  response: Awaited<ReturnType<Func>>
+  response: Awaited<ReturnType<Func>>,
 ): void => {
   document.dispatchEvent(
     new CustomEvent<CLCustomEventDetail<Func>>(type, {
       detail: {
         request: {
-          args
+          args,
         },
-        response
-      }
-    })
+        response,
+      },
+    }),
   )
 }
 
 export const fireEvent = memoDebounce(_fireEvent, 10, {
   leading: true,
-  trailing: false
+  trailing: false,
 }) as unknown as typeof _fireEvent
 
 /**
@@ -79,17 +79,17 @@ export function listenTo<Type extends keyof CLCustomEventDetailMap>(
   type: Type,
   listener: (
     this: Document,
-    evt: CustomEvent<CLCustomEventDetailMap[Type]>
+    evt: CustomEvent<CLCustomEventDetailMap[Type]>,
   ) => Promise<void> | void,
-  options?: boolean | AddEventListenerOptions | undefined
+  options?: boolean | AddEventListenerOptions | undefined,
 ): void {
   document.addEventListener(
     type,
     function (this: Document, evt): void {
       void listener.apply(this, [
-        evt as CustomEvent<CLCustomEventDetailMap[Type]>
+        evt as CustomEvent<CLCustomEventDetailMap[Type]>,
       ])
     },
-    options
+    options,
   )
 }

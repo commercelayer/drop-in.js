@@ -1,27 +1,27 @@
-import type { Price } from '@commercelayer/sdk'
+import type { Price } from "@commercelayer/sdk"
 import {
   Component,
   Host,
+  type JSX,
   Listen,
   Prop,
   State,
   h,
-  type JSX
-} from '@stencil/core'
+} from "@stencil/core"
 
 @Component({
-  tag: 'cl-price-amount',
-  shadow: true
+  tag: "cl-price-amount",
+  shadow: true,
 })
 export class ClPriceAmount {
   /**
    * The type of price amount to be displayed.
    */
-  @Prop({ reflect: true }) type: 'price' | 'compare-at' = 'price'
+  @Prop({ reflect: true }) type: "price" | "compare-at" = "price"
 
   @State() price: Price | undefined
 
-  @Listen('priceUpdate')
+  @Listen("priceUpdate")
   priceUpdateHandler(event: CustomEvent<Price | undefined>): void {
     this.price = event.detail
   }
@@ -32,9 +32,9 @@ export class ClPriceAmount {
 
     return (
       <Host>
-        {this.type === 'compare-at'
+        {this.type === "compare-at"
           ? hasStrikethrough && (
-              <s part='strikethrough'>
+              <s part="strikethrough">
                 {this.price?.formatted_compare_at_amount}
               </s>
             )

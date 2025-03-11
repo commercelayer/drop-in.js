@@ -1,36 +1,23 @@
 [
   {
     "resourceType": "subscription_models",
-    "referenceKeys": [
-      "subscription_model_1"
-    ]
+    "referenceKeys": ["subscription_model_1"]
   },
   {
     "resourceType": "addresses",
-    "referenceKeys": [
-      "address_1",
-      "address_2"
-    ]
+    "referenceKeys": ["address_1", "address_2"]
   },
   {
     "resourceType": "merchants",
-    "referenceKeys": [
-      "merchant_1"
-    ]
+    "referenceKeys": ["merchant_1"]
   },
   {
     "resourceType": "stock_locations",
-    "referenceKeys": [
-      "stock_location_1",
-      "stock_location_2"
-    ]
+    "referenceKeys": ["stock_location_1", "stock_location_2"]
   },
   {
     "resourceType": "inventory_models",
-    "referenceKeys": [
-      "inventory_model_1",
-      "inventory_model_2"
-    ]
+    "referenceKeys": ["inventory_model_1", "inventory_model_2"]
   },
   {
     "resourceType": "inventory_stock_locations",
@@ -52,33 +39,19 @@
   },
   {
     "resourceType": "price_lists",
-    "referenceKeys": [
-      "price_list_1",
-      "price_list_2",
-      "price_list_3"
-    ]
+    "referenceKeys": ["price_list_1", "price_list_2", "price_list_3"]
   },
   {
     "resourceType": "markets",
-    "referenceKeys": [
-      "market_1",
-      "market_2",
-      "market_3"
-    ]
+    "referenceKeys": ["market_1", "market_2", "market_3"]
   },
   {
     "resourceType": "shipping_categories",
-    "referenceKeys": [
-      "shipping_category_1",
-      "shipping_category_2"
-    ]
+    "referenceKeys": ["shipping_category_1", "shipping_category_2"]
   },
   {
     "resourceType": "shipping_zones",
-    "referenceKeys": [
-      "shipping_zone_1",
-      "shipping_zone_2"
-    ]
+    "referenceKeys": ["shipping_zone_1", "shipping_zone_2"]
   },
   {
     "resourceType": "shipping_methods",
@@ -96,9 +69,7 @@
   },
   {
     "resourceType": "payment_gateways",
-    "referenceKeys": [
-      "payment_gateway_1"
-    ]
+    "referenceKeys": ["payment_gateway_1"]
   },
   {
     "resourceType": "payment_methods",

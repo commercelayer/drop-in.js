@@ -1,13 +1,13 @@
-import { getConfig } from '#apis/commercelayer/config'
+import { getConfig } from "#apis/commercelayer/config"
 
 type LogType =
-  | 'error'
-  | 'info'
-  | 'log'
-  | 'warn'
-  | 'group'
-  | 'groupCollapsed'
-  | 'groupEnd'
+  | "error"
+  | "info"
+  | "log"
+  | "warn"
+  | "group"
+  | "groupCollapsed"
+  | "groupEnd"
 
 /**
  * Outputs a message to the Web console.
@@ -17,7 +17,7 @@ type LogType =
 export const log: Log = (type, ...messages) => {
   const { debug } = getConfig()
 
-  if (debug === 'all') {
+  if (debug === "all") {
     console[type](...messages)
   }
 }
@@ -37,7 +37,7 @@ export const log: Log = (type, ...messages) => {
  */
 export function logGroup(
   label: string,
-  collapsed: boolean = true
+  collapsed = true,
 ): {
   /**
    * Collect a message.
@@ -54,11 +54,11 @@ export function logGroup(
   const logs: Logs[] = []
 
   const end = (): void => {
-    log(collapsed ? 'groupCollapsed' : 'group', label)
+    log(collapsed ? "groupCollapsed" : "group", label)
     logs.forEach((messages) => {
       log(...messages)
     })
-    log('groupEnd')
+    log("groupEnd")
   }
 
   const _log = (type: LogType, ...messages: any[]): void => {

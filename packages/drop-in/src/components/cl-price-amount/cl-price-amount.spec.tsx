@@ -1,12 +1,12 @@
-import type { Price } from '@commercelayer/sdk'
-import { newSpecPage } from '@stencil/core/testing'
-import { ClPriceAmount } from './cl-price-amount'
+import type { Price } from "@commercelayer/sdk"
+import { newSpecPage } from "@stencil/core/testing"
+import { ClPriceAmount } from "./cl-price-amount"
 
-describe('cl-price-amount.spec', () => {
-  it('renders without any arguments', async () => {
+describe("cl-price-amount.spec", () => {
+  it("renders without any arguments", async () => {
     const { root } = await newSpecPage({
       components: [ClPriceAmount],
-      html: '<cl-price-amount></cl-price-amount>'
+      html: "<cl-price-amount></cl-price-amount>",
     })
 
     expect(root).toEqualHtml(`
@@ -19,7 +19,7 @@ describe('cl-price-amount.spec', () => {
   it('renders as formatted_amount when `type="price"`', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClPriceAmount],
-      html: '<cl-price-amount type="price"></cl-price-amount>'
+      html: '<cl-price-amount type="price"></cl-price-amount>',
     })
 
     expect(root).toEqualHtml(`
@@ -29,22 +29,22 @@ describe('cl-price-amount.spec', () => {
     `)
 
     const priceUpdateEvent: Price = {
-      id: 'ABC123',
-      type: 'prices',
+      id: "ABC123",
+      type: "prices",
       amount_cents: 1200,
       amount_float: 12,
       compare_at_amount_cents: 2850,
       compare_at_amount_float: 28.5,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      formatted_amount: '€ 12.00',
-      formatted_compare_at_amount: '€ 28.50'
+      formatted_amount: "€ 12.00",
+      formatted_compare_at_amount: "€ 28.50",
     }
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
-        detail: priceUpdateEvent
-      })
+      new CustomEvent<Price>("priceUpdate", {
+        detail: priceUpdateEvent,
+      }),
     )
 
     await waitForChanges()
@@ -61,7 +61,7 @@ describe('cl-price-amount.spec', () => {
   it('renders as formatted_compare_at_amount when `type="compare-at"`', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClPriceAmount],
-      html: '<cl-price-amount type="compare-at"></cl-price-amount>'
+      html: '<cl-price-amount type="compare-at"></cl-price-amount>',
     })
 
     expect(root).toEqualHtml(`
@@ -71,22 +71,22 @@ describe('cl-price-amount.spec', () => {
     `)
 
     const priceUpdateEvent: Price = {
-      id: 'ABC123',
-      type: 'prices',
+      id: "ABC123",
+      type: "prices",
       amount_cents: 1200,
       amount_float: 12,
       compare_at_amount_cents: 2850,
       compare_at_amount_float: 28.5,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      formatted_amount: '€ 12.00',
-      formatted_compare_at_amount: '€ 28.50'
+      formatted_amount: "€ 12.00",
+      formatted_compare_at_amount: "€ 28.50",
     }
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
-        detail: priceUpdateEvent
-      })
+      new CustomEvent<Price>("priceUpdate", {
+        detail: priceUpdateEvent,
+      }),
     )
 
     await waitForChanges()
@@ -103,7 +103,7 @@ describe('cl-price-amount.spec', () => {
   it('renders as empty box when `type="compare-at"` and there is no a compare-at amount', async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClPriceAmount],
-      html: '<cl-price-amount type="compare-at"></cl-price-amount>'
+      html: '<cl-price-amount type="compare-at"></cl-price-amount>',
     })
 
     expect(root).toEqualHtml(`
@@ -113,22 +113,22 @@ describe('cl-price-amount.spec', () => {
     `)
 
     const priceUpdateEvent: Price = {
-      id: 'ABC123',
-      type: 'prices',
+      id: "ABC123",
+      type: "prices",
       amount_cents: 1200,
       amount_float: 12,
       compare_at_amount_cents: 1200,
       compare_at_amount_float: 12,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      formatted_amount: '€ 12.00',
-      formatted_compare_at_amount: '€ 12.00'
+      formatted_amount: "€ 12.00",
+      formatted_compare_at_amount: "€ 12.00",
     }
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
-        detail: priceUpdateEvent
-      })
+      new CustomEvent<Price>("priceUpdate", {
+        detail: priceUpdateEvent,
+      }),
     )
 
     await waitForChanges()
@@ -140,10 +140,10 @@ describe('cl-price-amount.spec', () => {
     `)
   })
 
-  it('renders as empty when the Price is undefined', async () => {
+  it("renders as empty when the Price is undefined", async () => {
     const { root, waitForChanges } = await newSpecPage({
       components: [ClPriceAmount],
-      html: '<cl-price-amount type="price"></cl-price-amount>'
+      html: '<cl-price-amount type="price"></cl-price-amount>',
     })
 
     expect(root).toEqualHtml(`
@@ -153,30 +153,30 @@ describe('cl-price-amount.spec', () => {
     `)
 
     const priceUpdateEvent: Price = {
-      id: 'ABC123',
-      type: 'prices',
+      id: "ABC123",
+      type: "prices",
       amount_cents: 1200,
       amount_float: 12,
       compare_at_amount_cents: 2850,
       compare_at_amount_float: 28.5,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      formatted_amount: '€ 12.00',
-      formatted_compare_at_amount: '€ 28.50'
+      formatted_amount: "€ 12.00",
+      formatted_compare_at_amount: "€ 28.50",
     }
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
-        detail: priceUpdateEvent
-      })
+      new CustomEvent<Price>("priceUpdate", {
+        detail: priceUpdateEvent,
+      }),
     )
 
     await waitForChanges()
 
     root?.dispatchEvent(
-      new CustomEvent<Price>('priceUpdate', {
-        detail: undefined
-      })
+      new CustomEvent<Price>("priceUpdate", {
+        detail: undefined,
+      }),
     )
 
     await waitForChanges()

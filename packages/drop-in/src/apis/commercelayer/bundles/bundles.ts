@@ -1,9 +1,9 @@
-import { fireEvent } from '#apis/event'
-import type { Bundle, GetBundle, Inventory } from '#apis/types'
-import { memoize } from '../../../utils/utils'
-import { createClient } from '../client'
-import { getConfig } from '../config'
-import { _getBundleViaList } from './list'
+import { fireEvent } from "#apis/event"
+import type { Bundle, GetBundle, Inventory } from "#apis/types"
+import { memoize } from "../../../utils/utils"
+import { createClient } from "../client"
+import { getConfig } from "../config"
+import { _getBundleViaList } from "./list"
 
 export function getBundleInventory(bundle: Bundle): Inventory {
   return bundle.sku_list?.sku_list_items?.reduce<Inventory>(
@@ -12,7 +12,8 @@ export function getBundleInventory(bundle: Bundle): Inventory {
         skuListItem.sku?.inventory?.quantity == null
           ? undefined
           : Math.floor(
-              skuListItem.sku?.inventory?.quantity / (skuListItem.quantity ?? 1)
+              skuListItem.sku?.inventory?.quantity /
+                (skuListItem.quantity ?? 1),
             )
       const available = skuListItem.sku.inventory?.available ?? false
 
@@ -20,15 +21,16 @@ export function getBundleInventory(bundle: Bundle): Inventory {
         available: (inventory.available ?? true) && available,
         levels: inventory.levels,
         quantity:
-          quantity != null && quantity < (inventory.quantity ?? Infinity)
+          quantity != null &&
+          quantity < (inventory.quantity ?? Number.POSITIVE_INFINITY)
             ? quantity
-            : inventory.quantity
+            : inventory.quantity,
       }
     },
     {
       available: true,
-      levels: []
-    }
+      levels: [],
+    },
   )
 }
 
@@ -42,19 +44,19 @@ const getMemoizedBundle = memoize<GetBundle>(async (code) => {
   const client = await createClient(getConfig())
 
   const bundle = (await client.bundles.retrieve(id, {
-    include: ['sku_list.sku_list_items.sku']
+    include: ["sku_list.sku_list_items.sku"],
   })) as Bundle
 
   return {
     ...bundle,
-    inventory: getBundleInventory(bundle)
+    inventory: getBundleInventory(bundle),
   }
 })
 
 export const getBundle: GetBundle = async (code) => {
   const bundle = await getMemoizedBundle(code)
 
-  fireEvent('cl-bundles-getbundle', [code], bundle)
+  fireEvent("cl-bundles-getbundle", [code], bundle)
 
   return bundle
 }

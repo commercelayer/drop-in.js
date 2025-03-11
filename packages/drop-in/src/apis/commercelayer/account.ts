@@ -1,12 +1,12 @@
-import { getAccessToken } from '#apis/commercelayer/client'
-import { getConfig, getOrganizationConfig } from '#apis/commercelayer/config'
-import { getClosestLocationHref } from '#utils/url'
+import { getAccessToken } from "#apis/commercelayer/client"
+import { getConfig, getOrganizationConfig } from "#apis/commercelayer/config"
+import { getClosestLocationHref } from "#utils/url"
 
 export async function getMyAccountUrl(): Promise<string | undefined> {
   const config = getConfig()
   const { type } = await getAccessToken(config)
 
-  if (type === 'guest') {
+  if (type === "guest") {
     return undefined
   }
 
@@ -16,12 +16,12 @@ export async function getMyAccountUrl(): Promise<string | undefined> {
 }
 
 export async function getIdentityUrl(
-  type: 'login' | 'signup' | 'logout'
+  type: "login" | "signup" | "logout",
 ): Promise<string | undefined> {
   const config = getConfig()
 
-  if (type === 'logout') {
-    return '#'
+  if (type === "logout") {
+    return "#"
   }
 
   const organizationConfig = await getOrganizationConfig()

@@ -1,11 +1,11 @@
-import { fireEvent } from '#apis/event'
-import type { GetSkuPrice } from '#apis/types'
-import { pDebounce } from '#utils/debounce'
-import { logGroup } from '#utils/logger'
-import type { Price } from '@commercelayer/sdk'
-import { chunk, memoize, uniq } from '../../../utils/utils'
-import { createClient } from '../client'
-import { getConfig } from '../config'
+import type { Price } from "@commercelayer/sdk"
+import { fireEvent } from "#apis/event"
+import type { GetSkuPrice } from "#apis/types"
+import { pDebounce } from "#utils/debounce"
+import { logGroup } from "#utils/logger"
+import { chunk, memoize, uniq } from "../../../utils/utils"
+import { createClient } from "../client"
+import { getConfig } from "../config"
 
 interface PriceList {
   [sku: string]: Price | undefined
@@ -16,13 +16,13 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
 
   const uniqSkus = uniq(skus)
 
-  const log = logGroup('`getSkuPrices` method invoked with a list of SKU codes')
+  const log = logGroup("`getSkuPrices` method invoked with a list of SKU codes")
 
   log(
-    'info',
-    '`getSkuPrices` is the method involved in fetching a list of prices from Commerce Layer. You can follow the request in the "network" panel.'
+    "info",
+    '`getSkuPrices` is the method involved in fetching a list of prices from Commerce Layer. You can follow the request in the "network" panel.',
   )
-  log('info', 'SKUs', uniqSkus)
+  log("info", "SKUs", uniqSkus)
 
   const pageSize = 25
   const chunkedSkus = chunk(uniqSkus, pageSize)
@@ -32,9 +32,9 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
       chunkedSkus.map(async (skus) => {
         return await client.prices.list({
           pageSize,
-          filters: { sku_code_in: skus.join(',') }
+          filters: { sku_code_in: skus.join(",") },
         })
-      })
+      }),
     )
   ).flat()
 
@@ -47,7 +47,7 @@ const _getPrices = async (skus: string[]): Promise<PriceList> => {
 
       return prices
     },
-    {}
+    {},
   )
 
   log.end()
@@ -65,9 +65,9 @@ export const getPrice: GetSkuPrice = async (sku) => {
   const price = await getMemoizedPrice(sku)
 
   /** @deprecated Use `cl-skus-getprice` instead. This will be removed in a future version. */
-  fireEvent('cl-prices-getprice', [sku], price)
+  fireEvent("cl-prices-getprice", [sku], price)
 
-  fireEvent('cl-skus-getprice', [sku], price)
+  fireEvent("cl-skus-getprice", [sku], price)
 
   return price
 }

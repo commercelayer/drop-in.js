@@ -1,26 +1,26 @@
-import { getCart } from '#apis/commercelayer/cart'
-import { listenTo } from '#apis/event'
-import type { Order } from '@commercelayer/sdk'
-import { Component, Host, Prop, State, h, type JSX } from '@stencil/core'
+import type { Order } from "@commercelayer/sdk"
+import { Component, Host, type JSX, Prop, State, h } from "@stencil/core"
+import { getCart } from "#apis/commercelayer/cart"
+import { listenTo } from "#apis/event"
 
 @Component({
-  tag: 'cl-cart-count',
-  shadow: true
+  tag: "cl-cart-count",
+  shadow: true,
 })
 export class ClCartCount {
   /**
    * Toggle this switch to hide the counter when the cart is empty instead of showing `0`.
    */
-  @Prop({ reflect: true }) hideWhenEmpty: boolean = false
+  @Prop({ reflect: true }) hideWhenEmpty = false
 
   @State() count: number | undefined
 
   async componentWillLoad(): Promise<void> {
-    listenTo('cl-cart-update', (event) => {
+    listenTo("cl-cart-update", (event) => {
       void this.updateCart(event.detail.response)
     })
 
-    listenTo('cl-cart-hostedcartupdate', (event) => {
+    listenTo("cl-cart-hostedcartupdate", (event) => {
       void this.updateCart(event.detail.response)
     })
 
@@ -30,7 +30,7 @@ export class ClCartCount {
   private async updateCart(cart: Order | null): Promise<void> {
     const itemCount = cart?.line_items
       ?.filter(
-        (item) => item.item_type === 'skus' || item.item_type === 'bundles'
+        (item) => item.item_type === "skus" || item.item_type === "bundles",
       )
       .reduce((count, item) => count + item.quantity, 0)
 

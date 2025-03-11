@@ -1,28 +1,28 @@
-import type { AvailabilityUpdateEventPayload } from '#apis/types'
-import { logUnion } from '#utils/validation-helpers'
 import {
   Component,
   Element,
   Host,
+  type JSX,
   Listen,
   Prop,
   State,
   Watch,
   h,
-  type JSX
-} from '@stencil/core'
+} from "@stencil/core"
+import type { AvailabilityUpdateEventPayload } from "#apis/types"
+import { logUnion } from "#utils/validation-helpers"
 
 @Component({
-  tag: 'cl-availability-status',
-  shadow: true
+  tag: "cl-availability-status",
+  shadow: true,
 })
 export class ClAvailabilityStatus {
   @Element() host!: HTMLClAvailabilityStatusElement
 
   private readonly typeList: Array<NonNullable<typeof this.type>> = [
-    'available',
-    'available-with-info',
-    'unavailable'
+    "available",
+    "available-with-info",
+    "unavailable",
   ]
 
   /**
@@ -30,18 +30,18 @@ export class ClAvailabilityStatus {
    * It determines the visibility of the inner message.
    */
   @Prop({ reflect: true }) type!:
-    | 'available'
-    | 'available-with-info'
-    | 'unavailable'
+    | "available"
+    | "available-with-info"
+    | "unavailable"
     | undefined
 
   @State() available: boolean | undefined
 
   @State() hasDeliveryLeadTimes: boolean | undefined
 
-  @Listen('availabilityUpdate')
+  @Listen("availabilityUpdate")
   availabilityUpdateHandler(
-    event: CustomEvent<AvailabilityUpdateEventPayload>
+    event: CustomEvent<AvailabilityUpdateEventPayload>,
   ): void {
     const hasQuantity =
       event.detail?.sku?.inventory?.quantity === undefined ||
@@ -61,26 +61,26 @@ export class ClAvailabilityStatus {
     this.logType(this.type)
   }
 
-  @Watch('type')
+  @Watch("type")
   async watchTypeHandler(newValue: typeof this.type): Promise<void> {
     this.logType(newValue)
   }
 
   private logType(type: typeof this.type): void {
-    logUnion(this.host, 'type', type, this.typeList)
+    logUnion(this.host, "type", type, this.typeList)
   }
 
   render(): JSX.Element {
     if (
-      (this.type === 'available' && this.available === true) ||
-      (this.type === 'unavailable' && this.available === false) ||
-      (this.type === 'available-with-info' &&
+      (this.type === "available" && this.available === true) ||
+      (this.type === "unavailable" && this.available === false) ||
+      (this.type === "available-with-info" &&
         this.available === true &&
         this.hasDeliveryLeadTimes === true)
     ) {
-      return <slot></slot>
+      return <slot />
     }
 
-    return <Host aria-disabled='true'></Host>
+    return <Host aria-disabled="true" />
   }
 }
