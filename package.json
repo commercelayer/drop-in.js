@@ -36,7 +36,7 @@
     "concurrently": "^9.1.2",
     "husky": "^9.1.7",
     "lerna": "^8.2.1",
-    "lint-staged": "^15.4.3",
+    "lint-staged": "^15.5.0",
     "replace-in-file": "^8.3.0",
     "typescript": "^5.8.2"
   },

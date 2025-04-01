@@ -45,21 +45,21 @@
     "email": "marco.montalbano@commercelayer.io"
   },
   "dependencies": {
-    "@commercelayer/js-auth": "^6.7.1",
+    "@commercelayer/js-auth": "^6.7.2",
     "@commercelayer/organization-config": "^2.2.0",
-    "@commercelayer/sdk": "^6.35.0",
+    "@commercelayer/sdk": "^6.37.0",
     "@types/lodash": "^4.17.16",
     "iframe-resizer": "4.3.11",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
-    "type-fest": "^4.37.0"
+    "type-fest": "^4.38.0"
   },
   "peerDependencies": {
     "@stencil/core": "^4.0.0"
   },
   "devDependencies": {
-    "@stencil/core": "^4.27.2",
-    "@stencil/sass": "^3.1.9",
+    "@stencil/core": "^4.28.2",
+    "@stencil/sass": "^3.2.0",
     "@types/iframe-resizer": "^4.0.0",
     "@types/jest": "^29.5.14",
     "@types/js-cookie": "^3.0.6",
@@ -68,8 +68,8 @@
     "jest-cli": "^29.7.0",
     "nodemon": "^3.1.9",
     "puppeteer": "24.4.0",
-    "sass": "^1.85.1",
-    "ts-jest": "^29.2.6",
+    "sass": "^1.86.0",
+    "ts-jest": "^29.3.0",
     "typescript": "^5.8.2"
   },
   "license": "MIT",
