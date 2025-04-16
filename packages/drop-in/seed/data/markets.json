@@ -9,6 +9,16 @@
     "subscription_model": "subscription_model_1"
   },
   {
+    "reference": "market_1_employees",
+    "merchant": "merchant_1",
+    "inventory_model": "inventory_model_1",
+    "price_list": "price_list_1_employees",
+    "name": "Europe (employees)",
+    "code": "europe-employees",
+    "subscription_model": "subscription_model_1",
+    "customer_group": "customer_group_1"
+  },
+  {
     "reference": "market_2",
     "merchant": "merchant_1",
     "inventory_model": "inventory_model_2",
@@ -18,6 +28,16 @@
     "subscription_model": "subscription_model_1"
   },
   {
+    "reference": "market_2_employees",
+    "merchant": "merchant_1",
+    "inventory_model": "inventory_model_2",
+    "price_list": "price_list_2_employees",
+    "name": "USA (employees)",
+    "code": "usa-employees",
+    "subscription_model": "subscription_model_1",
+    "customer_group": "customer_group_1"
+  },
+  {
     "reference": "market_3",
     "merchant": "merchant_1",
     "inventory_model": "inventory_model_1",
@@ -25,5 +45,15 @@
     "name": "UK",
     "code": "uk",
     "subscription_model": "subscription_model_1"
+  },
+  {
+    "reference": "market_3_employees",
+    "merchant": "merchant_1",
+    "inventory_model": "inventory_model_1",
+    "price_list": "price_list_3_employees",
+    "name": "UK (employees)",
+    "code": "uk-employees",
+    "subscription_model": "subscription_model_1",
+    "customer_group": "customer_group_1"
   }
 ]

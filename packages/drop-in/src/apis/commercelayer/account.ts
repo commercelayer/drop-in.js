@@ -17,6 +17,7 @@ export async function getMyAccountUrl(): Promise<string | undefined> {
 
 export async function getIdentityUrl(
   type: "login" | "signup" | "logout",
+  scope?: string,
 ): Promise<string | undefined> {
   const config = getConfig()
 
@@ -28,5 +29,5 @@ export async function getIdentityUrl(
 
   return `${organizationConfig.links.identity}/${type}?clientId=${
     config.clientId
-  }&scope=${config.scope}&returnUrl=${getClosestLocationHref()}`
+  }&scope=${scope ?? config.scope}&publicScope=${config.scope}&returnUrl=${getClosestLocationHref()}`
 }

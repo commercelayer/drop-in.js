@@ -1,19 +1,19 @@
 [
   {
     "reference": "payment_method_1",
-    "market": "market_1",
+    "currency_code": "EUR",
     "payment_source_type": "WireTransfer",
     "payment_gateway": "payment_gateway_1"
   },
   {
     "reference": "payment_method_2",
-    "market": "market_2",
+    "currency_code": "USD",
     "payment_source_type": "WireTransfer",
     "payment_gateway": "payment_gateway_1"
   },
   {
     "reference": "payment_method_3",
-    "market": "market_3",
+    "currency_code": "GBP",
     "payment_source_type": "WireTransfer",
     "payment_gateway": "payment_gateway_1"
   }
