@@ -46,5 +46,32 @@
     "name": "Standard Shipping",
     "price_amount_cents": 700,
     "free_over_amount_cents": 9900
+  },
+  {
+    "reference": "shipping_method_1_employees",
+    "market": "market_1_employees",
+    "shipping_zone": "shipping_zone_1",
+    "shipping_category": "shipping_category_1",
+    "stock_location": "stock_location_1",
+    "name": "Employee Free Shipping",
+    "price_amount_cents": 0
+  },
+  {
+    "reference": "shipping_method_2_employees",
+    "market": "market_2_employees",
+    "shipping_zone": "shipping_zone_2",
+    "shipping_category": "shipping_category_1",
+    "stock_location": "stock_location_2",
+    "name": "Employee Free Shipping",
+    "price_amount_cents": 0
+  },
+  {
+    "reference": "shipping_method_3_employees",
+    "market": "market_3_employees",
+    "shipping_zone": "shipping_zone_1",
+    "shipping_category": "shipping_category_1",
+    "stock_location": "stock_location_1",
+    "name": "Employee Free Shipping",
+    "price_amount_cents": 0
   }
 ]

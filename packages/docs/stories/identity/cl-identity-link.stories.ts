@@ -17,6 +17,7 @@ const Template: StoryFn<Args> = (args) => {
     <cl-identity-link
       type=${args.type ?? nothing}
       target=${args.target ?? nothing}
+      scope=${args.scope ?? nothing}
     >
       Identity link
     </cl-identity-link>

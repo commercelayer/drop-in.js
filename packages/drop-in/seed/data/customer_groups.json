@@ -1,0 +1,10 @@
+[
+  {
+    "reference": "customer_group_1",
+    "name": "Employees"
+  },
+  {
+    "reference": "customer_group_2",
+    "name": "VIP Customers"
+  }
+]
