@@ -36,6 +36,15 @@ export class ClIdentityLink {
    */
   @Prop({ reflect: true }) type!: "login" | "signup" | "logout" | undefined
 
+  /**
+   * String specified during the authentication flow to restrict the scope of the obtained access token to a market and/or stock location.
+   * Example: `market:code:usa` or `stock_location:code:eu` or `market:code:eu stock_location:code:eu`
+   *
+   * This is optional, as by default the scope is taken from the drop-in.js configuration.
+   * This property is particularly useful when you want to set a scope related to a private market (restricted to a customer group).
+   */
+  @Prop({ reflect: true }) scope?: string
+
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
@@ -49,7 +58,7 @@ export class ClIdentityLink {
 
   private async updateUrl(type: typeof this.type): Promise<void> {
     this.href = isValidUnion(type, this.typeList)
-      ? await getIdentityUrl(type)
+      ? await getIdentityUrl(type, this.scope)
       : undefined
 
     logUnion(this.host, "type", type, this.typeList)
