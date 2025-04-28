@@ -1,6 +1,7 @@
-import { Canvas, Meta, Story, Controls } from '@storybook/blocks'
+import { Canvas, Meta, Story, Controls, Source } from '@storybook/blocks'
 import * as Stories from './cl-identity-link.stories.ts';
 import { codes } from '../assets/constants.ts'
+import { getSelectedScopeValue } from '../../.storybook/addon-scope-selector/constants'
 
 <Meta of={Stories} />
 
@@ -13,3 +14,29 @@ Once you have [imported](?path=/docs/getting-started--docs) the drop-in library,
 <Canvas of={Stories.Basic} />
 
 <Controls of={Stories.Basic} />
+
+## Private market
+
+When you associate a [customer group](https://docs.commercelayer.io/core/api-reference/customer_groups) to a market, that market becomes private and can be accessed only by the customers belonging to the group.
+
+You can use customer groups to manage B2B customers, B2C loyalty programs, private sales, and more.
+
+Here we've created a private market with a customer group associated with it. The `cl-identity-link` accepts a `scope` attribute that allows you to specify the market to be used for the login process.
+The `scope` attribute is optional and, if omitted, the drop-in.js configuration scope will be used.
+
+<Source language='html' dark code={`
+<cl-identity-link
+  type="login"
+  target="_parent"
+  scope="${getSelectedScopeValue()}-employees"
+>
+  Login
+</cl-identity-link>
+`} />
+
+Here below you can try to login to a demo employee store using the following credentials:
+
+email: <b className='pointer-events-none'>drop-in.js@commercelayer.io</b>  
+password: <b>123456</b>
+
+<Canvas sourceState="hidden" of={Stories.PrivateScope} />
