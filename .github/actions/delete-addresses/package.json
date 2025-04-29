@@ -1,0 +1,14 @@
+{
+  
+  "private": true,
+  "author": {
+    "name": "Marco Montalbano",
+    "email": "marco.montalbano@commercelayer.io"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@commercelayer/js-auth": "^6.7.2",
+    "@commercelayer/sdk": "^6.39.0",
+    "@actions/core": "^1.11.1"
+  }
+}

@@ -35,6 +35,7 @@ jobs:
             --clientId ${{ secrets.CL_CLIENT_ID }} \
             --clientSecret ${{ secrets.CL_CLIENT_SECRET }} \
             --organization ${{ secrets.CL_ORGANIZATION }} \
+            -d ${{ secrets.CL_DOMAIN }} \
             --alias cli-admin
 
       - name: Log 🔎
@@ -45,3 +46,10 @@ jobs:
 
       - name: Seed 🌱
         run: commercelayer seeder:seed -b custom -n reset_stock_items -u ./packages/drop-in/seed
+
+      - name: Delete Addresses 🗑️
+        uses: ./.github/actions/delete-addresses
+        with:
+          clientId: ${{ secrets.CL_CLIENT_ID }}
+          clientSecret: ${{ secrets.CL_CLIENT_SECRET }}
+          domain: ${{ secrets.CL_DOMAIN }}
