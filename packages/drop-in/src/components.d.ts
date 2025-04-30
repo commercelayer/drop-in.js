@@ -104,7 +104,7 @@ export namespace Components {
     }
     interface ClIdentityLink {
         /**
-          * String specified during the authentication flow to restrict the scope of the obtained access token to a market and/or stock location. Example: `market:code:usa` or `stock_location:code:eu` or `market:code:eu stock_location:code:eu`  This is optional, as by default the scope is taken from the drop-in.js configuration. This property is particularly useful when you want to set a scope related to a private market (restricted to a customer group).
+          * Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (used to restrict the dataset of your application to a market and/or stock location). If specified, it will override the default scope set in the drop-in library configuration. Otherwise, the default scope taken from the drop-in library configuration will be used.
          */
         "scope"?: string;
         /**
@@ -340,7 +340,7 @@ declare namespace LocalJSX {
     }
     interface ClIdentityLink {
         /**
-          * String specified during the authentication flow to restrict the scope of the obtained access token to a market and/or stock location. Example: `market:code:usa` or `stock_location:code:eu` or `market:code:eu stock_location:code:eu`  This is optional, as by default the scope is taken from the drop-in.js configuration. This property is particularly useful when you want to set a scope related to a private market (restricted to a customer group).
+          * Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (used to restrict the dataset of your application to a market and/or stock location). If specified, it will override the default scope set in the drop-in library configuration. Otherwise, the default scope taken from the drop-in library configuration will be used.
          */
         "scope"?: string;
         /**

@@ -9,20 +9,17 @@ import { getSelectedScopeValue } from '../../.storybook/addon-scope-selector/con
 
 Any Commerce Layer account comes with a hosted version of the [open-source Identity application](https://github.com/commercelayer/mfe-identity) that is automatically enabled. It's a React-based, production-ready implementation that provides signup and login functionalities for a specific organization that developers can integrate with just a single URL link as explained in detail [here](https://github.com/commercelayer/mfe-identity#hosted-version).
 
-Once you have [imported](?path=/docs/getting-started--docs) the drop-in library, you can use the `cl-identity-link` component as an in-place replacement for an `<a>` tag pointing to the signup or login URLs or performing the logout action, based on the value of the `type` attribute, which is required (if missing, the component will not be rendered). You also have the option to specify the `target`, as shown in the code snippet below.
+Once you have [imported](?path=/docs/getting-started--docs) the drop-in library, you can use the `cl-identity-link` component as an in-place replacement for an `<a>` tag pointing to the signup or login URLs or performing the logout action, based on the value of the `type` attribute, which is required (if missing, the component will not be rendered). You also have the option to specify the `target`, as shown in the code snippet below, and [override](#private-markets) the original `scope` specified in the drop-in library [configuration](?path=/docs/getting-started--docs).
 
 <Canvas of={Stories.Basic} />
 
 <Controls of={Stories.Basic} />
 
-## Private market
+## Private markets
 
-When you associate a [customer group](https://docs.commercelayer.io/core/api-reference/customer_groups) to a market, that market becomes private and can be accessed only by the customers belonging to the group.
+When you associate a [customer group](https://docs.commercelayer.io/core/api-reference/customer_groups) with a market, that market becomes private and can be accessed only by the customers belonging to the group. You can use customer groups to handle scenarios where you need dedicated price lists, custom shipping methods, or other specific features available for a restricted pool of customers, such as managing B2B deals, B2C loyalty programs, private sales, and more.
 
-You can use customer groups to manage B2B customers, B2C loyalty programs, private sales, and more.
-
-Here we've created a private market with a customer group associated with it. The `cl-identity-link` accepts a `scope` attribute that allows you to specify the market to be used for the login process.
-The `scope` attribute is optional and, if omitted, the drop-in.js configuration scope will be used.
+To make handling these use cases easier, the `cl-identity-link` accepts a `scope` attribute that allows you to specify the market to be used for the login process. This parameter is optional and, if omitted, the drop-in library [configuration](?path=/docs/getting-started--docs) scope will be used. In the example below, the specified scope identifies a private market so that when customers belonging to the associated customer group log in, they will be redirected to the private market instead of the public one and will be able to see only the products that are available for them, take advantage of dedicated promotions, and more.
 
 <Source language='html' dark code={`
 <cl-identity-link
@@ -33,10 +30,3 @@ The `scope` attribute is optional and, if omitted, the drop-in.js configuration 
   Login
 </cl-identity-link>
 `} />
-
-Here below you can try to login to a demo employee store using the following credentials:
-
-email: <b className='pointer-events-none'>drop-in.js@commercelayer.io</b>  
-password: <b>123456</b>
-
-<Canvas sourceState="hidden" of={Stories.PrivateScope} />
