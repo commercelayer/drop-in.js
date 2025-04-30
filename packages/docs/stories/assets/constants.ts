@@ -15,10 +15,10 @@ export const codes = {
 
 // // stg
 // export const createConfig = (scope: string): CommerceLayerConfig => ({
-//   clientId: 'gQMSINLyMm2TrZo0UGEEdubC7uSgm9-',
+//   clientId: "gQMSINLyMm2TrZo0UGEEdubC7uSgm9-",
 //   scope,
-//   debug: 'all',
-//   domain: 'commercelayer.co'
+//   debug: "all",
+//   domain: "commercelayer.co"
 // })
 
 // prd

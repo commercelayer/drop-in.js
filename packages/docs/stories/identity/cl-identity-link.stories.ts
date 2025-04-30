@@ -34,7 +34,7 @@ Basic.args = {
 
 export const WithoutAttributes = Template.bind({})
 
-export const PrivateScope: StoryFn = () => {
+export const PrivateMarkets: StoryFn = () => {
   return create(
     html`
       <!-- for demonstration purpose only -->
@@ -72,7 +72,6 @@ export const PrivateScope: StoryFn = () => {
       <!-- product list -->
       <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-center">
 
-        <!-- 2nd product: White Backpack with Black Logo -->
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
