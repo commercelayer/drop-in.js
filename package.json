@@ -35,10 +35,10 @@
     "@biomejs/biome": "1.9.4",
     "concurrently": "^9.1.2",
     "husky": "^9.1.7",
-    "lerna": "^8.2.1",
-    "lint-staged": "^15.5.0",
+    "lerna": "^8.2.2",
+    "lint-staged": "^15.5.1",
     "replace-in-file": "^8.3.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "resolutions": {
     "prismjs": "^1.30.0"
