@@ -11,7 +11,7 @@ import { createClient, getAccessToken } from "./client"
 
 export interface CommerceLayerConfig {
   /**
-   * Client ID is the application unique identifier. You can find it in your dashboard.
+   * The client ID (from you API credentials).
    * @see https://docs.commercelayer.io/core/authentication/client-credentials
    */
   clientId: string

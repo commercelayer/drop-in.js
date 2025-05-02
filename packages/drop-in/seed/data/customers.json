@@ -2,7 +2,6 @@
   {
     "reference": "customer_1_employees",
     "email": "drop-in.js@commercelayer.io",
-    "password": "123456",
     "customer_group": "customer_group_1"
   }
 ]
