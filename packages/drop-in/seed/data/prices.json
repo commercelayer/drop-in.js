@@ -87,22 +87,43 @@
     "reference": "price_8",
     "sku_code": "BACKPACKFFFFFF000000XXXX",
     "amount_cents": 9900,
-    "compare_at_amount_cents": null,
+    "compare_at_amount_cents": 9900,
     "price_list": "price_list_1"
+  },
+  {
+    "reference": "price_8_employees",
+    "sku_code": "BACKPACKFFFFFF000000XXXX",
+    "amount_cents": 4900,
+    "compare_at_amount_cents": 9900,
+    "price_list": "price_list_1_employees"
   },
   {
     "reference": "price_258",
     "sku_code": "BACKPACKFFFFFF000000XXXX",
     "amount_cents": 11000,
-    "compare_at_amount_cents": null,
+    "compare_at_amount_cents": 11000,
     "price_list": "price_list_2"
+  },
+  {
+    "reference": "price_258_employees",
+    "sku_code": "BACKPACKFFFFFF000000XXXX",
+    "amount_cents": 6000,
+    "compare_at_amount_cents": 11000,
+    "price_list": "price_list_2_employees"
   },
   {
     "reference": "price_508",
     "sku_code": "BACKPACKFFFFFF000000XXXX",
     "amount_cents": 9110,
-    "compare_at_amount_cents": null,
+    "compare_at_amount_cents": 9110,
     "price_list": "price_list_3"
+  },
+  {
+    "reference": "price_508_employees",
+    "sku_code": "BACKPACKFFFFFF000000XXXX",
+    "amount_cents": 4000,
+    "compare_at_amount_cents": 9110,
+    "price_list": "price_list_3_employees"
   },
   {
     "reference": "price_21",

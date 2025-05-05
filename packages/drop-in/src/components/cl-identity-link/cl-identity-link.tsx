@@ -36,6 +36,14 @@ export class ClIdentityLink {
    */
   @Prop({ reflect: true }) type!: "login" | "signup" | "logout" | undefined
 
+  /**
+   * Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes)
+   * (used to restrict the dataset of your application to a market and/or stock location).
+   * If specified, it will override the default scope set in the drop-in library configuration.
+   * Otherwise, the default scope taken from the drop-in library configuration will be used.
+   */
+  @Prop({ reflect: true }) scope?: string
+
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
@@ -49,7 +57,7 @@ export class ClIdentityLink {
 
   private async updateUrl(type: typeof this.type): Promise<void> {
     this.href = isValidUnion(type, this.typeList)
-      ? await getIdentityUrl(type)
+      ? await getIdentityUrl(type, this.scope)
       : undefined
 
     logUnion(this.host, "type", type, this.typeList)

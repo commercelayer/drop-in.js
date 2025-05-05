@@ -104,6 +104,10 @@ export namespace Components {
     }
     interface ClIdentityLink {
         /**
+          * Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (used to restrict the dataset of your application to a market and/or stock location). If specified, it will override the default scope set in the drop-in library configuration. Otherwise, the default scope taken from the drop-in library configuration will be used.
+         */
+        "scope"?: string;
+        /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
         "target": "_self" | "_blank" | "_parent" | "_top";
@@ -335,6 +339,10 @@ declare namespace LocalJSX {
         "target"?: "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClIdentityLink {
+        /**
+          * Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (used to restrict the dataset of your application to a market and/or stock location). If specified, it will override the default scope set in the drop-in library configuration. Otherwise, the default scope taken from the drop-in library configuration will be used.
+         */
+        "scope"?: string;
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
          */
