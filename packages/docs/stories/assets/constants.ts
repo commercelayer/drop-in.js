@@ -26,4 +26,9 @@ export const createConfig = (scope: string): CommerceLayerConfig => ({
   clientId: "kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8",
   scope,
   debug: "all",
+  // defaultAttributes: {
+  //   orders: {
+  //     language_code: "it",
+  //   }
+  // }
 })
