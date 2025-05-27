@@ -4,6 +4,11 @@
  * This script will replace all "version number" occurrences from jsDelivr urls so that it will point to the latest version.
  * This script runs on "version lifecycle" - https://github.com/lerna/lerna/blob/main/commands/version/README.md#lifecycle-scripts
  * 
+ * After every version release, it needded to [purge the jsDelivr cache](https://www.jsdelivr.com/tools/purge) of the following files:
+ * - https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.esm.js
+ * - https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.css
+ * - https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/minicart.css
+ * 
  * @example https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.esm.js
  * @example `drop-in.js@2`
  * @example `drop-in.js@2.13.0`
