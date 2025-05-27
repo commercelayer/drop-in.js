@@ -11,8 +11,9 @@ export async function getMyAccountUrl(): Promise<string | undefined> {
   }
 
   const organizationConfig = await getOrganizationConfig()
+  const lang = config.defaultAttributes?.orders?.language_code
 
-  return organizationConfig.links.my_account
+  return `${organizationConfig.links.my_account}${lang != null ? `&lang=${lang}` : ""}`
 }
 
 export async function getIdentityUrl(
@@ -26,8 +27,9 @@ export async function getIdentityUrl(
   }
 
   const organizationConfig = await getOrganizationConfig()
+  const lang = config.defaultAttributes?.orders?.language_code
 
   return `${organizationConfig.links.identity}/${type}?clientId=${
     config.clientId
-  }&scope=${scope ?? config.scope}&publicScope=${config.scope}&returnUrl=${getClosestLocationHref()}`
+  }&scope=${scope ?? config.scope}&publicScope=${config.scope}&returnUrl=${getClosestLocationHref()}${lang != null ? `&lang=${lang}` : ""}`
 }

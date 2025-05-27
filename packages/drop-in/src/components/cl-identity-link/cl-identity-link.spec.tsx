@@ -65,7 +65,7 @@ describe("cl-identity-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self">
-        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/&amp;lang=en" target="_self">
           Login
         </a>
       </cl-identity-link>
@@ -85,7 +85,7 @@ describe("cl-identity-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="signup" target="_self">
-        <a href="https://drop-in-js.commercelayer.app/identity/signup?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/signup?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/&amp;lang=en" target="_self">
           Sign Up
         </a>
       </cl-identity-link>
@@ -125,7 +125,7 @@ describe("cl-identity-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self" scope="market:code:usa-employees">
-        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa-employees&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa-employees&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/&amp;lang=en" target="_self">
           Login
         </a>
       </cl-identity-link>
@@ -148,7 +148,7 @@ describe("cl-identity-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self">
-        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/&amp;lang=en" target="_self">
           Login
         </a>
       </cl-identity-link>

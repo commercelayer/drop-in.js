@@ -106,7 +106,7 @@ describe("cl-my-account-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-my-account-link target="_blank">
-        <a href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123" target="_blank">
+        <a href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123&lang=en" target="_blank">
           My Account
         </a>
       </cl-my-account-link>
@@ -141,7 +141,7 @@ describe("cl-my-account-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-my-account-link target="_blank">
-        <a href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123" target="_blank">
+        <a href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123&lang=en" target="_blank">
           My Account
         </a>
       </cl-my-account-link>
