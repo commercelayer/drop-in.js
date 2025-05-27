@@ -104,6 +104,35 @@ export async function getCheckoutUrl(): Promise<string | undefined> {
   return organizationConfig.links.checkout
 }
 
+/**
+ * Update the language code of the order when it is different from the drop-in language code configuration.
+ */
+async function updateOrderLanguage(
+  order: Order | null,
+  orderParams: QueryParamsRetrieve,
+): Promise<Order | null> {
+  const config = getConfig()
+  const client = await createClient(config)
+
+  if (order === null) {
+    return null
+  }
+
+  if (order.language_code === config.defaultAttributes?.orders?.language_code) {
+    return order
+  }
+
+  const updatedOrder = await client.orders.update(
+    {
+      id: order.id,
+      language_code: config.defaultAttributes?.orders?.language_code,
+    },
+    orderParams,
+  )
+
+  return updatedOrder
+}
+
 export async function _getCart(): Promise<Order | null> {
   const config = getConfig()
   const client = await createClient(config)
@@ -129,7 +158,7 @@ export async function _getCart(): Promise<Order | null> {
       return null
     }
 
-    return order
+    return await updateOrderLanguage(order, orderParams)
   }
 
   const jwt = jwtDecode(token.accessToken)
@@ -152,7 +181,7 @@ export async function _getCart(): Promise<Order | null> {
     pageSize: 1,
   })
 
-  return order
+  return await updateOrderLanguage(order, orderParams)
 }
 
 export const getCart = memoize(pDebounce(_getCart, { wait: 10, maxWait: 50 }))
