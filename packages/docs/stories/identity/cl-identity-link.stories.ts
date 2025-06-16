@@ -20,6 +20,7 @@ const Template: StoryFn<Args> = (args) => {
       type=${args.type ?? nothing}
       target=${args.target ?? nothing}
       scope=${args.scope ?? nothing}
+      reset-password-url=${args["reset-password-url"] ?? nothing}
     >
       Identity link
     </cl-identity-link>

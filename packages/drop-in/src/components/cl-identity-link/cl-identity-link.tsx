@@ -37,6 +37,12 @@ export class ClIdentityLink {
   @Prop({ reflect: true }) type!: "login" | "signup" | "logout" | undefined
 
   /**
+   * Enable a custom reset password link visible on the login form page.
+   * When set, a "Forgot password?" link will be shown on the right below the Password field.
+   */
+  @Prop({ reflect: true }) resetPasswordUrl?: string
+
+  /**
    * Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes)
    * (used to restrict the dataset of your application to a market and/or stock location).
    * If specified, it will override the default scope set in the drop-in library configuration.
@@ -57,7 +63,7 @@ export class ClIdentityLink {
 
   private async updateUrl(type: typeof this.type): Promise<void> {
     this.href = isValidUnion(type, this.typeList)
-      ? await getIdentityUrl(type, this.scope)
+      ? await getIdentityUrl(type, this.scope, this.resetPasswordUrl)
       : undefined
 
     logUnion(this.host, "type", type, this.typeList)

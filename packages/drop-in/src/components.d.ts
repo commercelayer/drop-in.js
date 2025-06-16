@@ -104,6 +104,10 @@ export namespace Components {
     }
     interface ClIdentityLink {
         /**
+          * Enable a custom reset password link visible on the login form page. When set, a "Forgot password?" link will be shown on the right below the Password field.
+         */
+        "resetPasswordUrl"?: string;
+        /**
           * Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (used to restrict the dataset of your application to a market and/or stock location). If specified, it will override the default scope set in the drop-in library configuration. Otherwise, the default scope taken from the drop-in library configuration will be used.
          */
         "scope"?: string;
@@ -339,6 +343,10 @@ declare namespace LocalJSX {
         "target"?: "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClIdentityLink {
+        /**
+          * Enable a custom reset password link visible on the login form page. When set, a "Forgot password?" link will be shown on the right below the Password field.
+         */
+        "resetPasswordUrl"?: string;
         /**
           * Your sales channel [scope](https://docs.commercelayer.io/core/authentication#authorization-scopes) (used to restrict the dataset of your application to a market and/or stock location). If specified, it will override the default scope set in the drop-in library configuration. Otherwise, the default scope taken from the drop-in library configuration will be used.
          */
