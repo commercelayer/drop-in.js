@@ -46,6 +46,7 @@ export namespace Components {
         "kind"?: "sku" | "bundle";
         /**
           * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
+          * @default "cheapest"
          */
         "rule": "cheapest" | "fastest";
     }
@@ -73,10 +74,12 @@ export namespace Components {
     interface ClCart {
         /**
           * Indicate whether the minicart is open or not (available _only_ when the `cl-cart` component is used as _minicart_).
+          * @default false
          */
         "open": boolean;
         /**
           * If `true` the minicart automatically opens as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
+          * @default false
          */
         "openOnAdd": boolean;
         /**
@@ -87,18 +90,21 @@ export namespace Components {
     interface ClCartCount {
         /**
           * Toggle this switch to hide the counter when the cart is empty instead of showing `0`.
+          * @default false
          */
         "hideWhenEmpty": boolean;
     }
     interface ClCartLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+          * @default "_self"
          */
         "target": "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClCheckoutLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+          * @default "_self"
          */
         "target": "_self" | "_blank" | "_parent" | "_top";
     }
@@ -113,6 +119,7 @@ export namespace Components {
         "scope"?: string;
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+          * @default "_self"
          */
         "target": "_self" | "_blank" | "_parent" | "_top";
         /**
@@ -129,6 +136,7 @@ export namespace Components {
     interface ClMyAccountLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+          * @default "_self"
          */
         "target": "_self" | "_blank" | "_parent" | "_top";
     }
@@ -146,6 +154,7 @@ export namespace Components {
     interface ClPriceAmount {
         /**
           * The type of price amount to be displayed.
+          * @default "price"
          */
         "type": "price" | "compare-at";
     }
@@ -286,6 +295,7 @@ declare namespace LocalJSX {
         "kind"?: "sku" | "bundle";
         /**
           * The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery.
+          * @default "cheapest"
          */
         "rule"?: "cheapest" | "fastest";
     }
@@ -313,10 +323,12 @@ declare namespace LocalJSX {
     interface ClCart {
         /**
           * Indicate whether the minicart is open or not (available _only_ when the `cl-cart` component is used as _minicart_).
+          * @default false
          */
         "open"?: boolean;
         /**
           * If `true` the minicart automatically opens as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
+          * @default false
          */
         "openOnAdd"?: boolean;
         /**
@@ -327,18 +339,21 @@ declare namespace LocalJSX {
     interface ClCartCount {
         /**
           * Toggle this switch to hide the counter when the cart is empty instead of showing `0`.
+          * @default false
          */
         "hideWhenEmpty"?: boolean;
     }
     interface ClCartLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+          * @default "_self"
          */
         "target"?: "_self" | "_blank" | "_parent" | "_top";
     }
     interface ClCheckoutLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+          * @default "_self"
          */
         "target"?: "_self" | "_blank" | "_parent" | "_top";
     }
@@ -353,6 +368,7 @@ declare namespace LocalJSX {
         "scope"?: string;
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+          * @default "_self"
          */
         "target"?: "_self" | "_blank" | "_parent" | "_top";
         /**
@@ -369,6 +385,7 @@ declare namespace LocalJSX {
     interface ClMyAccountLink {
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
+          * @default "_self"
          */
         "target"?: "_self" | "_blank" | "_parent" | "_top";
     }
@@ -386,6 +403,7 @@ declare namespace LocalJSX {
     interface ClPriceAmount {
         /**
           * The type of price amount to be displayed.
+          * @default "price"
          */
         "type"?: "price" | "compare-at";
     }
