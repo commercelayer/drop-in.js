@@ -19,6 +19,7 @@ export async function getMyAccountUrl(): Promise<string | undefined> {
 export async function getIdentityUrl(
   type: "login" | "signup" | "logout",
   scope?: string,
+  resetPasswordUrl?: string,
 ): Promise<string | undefined> {
   const config = getConfig()
 
@@ -31,5 +32,5 @@ export async function getIdentityUrl(
 
   return `${organizationConfig.links.identity}/${type}?clientId=${
     config.clientId
-  }&scope=${scope ?? config.scope}&publicScope=${config.scope}&returnUrl=${getClosestLocationHref()}${lang != null ? `&lang=${lang}` : ""}`
+  }&scope=${scope ?? config.scope}&publicScope=${config.scope}&returnUrl=${getClosestLocationHref()}${lang != null ? `&lang=${lang}` : ""}${resetPasswordUrl != null ? `&resetPasswordUrl=${resetPasswordUrl}` : ""}`
 }
