@@ -11,7 +11,7 @@ beforeEach(() => {
 describe("cl-checkout-link.spec", () => {
   it("renders the checkout url without a cartId during the first load", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })

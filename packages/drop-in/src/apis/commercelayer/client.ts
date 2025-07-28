@@ -1,73 +1,24 @@
 import {
   type AuthenticateOptions,
-  type AuthenticateReturn,
-  authenticate,
-  jwtDecode,
-  jwtIsSalesChannel,
-  revoke,
+  makeSalesChannel,
 } from "@commercelayer/js-auth"
 import CommerceLayer, { type CommerceLayerClient } from "@commercelayer/sdk"
 import Cookies from "js-cookie"
 import memoize from "lodash/memoize"
 import { fireEvent } from "#apis/event"
-import { getKeyForCustomerToken, getKeyForGuestToken } from "#apis/storage"
 import { type Config, getConfig } from "./config"
 
 export type Token = (
   | {
-      type: "guest"
+      ownerType: "guest"
     }
   | {
-      type: "customer"
-      customerId: string
+      ownerType: "customer"
+      ownerId: string
     }
 ) & {
   accessToken: string
   scope?: string
-}
-
-function setToken(key: string, value: Token, expires?: Date): void {
-  Cookies.set(key, JSON.stringify(value), { expires })
-}
-
-function clearToken(key: string): void {
-  Cookies.remove(key)
-}
-
-function getToken(key: string): Token | undefined {
-  const cookie = Cookies.get(key)
-
-  if (cookie == null) {
-    return undefined
-  }
-
-  try {
-    return JSON.parse(cookie)
-  } catch (e) {
-    return undefined
-  }
-}
-
-async function revokeToken(
-  clientCredentials: AuthenticateOptions<"client_credentials">,
-  accessToken: string,
-): Promise<boolean> {
-  const res = await revoke({
-    clientId: clientCredentials.clientId,
-    token: accessToken,
-  })
-
-  return res.errors == null
-}
-
-async function getSalesChannelToken(
-  clientCredentials: AuthenticateOptions<"client_credentials">,
-): Promise<AuthenticateReturn<"client_credentials"> | null> {
-  return await authenticate("client_credentials", {
-    clientId: clientCredentials.clientId,
-    scope: clientCredentials.scope,
-    domain: clientCredentials.domain,
-  }).then((res) => (res.errors == null ? res : null))
 }
 
 const getCustomerInfoFromUrl = (): {
@@ -89,82 +40,45 @@ const getCustomerInfoFromUrl = (): {
   }
 }
 
-async function readCustomerToken(
-  clientCredentials: AuthenticateOptions<"client_credentials">,
-): Promise<Token | null> {
-  const cookieName = getKeyForCustomerToken(clientCredentials)
-  const cookieValue = getToken(cookieName) ?? null
+const getSalesChannel = memoize(
+  (clientCredentials) =>
+    makeSalesChannel(clientCredentials, {
+      async getKey(configuration, type) {
+        const scope = (configuration.scope ?? "undefined").replace(" ", "-")
+        const t = type === "guest" ? "token" : "session"
 
-  // const searchParams = new window.URL(window.location.href).searchParams
-  // const accessToken = searchParams.get('accessToken')
-  // const scope = searchParams.get('scope') ?? clientCredentials.scope
-  const { accessToken, scope = clientCredentials.scope } =
-    getCustomerInfoFromUrl()
-
-  if (accessToken == null) {
-    return cookieValue
-  }
-
-  const jwt = jwtDecode(accessToken)
-
-  if (jwtIsSalesChannel(jwt.payload) && jwt.payload.owner != null) {
-    const token: Token = {
-      type: "customer",
-      customerId: jwt.payload.owner.id,
-      accessToken,
-      scope,
-    }
-
-    setToken(cookieName, token, new Date(jwt.payload.exp * 1000))
-
-    return token
-  }
-
-  return cookieValue
-}
-
-async function readGuestToken(
-  clientCredentials: AuthenticateOptions<"client_credentials">,
-): Promise<Token> {
-  const cookieName = getKeyForGuestToken(clientCredentials)
-  const value = getToken(cookieName)
-
-  if (value !== undefined) {
-    return value
-  }
-
-  const salesChannelToken = await getSalesChannelToken(clientCredentials).catch(
-    (error) => {
-      throw new Error(
-        `Cannot get a sales channel token. ${error.body.error}. ${error.body.error_description}`,
-      )
-    },
-  )
-
-  if (salesChannelToken == null) {
-    throw new Error("Unable to get a valid sales channel token.")
-  }
-
-  const { accessToken, expires } = salesChannelToken
-
-  const token: Token = {
-    type: "guest",
-    accessToken,
-    scope: clientCredentials.scope,
-  }
-  setToken(cookieName, token, expires)
-
-  return token
-}
+        return `commercelayer_${t}-${configuration.clientId}-${scope}`
+      },
+      storage: {
+        async getItem(key: string) {
+          return JSON.parse(Cookies.get(key) ?? "null")
+        },
+        async removeItem(key) {
+          Cookies.remove(key)
+        },
+        async setItem(key, value) {
+          Cookies.set(key, JSON.stringify(value))
+        },
+      },
+    }),
+  (clientCredentials) => JSON.stringify(clientCredentials),
+)
 
 export const getAccessToken = memoize(
   async (
     clientCredentials: AuthenticateOptions<"client_credentials">,
   ): Promise<Token> => {
-    let token = await readCustomerToken(clientCredentials)
+    const salesChannel = getSalesChannel(clientCredentials)
+    let token = await salesChannel.getAuthorization()
 
-    if (token == null) {
-      token = await readGuestToken(clientCredentials)
+    const { accessToken, scope = clientCredentials.scope } =
+      getCustomerInfoFromUrl()
+
+    if (accessToken != null && scope != null) {
+      token = await salesChannel.setCustomer({
+        accessToken,
+        scope,
+      })
     }
 
     fireEvent("cl-identity-gettoken", [], token)
@@ -186,13 +100,11 @@ export async function createClient(
 
 export async function logout(): Promise<void> {
   const config = getConfig()
+  const salesChannel = getSalesChannel(config)
   const token = await getAccessToken(config)
 
-  if (token.type === "customer") {
-    const cookieName = getKeyForCustomerToken(config)
-    clearToken(cookieName)
-
-    await revokeToken(config, token.accessToken)
+  if (token.ownerType === "customer") {
+    await salesChannel.logoutCustomer()
 
     getAccessToken.cache.clear?.()
     // await getAccessToken(config)

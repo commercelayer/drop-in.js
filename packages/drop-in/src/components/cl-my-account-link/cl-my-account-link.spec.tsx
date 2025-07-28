@@ -12,7 +12,7 @@ beforeEach(() => {
 describe("cl-my-account-link.spec", () => {
   it("renders the my-account without href when guest", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
@@ -46,7 +46,7 @@ describe("cl-my-account-link.spec", () => {
 
   it("renders the my-account with a defined target", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
@@ -80,8 +80,8 @@ describe("cl-my-account-link.spec", () => {
 
   it("renders the my-account url when user is logged in", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "customer",
-      customerId: "1234",
+      ownerType: "customer",
+      ownerId: "1234",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
@@ -115,8 +115,8 @@ describe("cl-my-account-link.spec", () => {
 
   it("renders the my-account without href when user logged out", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "customer",
-      customerId: "1234",
+      ownerType: "customer",
+      ownerId: "1234",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
@@ -148,12 +148,12 @@ describe("cl-my-account-link.spec", () => {
     `)
 
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: "token-1234",
       scope: "market:code:usa",
     })
     fireEvent("cl-identity-gettoken", [], {
-      type: "guest",
+      ownerType: "guest",
       accessToken: "token-1234",
       scope: "market:code:usa",
     })

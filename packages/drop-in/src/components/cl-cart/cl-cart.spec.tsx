@@ -12,7 +12,7 @@ beforeEach(() => {
 describe("cl-cart.spec", () => {
   it("renders", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })

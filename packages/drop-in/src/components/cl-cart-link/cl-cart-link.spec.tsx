@@ -12,7 +12,7 @@ afterEach(() => {
 describe("cl-cart-link.spec", () => {
   it("renders the cart url without a cartId during the first load", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken,
       scope: "market:code:usa",
     })
@@ -46,7 +46,7 @@ describe("cl-cart-link.spec", () => {
 
   it("renders the cart url with a defined cartUrl", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken,
       scope: "market:code:usa",
     })
@@ -82,7 +82,7 @@ describe("cl-cart-link.spec", () => {
 
   it("renders the cart url with a cartId after clicking on the link when url is invalid", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken,
       scope: "market:code:usa",
     })

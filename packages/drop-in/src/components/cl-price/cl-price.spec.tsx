@@ -36,7 +36,7 @@ const fakePrices: { [sku: string]: Price } = {
 describe("cl-price.spec", () => {
   it("renders without attributes", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })

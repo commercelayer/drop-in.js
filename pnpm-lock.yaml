@@ -145,8 +145,8 @@ importers:
   packages/drop-in:
     dependencies:
       '@commercelayer/js-auth':
-        specifier: ^6.7.2
-        version: 6.7.2
+        specifier: https://pkg.pr.new/commercelayer/commercelayer-js-auth/@commercelayer/js-auth@810daa5
+        version: https://pkg.pr.new/commercelayer/commercelayer-js-auth/@commercelayer/js-auth@810daa5
       '@commercelayer/organization-config':
         specifier: ^2.3.0
         version: 2.3.0
@@ -912,8 +912,9 @@ packages:
   '@bufbuild/protobuf@2.5.0':
     resolution: {integrity: sha512-nniMblXT+dNyubek2OLKAYJnG/in4tmfS2c5CDnIvqfF9kFlERSG3FCBvmdqerpkWuPv0qhdGKReQ2OqKPG20w==}
 
-  '@commercelayer/js-auth@6.7.2':
-    resolution: {integrity: sha512-kk4VqN2iEOreXFq76YqTP83KhBs09Z5Ez9nZNlikXWf5DXzkrOfShqqEwq8ezHjSOlqs4xVyxgQzsEdPP35CeQ==}
+  '@commercelayer/js-auth@https://pkg.pr.new/commercelayer/commercelayer-js-auth/@commercelayer/js-auth@810daa5':
+    resolution: {tarball: https://pkg.pr.new/commercelayer/commercelayer-js-auth/@commercelayer/js-auth@810daa5}
+    version: 6.7.2
     engines: {node: '>=18.0.0'}
 
   '@commercelayer/organization-config@2.3.0':
@@ -6779,7 +6780,7 @@ snapshots:
 
   '@bufbuild/protobuf@2.5.0': {}
 
-  '@commercelayer/js-auth@6.7.2': {}
+  '@commercelayer/js-auth@https://pkg.pr.new/commercelayer/commercelayer-js-auth/@commercelayer/js-auth@810daa5': {}
 
   '@commercelayer/organization-config@2.3.0':
     dependencies:
