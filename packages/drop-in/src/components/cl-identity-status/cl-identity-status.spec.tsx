@@ -36,7 +36,7 @@ describe("cl-identity-status.spec", () => {
 
   it("renders as guest when user is guest", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
@@ -75,8 +75,8 @@ describe("cl-identity-status.spec", () => {
 
   it("renders as customer when user is customer", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "customer",
-      customerId: "1234",
+      ownerType: "customer",
+      ownerId: "1234",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
@@ -115,7 +115,7 @@ describe("cl-identity-status.spec", () => {
 
   it("renders as customer when user logged in", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
@@ -150,8 +150,8 @@ describe("cl-identity-status.spec", () => {
     `)
 
     fireEvent("cl-identity-gettoken", [], {
-      type: "customer",
-      customerId: "12as",
+      ownerType: "customer",
+      ownerId: "12as",
       accessToken: "token-1234",
       scope: "market:code:usa",
     })
@@ -178,8 +178,8 @@ describe("cl-identity-status.spec", () => {
 
   it("renders as guest when user logged out", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "customer",
-      customerId: "1234",
+      ownerType: "customer",
+      ownerId: "1234",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
@@ -214,7 +214,7 @@ describe("cl-identity-status.spec", () => {
     `)
 
     fireEvent("cl-identity-gettoken", [], {
-      type: "guest",
+      ownerType: "guest",
       accessToken: "token-1234",
       scope: "market:code:usa",
     })

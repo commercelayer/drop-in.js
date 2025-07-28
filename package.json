@@ -36,8 +36,8 @@
     "@biomejs/biome": "2.2.4",
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
-    "lerna": "^8.2.4",
-    "lint-staged": "^16.2.0",
+    "lerna": "^9.0.0",
+    "lint-staged": "^16.2.3",
     "replace-in-file": "^8.3.0",
     "typescript": "^5.9.2"
   },

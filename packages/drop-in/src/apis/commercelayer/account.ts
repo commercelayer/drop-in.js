@@ -4,9 +4,9 @@ import { getClosestLocationHref } from "@/utils/url"
 
 export async function getMyAccountUrl(): Promise<string | undefined> {
   const config = getConfig()
-  const { type } = await getAccessToken(config)
+  const { ownerType } = await getAccessToken(config)
 
-  if (type === "guest") {
+  if (ownerType === "guest") {
     return undefined
   }
 
