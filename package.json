@@ -27,16 +27,16 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=20.10",
+    "node": ">=20.17",
     "pnpm": "10.4.0"
   },
   "packageManager": "pnpm@10.4.0",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "concurrently": "^9.1.2",
+    "concurrently": "^9.2.0",
     "husky": "^9.1.7",
-    "lerna": "^8.2.2",
-    "lint-staged": "^15.5.2",
+    "lerna": "^8.2.4",
+    "lint-staged": "^16.1.2",
     "replace-in-file": "^8.3.0",
     "typescript": "^5.8.3"
   },
