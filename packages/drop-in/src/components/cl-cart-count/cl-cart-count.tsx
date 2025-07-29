@@ -1,5 +1,13 @@
 import type { Order } from "@commercelayer/sdk"
-import { Component, Host, type JSX, Prop, State, h } from "@stencil/core"
+import {
+  Component,
+  Host,
+  // biome-ignore lint/correctness/noUnusedImports: "h" is used in the render method
+  h,
+  type JSX,
+  Prop,
+  State,
+} from "@stencil/core"
 import { getCart } from "#apis/commercelayer/cart"
 import { listenTo } from "#apis/event"
 

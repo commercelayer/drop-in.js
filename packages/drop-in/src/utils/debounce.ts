@@ -1,4 +1,4 @@
-import type { DebounceSettings, DebouncedFunc } from "lodash"
+import type { DebouncedFunc, DebounceSettings } from "lodash"
 import debounce from "lodash/debounce"
 import memoize from "lodash/memoize"
 

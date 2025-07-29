@@ -2,12 +2,13 @@ import {
   Component,
   Element,
   Host,
+  // biome-ignore lint/correctness/noUnusedImports: "h" is used in the render method
+  h,
   type JSX,
   Listen,
   Prop,
   State,
   Watch,
-  h,
 } from "@stencil/core"
 import minBy from "lodash/minBy"
 import type { AvailabilityUpdateEventPayload } from "#apis/types"

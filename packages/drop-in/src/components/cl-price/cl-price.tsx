@@ -1,5 +1,13 @@
 import type { Price } from "@commercelayer/sdk"
-import { Component, Element, type JSX, Prop, Watch, h } from "@stencil/core"
+import {
+  Component,
+  Element,
+  // biome-ignore lint/correctness/noUnusedImports: "h" is used in the render method
+  h,
+  type JSX,
+  Prop,
+  Watch,
+} from "@stencil/core"
 import debounce from "lodash/debounce"
 import { getPrice as getBundlePrice } from "#apis/commercelayer/bundles"
 import { getPrice as getSkuPrice } from "#apis/commercelayer/skus"

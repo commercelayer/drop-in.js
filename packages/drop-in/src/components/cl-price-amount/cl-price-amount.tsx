@@ -2,11 +2,12 @@ import type { Price } from "@commercelayer/sdk"
 import {
   Component,
   Host,
+  // biome-ignore lint/correctness/noUnusedImports: "h" is used in the render method
+  h,
   type JSX,
   Listen,
   Prop,
   State,
-  h,
 } from "@stencil/core"
 
 @Component({
