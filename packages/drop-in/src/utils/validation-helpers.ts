@@ -48,7 +48,8 @@ type MustInclude<T, U extends T[]> = [T] extends [ValueOf<U>] ? U : never
  * Converts an Union type to a Tuple
  */
 export function unionToTuple<T>() {
-  return <U extends NonEmptyArray<NonNullable<T>>>(
-    ...elements: MustInclude<NonNullable<T>, U>
+  type IsValid<T> = NonNullable<Exclude<T, `metadata.${string}`>>
+  return <U extends NonEmptyArray<IsValid<T>>>(
+    ...elements: MustInclude<IsValid<T>, U>
   ) => elements
 }

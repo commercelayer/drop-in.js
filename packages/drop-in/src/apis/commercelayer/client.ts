@@ -6,11 +6,15 @@ import {
   jwtIsSalesChannel,
   revoke,
 } from "@commercelayer/js-auth"
-import CommerceLayer, { type CommerceLayerClient } from "@commercelayer/sdk"
+import CommerceLayer, {
+  type CommerceLayerClient,
+  type Customer,
+} from "@commercelayer/sdk"
 import Cookies from "js-cookie"
 import { memoize } from "lodash-es"
 import { fireEvent } from "#apis/event"
 import { getKeyForCustomerToken, getKeyForGuestToken } from "#apis/storage"
+import { pDebounce } from "#utils/debounce"
 import { type Config, getConfig } from "./config"
 
 export type Token = (
@@ -183,6 +187,29 @@ export async function createClient(
     domain: config.domain,
   })
 }
+
+export const customerFields = [
+  "email",
+  "metadata",
+] as const satisfies (keyof Customer)[]
+
+async function _getCustomer(): Promise<Customer | null> {
+  const config = getConfig()
+  const token = await getAccessToken(config)
+
+  if (token.type === "customer") {
+    const client = await createClient(config)
+    return await client.customers.retrieve(token.customerId, {
+      fields: customerFields,
+    })
+  }
+
+  return null
+}
+
+export const getCustomer = memoize(
+  pDebounce(_getCustomer, { wait: 10, maxWait: 50 }),
+)
 
 export async function logout(): Promise<void> {
   const config = getConfig()
