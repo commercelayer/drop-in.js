@@ -1,5 +1,8 @@
+import { createRequire } from "node:module"
 import type { StorybookConfig } from "@storybook/types"
 import remarkGfm from "remark-gfm"
+
+const require = createRequire(import.meta.url)
 
 const storybookConfig: StorybookConfig = {
   stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -39,11 +42,12 @@ const storybookConfig: StorybookConfig = {
   features: {},
   staticDirs: ["../public"],
   core: {
-    disableTelemetry: true, // 👈 Disables telemetry
+    disableTelemetry: true,
+    disableWhatsNewNotifications: true,
   },
   docs: {
     docsMode: true,
   },
 }
 
-module.exports = storybookConfig
+export default storybookConfig

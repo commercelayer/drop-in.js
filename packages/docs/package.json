@@ -35,6 +35,7 @@
     "@storybook/theming": "^8.6.14",
     "@storybook/types": "^8.6.14",
     "@types/common-tags": "^1.8.4",
+    "@types/node": "^20.19.9",
     "@types/react": "^19",
     "@types/react-syntax-highlighter": "^15.5.13",
     "babel-loader": "^10.0.0",
