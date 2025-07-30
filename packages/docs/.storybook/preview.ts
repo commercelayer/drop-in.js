@@ -1,7 +1,6 @@
 import customElements, {
   type JsonDocsProp,
 } from "@commercelayer/drop-in.js/dist/custom-elements"
-import { defineCustomElements } from "@commercelayer/drop-in.js/dist/loader"
 import { SyntaxHighlighter } from "@storybook/components"
 import type { Preview } from "@storybook/html"
 import diff from "react-syntax-highlighter/dist/esm/languages/prism/diff"
@@ -165,7 +164,11 @@ const preview: Preview = {
       return story()
     },
     (story) => {
-      defineCustomElements()
+      const script = document.createElement("script")
+      script.type = "module"
+      script.src = "dist/drop-in/drop-in.esm.js"
+      document.head.appendChild(script)
+
       return story()
     },
   ],

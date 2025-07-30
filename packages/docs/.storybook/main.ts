@@ -25,7 +25,6 @@ const storybookConfig: StorybookConfig = {
       },
     },
     "@storybook/addon-interactions",
-    "@storybook/addon-webpack5-compiler-swc",
   ],
   // @ts-expect-error This 'managerEntries' exists.
   managerEntries: [
@@ -36,7 +35,7 @@ const storybookConfig: StorybookConfig = {
     require.resolve("./addon-gh-repository/manager.tsx"),
   ],
   framework: {
-    name: "@storybook/html-webpack5",
+    name: "@storybook/html-vite",
     options: {},
   },
   features: {},
