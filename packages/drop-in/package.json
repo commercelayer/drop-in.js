@@ -48,10 +48,10 @@
     "@commercelayer/js-auth": "^6.7.2",
     "@commercelayer/organization-config": "^2.4.0",
     "@commercelayer/sdk": "^6.45.0",
-    "@types/lodash": "^4.17.20",
+    "@types/lodash-es": "^4.17.12",
     "iframe-resizer": "4.3.11",
     "js-cookie": "^3.0.5",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "type-fest": "^4.41.0"
   },
   "peerDependencies": {

@@ -4,7 +4,7 @@ import {
   getMfeConfig as mergeConfig,
 } from "@commercelayer/organization-config"
 import type { OrderCreate, ResourceRel } from "@commercelayer/sdk"
-import merge from "lodash/merge"
+import { merge } from "lodash-es"
 import type { ConditionalExcept, OmitDeep, SetRequired } from "type-fest"
 import { memoize } from "#utils/utils"
 import { createClient, getAccessToken } from "./client"

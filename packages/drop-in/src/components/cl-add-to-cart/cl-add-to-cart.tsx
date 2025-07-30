@@ -10,7 +10,7 @@ import {
   State,
   Watch,
 } from "@stencil/core"
-import debounce from "lodash/debounce"
+import { debounce } from "lodash-es"
 import { getBundle } from "#apis/commercelayer/bundles"
 import { addItem, getCart, getCartQuantity } from "#apis/commercelayer/cart"
 import { getSku } from "#apis/commercelayer/skus"
