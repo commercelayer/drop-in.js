@@ -2,10 +2,11 @@ import {
   Component,
   Element,
   Host,
+  // biome-ignore lint/correctness/noUnusedImports: "h" is used in the render method
+  h,
   type JSX,
   Prop,
   State,
-  h,
 } from "@stencil/core"
 import { getCartUrl, isValidUrl } from "#apis/commercelayer/cart"
 import { listenTo } from "#apis/event"

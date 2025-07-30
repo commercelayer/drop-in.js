@@ -1,7 +1,7 @@
 import { IconButton } from "@storybook/components"
 import { MarkupIcon } from "@storybook/icons"
 import { useGlobals, useStorybookApi } from "@storybook/manager-api"
-import React, { useCallback, useEffect } from "react"
+import React from "react"
 import {
   ADDON_ID,
   ADDON_TITLE,
@@ -15,7 +15,7 @@ export const Tool = () => {
   const active = globals[PARAM_KEY] === true || globals[PARAM_KEY] === "true"
   const api = useStorybookApi()
 
-  const toggle = useCallback(
+  const toggle = React.useCallback(
     () =>
       updateGlobals({
         [PARAM_KEY]: !active,
@@ -23,7 +23,7 @@ export const Tool = () => {
     [updateGlobals, active],
   )
 
-  useEffect(() => {
+  React.useEffect(() => {
     api.setAddonShortcut(ADDON_ID, {
       label: `Toggle \`${FILENAME}\` [D]`,
       defaultShortcut: ["D"],

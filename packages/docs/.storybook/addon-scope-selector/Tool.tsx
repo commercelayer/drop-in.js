@@ -6,13 +6,13 @@ import {
 } from "@storybook/components"
 import { BasketIcon, CheckIcon } from "@storybook/icons"
 import { color, styled } from "@storybook/theming"
-import React, { useCallback } from "react"
+import React from "react"
 import {
   ADDON_TITLE,
+  getSelectedScopeKey,
   PARAM_KEY,
   SCOPES,
   TOOL_ID,
-  getSelectedScopeKey,
 } from "./constants"
 
 const scopes = Object.keys(SCOPES) as (keyof typeof SCOPES)[]
@@ -20,7 +20,7 @@ const scopes = Object.keys(SCOPES) as (keyof typeof SCOPES)[]
 type Scope = keyof typeof SCOPES
 
 export const Tool = () => {
-  const isActive = useCallback((scope: Scope) => {
+  const isActive = React.useCallback((scope: Scope) => {
     return getSelectedScopeKey() === scope
   }, [])
 

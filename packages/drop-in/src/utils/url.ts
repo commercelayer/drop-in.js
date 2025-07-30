@@ -10,7 +10,7 @@ export function getClosestLocationHref(): string {
 
   try {
     parentUrl = window.parent.location.href
-  } catch (error) {}
+  } catch (_error) {}
 
   return parentUrl !== undefined && parentUrl !== currentUrl
     ? parentUrl

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.1.3/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -7,21 +7,22 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "include": ["packages/docs/**", "packages/drop-in/**"],
-    "ignore": [
-      "packages/drop-in/.stencil",
-      "packages/docs/storybook-static",
-      "packages/docs/public",
-      "packages/drop-in/.build",
-      "packages/drop-in/dist",
-      "packages/drop-in/www",
-      "packages/drop-in/stencil.config.ts",
-      "packages/drop-in/stencil.test.config.ts",
-      "packages/drop-in/jest.setup.ts",
-      "*.d.ts",
-      "replace-jsdelivr.js",
-      "node_modules",
-      "package.json"
+    "includes": [
+      "**/packages/docs/**",
+      "**/packages/drop-in/**",
+      "!**/packages/drop-in/.stencil",
+      "!**/packages/docs/storybook-static",
+      "!**/packages/docs/public",
+      "!**/packages/drop-in/.build",
+      "!**/packages/drop-in/dist",
+      "!**/packages/drop-in/www",
+      "!**/packages/drop-in/stencil.config.ts",
+      "!**/packages/drop-in/stencil.test.config.ts",
+      "!**/packages/drop-in/jest.setup.ts",
+      "!**/*.d.ts",
+      "!**/replace-jsdelivr.js",
+      "!**/node_modules",
+      "!**/package.json"
     ]
   },
   "formatter": {
@@ -29,9 +30,7 @@
     "indentStyle": "space",
     "indentWidth": 2
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {

@@ -1,5 +1,6 @@
-import { A, IconButton, Separator } from "@storybook/components"
+import { IconButton, Separator } from "@storybook/components"
 import { GithubIcon } from "@storybook/icons"
+// biome-ignore lint/correctness/noUnusedImports: React is used in the render method
 import React from "react"
 import { ADDON_NAME, REPOSITORY_URL, TOOL_ID } from "./constants"
 

@@ -43,7 +43,7 @@ function getToken(key: string): Token | undefined {
 
   try {
     return JSON.parse(cookie)
-  } catch (e) {
+  } catch (_e) {
     return undefined
   }
 }
