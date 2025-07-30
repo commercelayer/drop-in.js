@@ -13,6 +13,9 @@ export const config: Config = {
 
   testing: {
     browserHeadless: 'shell',
-    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+    moduleNameMapper: {
+      'lodash-es': 'lodash'
+    }
   }
 }

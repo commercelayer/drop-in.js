@@ -1,6 +1,9 @@
-import type { DebouncedFunc, DebounceSettings } from "lodash"
-import debounce from "lodash/debounce"
-import memoize from "lodash/memoize"
+import {
+  type DebouncedFunc,
+  type DebounceSettings,
+  debounce,
+  memoize,
+} from "lodash-es"
 
 interface Options {
   wait: number

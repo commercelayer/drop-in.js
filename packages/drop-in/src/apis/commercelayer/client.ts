@@ -8,7 +8,7 @@ import {
 } from "@commercelayer/js-auth"
 import CommerceLayer, { type CommerceLayerClient } from "@commercelayer/sdk"
 import Cookies from "js-cookie"
-import memoize from "lodash/memoize"
+import { memoize } from "lodash-es"
 import { fireEvent } from "#apis/event"
 import { getKeyForCustomerToken, getKeyForGuestToken } from "#apis/storage"
 import { type Config, getConfig } from "./config"

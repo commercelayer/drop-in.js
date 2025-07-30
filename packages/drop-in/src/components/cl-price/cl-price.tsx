@@ -8,7 +8,7 @@ import {
   Prop,
   Watch,
 } from "@stencil/core"
-import debounce from "lodash/debounce"
+import { debounce } from "lodash-es"
 import { getPrice as getBundlePrice } from "#apis/commercelayer/bundles"
 import { getPrice as getSkuPrice } from "#apis/commercelayer/skus"
 import {
