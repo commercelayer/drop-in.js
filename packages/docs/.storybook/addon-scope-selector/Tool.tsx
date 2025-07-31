@@ -1,12 +1,12 @@
+import { BasketIcon, CheckIcon } from "@storybook/icons"
+import React from "react"
 import {
   IconButton,
   Separator,
   TooltipLinkList,
   WithTooltip,
-} from "@storybook/components"
-import { BasketIcon, CheckIcon } from "@storybook/icons"
-import { color, styled } from "@storybook/theming"
-import React from "react"
+} from "storybook/internal/components"
+import { color, styled } from "storybook/theming"
 import {
   ADDON_TITLE,
   getSelectedScopeKey,

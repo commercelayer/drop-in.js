@@ -1,7 +1,7 @@
-import { IconButton } from "@storybook/components"
 import { MarkupIcon } from "@storybook/icons"
-import { useGlobals, useStorybookApi } from "@storybook/manager-api"
 import React from "react"
+import { IconButton } from "storybook/internal/components"
+import { useGlobals, useStorybookApi } from "storybook/manager-api"
 import {
   ADDON_ID,
   ADDON_TITLE,
