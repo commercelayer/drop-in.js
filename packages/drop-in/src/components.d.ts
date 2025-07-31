@@ -108,6 +108,12 @@ export namespace Components {
          */
         "target": "_self" | "_blank" | "_parent" | "_top";
     }
+    interface ClIdentityInfo {
+        /**
+          * The field to be displayed.  Valid values are: - `"email"` - `"metadata.*"` (e.g. `"metadata.firstname"`, etc.)
+         */
+        "field": string;
+    }
     interface ClIdentityLink {
         /**
           * Enable a custom reset password link visible on the login form page. When set, a "Forgot password?" link will be shown on the right below the Password field.
@@ -208,6 +214,12 @@ declare global {
         prototype: HTMLClCheckoutLinkElement;
         new (): HTMLClCheckoutLinkElement;
     };
+    interface HTMLClIdentityInfoElement extends Components.ClIdentityInfo, HTMLStencilElement {
+    }
+    var HTMLClIdentityInfoElement: {
+        prototype: HTMLClIdentityInfoElement;
+        new (): HTMLClIdentityInfoElement;
+    };
     interface HTMLClIdentityLinkElement extends Components.ClIdentityLink, HTMLStencilElement {
     }
     var HTMLClIdentityLinkElement: {
@@ -247,6 +259,7 @@ declare global {
         "cl-cart-count": HTMLClCartCountElement;
         "cl-cart-link": HTMLClCartLinkElement;
         "cl-checkout-link": HTMLClCheckoutLinkElement;
+        "cl-identity-info": HTMLClIdentityInfoElement;
         "cl-identity-link": HTMLClIdentityLinkElement;
         "cl-identity-status": HTMLClIdentityStatusElement;
         "cl-my-account-link": HTMLClMyAccountLinkElement;
@@ -357,6 +370,12 @@ declare namespace LocalJSX {
          */
         "target"?: "_self" | "_blank" | "_parent" | "_top";
     }
+    interface ClIdentityInfo {
+        /**
+          * The field to be displayed.  Valid values are: - `"email"` - `"metadata.*"` (e.g. `"metadata.firstname"`, etc.)
+         */
+        "field": string;
+    }
     interface ClIdentityLink {
         /**
           * Enable a custom reset password link visible on the login form page. When set, a "Forgot password?" link will be shown on the right below the Password field.
@@ -416,6 +435,7 @@ declare namespace LocalJSX {
         "cl-cart-count": ClCartCount;
         "cl-cart-link": ClCartLink;
         "cl-checkout-link": ClCheckoutLink;
+        "cl-identity-info": ClIdentityInfo;
         "cl-identity-link": ClIdentityLink;
         "cl-identity-status": ClIdentityStatus;
         "cl-my-account-link": ClMyAccountLink;
@@ -435,6 +455,7 @@ declare module "@stencil/core" {
             "cl-cart-count": LocalJSX.ClCartCount & JSXBase.HTMLAttributes<HTMLClCartCountElement>;
             "cl-cart-link": LocalJSX.ClCartLink & JSXBase.HTMLAttributes<HTMLClCartLinkElement>;
             "cl-checkout-link": LocalJSX.ClCheckoutLink & JSXBase.HTMLAttributes<HTMLClCheckoutLinkElement>;
+            "cl-identity-info": LocalJSX.ClIdentityInfo & JSXBase.HTMLAttributes<HTMLClIdentityInfoElement>;
             "cl-identity-link": LocalJSX.ClIdentityLink & JSXBase.HTMLAttributes<HTMLClIdentityLinkElement>;
             "cl-identity-status": LocalJSX.ClIdentityStatus & JSXBase.HTMLAttributes<HTMLClIdentityStatusElement>;
             "cl-my-account-link": LocalJSX.ClMyAccountLink & JSXBase.HTMLAttributes<HTMLClMyAccountLinkElement>;

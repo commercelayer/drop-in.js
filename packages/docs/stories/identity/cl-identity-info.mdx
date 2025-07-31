@@ -1,0 +1,26 @@
+import { Canvas, Meta, Story, Controls, Source } from '@storybook/addon-docs/blocks'
+import * as Stories from './cl-identity-info.stories.ts';
+import { Alert } from '../assets/components'
+
+<Meta of={Stories} />
+
+# Identity information
+
+The `cl-identity-info` component is a placeholder used to show [customer](https://docs.commercelayer.io/core/api-reference/customers) information given a valid customer field.
+
+When the customer is not logged-in, nothing will be displayed and the component will be rendered as an empty box without any size. Give it a try here below by <cl-identity-link type="login" target="_blank">logging in</cl-identity-link> and <cl-identity-link type="logout" target="_parent">logging out</cl-identity-link>:
+
+<Canvas of={Stories.Basic} />
+
+<Controls of={Stories.Basic} />
+
+### Information by identity status
+
+Remember that you can use the [`cl-identity-status`](?path=/docs/components-identity-cl-identity-status--docs) component to [conditionally](?path=/docs/components-identity-cl-identity-status--docs#mutually-exclusive-content) render content based on the authentication status of the customer. In this regard, the `cl-identity-info` component can be used inside a `cl-identity-status` component to display specific data only for logged customers (the email address and/or other info set within the customer's `metadata` object), as shown in the snippet below:
+
+<Source language='html' dark code={`
+<cl-identity-status type="customer">
+  Hi <cl-identity-info field="metadata.firstname"></cl-identity-info> <cl-identity-info field="metadata.lastname"></cl-identity-info>
+  (<cl-identity-info field="email"></cl-identity-info>)!
+</cl-identity-status>
+`} />

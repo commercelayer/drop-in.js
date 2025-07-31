@@ -118,7 +118,7 @@ const preview: Preview = {
             "Checkout",
             ["cl-checkout-link"],
             "Identity",
-            ["cl-identity-link", "cl-identity-status"],
+            ["cl-identity-link", "cl-identity-status", "cl-identity-info"],
             "My account",
             ["cl-my-account-link"],
           ],
