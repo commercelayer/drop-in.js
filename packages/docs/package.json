@@ -1,7 +1,7 @@
 {
   "name": "docs",
   "private": true,
-  "version": "2.15.0",
+  "version": "2.16.0",
   "scripts": {
     "start": "concurrently -n copy,sass,app -c 'bgMagenta,bgMagenta,bgMagenta' 'pnpm build:copy:watch' 'pnpm build:sass:watch' 'storybook dev -p 6006'",
     "build:copy": "cp -r ../drop-in/dist public/",
@@ -43,7 +43,7 @@
     "vite": "^7.0.6"
   },
   "dependencies": {
-    "@commercelayer/drop-in.js": "workspace:^2.15.0",
+    "@commercelayer/drop-in.js": "workspace:^2.16.0",
     "lit-html": "^3.3.1"
   }
 }
