@@ -49,6 +49,12 @@ try {
     ignore: [
       './node_modules/**',
       './**/node_modules/**',
+
+      './packages/drop-in/dist/**',
+      './packages/drop-in/www/**',
+
+      './packages/docs/storybook-static/**',
+      './packages/docs/public/dist/**',
     ],
     files: [
       './**/*.md*',
