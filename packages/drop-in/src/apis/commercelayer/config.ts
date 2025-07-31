@@ -11,6 +11,12 @@ import { createClient, getAccessToken } from "./client"
 
 export interface CommerceLayerConfig {
   /**
+   * The version of the library.
+   * This is automatically set by the build process and should not be manually specified.
+   */
+  version: "drop-in.js@2.16.0"
+
+  /**
    * The client ID (from you API credentials).
    * @see https://docs.commercelayer.io/core/authentication/client-credentials
    */
@@ -90,6 +96,9 @@ export function getConfig(): Config {
       `"window.commercelayerConfig" is required.\n${documentationLink}\n`,
     )
   }
+
+  // NOTE: This is automatically set by the build process and should not be manually specified.
+  window.commercelayerConfig.version = "drop-in.js@2.16.0"
 
   const commercelayerConfig: CommerceLayerConfig = window.commercelayerConfig
 
