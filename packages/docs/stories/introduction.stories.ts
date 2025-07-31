@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from "@storybook/html"
+import type { Meta, StoryFn } from "@storybook/html-vite"
 import { html } from "lit-html"
 import { create } from "../utils"
 import { codes } from "./assets/constants"

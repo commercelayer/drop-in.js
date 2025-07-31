@@ -1,6 +1,6 @@
 import { createRequire } from "node:module"
-import type { StorybookConfig } from "@storybook/types"
 import remarkGfm from "remark-gfm"
+import type { StorybookConfig } from "storybook/internal/types"
 
 const require = createRequire(import.meta.url)
 
@@ -8,12 +8,6 @@ const storybookConfig: StorybookConfig = {
   stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
     "@storybook/addon-links",
-    {
-      name: "@storybook/addon-essentials",
-      options: {
-        docs: false,
-      },
-    },
     {
       name: "@storybook/addon-docs",
       options: {
@@ -24,7 +18,6 @@ const storybookConfig: StorybookConfig = {
         },
       },
     },
-    "@storybook/addon-interactions",
   ],
   // @ts-expect-error This 'managerEntries' exists.
   managerEntries: [

@@ -1,5 +1,5 @@
 import type { DropInArgs } from "@commercelayer/drop-in.js/dist/custom-elements-args"
-import type { Meta, StoryFn } from "@storybook/html"
+import type { Meta, StoryFn } from "@storybook/html-vite"
 import { html, nothing } from "lit-html"
 import { getSelectedScopeValue } from "../../.storybook/addon-scope-selector/constants"
 import { create } from "../../utils"

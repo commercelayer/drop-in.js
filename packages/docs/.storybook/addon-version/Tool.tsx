@@ -1,6 +1,6 @@
-import { IconButton, Separator } from "@storybook/components"
 // biome-ignore lint/correctness/noUnusedImports: React is used in the render method
 import React from "react"
+import { IconButton, Separator } from "storybook/internal/components"
 import { ADDON_NAME, LINK_URL, TOOL_ID } from "./constants"
 
 export const Tool = () => {

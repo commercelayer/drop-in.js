@@ -1,9 +1,9 @@
 import customElements, {
   type JsonDocsProp,
 } from "@commercelayer/drop-in.js/dist/custom-elements"
-import { SyntaxHighlighter } from "@storybook/components"
-import type { Preview } from "@storybook/html"
+import type { Preview } from "@storybook/html-vite"
 import diff from "react-syntax-highlighter/dist/esm/languages/prism/diff"
+import { SyntaxHighlighter } from "storybook/internal/components"
 import { createConfig } from "../stories/assets/constants"
 import {
   FILENAME as DROP_IN_CSS_FILENAME,
