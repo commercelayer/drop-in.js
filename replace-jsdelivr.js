@@ -15,7 +15,7 @@
  */
 
 import { replaceInFileSync } from 'replace-in-file'
-import lernaJson from './lerna.json' assert { type: 'json' }
+import lernaJson from './lerna.json' with { type: 'json' }
 
 const [major, minor, patch] = lernaJson.version.split('.')
 
@@ -32,6 +32,10 @@ const tasks = [
   {
     from: /`(drop-in.js@)([0-9]+\.[0-9]+\.[0-9a-z\-]+)`/g,
     to: `\`$1${lernaJson.version}\``
+  },
+  {
+    from: /\"(drop-in.js@)([0-9]+\.[0-9]+\.[0-9a-z\-]+)\"/g,
+    to: `\"$1${lernaJson.version}\"`
   },
   {
     from: /({\/\* DO NOT REMOVE - replace version \*\/}v)([0-9a-z\.\-]+)/g,
