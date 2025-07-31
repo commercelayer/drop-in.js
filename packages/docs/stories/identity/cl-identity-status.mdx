@@ -7,7 +7,7 @@ import { Alert } from '../assets/components'
 
 # Identity status
 
-The `cl-identity-status` is a placeholder used to [display specific content](#mutually-exclusive-content) depending on whether the user is logged in or not.
+The `cl-identity-status` component is a placeholder used to [display specific content](#mutually-exclusive-content) depending on whether the user is logged in or not.
 
 The inner message will be displayed based on the status type, matched against the currently stored access token. If the `type` attribute is set to `customer`, the message will be visible only to logged users. Vice versa, if it is set to `guest`, the message will be visible only to non-logged users. Give it a try here below:
 
@@ -17,7 +17,7 @@ The inner message will be displayed based on the status type, matched against th
 
 ### Mutually exclusive content
 
-Using two instances of the `cl-identity-status` with different `type` you can you can show different editorial content to logged customers than what you show to guests, as shown in the snippet below:
+Using two instances of the `cl-identity-status` component with different `type` you can you can show different editorial content to logged customers than what you show to guests, as shown in the snippet below:
 
 <Canvas of={Stories.Message} />
 

@@ -9,7 +9,7 @@
 
 | Property             | Attribute | Description                                                                                                    | Type     | Default     |
 | -------------------- | --------- | -------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| `field` _(required)_ | `field`   | The field to be displayed.  Valid values are: - "`email`" - "`metadata.*`" _(e.g. "metadata.firstname", etc.)_ | `string` | `undefined` |
+| `field` _(required)_ | `field`   | The field to be displayed.  Valid values are: - `"email"` - `"metadata.*"` (e.g. `"metadata.firstname"`, etc.) | `string` | `undefined` |
 
 
 ----------------------------------------------

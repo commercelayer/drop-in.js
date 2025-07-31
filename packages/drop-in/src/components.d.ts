@@ -110,7 +110,7 @@ export namespace Components {
     }
     interface ClIdentityInfo {
         /**
-          * The field to be displayed.  Valid values are: - "`email`" - "`metadata.*`" _(e.g. "metadata.firstname", etc.)_
+          * The field to be displayed.  Valid values are: - `"email"` - `"metadata.*"` (e.g. `"metadata.firstname"`, etc.)
          */
         "field": string;
     }
@@ -372,7 +372,7 @@ declare namespace LocalJSX {
     }
     interface ClIdentityInfo {
         /**
-          * The field to be displayed.  Valid values are: - "`email`" - "`metadata.*`" _(e.g. "metadata.firstname", etc.)_
+          * The field to be displayed.  Valid values are: - `"email"` - `"metadata.*"` (e.g. `"metadata.firstname"`, etc.)
          */
         "field": string;
     }

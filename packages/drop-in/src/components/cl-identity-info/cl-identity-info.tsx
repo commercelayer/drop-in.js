@@ -28,8 +28,8 @@ export class ClIdentityInfo {
    * The field to be displayed.
    *
    * Valid values are:
-   * - "`email`"
-   * - "`metadata.*`" _(e.g. "metadata.firstname", etc.)_
+   * - `"email"`
+   * - `"metadata.*"` (e.g. `"metadata.firstname"`, etc.)
    */
   @Prop({ reflect: true }) field!: string
 
