@@ -74,9 +74,9 @@
       };
     </script>
   </head>
-  <body>
-    <div class="container mx-auto p-6">
-      <nav id="header" class="flex mb-12">
+  <body class="bg-[url(https://www.transparenttextures.com/patterns/food.png)] pt-[152px]">
+    <nav id="header" class="backdrop-blur-md fixed top-0 left-0 w-full">
+      <div class="container mx-auto p-6 flex">
         <menu id="main-navigation">
             <div>
               <cl-identity-status type="guest">
@@ -131,13 +131,15 @@
             <cl-cart open-on-add></cl-cart>
           </cl-cart-link>
         </div>
-      </nav>
+      </div>
+    </nav>
+    <div class="container mx-auto p-6">
 
       <main>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-center gap-6">
 
           <!-- <product-card> -->
-          <div data-id="product-card" class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2 border border-gray-100">
+          <div data-id="product-card" class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2 border border-gray-100 bg-white">
             <div data-id="pc--selector" class="mb-4">
               <code>
                 <select name="code" aria-label="Select a product">
@@ -184,7 +186,7 @@
           </div>
           <!-- </product-card> -->
 
-          <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2">
+          <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2 bg-white">
             <div class="mb-4"><code>EDITORIAL BANNER</code></div>
             <cl-identity-status type="guest">
               <div class="text-xl"><img alt="Register" class="max-h-[325px] w-full object-contain" src="https://commercelayer.github.io/drop-in.js/register-v.jpg" /></div>
