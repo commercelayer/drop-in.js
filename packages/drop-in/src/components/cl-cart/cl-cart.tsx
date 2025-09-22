@@ -7,6 +7,7 @@ import {
   h,
   type JSX,
   Listen,
+  Method,
   Prop,
   State,
   Watch,
@@ -78,7 +79,10 @@ export class ClCart {
   /** Current hosted cart url */
   @State() href: string | undefined
 
-  @State() isMinicart = false
+  /**
+   * The opener of the minicart.
+   */
+  @State() opener: HTMLElement | null = null
 
   /**
    * Used for:
@@ -152,6 +156,17 @@ export class ClCart {
   }
 
   /**
+   * Open the minicart and set the opener so that the minicart can be closed by focusing on the opener.
+   * (available _only_ when the `cl-cart` component is used as _minicart_).
+   * @param opener The opener of the minicart.
+   */
+  @Method()
+  async openMinicart(opener: HTMLElement): Promise<void> {
+    this.opener = opener
+    this.open = true
+  }
+
+  /**
    * Check whether the current url has the `openDirective` query parameter.
    * @returns Whether the current url has the `openDirective`
    */
@@ -180,7 +195,8 @@ export class ClCart {
       this.updateMinicartUrl()
 
       if (!opened) {
-        this.host.closest("cl-cart-link")?.focus()
+        this.opener?.focus()
+        this.opener = null
       }
     }
   }

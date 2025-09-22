@@ -53,6 +53,7 @@ describe("cl-cart.spec", () => {
       components: [ClCart, ClCartLink],
       html: `
         <cl-cart-link>
+          <span>Cart</span>
           <cl-cart></cl-cart>
         </cl-cart-link>
       `,
@@ -62,49 +63,57 @@ describe("cl-cart.spec", () => {
 
     expect(page.root).toEqualHtml(`
       <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
-        <cl-cart type="mini" aria-hidden="true" tabindex="-1">
-          <mock:shadow-root>
-            <div part="container">
-              <button aria-label="Close" part="close-button" type="button">
-                Close
-              </button>
-              <iframe
-                part="iframe"
-                title="My Cart"
-                id="iFrameResizer1"
-                allow="payment"
-                style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
-              ></iframe>
-            </div>
-          </mock:shadow-root>
-        </cl-cart>
+        <span>Cart</span>
       </cl-cart-link>
     `)
 
-    page.root?.click()
+    expect(page.body.children[1]).toEqualHtml(`
+      <cl-cart type="mini" aria-hidden="true" tabindex="-1">
+        <mock:shadow-root>
+          <div part="container">
+            <button aria-label="Close" part="close-button" type="button">
+              Close
+            </button>
+            <iframe
+              part="iframe"
+              title="My Cart"
+              id="iFrameResizer1"
+              allow="payment"
+              style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
+            ></iframe>
+          </div>
+        </mock:shadow-root>
+      </cl-cart>
+    `)
+
+    await page.root?.click()
 
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
       <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
-        <cl-cart type="mini" open role="alertdialog" aria-modal="true">
-          <mock:shadow-root>
-            <div part="container">
-              <button aria-label="Close" part="close-button" type="button">
-                Close
-              </button>
-              <iframe
-                part="iframe"
-                title="My Cart"
-                id="iFrameResizer1"
-                allow="payment"
-                src="https://example.com/checkout-url"
-                style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
-              ></iframe>
-            </div>
-          </mock:shadow-root>
-        </cl-cart>
+        <span>Cart</span>
       </cl-cart-link>
+    `)
+
+    expect(page.body.children[1]).toEqualHtml(`
+      <cl-cart type="mini" open role="alertdialog" aria-modal="true">
+        <mock:shadow-root>
+          <div part="container">
+            <button aria-label="Close" part="close-button" type="button">
+              Close
+            </button>
+            <iframe
+              part="iframe"
+              title="My Cart"
+              id="iFrameResizer1"
+              allow="payment"
+              src="https://example.com/checkout-url"
+              style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
+            ></iframe>
+          </div>
+        </mock:shadow-root>
+      </cl-cart>
     `)
   })
 })

@@ -32,6 +32,7 @@ export class ClCartLink {
     this.minicart = this.host.querySelector("cl-cart")
 
     if (this.minicart !== null) {
+      document.body.appendChild(this.minicart)
       this.minicart.type = "mini"
     }
 
@@ -62,7 +63,7 @@ export class ClCartLink {
 
   private handleOpenMinicart(): void {
     if (this.minicart !== null) {
-      this.minicart.open = true
+      void this.minicart.openMinicart(this.host)
     }
   }
 
