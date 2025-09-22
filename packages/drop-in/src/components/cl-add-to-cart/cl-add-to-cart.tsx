@@ -11,19 +11,19 @@ import {
   Watch,
 } from "@stencil/core"
 import { debounce } from "lodash-es"
-import { getBundle } from "#apis/commercelayer/bundles"
-import { addItem, getCart, getCartQuantity } from "#apis/commercelayer/cart"
-import { getSku } from "#apis/commercelayer/skus"
-import { listenTo } from "#apis/event"
-import type { Inventory } from "#apis/types"
-import { log } from "#utils/logger"
+import { getBundle } from "@/apis/commercelayer/bundles"
+import { addItem, getCart, getCartQuantity } from "@/apis/commercelayer/cart"
+import { getSku } from "@/apis/commercelayer/skus"
+import { listenTo } from "@/apis/event"
+import type { Inventory } from "@/apis/types"
+import { log } from "@/utils/logger"
 import {
   isValidCode,
   isValidQuantity,
   logCode,
   logUnion,
   unionToTuple,
-} from "#utils/validation-helpers"
+} from "@/utils/validation-helpers"
 
 @Component({
   tag: "cl-add-to-cart",

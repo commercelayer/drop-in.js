@@ -1,9 +1,9 @@
 import type { Order } from "@commercelayer/sdk"
 import { newSpecPage } from "@stencil/core/testing"
 import { waitForMs } from "jest.spec.helpers"
-import * as cart from "#apis/commercelayer/cart"
-import * as skus from "#apis/commercelayer/skus"
-import type { Sku } from "#apis/types"
+import * as cart from "@/apis/commercelayer/cart"
+import * as skus from "@/apis/commercelayer/skus"
+import type { Sku } from "@/apis/types"
 import { ClAddToCart } from "./cl-add-to-cart"
 
 const baseSku = (id: string): Sku => {

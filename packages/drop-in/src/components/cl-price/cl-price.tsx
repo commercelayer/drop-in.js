@@ -9,14 +9,14 @@ import {
   Watch,
 } from "@stencil/core"
 import { debounce } from "lodash-es"
-import { getPrice as getBundlePrice } from "#apis/commercelayer/bundles"
-import { getPrice as getSkuPrice } from "#apis/commercelayer/skus"
+import { getPrice as getBundlePrice } from "@/apis/commercelayer/bundles"
+import { getPrice as getSkuPrice } from "@/apis/commercelayer/skus"
 import {
   isValidCode,
   logCode,
   logUnion,
   unionToTuple,
-} from "#utils/validation-helpers"
+} from "@/utils/validation-helpers"
 
 export interface Props {
   code: string | undefined

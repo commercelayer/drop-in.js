@@ -1,11 +1,11 @@
 import type { Order } from "@commercelayer/sdk"
 import { newSpecPage } from "@stencil/core/testing"
 import { waitForMs } from "jest.spec.helpers"
-import * as cart from "#apis/commercelayer/cart"
-import * as skus from "#apis/commercelayer/skus"
-import type { Sku } from "#apis/types"
-import { ClAvailabilityInfo } from "#components/cl-availability-info/cl-availability-info"
-import { ClAvailabilityStatus } from "#components/cl-availability-status/cl-availability-status"
+import * as cart from "@/apis/commercelayer/cart"
+import * as skus from "@/apis/commercelayer/skus"
+import type { Sku } from "@/apis/types"
+import { ClAvailabilityInfo } from "@/components/cl-availability-info/cl-availability-info"
+import { ClAvailabilityStatus } from "@/components/cl-availability-status/cl-availability-status"
 import { ClAvailability } from "./cl-availability"
 
 const baseSku = (id: string): Sku => {

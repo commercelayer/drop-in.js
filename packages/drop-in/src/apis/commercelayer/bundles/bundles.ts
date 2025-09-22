@@ -1,5 +1,5 @@
-import { fireEvent } from "#apis/event"
-import type { Bundle, GetBundle, Inventory } from "#apis/types"
+import { fireEvent } from "@/apis/event"
+import type { Bundle, GetBundle, Inventory } from "@/apis/types"
 import { memoize } from "../../../utils/utils"
 import { createClient } from "../client"
 import { getConfig } from "../config"

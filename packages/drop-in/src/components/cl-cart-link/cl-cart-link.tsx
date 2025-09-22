@@ -8,8 +8,8 @@ import {
   Prop,
   State,
 } from "@stencil/core"
-import { getCartUrl, isValidUrl } from "#apis/commercelayer/cart"
-import { listenTo } from "#apis/event"
+import { getCartUrl, isValidUrl } from "@/apis/commercelayer/cart"
+import { listenTo } from "@/apis/event"
 
 @Component({
   tag: "cl-cart-link",

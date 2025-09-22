@@ -9,10 +9,14 @@ import {
   State,
   Watch,
 } from "@stencil/core"
-import { getAccessToken } from "#apis/commercelayer/client"
-import { getConfig } from "#apis/commercelayer/config"
-import { listenTo } from "#apis/event"
-import { isValidUnion, logUnion, unionToTuple } from "#utils/validation-helpers"
+import { getAccessToken } from "@/apis/commercelayer/client"
+import { getConfig } from "@/apis/commercelayer/config"
+import { listenTo } from "@/apis/event"
+import {
+  isValidUnion,
+  logUnion,
+  unionToTuple,
+} from "@/utils/validation-helpers"
 
 @Component({
   tag: "cl-identity-status",

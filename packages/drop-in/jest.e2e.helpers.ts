@@ -1,6 +1,6 @@
 import type { E2EPage } from "@stencil/core/testing"
-import type { Token } from "#apis/commercelayer/client"
-import type { CommerceLayerConfig } from "#apis/commercelayer/config"
+import type { Token } from "@/apis/commercelayer/client"
+import type { CommerceLayerConfig } from "@/apis/commercelayer/config"
 
 type Cookie = Awaited<ReturnType<E2EPage["cookies"]>>[number]
 

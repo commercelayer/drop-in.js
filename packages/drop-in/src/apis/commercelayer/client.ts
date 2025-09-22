@@ -12,9 +12,9 @@ import CommerceLayer, {
 } from "@commercelayer/sdk"
 import Cookies from "js-cookie"
 import { memoize } from "lodash-es"
-import { fireEvent } from "#apis/event"
-import { getKeyForCustomerToken, getKeyForGuestToken } from "#apis/storage"
-import { pDebounce } from "#utils/debounce"
+import { fireEvent } from "@/apis/event"
+import { getKeyForCustomerToken, getKeyForGuestToken } from "@/apis/storage"
+import { pDebounce } from "@/utils/debounce"
 import { type Config, getConfig } from "./config"
 
 export type Token = (

@@ -141,7 +141,9 @@ const preview: Preview = {
         const links = document.querySelectorAll(
           `[href="${DROP_IN_CSS_FILENAME}"]`,
         )
-        links.forEach((link) => link.remove())
+        links.forEach((link) => {
+          link.remove()
+        })
       }
 
       if (minicartCssEnabled) {
@@ -153,7 +155,9 @@ const preview: Preview = {
         const links = document.querySelectorAll(
           `[href="${MINICART_CSS_FILENAME}"]`,
         )
-        links.forEach((link) => link.remove())
+        links.forEach((link) => {
+          link.remove()
+        })
       }
 
       return story()

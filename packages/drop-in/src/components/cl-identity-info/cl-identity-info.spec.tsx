@@ -1,6 +1,6 @@
 import { newSpecPage } from "@stencil/core/testing"
-import * as client from "#apis/commercelayer/client"
-import * as logger from "#utils/logger"
+import * as client from "@/apis/commercelayer/client"
+import * as logger from "@/utils/logger"
 import { ClIdentityInfo } from "./cl-identity-info"
 
 describe("cl-identity-info.spec", () => {

@@ -10,8 +10,8 @@ import {
   Watch,
 } from "@stencil/core"
 import { get } from "lodash-es"
-import { customerFields, getCustomer } from "#apis/commercelayer/client"
-import { log } from "#utils/logger"
+import { customerFields, getCustomer } from "@/apis/commercelayer/client"
+import { log } from "@/utils/logger"
 
 @Component({
   tag: "cl-identity-info",

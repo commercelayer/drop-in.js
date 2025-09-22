@@ -1,6 +1,6 @@
 import type { Price } from "@commercelayer/sdk"
-import { fireEvent } from "#apis/event"
-import type { GetBundlePrice } from "#apis/types"
+import { fireEvent } from "@/apis/event"
+import type { GetBundlePrice } from "@/apis/types"
 import { memoize } from "../../../utils/utils"
 import { _getBundleViaList } from "./list"
 

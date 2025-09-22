@@ -1,8 +1,8 @@
 import { newSpecPage } from "@stencil/core/testing"
 import { mockedAccessToken } from "jest.spec.helpers"
-import * as client from "#apis/commercelayer/client"
-import * as config from "#apis/commercelayer/config"
-import { fireEvent } from "#apis/event"
+import * as client from "@/apis/commercelayer/client"
+import * as config from "@/apis/commercelayer/config"
+import { fireEvent } from "@/apis/event"
 import { ClMyAccountLink } from "./cl-my-account-link"
 
 beforeEach(() => {

@@ -1,7 +1,7 @@
 import { newSpecPage } from "@stencil/core/testing"
 import { mockedAccessToken } from "jest.spec.helpers"
-import * as client from "#apis/commercelayer/client"
-import type { CLCustomEventDetailMap } from "#apis/event"
+import * as client from "@/apis/commercelayer/client"
+import type { CLCustomEventDetailMap } from "@/apis/event"
 import { ClCartCount } from "./cl-cart-count"
 
 describe("cl-cart-count.spec", () => {

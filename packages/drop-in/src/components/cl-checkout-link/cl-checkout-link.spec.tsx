@@ -1,7 +1,7 @@
 import { newSpecPage } from "@stencil/core/testing"
 import { mockedAccessToken } from "jest.spec.helpers"
-import * as cart from "#apis/commercelayer/cart"
-import * as client from "#apis/commercelayer/client"
+import * as cart from "@/apis/commercelayer/cart"
+import * as client from "@/apis/commercelayer/client"
 import { ClCheckoutLink } from "./cl-checkout-link"
 
 beforeEach(() => {

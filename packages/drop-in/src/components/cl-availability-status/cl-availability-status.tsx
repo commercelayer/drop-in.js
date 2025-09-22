@@ -10,8 +10,8 @@ import {
   State,
   Watch,
 } from "@stencil/core"
-import type { AvailabilityUpdateEventPayload } from "#apis/types"
-import { logUnion } from "#utils/validation-helpers"
+import type { AvailabilityUpdateEventPayload } from "@/apis/types"
+import { logUnion } from "@/utils/validation-helpers"
 
 @Component({
   tag: "cl-availability-status",

@@ -1,7 +1,7 @@
-import type { Sku } from "#apis/types"
-import { pDebounce } from "#utils/debounce"
-import { logGroup } from "#utils/logger"
-import { chunk, memoize, uniq } from "#utils/utils"
+import type { Sku } from "@/apis/types"
+import { pDebounce } from "@/utils/debounce"
+import { logGroup } from "@/utils/logger"
+import { chunk, memoize, uniq } from "@/utils/utils"
 import { createClient } from "../client"
 import { getConfig } from "../config"
 
