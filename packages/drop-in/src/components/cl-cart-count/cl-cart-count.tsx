@@ -8,8 +8,8 @@ import {
   Prop,
   State,
 } from "@stencil/core"
-import { getCart } from "#apis/commercelayer/cart"
-import { listenTo } from "#apis/event"
+import { getCart } from "@/apis/commercelayer/cart"
+import { listenTo } from "@/apis/event"
 
 @Component({
   tag: "cl-cart-count",

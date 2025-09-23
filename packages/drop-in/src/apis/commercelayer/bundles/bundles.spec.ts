@@ -1,4 +1,4 @@
-import type { Bundle, Inventory } from "#apis/types"
+import type { Bundle, Inventory } from "@/apis/types"
 import { getBundleInventory } from "./bundles"
 
 function mockSkuListItem(

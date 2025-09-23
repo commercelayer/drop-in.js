@@ -8,8 +8,8 @@ import {
   Prop,
   State,
 } from "@stencil/core"
-import { getMyAccountUrl } from "#apis/commercelayer/account"
-import { listenTo } from "#apis/event"
+import { getMyAccountUrl } from "@/apis/commercelayer/account"
+import { listenTo } from "@/apis/event"
 
 @Component({
   tag: "cl-my-account-link",

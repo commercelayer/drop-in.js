@@ -1,6 +1,6 @@
-import { getAccessToken } from "#apis/commercelayer/client"
-import { getConfig, getOrganizationConfig } from "#apis/commercelayer/config"
-import { getClosestLocationHref } from "#utils/url"
+import { getAccessToken } from "@/apis/commercelayer/client"
+import { getConfig, getOrganizationConfig } from "@/apis/commercelayer/config"
+import { getClosestLocationHref } from "@/utils/url"
 
 export async function getMyAccountUrl(): Promise<string | undefined> {
   const config = getConfig()

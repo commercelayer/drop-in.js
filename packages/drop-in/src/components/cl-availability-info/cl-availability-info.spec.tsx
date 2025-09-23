@@ -1,5 +1,5 @@
 import { newSpecPage } from "@stencil/core/testing"
-import type { AvailabilityUpdateEventPayload, Sku } from "#apis/types"
+import type { AvailabilityUpdateEventPayload, Sku } from "@/apis/types"
 import { ClAvailabilityInfo } from "./cl-availability-info"
 
 describe("cl-availability-info.spec", () => {
@@ -109,7 +109,7 @@ describe("cl-availability-info.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-info").forEach((element) =>
+    body.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -118,8 +118,8 @@ describe("cl-availability-info.spec", () => {
             cartQuantity: 0,
           },
         }),
-      ),
-    )
+      )
+    })
 
     await waitForChanges()
 
@@ -241,7 +241,7 @@ describe("cl-availability-info.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-info").forEach((element) =>
+    body.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -250,8 +250,8 @@ describe("cl-availability-info.spec", () => {
             cartQuantity: 0,
           },
         }),
-      ),
-    )
+      )
+    })
 
     await waitForChanges()
 
@@ -331,7 +331,7 @@ describe("cl-availability-info.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-info").forEach((element) =>
+    body.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -340,8 +340,8 @@ describe("cl-availability-info.spec", () => {
             cartQuantity: 0,
           },
         }),
-      ),
-    )
+      )
+    })
 
     await waitForChanges()
 
@@ -445,7 +445,7 @@ describe("cl-availability-info.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-info").forEach((element) =>
+    body.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -454,12 +454,12 @@ describe("cl-availability-info.spec", () => {
             cartQuantity: 0,
           },
         }),
-      ),
-    )
+      )
+    })
 
     await waitForChanges()
 
-    body.querySelectorAll("cl-availability-info").forEach((element) =>
+    body.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -468,8 +468,8 @@ describe("cl-availability-info.spec", () => {
             cartQuantity: 0,
           },
         }),
-      ),
-    )
+      )
+    })
 
     await waitForChanges()
 

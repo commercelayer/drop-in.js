@@ -9,9 +9,13 @@ import {
   State,
   Watch,
 } from "@stencil/core"
-import { getIdentityUrl } from "#apis/commercelayer/account"
-import { logout } from "#apis/commercelayer/client"
-import { isValidUnion, logUnion, unionToTuple } from "#utils/validation-helpers"
+import { getIdentityUrl } from "@/apis/commercelayer/account"
+import { logout } from "@/apis/commercelayer/client"
+import {
+  isValidUnion,
+  logUnion,
+  unionToTuple,
+} from "@/utils/validation-helpers"
 
 @Component({
   tag: "cl-identity-link",

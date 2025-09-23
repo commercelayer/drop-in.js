@@ -1,8 +1,8 @@
 import type { CommerceLayerClient } from "@commercelayer/sdk"
 import { newSpecPage } from "@stencil/core/testing"
 import { waitFor } from "jest.spec.helpers"
-import * as cart from "#apis/commercelayer/cart"
-import * as client from "#apis/commercelayer/client"
+import * as cart from "@/apis/commercelayer/cart"
+import * as client from "@/apis/commercelayer/client"
 import { ClCartLink } from "./cl-cart-link"
 
 afterEach(() => {

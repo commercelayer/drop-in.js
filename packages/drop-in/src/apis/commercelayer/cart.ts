@@ -2,16 +2,16 @@ import { jwtDecode } from "@commercelayer/js-auth"
 import type { Order, QueryParamsRetrieve } from "@commercelayer/sdk"
 import Cookies from "js-cookie"
 import { memoize } from "lodash-es"
-import { createClient, getAccessToken } from "#apis/commercelayer/client"
-import { getConfig, getOrganizationConfig } from "#apis/commercelayer/config"
-import { type EventTypes, fireEvent } from "#apis/event"
-import { getKeyForCart } from "#apis/storage"
+import { createClient, getAccessToken } from "@/apis/commercelayer/client"
+import { getConfig, getOrganizationConfig } from "@/apis/commercelayer/config"
+import { type EventTypes, fireEvent } from "@/apis/event"
+import { getKeyForCart } from "@/apis/storage"
 import type {
   AddItem,
   TriggerCartUpdate,
   TriggerHostedCartUpdate,
-} from "#apis/types"
-import { pDebounce } from "#utils/debounce"
+} from "@/apis/types"
+import { pDebounce } from "@/utils/debounce"
 
 /**
  * Create a draft order.

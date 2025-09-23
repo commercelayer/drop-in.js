@@ -16,10 +16,10 @@
 
     "baseUrl": ".",
     "paths": {
-      "#apis/*": ["src/apis/*"],
-      "#components/*": ["src/components/*"],
-      "#global/*": ["src/global/*"],
-      "#utils/*": ["src/utils/*"],
+      "@/apis/*": ["src/apis/*"],
+      "@/components/*": ["src/components/*"],
+      "@/global/*": ["src/global/*"],
+      "@/utils/*": ["src/utils/*"],
       "jest.e2e.helpers": ["jest.e2e.helpers"],
       "jest.spec.helpers": ["jest.spec.helpers"]
     },

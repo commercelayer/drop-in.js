@@ -11,8 +11,8 @@ import {
   Watch,
 } from "@stencil/core"
 import { minBy } from "lodash-es"
-import type { AvailabilityUpdateEventPayload } from "#apis/types"
-import { logUnion, unionToTuple } from "#utils/validation-helpers"
+import type { AvailabilityUpdateEventPayload } from "@/apis/types"
+import { logUnion, unionToTuple } from "@/utils/validation-helpers"
 
 @Component({
   tag: "cl-availability-info",

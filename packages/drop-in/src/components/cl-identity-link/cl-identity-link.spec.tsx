@@ -1,8 +1,8 @@
 import { newSpecPage } from "@stencil/core/testing"
 import { mockedAccessToken } from "jest.spec.helpers"
-import * as client from "#apis/commercelayer/client"
-import * as config from "#apis/commercelayer/config"
-import * as logger from "#utils/logger"
+import * as client from "@/apis/commercelayer/client"
+import * as config from "@/apis/commercelayer/config"
+import * as logger from "@/utils/logger"
 import { ClIdentityLink } from "./cl-identity-link"
 
 let log: jest.SpyInstance

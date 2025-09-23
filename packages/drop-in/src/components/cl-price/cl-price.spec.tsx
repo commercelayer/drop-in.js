@@ -1,9 +1,9 @@
 import type { Price } from "@commercelayer/sdk"
 import { newSpecPage } from "@stencil/core/testing"
 import { mockedAccessToken, waitForMs } from "jest.spec.helpers"
-import * as client from "#apis/commercelayer/client"
-import * as skus from "#apis/commercelayer/skus"
-import { ClPriceAmount } from "#components/cl-price-amount/cl-price-amount"
+import * as client from "@/apis/commercelayer/client"
+import * as skus from "@/apis/commercelayer/skus"
+import { ClPriceAmount } from "@/components/cl-price-amount/cl-price-amount"
 import { ClPrice } from "./cl-price"
 
 const fakePrices: { [sku: string]: Price } = {

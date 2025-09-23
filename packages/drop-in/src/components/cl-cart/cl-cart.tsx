@@ -18,9 +18,9 @@ import {
   isValidUrl,
   triggerHostedCartUpdate,
   updateCartUrl,
-} from "#apis/commercelayer/cart"
-import { listenTo } from "#apis/event"
-import { getClosestLocationHref } from "#utils/url"
+} from "@/apis/commercelayer/cart"
+import { listenTo } from "@/apis/event"
+import { getClosestLocationHref } from "@/utils/url"
 
 interface IframeData {
   message:

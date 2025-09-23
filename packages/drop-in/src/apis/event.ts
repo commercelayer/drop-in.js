@@ -1,5 +1,5 @@
-import { memoDebounce } from "#utils/debounce"
-import type { Expand } from "#utils/utility-types"
+import { memoDebounce } from "@/utils/debounce"
+import type { Expand } from "@/utils/utility-types"
 import type {
   AddItem,
   GetBundle,

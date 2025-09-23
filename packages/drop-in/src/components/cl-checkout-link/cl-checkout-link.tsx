@@ -8,8 +8,8 @@ import {
   Prop,
   State,
 } from "@stencil/core"
-import { getCheckoutUrl } from "#apis/commercelayer/cart"
-import { listenTo } from "#apis/event"
+import { getCheckoutUrl } from "@/apis/commercelayer/cart"
+import { listenTo } from "@/apis/event"
 
 @Component({
   tag: "cl-checkout-link",

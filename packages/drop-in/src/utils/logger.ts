@@ -1,4 +1,4 @@
-import { getConfig } from "#apis/commercelayer/config"
+import { getConfig } from "@/apis/commercelayer/config"
 
 type LogType =
   | "error"
