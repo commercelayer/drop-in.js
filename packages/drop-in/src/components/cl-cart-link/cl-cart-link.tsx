@@ -27,14 +27,23 @@ export class ClCartLink {
   @State() minicart: HTMLClCartElement | null = null
   @State() href: string | undefined
 
-  componentWillLoad(): void {
-    this.host.setAttribute("cl-hydrated", "")
-    this.minicart = this.host.querySelector("cl-cart")
+  connectedCallback(): void {
+    this.minicart ??= this.host.querySelector("cl-cart")
 
     if (this.minicart !== null) {
-      document.body.appendChild(this.minicart)
       this.minicart.type = "mini"
+      document.body.appendChild(this.minicart)
     }
+  }
+
+  disconnectedCallback(): void {
+    if (this.minicart !== null) {
+      this.host.appendChild(this.minicart)
+    }
+  }
+
+  componentWillLoad(): void {
+    this.host.setAttribute("cl-hydrated", "")
 
     listenTo("cl-cart-update", async () => {
       if (this.href === undefined || !(await isValidUrl(this.href))) {
