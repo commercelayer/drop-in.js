@@ -189,6 +189,18 @@ export class ClCart {
     }
   }
 
+  connectedCallback(): void {
+    if (this.type === "mini") {
+      document.body.classList.toggle(this.openDirective, this.open)
+    }
+  }
+
+  disconnectedCallback(): void {
+    if (this.type === "mini") {
+      document.body.classList.toggle(this.openDirective, false)
+    }
+  }
+
   @Watch("open")
   watchOpenHandler(opened: boolean): void {
     if (this.type === "mini") {
