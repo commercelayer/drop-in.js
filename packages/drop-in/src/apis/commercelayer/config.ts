@@ -14,7 +14,7 @@ export interface CommerceLayerConfig {
    * The version of the library.
    * This is automatically set by the build process and should not be manually specified.
    */
-  version: "drop-in.js@2.18.0"
+  version: "drop-in.js@2.19.0"
 
   /**
    * The client ID (from you API credentials).
@@ -98,7 +98,7 @@ export function getConfig(): Config {
   }
 
   // NOTE: This is automatically set by the build process and should not be manually specified.
-  window.commercelayerConfig.version = "drop-in.js@2.18.0"
+  window.commercelayerConfig.version = "drop-in.js@2.19.0"
 
   const commercelayerConfig: CommerceLayerConfig = window.commercelayerConfig
 
