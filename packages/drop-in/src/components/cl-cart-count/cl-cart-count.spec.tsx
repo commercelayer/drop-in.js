@@ -7,7 +7,7 @@ import { ClCartCount } from "./cl-cart-count"
 describe("cl-cart-count.spec", () => {
   it("renders", async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
@@ -26,7 +26,7 @@ describe("cl-cart-count.spec", () => {
 
   it('renders without content when "hide-when-empty" attribute is set to `true`', async () => {
     jest.spyOn(client, "getAccessToken").mockResolvedValue({
-      type: "guest",
+      ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })

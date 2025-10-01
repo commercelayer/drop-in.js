@@ -40,11 +40,11 @@ export class ClIdentityStatus {
 
   async componentWillLoad(): Promise<void> {
     listenTo("cl-identity-gettoken", (event) => {
-      this.status = event.detail.response.type
+      this.status = event.detail.response.ownerType
     })
 
     const config = getConfig()
-    this.status = (await getAccessToken(config)).type
+    this.status = (await getAccessToken(config)).ownerType
 
     this.logType(this.type)
   }

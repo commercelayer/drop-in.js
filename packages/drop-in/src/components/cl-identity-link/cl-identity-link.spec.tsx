@@ -11,7 +11,7 @@ beforeEach(() => {
   jest.resetAllMocks()
 
   jest.spyOn(client, "getAccessToken").mockResolvedValue({
-    type: "guest",
+    ownerType: "guest",
     accessToken: mockedAccessToken,
     scope: "market:code:usa",
   })

@@ -27,7 +27,7 @@ async function createEmptyCart(): Promise<Order> {
     config.defaultAttributes?.orders ?? {},
   )
 
-  if (token.type === "guest") {
+  if (token.ownerType === "guest") {
     setCartId(order.id)
   }
 
@@ -142,7 +142,7 @@ export async function _getCart(): Promise<Order | null> {
     include: ["line_items.item", "line_items.line_item_options.sku_option"],
   }
 
-  if (token.type === "guest") {
+  if (token.ownerType === "guest") {
     const orderId = getCartId()
 
     if (orderId === null) {
@@ -167,7 +167,7 @@ export async function _getCart(): Promise<Order | null> {
     return null
   }
 
-  const [order = null] = await client.customers.orders(token.customerId, {
+  const [order = null] = await client.customers.orders(token.ownerId, {
     ...orderParams,
     filters: {
       market_id_in: jwt.payload.market.id.join(","),
