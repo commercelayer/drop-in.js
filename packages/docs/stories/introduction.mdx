@@ -1,6 +1,7 @@
 import { Canvas, Meta, Story } from '@storybook/addon-docs/blocks'
 import { linkTo } from '@storybook/addon-links'
-import * as Stories from './introduction.stories.ts';
+import * as Stories from './introduction.stories.ts'
+import { Alert } from './assets/components'
 import { Card } from './assets/components'
 
 <Meta of={Stories} />
@@ -51,3 +52,9 @@ If you want to see most of the reusable components above in action before diggin
 We've called it a demo, but the truth is that by switching the linked organization [from test to live mode](https://docs.commercelayer.io/core/api-specification#environments) on the Commerce Layer Admin Dashboard, this can be considered a full-fledged, up and running production website 😮 — and it took a snap to build it!
 
 <Canvas sourceState="hidden" of={Stories.Basic} />
+
+<Alert title="How to run the demo locally?" type="info">
+  You can simply copy and paste the example above into a new HTML file named `index.html`.  
+  Opening the `index.html` file directly in a browser won’t work because cookies are disabled when using the `file://` protocol for security reasons.  
+  Make sure to run the file through an HTTP server instead, for example, by using the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension in VS Code, or by running [`npx serve`](https://www.npmjs.com/package/serve) if you’re familiar with Node.js.
+</Alert>

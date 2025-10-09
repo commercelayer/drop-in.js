@@ -1,5 +1,8 @@
 import type { Meta, StoryFn } from "@storybook/html-vite"
 import { html } from "lit-html"
+import { PARAM_KEY as DROP_IN_CSS_PARAM_KEY } from "../.storybook/addon-drop-in-css/constants"
+import { PARAM_KEY as MINICART_CSS_PARAM_KEY } from "../.storybook/addon-minicart-css/constants"
+import { getSelectedScopeValue } from "../.storybook/addon-scope-selector/constants"
 import { create } from "../utils"
 import { codes } from "./assets/constants"
 
@@ -9,9 +12,45 @@ const meta: Meta = {
 
 export default meta
 
-export const Basic: StoryFn = () => {
+export const Basic: StoryFn = (_args, context) => {
+  const baseUrl = location.href.substring(
+    0,
+    location.href.indexOf("/iframe.html"),
+  )
+
+  const dropInCssEnabled = context.globals[DROP_IN_CSS_PARAM_KEY]
+  const minicartCssEnabled = context.globals[MINICART_CSS_PARAM_KEY]
+
   return create(
     html`
+      ${dropInCssEnabled ? html`<link href="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.css" rel="stylesheet" />` : ""}
+      ${minicartCssEnabled ? html`<link href="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/minicart.css" rel="stylesheet" />` : ""}
+
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@commercelayer/drop-in.js@2/dist/drop-in/drop-in.esm.js"></script>
+
+      <script>
+        window.commercelayerConfig = {
+          clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+          scope: '${getSelectedScopeValue()}',
+          debug: 'all', // default is 'none'
+          defaultAttributes: {
+            orders: {
+              /**
+              * The preferred language code (ISO 639-1) to be used when communicating with the customer.
+              * If the language is supported, the hosted checkout will be localized accordingly.
+              * @default 'en'
+              */
+              language_code: 'en',
+              /**
+              * The URL the cart's *Continue shopping* button points to. This is also used in the thank you page.
+              * @optional
+              */
+              return_url: 'https://example.com'
+            }
+          }
+        }
+      </script>
+
       <!-- for demonstration purpose only -->
       <script src="https://cdn.tailwindcss.com"></script>
 
@@ -54,6 +93,7 @@ export const Basic: StoryFn = () => {
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
+              alt="Gray Five-Panel Cap with White Logo"
               src="https://data.commercelayer.app/seed/images/skus/${codes.outOfStock}_FLAT.png"
               class="w-full h-full object-center object-contain"
             />
@@ -83,6 +123,7 @@ export const Basic: StoryFn = () => {
         <div class="flex flex-col">
           <div class="h-80 sm:h-64">
             <img
+              alt="White Backpack with Black Logo"
               src="https://data.commercelayer.app/seed/images/skus/${codes.noDiscount}_FLAT.png"
               class="w-full h-full object-center object-contain"
             />
@@ -112,6 +153,7 @@ export const Basic: StoryFn = () => {
         <div class="flex flex-col">
           <div class="h-80 sm:h-64 flex justify-center">
             <img
+              alt="Getting Started bundle"
               src="https://res.cloudinary.com/commercelayer/image/upload/v1681465805/demo-store/assets/white-glossy-mug-15oz-valentines-day.png"
               class="h-full object-center object-contain rounded-md"
             />
@@ -142,13 +184,15 @@ export const Basic: StoryFn = () => {
       <!-- Editorial Banner -->
       <div class="flex flex-col items-center mt-8">
         <cl-identity-status class="h-full" type="guest">
-          <img class="object-contain position-top max-h-[470px]" src="register-h.jpg" />
+          <cl-identity-link type="signup" target="_parent">
+            <img class="object-contain position-top max-h-[470px]" src="${baseUrl}/register-h.jpg" alt="Register" />
+          </cl-identity-link>
         </cl-identity-status>
 
         <cl-identity-status class="h-full" type="customer">
-          <img class="object-contain position-top max-h-[470px]" src="welcomeback-h.jpg" />
+          <img class="object-contain position-top max-h-[470px]" src="${baseUrl}/welcomeback-h.jpg" alt="Welcome Back" />
         </cl-identity-status>
       </div>
     `,
-  )
+  ).replaceAll("<!---->", "")
 }
