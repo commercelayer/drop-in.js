@@ -17,6 +17,10 @@ pnpm test
 If you get the error "_Browser was not found at the configured executablePath_", run the following:
 
 ```sh
+node packages/drop-in/node_modules/puppeteer/install.mjs
+
+# or
+
 node node_modules/puppeteer/install.mjs
 ```
 

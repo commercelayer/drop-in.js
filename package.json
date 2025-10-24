@@ -33,13 +33,13 @@
   },
   "packageManager": "pnpm@10.4.0",
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
+    "@biomejs/biome": "2.3.0",
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
     "lerna": "^9.0.0",
-    "lint-staged": "^16.2.3",
+    "lint-staged": "^16.2.6",
     "replace-in-file": "^8.3.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "resolutions": {
     "prismjs": "^1.30.0"
