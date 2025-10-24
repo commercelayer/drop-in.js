@@ -132,7 +132,7 @@
             const addToCart = document.getElementById('vs--add-to-cart')
             const availability = document.getElementById('vs--availability')
 
-            select.addEventListener('change', function (event) {
+            select.addEventListener('change', (event) => {
               const sku = event.currentTarget.value
               title.innerText = sku
               price.code = sku
