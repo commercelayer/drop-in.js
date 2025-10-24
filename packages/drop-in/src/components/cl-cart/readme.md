@@ -16,16 +16,16 @@
 
 ## Methods
 
-### `openMinicart(opener: HTMLElement) => Promise<void>`
+### `openMinicart(opener: Pick<HTMLElement, "focus">) => Promise<void>`
 
 Open the minicart and set the opener so that the minicart can be closed by focusing on the opener.
 (available _only_ when the `cl-cart` component is used as _minicart_).
 
 #### Parameters
 
-| Name     | Type          | Description                 |
-| -------- | ------------- | --------------------------- |
-| `opener` | `HTMLElement` | The opener of the minicart. |
+| Name     | Type                                                        | Description                 |
+| -------- | ----------------------------------------------------------- | --------------------------- |
+| `opener` | `{ focus: (options?: FocusOptions \| undefined) => void; }` | The opener of the minicart. |
 
 #### Returns
 
