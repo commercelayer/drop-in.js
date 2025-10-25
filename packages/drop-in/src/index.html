@@ -37,12 +37,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
-      document.addEventListener('cl-identity-gettoken', (e) => console.info('cl-identity-gettoken', e.detail));
-      document.addEventListener('cl-skus-getsku', (e) => console.info('cl-skus-getsku', e.detail));
-      document.addEventListener('cl-skus-getprice', (e) => console.info('cl-skus-getprice', e.detail));
-      document.addEventListener('cl-bundles-getbundle', (e) => console.info('cl-bundles-getbundle', e.detail))
-      document.addEventListener('cl-bundles-getprice', (e) => console.info('cl-bundles-getprice', e.detail))
-      document.addEventListener('cl-cart-additem', (e) => console.info('cl-cart-additem', e.detail));
+      document.addEventListener('cl-identity-gettoken', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-identity-gettoken', e.detail));
+      document.addEventListener('cl-skus-getsku', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-skus-getsku', e.detail));
+      document.addEventListener('cl-skus-getprice', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-skus-getprice', e.detail));
+      document.addEventListener('cl-bundles-getbundle', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-bundles-getbundle', e.detail));
+      document.addEventListener('cl-bundles-getprice', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-bundles-getprice', e.detail));
+      document.addEventListener('cl-cart-additem', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-cart-additem', e.detail));
+      document.addEventListener('cl-cart-hostedcartupdate', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-cart-hostedcartupdate', e.detail));
+      document.addEventListener('cl-cart-update', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-cart-update', e.detail));
     </script>
 
     <script>
