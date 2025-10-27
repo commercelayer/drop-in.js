@@ -1,4 +1,7 @@
-import type { CommerceLayerClient } from "@commercelayer/sdk"
+import type {
+  orders as sdkOrders,
+  organization as sdkOrganization,
+} from "@commercelayer/sdk"
 import { newSpecPage } from "@stencil/core/testing"
 import { waitFor } from "jest.spec.helpers"
 import * as cart from "@/apis/commercelayer/cart"
@@ -20,7 +23,7 @@ describe("cl-cart-link.spec", () => {
     jest.spyOn(client, "createClient").mockResolvedValue({
       orders,
       organization,
-    } as unknown as CommerceLayerClient)
+    } as unknown as ReturnType<(typeof client)["createClient"]>)
 
     const { root, waitForChanges } = await newSpecPage({
       components: [ClCartLink],
@@ -53,7 +56,7 @@ describe("cl-cart-link.spec", () => {
     jest.spyOn(client, "createClient").mockResolvedValue({
       orders,
       organization,
-    } as unknown as CommerceLayerClient)
+    } as unknown as ReturnType<(typeof client)["createClient"]>)
     jest.spyOn(cart, "getCart").mockResolvedValue({
       type: "orders",
       id: "order-123",
@@ -90,7 +93,7 @@ describe("cl-cart-link.spec", () => {
     jest.spyOn(client, "createClient").mockResolvedValue({
       orders,
       organization,
-    } as unknown as CommerceLayerClient)
+    } as unknown as ReturnType<(typeof client)["createClient"]>)
 
     const { root, waitForChanges } = await newSpecPage({
       components: [ClCartLink],
@@ -129,7 +132,7 @@ describe("cl-cart-link.spec", () => {
 const accessToken =
   "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCIsImtpZCI6IjliN2JiZmVlMzQzZDVkNDQ5ZGFkODhmMjg0MGEyZTM3YzhkZWFlZTg5NjM4MGQ1ODA2YTc4NWVkMWQ1OTc5ZjAifQ.eyJvcmdhbml6YXRpb24iOnsiaWQiOiJPblZOcUZPTUpuIiwic2x1ZyI6ImRyb3AtaW4tanMiLCJlbnRlcnByaXNlIjp0cnVlLCJyZWdpb24iOiJldS13ZXN0LTEifSwiYXBwbGljYXRpb24iOnsiaWQiOiJkTm5XbWl4eEtHIiwiY2xpZW50X2lkIjoia3VTS1BiZUtiVTlMRzlMam5kemllS1dSY2ZpWEZ1RWZPME9ZSFhLSDlKOCIsImtpbmQiOiJzYWxlc19jaGFubmVsIiwicHVibGljIjp0cnVlfSwibWFya2V0Ijp7ImlkIjpbIkJvd2RHaHdYZGoiXSwic3RvY2tfbG9jYXRpb25faWRzIjpbIkRuZ2VwdU5tT2siLCJLR3lPanV5S1hNIl0sImdlb2NvZGVyX2lkIjpudWxsLCJhbGxvd3NfZXh0ZXJuYWxfcHJpY2VzIjpmYWxzZX0sInNjb3BlIjoibWFya2V0OmNvZGU6dXNhIiwiZXhwIjoxNzMwOTEzNjkxLCJ0ZXN0Ijp0cnVlLCJyYW5kIjowLjQ2MjA0OTI5MDY1NTczNTIsImlhdCI6MTczMDkwNjQ5MSwiaXNzIjoiaHR0cHM6Ly9hdXRoLmNvbW1lcmNlbGF5ZXIuaW8ifQ.OJerreNcfS_QKQ691iKyJqgAemIouRTBHfqmy2mlAt4_GnqtqjEFRW_hE9SNW8h80eUnSDMc4ocOSsHL5nqKZQeXkwlycwtYzNMralEM03jgLDIMvRzfFznZNOXNrySSFPQ9zrIHlbyfW3Wxc8hMEz-SvZ7t0cSlrvSqSEoLBAoMQqsBJkiIVYMWlUmgq_d0dznU4U8MJiPvC-rb32lRinLl3M0TGGApnDTijuQALywGbPkNZzMs3rrK8pz1Gf7ZYVgu9aXUCDEVEac99kTLJj2DJdHMNHYjzupoKu8xSutSAShN8MHaM_9ijuJHmlCdgAfQtEKoGOKpGp7JH8Zl7zeYDkmsdVAqvGAIGNBzHnxb7SdPXmPViq_9u5K9Bq1IBr9K1TwcCyjMTFghnJm6CfDQ60AEPB4dxWHSXNTyGCAcrSwDqni7dgcD3G1Asqb5TmlxOtcmC0jXrZE4TQQZqBUFBiWTXiMhFhq8tGE6PlW0fIZzV9xlKPkaLPKO6rGdmiutmofAB8CVz1ZkmyIaHNR4KbIfWZUVQDEOkCPHzy_yXB7LinYlpDtVlJxZ9n_aetuxmJweLT94LQml56kcmXRPJbNH208ermGKpipQkqM6GoknqtEG3ouVgahjVwD2bSqFGPtZyrYgIzhunupkIhEz1dSLDrk0wXJS9GY4W50"
 
-const orders: Partial<CommerceLayerClient["orders"]> = {
+const orders: Partial<typeof sdkOrders> = {
   create: jest.fn().mockResolvedValue({
     type: "orders",
     id: "order-123",
@@ -138,7 +141,7 @@ const orders: Partial<CommerceLayerClient["orders"]> = {
   }),
 }
 
-const organization: Partial<CommerceLayerClient["organization"]> = {
+const organization: Partial<typeof sdkOrganization> = {
   retrieve: jest.fn().mockResolvedValue({
     type: "organizations",
     id: "organization-123",

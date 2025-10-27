@@ -4,6 +4,7 @@
   }
 
   .sbdocs-h3:first-of-type {
+    /* biome-ignore lint/complexity/noImportantStyles : we need to override the default styles */
     margin: 20px 0 8px !important;
     padding: 0;
   }
@@ -24,6 +25,7 @@
     }
   }
 
+  /* biome-ignore lint/correctness/noUnknownMediaFeatureName : we need to override the default styles */
   @media all and (-ms-high-contrast:none) {
   .link-list {
       display: -ms-grid;
@@ -38,7 +40,6 @@
 
   .link-list > button {
     cursor: pointer;
-    display: block;
     text-align: left;
     padding: 20px 30px 20px 15px;
     border: 1px solid #00000010;
@@ -136,11 +137,7 @@
   .drop-in-js--organization-settings button,
   .drop-in-js--organization-settings input[type="submit"] {
     border: 0;
-    border-radius: 3em;
     cursor: pointer;
-    display: inline-block;
-    overflow: hidden;
-    padding: 8px 16px;
     position: relative;
     text-align: center;
     -webkit-text-decoration: none;
@@ -153,13 +150,8 @@
     transform: translate3d(0,0,0);
     vertical-align: top;
     white-space: nowrap;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
     opacity: 1;
     margin: 0;
-    background: transparent;
     font-size: 12px;
     font-weight: 700;
     line-height: 1;
@@ -202,34 +194,34 @@
 
   /* Weird Storybook issue on firefox */
   [scale="1"] {
-    transform: none !important;
-    transform-origin: initial !important;
-    height: auto !important;
+    transform: none;
+    transform-origin: initial;
+    height: auto;
   }
 </style>
 
 <style>
   ol {
-    list-style: decimal !important;
+    list-style: decimal;
   }
   h2 {
-    margin: 40px 0 8px !important;
+    margin: 40px 0 8px;
   }
   h3 {
-    margin: 20px 0 8px !important;
+    margin: 20px 0 8px;
   }
   a:link, a:link:hover, a:link:active, a:visited {
-    color: #029CFD !important;
+    color: #029CFD;
     text-decoration: underline;
   }
 </style>
 
 <style>
   .language-diff .token.deleted {
-    color: #E57373 !important;
+    color: #E57373;
   }
   .language-diff .token.inserted {
-    color: #AED581 !important;
+    color: #AED581;
   }
 </style>
 
@@ -237,7 +229,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
-  (function() {
+          (() => {
     // This hack is to remove the access token from the URL after the user has been redirected back to the docs (only for storybook use-case).
     setTimeout(() => {
       const url = new URL(window.parent.location.href)

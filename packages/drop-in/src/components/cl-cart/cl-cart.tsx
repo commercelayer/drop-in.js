@@ -82,7 +82,7 @@ export class ClCart {
   /**
    * The opener of the minicart.
    */
-  @State() opener: HTMLElement | null = null
+  @State() opener: Pick<HTMLElement, "focus"> | null = null
 
   /**
    * Used for:
@@ -161,7 +161,7 @@ export class ClCart {
    * @param opener The opener of the minicart.
    */
   @Method()
-  async openMinicart(opener: HTMLElement): Promise<void> {
+  async openMinicart(opener: Pick<HTMLElement, "focus">): Promise<void> {
     this.opener = opener
     this.open = true
   }

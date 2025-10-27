@@ -4,7 +4,10 @@ export function isValidCode(code: string | undefined): code is string {
   return typeof code === "string" && code !== ""
 }
 
-export function logCode(host: HTMLElement, code: string | undefined): void {
+export function logCode(
+  host: Omit<HTMLElement, "autocorrect">,
+  code: string | undefined,
+): void {
   if (!isValidCode(code)) {
     log("warn", '"code" attribute should be a not empty string.', host)
   }
@@ -22,7 +25,7 @@ export function isValidUnion<T extends string | undefined>(
 }
 
 export function logUnion<T extends string | undefined>(
-  host: HTMLElement,
+  host: Omit<HTMLElement, "autocorrect">,
   attributeName: string,
   attributeValue: T,
   validValues: ReadonlyArray<NonNullable<T>>,

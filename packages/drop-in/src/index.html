@@ -37,12 +37,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
-      document.addEventListener('cl-identity-gettoken', (e) => console.info('cl-identity-gettoken', e.detail));
-      document.addEventListener('cl-skus-getsku', (e) => console.info('cl-skus-getsku', e.detail));
-      document.addEventListener('cl-skus-getprice', (e) => console.info('cl-skus-getprice', e.detail));
-      document.addEventListener('cl-bundles-getbundle', (e) => console.info('cl-bundles-getbundle', e.detail))
-      document.addEventListener('cl-bundles-getprice', (e) => console.info('cl-bundles-getprice', e.detail))
-      document.addEventListener('cl-cart-additem', (e) => console.info('cl-cart-additem', e.detail));
+      document.addEventListener('cl-identity-gettoken', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-identity-gettoken', e.detail));
+      document.addEventListener('cl-skus-getsku', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-skus-getsku', e.detail));
+      document.addEventListener('cl-skus-getprice', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-skus-getprice', e.detail));
+      document.addEventListener('cl-bundles-getbundle', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-bundles-getbundle', e.detail));
+      document.addEventListener('cl-bundles-getprice', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-bundles-getprice', e.detail));
+      document.addEventListener('cl-cart-additem', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-cart-additem', e.detail));
+      document.addEventListener('cl-cart-hostedcartupdate', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-cart-hostedcartupdate', e.detail));
+      document.addEventListener('cl-cart-update', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-cart-update', e.detail));
     </script>
 
     <script>
@@ -205,7 +207,7 @@
                 option.innerText,
                 {
                   code: option.value,
-                  quantity: parseInt(option.dataset.quantity),
+                  quantity: parseInt(option.dataset.quantity, 10),
                   name: option.dataset.name,
                   imageUrl: option.dataset.imageUrl,
                   frequency: option.dataset.frequency,
@@ -230,8 +232,8 @@
               productCard.querySelector('cl-price').code = code;
               productCard.querySelector('cl-add-to-cart').kind = kind ?? null;
               productCard.querySelector('cl-add-to-cart').code = code;
-              productCard.querySelector('cl-add-to-cart').quantity = isNaN(quantity) || quantity == null ? 1 : quantity;
-              productCard.querySelector('[data-id="pc--quantity"]').value = isNaN(quantity) || quantity == null ? 1 : quantity;
+              productCard.querySelector('cl-add-to-cart').quantity = Number.isNaN(quantity) || quantity == null ? 1 : quantity
+              productCard.querySelector('[data-id="pc--quantity"]').value = Number.isNaN(quantity) || quantity == null ? 1 : quantity;
               productCard.querySelector('cl-add-to-cart').name = name;
               productCard.querySelector('cl-add-to-cart').imageUrl = imageUrl;
               productCard.querySelector('cl-add-to-cart').frequency = frequency;
@@ -241,8 +243,8 @@
                 productCard.querySelector('[data-id="pc--selector"]').innerHTML = `<code>${description.toUpperCase()}</code>`
               }
 
-              productCard.querySelector('[data-id="pc--quantity"]').addEventListener('keyup', function (event) {
-                const qnt = parseInt(event.currentTarget.value)
+              productCard.querySelector('[data-id="pc--quantity"]').addEventListener('keyup', (event) => {
+                const qnt = parseInt(event.currentTarget.value, 10)
                 productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : qnt < -101 ? -101 : qnt
                 if (qnt > 101) {
                   event.currentTarget.value = 101
@@ -253,8 +255,8 @@
               })
             }
 
-            productCard.querySelector('[data-id="pc--quantity"]').addEventListener('input', function (event) {
-              const qnt = parseInt(event.currentTarget.value)
+              productCard.querySelector('[data-id="pc--quantity"]').addEventListener('input', (event) => {
+                const qnt = parseInt(event.currentTarget.value, 10)
               productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : qnt < -101 ? -101 : qnt
               if (qnt > 101) {
                 event.currentTarget.value = 101
@@ -264,9 +266,9 @@
               }
             })
 
-            select.addEventListener('change', function (event) {
+              select.addEventListener('change', (event) => {
               const code = event.currentTarget.value;
-              const quantity = parseInt(event.currentTarget.selectedOptions[0].dataset.quantity)
+              const quantity = parseInt(event.currentTarget.selectedOptions[0].dataset.quantity, 10)
               const name = event.currentTarget.selectedOptions[0].dataset.name
               const imageUrl = event.currentTarget.selectedOptions[0].dataset.imageUrl
               const frequency = event.currentTarget.selectedOptions[0].dataset.frequency

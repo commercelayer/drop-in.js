@@ -81,7 +81,7 @@ export namespace Components {
           * Open the minicart and set the opener so that the minicart can be closed by focusing on the opener. (available _only_ when the `cl-cart` component is used as _minicart_).
           * @param opener The opener of the minicart.
          */
-        "openMinicart": (opener: HTMLElement) => Promise<void>;
+        "openMinicart": (opener: Pick<HTMLElement, "focus">) => Promise<void>;
         /**
           * If `true` the minicart automatically opens as soon as an item is added to the shopping cart (available _only_ when the `cl-cart` component is used as _minicart_).
           * @default false

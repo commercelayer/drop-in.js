@@ -1,7 +1,13 @@
 import { makeSalesChannel } from "@commercelayer/js-auth"
 import CommerceLayer, {
-  type CommerceLayerClient,
+  bundles,
   type Customer,
+  customers,
+  line_items,
+  orders,
+  organization,
+  prices,
+  skus,
 } from "@commercelayer/sdk"
 import Cookies from "js-cookie"
 import { memoize } from "lodash-es"
@@ -93,15 +99,23 @@ export const getAccessToken = memoize(
   (clientCredentials) => JSON.stringify(clientCredentials),
 )
 
-export async function createClient(
-  config: Config,
-): Promise<CommerceLayerClient> {
+export async function createClient(config: Config) {
   const token = await getAccessToken(config)
 
-  return CommerceLayer({
+  CommerceLayer({
     accessToken: token.accessToken,
     domain: config.domain,
   })
+
+  return {
+    bundles,
+    customers,
+    line_items,
+    orders,
+    organization,
+    prices,
+    skus,
+  }
 }
 
 export const customerFields = [
