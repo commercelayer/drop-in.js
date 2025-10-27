@@ -45,7 +45,7 @@
     "email": "marco.montalbano@commercelayer.io"
   },
   "dependencies": {
-    "@commercelayer/js-auth": "^7.0.0",
+    "@commercelayer/js-auth": "^7.1.0",
     "@commercelayer/organization-config": "^2.4.0",
     "@commercelayer/sdk": "^7.3.0",
     "@types/lodash-es": "^4.17.12",
