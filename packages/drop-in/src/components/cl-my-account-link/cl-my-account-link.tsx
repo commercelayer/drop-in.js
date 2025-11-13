@@ -10,6 +10,7 @@ import {
 } from "@stencil/core"
 import { getMyAccountUrl } from "@/apis/commercelayer/account"
 import { listenTo } from "@/apis/event"
+import { getClosestLocationHref } from "@/utils/url"
 
 @Component({
   tag: "cl-my-account-link",
@@ -24,14 +25,29 @@ export class ClMyAccountLink {
   @Prop({ reflect: true }) target: "_self" | "_blank" | "_parent" | "_top" =
     "_self"
 
+  /**
+   * Providing this attribute will enable the "Back to shop" and "Logout" navigation links on the My Account page.
+   * When set to `true`, the link will redirect to the current page URL.
+   * You can also provide a custom URL string.
+   */
+  @Prop({ reflect: true, mutable: true }) backToShop?: "true" | string
+
   @State() href: string | undefined
 
   async componentWillLoad(): Promise<void> {
     listenTo("cl-identity-gettoken", async () => {
-      this.href = await getMyAccountUrl()
+      if (isTrue(this.backToShop)) {
+        this.backToShop = getClosestLocationHref()
+      }
+
+      this.href = await getMyAccountUrl({ returnUrl: this.backToShop })
     })
 
-    this.href = await getMyAccountUrl()
+    if (isTrue(this.backToShop)) {
+      this.backToShop = getClosestLocationHref()
+    }
+
+    this.href = await getMyAccountUrl({ returnUrl: this.backToShop })
   }
 
   render(): JSX.Element {
@@ -43,4 +59,8 @@ export class ClMyAccountLink {
       </Host>
     )
   }
+}
+
+function isTrue(value: unknown): value is true {
+  return value === true || value === "true"
 }

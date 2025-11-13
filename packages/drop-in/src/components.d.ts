@@ -146,6 +146,10 @@ export namespace Components {
     }
     interface ClMyAccountLink {
         /**
+          * Providing this attribute will enable the "Back to shop" and "Logout" navigation links on the My Account page. When set to `true`, the link will redirect to the current page URL. You can also provide a custom URL string.
+         */
+        "backToShop"?: "true" | string;
+        /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
           * @default "_self"
          */
@@ -407,6 +411,10 @@ declare namespace LocalJSX {
         "type": "guest" | "customer" | undefined;
     }
     interface ClMyAccountLink {
+        /**
+          * Providing this attribute will enable the "Back to shop" and "Logout" navigation links on the My Account page. When set to `true`, the link will redirect to the current page URL. You can also provide a custom URL string.
+         */
+        "backToShop"?: "true" | string;
         /**
           * The browsing context in which to open the linked URL (a tab, a window, or an &lt;iframe&gt;).
           * @default "_self"

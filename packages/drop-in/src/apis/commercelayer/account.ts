@@ -2,7 +2,11 @@ import { getAccessToken } from "@/apis/commercelayer/client"
 import { getConfig, getOrganizationConfig } from "@/apis/commercelayer/config"
 import { getClosestLocationHref } from "@/utils/url"
 
-export async function getMyAccountUrl(): Promise<string | undefined> {
+export async function getMyAccountUrl({
+  returnUrl,
+}: {
+  returnUrl?: string
+}): Promise<string | undefined> {
   const config = getConfig()
   const { ownerType } = await getAccessToken(config)
 
@@ -13,7 +17,7 @@ export async function getMyAccountUrl(): Promise<string | undefined> {
   const organizationConfig = await getOrganizationConfig()
   const lang = config.defaultAttributes?.orders?.language_code
 
-  return `${organizationConfig.links.my_account}${lang != null ? `&lang=${lang}` : ""}`
+  return `${organizationConfig.links.my_account}${lang != null ? `&lang=${lang}` : ""}${returnUrl != null ? `&returnUrl=${returnUrl}` : ""}`
 }
 
 export async function getIdentityUrl(
