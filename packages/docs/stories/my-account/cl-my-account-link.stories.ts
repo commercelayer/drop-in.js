@@ -14,7 +14,7 @@ export default meta
 
 const Template: StoryFn<Args> = (args) => {
   return create(html`
-    <cl-my-account-link target=${args.target ?? nothing}>
+    <cl-my-account-link target=${args.target ?? nothing} back-to-shop=${args["back-to-shop"] ?? nothing}>
       Go to my account
     </cl-my-account-link>
   `)

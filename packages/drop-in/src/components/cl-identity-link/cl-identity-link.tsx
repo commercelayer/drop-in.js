@@ -90,7 +90,7 @@ export class ClIdentityLink {
             if (this.type === "logout") {
               event.preventDefault()
               void logout().then(() => {
-                location.reload()
+                window.location.reload()
               })
             }
           }}

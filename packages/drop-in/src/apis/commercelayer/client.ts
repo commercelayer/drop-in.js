@@ -105,6 +105,20 @@ export async function createClient(config: Config) {
   CommerceLayer({
     accessToken: token.accessToken,
     domain: config.domain,
+    fetch: async (input, init) => {
+      const response = await fetch(input, init)
+
+      if (response.status === 401) {
+        const config = getConfig()
+        const clientCredentials = configToClientCredentials(config)
+        const salesChannel = getSalesChannel(clientCredentials)
+        await salesChannel.removeAuthorization()
+
+        window.location.reload()
+      }
+
+      return response
+    },
   })
 
   return {
