@@ -5,6 +5,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky",
+    "clean": "pnpx rimraf --glob **/node_modules **/pnpm-lock.yaml",
     "build": "pnpm -r build && cp -r packages/drop-in/www/drop-in.js/demo packages/docs/storybook-static",
     "build:drop-in": "pnpm --filter drop-in.js build",
     "start:drop-in": "pnpm --filter drop-in.js start",
@@ -33,16 +34,12 @@
   },
   "packageManager": "pnpm@10.4.0",
   "devDependencies": {
-    "@biomejs/biome": "2.3.5",
+    "@biomejs/biome": "2.3.9",
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
-    "lerna": "^9.0.1",
-    "lint-staged": "^16.2.6",
-    "replace-in-file": "^8.3.0",
+    "lerna": "^9.0.3",
+    "lint-staged": "^16.2.7",
+    "replace-in-file": "^8.4.0",
     "typescript": "^5.9.3"
-  },
-  "resolutions": {
-    "prismjs": "^1.30.0",
-    "js-yaml": "^4.1.1"
   }
 }
