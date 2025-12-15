@@ -32,9 +32,15 @@ export class ClCartLink {
 
     if (this.minicart !== null) {
       this.minicart.type = "mini"
+      this.minicart.setOpener(this.host)
       document.body.appendChild(this.minicart)
     }
   }
+
+  // @Watch("href")
+  // async watchHrefHandler(newValue: string | undefined): Promise<void> {
+  //   console.log("cl-cart-link: href changed to", newValue)
+  // }
 
   disconnectedCallback(): void {
     if (this.minicart !== null) {
@@ -48,6 +54,12 @@ export class ClCartLink {
     listenTo("cl-cart-update", async () => {
       if (this.href === undefined || !(await isValidUrl(this.href))) {
         this.href = await getCartUrl()
+      }
+
+      if (this.minicart != null) {
+        // perche sto ????
+        this.host.querySelector('a')?.dispatchEvent(new MouseEvent('mousedown', {bubbles: true}));
+        this.host.querySelector('a')?.click()
       }
     })
 
@@ -72,25 +84,53 @@ export class ClCartLink {
 
   private handleOpenMinicart(): void {
     if (this.minicart !== null) {
-      void this.minicart.openMinicart(this.host)
+      void this.minicart.openMinicart(this.host, this.href)
     }
   }
 
   render(): JSX.Element {
     if (this.minicart !== null) {
       return (
-        <Host
-          role="button"
-          tabindex="0"
-          onKeyDown={(event: KeyboardEvent) => {
-            this.handleKeyDown(event)
-          }}
-          onClick={() => {
-            this.handleOpenMinicart()
-          }}
-        >
-          <slot />
+        <Host aria-disabled={this.href !== undefined ? undefined : "true"}>
+          <a
+            target={this.target}
+            href={this.href}
+            onClick={(e) => {
+              e.preventDefault()
+              this.minicart?.openMinicart(this.host, (e.currentTarget as HTMLAnchorElement).href)
+              console.log("cl-cart-link: href changed to", (e.currentTarget as HTMLAnchorElement).href)
+            }}
+          >
+            <slot />
+          </a>
         </Host>
+        // <Host
+        //   role="button"
+        //   tabindex="0"
+        //   onKeyDown={(event: KeyboardEvent) => {
+        //     this.handleKeyDown(event)
+        //   }}
+        //   onClick={() => {
+        //     this.handleOpenMinicart()
+        //   }}
+        // >
+        //   <a
+        //   target={this.target}
+        //   href={this.href}
+        //   onClickCapture={(e) => {
+        //     console.log("cl-cart-link: href changed to", (e.currentTarget as HTMLAnchorElement).href)
+        //     ;(e.currentTarget as HTMLAnchorElement).href = 'https://google.com'
+        //   }}
+        //   onClick={(e) => {
+        //     e.preventDefault()
+        //     this.handleClick(e).catch((error) => {
+        //       throw error
+        //     })
+        //   }}
+        // >
+        //   <slot />
+        // </a>
+        // </Host>
       )
     }
 
@@ -99,6 +139,10 @@ export class ClCartLink {
         <a
           target={this.target}
           href={this.href}
+          onClickCapture={(e) => {
+            console.log("cl-cart-link: href changed to", (e.currentTarget as HTMLAnchorElement).href)
+            ;(e.currentTarget as HTMLAnchorElement).href = 'https://google.com'
+          }}
           onClick={(e) => {
             this.handleClick(e).catch((error) => {
               throw error

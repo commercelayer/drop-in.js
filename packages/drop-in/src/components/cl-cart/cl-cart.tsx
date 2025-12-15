@@ -102,15 +102,15 @@ export class ClCart {
       }
     })
 
-    listenTo("cl-cart-update", async () => {
-      this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
+    // listenTo("cl-cart-update", async () => {
+    //   this.iframe.iFrameResizer.sendMessage(hostedCartIframeUpdateEvent)
 
-      await this.updateUrl(this.openOnAdd)
+    //   await this.updateUrl(this.openOnAdd)
 
-      if (this.type === "mini" && this.openOnAdd) {
-        this.open = true
-      }
-    })
+    //   if (this.type === "mini" && this.openOnAdd) {
+    //     this.open = true
+    //   }
+    // })
 
     await updateCartUrl(this.getCartPageUrl())
 
@@ -161,9 +161,17 @@ export class ClCart {
    * @param opener The opener of the minicart.
    */
   @Method()
-  async openMinicart(opener: Pick<HTMLElement, "focus">): Promise<void> {
+  async openMinicart(opener: Pick<HTMLElement, "focus">, href: string | undefined): Promise<void> {
+    if (href != null) {
+      this.href = href
+    }
     this.opener = opener
     this.open = true
+  }
+
+  @Method()
+  async setOpener(opener: Pick<HTMLElement, "focus"> | null): Promise<void> {
+    this.opener = opener
   }
 
   /**
@@ -204,7 +212,9 @@ export class ClCart {
   @Watch("open")
   watchOpenHandler(opened: boolean): void {
     if (this.type === "mini") {
-      this.updateMinicartUrl()
+      // this.updateMinicartUrl()
+
+      console.log("opener is: ", this.opener)
 
       if (!opened) {
         this.opener?.focus()
