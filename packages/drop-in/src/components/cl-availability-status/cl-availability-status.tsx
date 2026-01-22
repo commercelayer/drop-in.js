@@ -45,17 +45,17 @@ export class ClAvailabilityStatus {
     event: CustomEvent<AvailabilityUpdateEventPayload>,
   ): void {
     const hasQuantity =
-      event.detail?.sku?.inventory?.quantity === undefined ||
-      event.detail.sku.inventory.quantity - event.detail.cartQuantity > 0
+      event.detail?.inventory?.quantity === undefined ||
+      event.detail.inventory.quantity - event.detail.cartQuantity > 0
 
     this.available =
-      event.detail?.sku?.inventory?.available == null
+      event.detail?.inventory?.available == null
         ? undefined
-        : event.detail.sku.inventory.available && hasQuantity
+        : event.detail.inventory.available && hasQuantity
 
     this.hasDeliveryLeadTimes =
-      (event.detail?.sku?.inventory?.levels?.[0]?.delivery_lead_times?.length ??
-        0) > 0
+      (event.detail?.inventory?.levels?.[0]?.delivery_lead_times?.length ?? 0) >
+      0
   }
 
   async componentWillLoad(): Promise<void> {

@@ -113,7 +113,7 @@ describe("cl-availability-info.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku,
+            inventory: sku.inventory,
             rule: "cheapest",
             cartQuantity: 0,
           },
@@ -245,7 +245,7 @@ describe("cl-availability-info.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku,
+            inventory: sku.inventory,
             rule: "fastest",
             cartQuantity: 0,
           },
@@ -335,7 +335,7 @@ describe("cl-availability-info.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku,
+            inventory: sku.inventory,
             rule: "cheapest",
             cartQuantity: 0,
           },
@@ -449,7 +449,7 @@ describe("cl-availability-info.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku,
+            inventory: sku.inventory,
             rule: "cheapest",
             cartQuantity: 0,
           },
@@ -463,7 +463,7 @@ describe("cl-availability-info.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku: undefined,
+            inventory: undefined,
             rule: "cheapest",
             cartQuantity: 0,
           },

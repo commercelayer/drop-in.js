@@ -81,6 +81,6 @@ export type TriggerCartUpdate = (
 
 export interface AvailabilityUpdateEventPayload {
   cartQuantity: number
-  sku: Sku | undefined
+  inventory: Inventory | undefined
   rule: "cheapest" | "fastest"
 }

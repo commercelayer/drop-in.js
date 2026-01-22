@@ -477,7 +477,7 @@ describe("index.e2e", () => {
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
           <cl-availability kind="bundle" cl-hydrated code="${codes.bundleAvailable}" rule="cheapest">
-            <cl-availability-status aria-disabled="true" cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
+            <cl-availability-status cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
             <cl-availability-status aria-disabled="true" cl-hydrated type="available-with-info">
               ready to be shipped in
               <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
@@ -508,7 +508,7 @@ describe("index.e2e", () => {
               <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
               (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
             </cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+            <cl-availability-status cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
           </cl-availability>
         </div>
       </div>

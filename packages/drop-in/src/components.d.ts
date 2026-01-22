@@ -40,7 +40,7 @@ export namespace Components {
          */
         "code": string | undefined;
         /**
-          * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` is not fully implemented._
+          * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` support is limited. The `cl-availability-info` component does not display availability information for bundles._
           * @default sku
          */
         "kind"?: "sku" | "bundle";
@@ -311,7 +311,7 @@ declare namespace LocalJSX {
          */
         "code": string | undefined;
         /**
-          * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` is not fully implemented._
+          * Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` support is limited. The `cl-availability-info` component does not display availability information for bundles._
           * @default sku
          */
         "kind"?: "sku" | "bundle";
