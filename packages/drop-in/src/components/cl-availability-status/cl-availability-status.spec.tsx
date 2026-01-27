@@ -16,7 +16,7 @@ describe("cl-availability-status.spec", () => {
     `)
   })
 
-  it("renders as available when product is available", async () => {
+  it("renders as available when SKU is available", async () => {
     const { body, waitForChanges } = await newSpecPage({
       components: [ClAvailabilityStatus],
       html: `
@@ -69,7 +69,7 @@ describe("cl-availability-status.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku,
+            inventory: sku.inventory,
             rule: "cheapest",
             cartQuantity: 0,
           },
@@ -99,7 +99,7 @@ describe("cl-availability-status.spec", () => {
     `)
   })
 
-  it("renders as available with info when product is available and has delivery lead times", async () => {
+  it("renders as available with info when SKU is available and has delivery lead times", async () => {
     const { body, waitForChanges } = await newSpecPage({
       components: [ClAvailabilityStatus],
       html: `
@@ -194,7 +194,7 @@ describe("cl-availability-status.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku,
+            inventory: sku.inventory,
             rule: "cheapest",
             cartQuantity: 0,
           },
@@ -226,7 +226,7 @@ describe("cl-availability-status.spec", () => {
     `)
   })
 
-  it("renders as unavailable when product is out of stock", async () => {
+  it("renders as unavailable when SKU is out of stock", async () => {
     const { body, waitForChanges } = await newSpecPage({
       components: [ClAvailabilityStatus],
       html: `
@@ -279,7 +279,7 @@ describe("cl-availability-status.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku,
+            inventory: sku.inventory,
             rule: "cheapest",
             cartQuantity: 0,
           },
@@ -362,7 +362,7 @@ describe("cl-availability-status.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku,
+            inventory: sku.inventory,
             rule: "cheapest",
             cartQuantity: 98,
           },
@@ -445,7 +445,7 @@ describe("cl-availability-status.spec", () => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
-            sku,
+            inventory: sku.inventory,
             rule: "cheapest",
             cartQuantity: 0,
           },

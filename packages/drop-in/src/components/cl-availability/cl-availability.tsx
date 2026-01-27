@@ -10,10 +10,11 @@ import {
   Watch,
 } from "@stencil/core"
 import { debounce } from "lodash-es"
+import { getBundle } from "@/apis/commercelayer/bundles"
 import { getCart, getCartQuantity } from "@/apis/commercelayer/cart"
 import { getSku } from "@/apis/commercelayer/skus"
 import { listenTo } from "@/apis/event"
-import type { AvailabilityUpdateEventPayload, Sku } from "@/apis/types"
+import type { AvailabilityUpdateEventPayload, Inventory } from "@/apis/types"
 import {
   isValidCode,
   logCode,
@@ -35,7 +36,7 @@ export class ClAvailability {
   /**
    * Indicates whether the code refers to a `sku` or a `bundle`.
    *
-   * _⚠️ `bundle` is not fully implemented._
+   * _⚠️ `bundle` support is limited. The `cl-availability-info` component does not display availability information for bundles._
    *
    * @default sku
    */
@@ -93,10 +94,17 @@ export class ClAvailability {
     kind: typeof this.kind,
     code: typeof this.code,
   ): Promise<void> => {
-    let sku: Sku | undefined
+    let inventory: Inventory | undefined
 
-    if (kind !== "bundle" && isValidCode(code)) {
-      sku = await getSku(code)
+    if (isValidCode(code)) {
+      switch (this.kind) {
+        case "bundle":
+          inventory = (await getBundle(code))?.inventory
+          break
+        default:
+          inventory = (await getSku(code))?.inventory
+          break
+      }
     }
 
     this.host
@@ -107,7 +115,7 @@ export class ClAvailability {
             "availabilityUpdate",
             {
               detail: {
-                sku,
+                inventory,
                 rule: this.rule,
                 cartQuantity: getCartQuantity(this.cart, kind, code),
               },

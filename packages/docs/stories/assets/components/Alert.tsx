@@ -36,7 +36,7 @@ export const Alert: React.FC<Props> = ({ title, type = "info", children }) => {
     "div",
     {
       role: "alert",
-      className: `border-l-4 p-4 ${color}`,
+      className: `border-l-4 p-4 !mb-4 ${color}`,
     },
     titleElement,
     contentElement,

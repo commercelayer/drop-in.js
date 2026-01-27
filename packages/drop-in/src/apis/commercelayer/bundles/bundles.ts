@@ -15,11 +15,15 @@ export function getBundleInventory(bundle: Bundle): Inventory {
               skuListItem.sku?.inventory?.quantity /
                 (skuListItem.quantity ?? 1),
             )
-      const available = skuListItem.sku.inventory?.available ?? false
+
+      const available = skuListItem.sku?.inventory?.available ?? false
+
+      // TODO: aggregate levels to fully support delivery lead times
+      const levels = inventory.levels ?? []
 
       return {
         available: (inventory.available ?? true) && available,
-        levels: inventory.levels,
+        levels,
         quantity:
           quantity != null &&
           quantity < (inventory.quantity ?? Number.POSITIVE_INFINITY)
