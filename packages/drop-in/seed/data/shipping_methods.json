@@ -73,5 +73,80 @@
     "stock_location": "stock_location_1",
     "name": "Employee Free Shipping",
     "price_amount_cents": 0
+  },
+  {
+    "reference": "shipping_method_6",
+    "market": "market_1",
+    "shipping_zone": "shipping_zone_1",
+    "shipping_category": "shipping_category_3",
+    "stock_location": "stock_location_1",
+    "name": "Standard Shipping",
+    "price_amount_cents": 700,
+    "free_over_amount_cents": 9900
+  },
+  {
+    "reference": "shipping_method_7",
+    "market": "market_1",
+    "shipping_zone": "shipping_zone_1",
+    "shipping_category": "shipping_category_3",
+    "stock_location": "stock_location_1",
+    "name": "Express Delivery",
+    "price_amount_cents": 1200
+  },
+  {
+    "reference": "shipping_method_8",
+    "market": "market_2",
+    "shipping_zone": "shipping_zone_2",
+    "shipping_category": "shipping_category_3",
+    "stock_location": "stock_location_2",
+    "name": "Express Delivery",
+    "price_amount_cents": 1200
+  },
+  {
+    "reference": "shipping_method_9",
+    "market": "market_3",
+    "shipping_zone": "shipping_zone_1",
+    "shipping_category": "shipping_category_3",
+    "stock_location": "stock_location_1",
+    "name": "Standard Shipping",
+    "price_amount_cents": 700,
+    "free_over_amount_cents": 9900
+  },
+  {
+    "reference": "shipping_method_10",
+    "market": "market_2",
+    "shipping_zone": "shipping_zone_2",
+    "shipping_category": "shipping_category_3",
+    "stock_location": "stock_location_2",
+    "name": "Standard Shipping",
+    "price_amount_cents": 700,
+    "free_over_amount_cents": 9900
+  },
+  {
+    "reference": "shipping_method_4_employees",
+    "market": "market_1_employees",
+    "shipping_zone": "shipping_zone_1",
+    "shipping_category": "shipping_category_3",
+    "stock_location": "stock_location_1",
+    "name": "Employee Free Shipping",
+    "price_amount_cents": 0
+  },
+  {
+    "reference": "shipping_method_5_employees",
+    "market": "market_2_employees",
+    "shipping_zone": "shipping_zone_2",
+    "shipping_category": "shipping_category_3",
+    "stock_location": "stock_location_2",
+    "name": "Employee Free Shipping",
+    "price_amount_cents": 0
+  },
+  {
+    "reference": "shipping_method_6_employees",
+    "market": "market_3_employees",
+    "shipping_zone": "shipping_zone_1",
+    "shipping_category": "shipping_category_3",
+    "stock_location": "stock_location_1",
+    "name": "Employee Free Shipping",
+    "price_amount_cents": 0
   }
 ]

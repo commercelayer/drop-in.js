@@ -6,5 +6,9 @@
   {
     "reference": "shipping_category_2",
     "name": "Digital"
+  },
+  {
+    "reference": "shipping_category_3",
+    "name": "Fragile"
   }
 ]
