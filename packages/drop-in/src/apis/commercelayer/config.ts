@@ -1,11 +1,7 @@
 import { jwtDecode, jwtIsSalesChannel } from "@commercelayer/js-auth"
-import {
-  type DefaultMfeConfig,
-  getMfeConfig as mergeConfig,
-} from "@commercelayer/organization-config"
+import { getMfeConfig, hasValidLinks } from "@commercelayer/organization-config"
 import type { OrderCreate, ResourceRel } from "@commercelayer/sdk"
-import { merge } from "lodash-es"
-import type { ConditionalExcept, OmitDeep, SetRequired } from "type-fest"
+import type { ConditionalExcept } from "type-fest"
 import { memoize } from "@/utils/utils"
 import { createClient, getAccessToken } from "./client"
 
@@ -155,7 +151,10 @@ const getOrganization = memoize(async () => {
 })
 
 export async function getOrganizationConfig(
-  params?: Omit<ConfigParams, "accessToken" | "lang">,
+  params?: Omit<
+    NonNullable<Parameters<typeof getMfeConfig>[0]["params"]>,
+    "accessToken" | "lang"
+  >,
 ) {
   const config = getConfig()
   const { accessToken } = await getAccessToken(config)
@@ -169,28 +168,8 @@ export async function getOrganizationConfig(
 
   const organization = await getOrganization()
 
-  const domainPrefix = config.domain === "commercelayer.co" ? ".stg" : ""
-  const appEndpoint = `https://:slug${domainPrefix}.commercelayer.app`
-
-  const defaultConfig: ConfigJSONWithRequiredLinks = {
-    mfe: {
-      default: {
-        links: {
-          cart: `${appEndpoint}/cart/:order_id?accessToken=:access_token`,
-          checkout: `${appEndpoint}/checkout/:order_id?accessToken=:access_token`,
-          my_account: `${appEndpoint}/my-account?accessToken=:access_token`,
-          identity: `${appEndpoint}/identity`,
-        },
-      },
-    },
-  }
-
-  const mergeConfigOptions: Parameters<typeof mergeConfig>[0] = {
-    jsonConfig: merge<ConfigJSON, ConfigJSON, typeof organization.config>(
-      {},
-      defaultConfig,
-      organization.config,
-    ),
+  const organizationConfig = getMfeConfig({
+    jsonConfig: organization.config,
     market:
       jwtIsSalesChannel(jwt.payload) && jwt.payload.market?.id[0] != null
         ? `market:id:${jwt.payload.market.id[0]}`
@@ -202,25 +181,11 @@ export async function getOrganizationConfig(
       lang:
         config.defaultAttributes?.orders?.language_code ?? defaultLanguageCode,
     },
+  })
+
+  if (!hasValidLinks(organizationConfig)) {
+    throw new Error("The organization configuration is missing required links.")
   }
 
-  return mergeConfig(mergeConfigOptions) as Omit<DefaultMfeConfig, "links"> & {
-    links: RequiredLinks
-  }
-}
-
-type ConfigLink = NonNullable<DefaultMfeConfig["links"]>
-type ConfigParams = NonNullable<Parameters<typeof mergeConfig>[0]["params"]>
-type ConfigJSON = NonNullable<Parameters<typeof mergeConfig>[0]["jsonConfig"]>
-type RequiredLinks = SetRequired<
-  ConfigLink,
-  "cart" | "checkout" | "identity" | "my_account"
->
-
-type ConfigJSONWithRequiredLinks = OmitDeep<ConfigJSON, "mfe.default.links"> & {
-  mfe: {
-    default: {
-      links: RequiredLinks
-    }
-  }
+  return organizationConfig
 }
