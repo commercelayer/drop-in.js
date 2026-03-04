@@ -277,6 +277,8 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
+
     interface ClAddToCart {
         /**
           * The SKU or bundle code (i.e. the unique identifier of the product or bundle you want to add to the shopping cart).
@@ -439,41 +441,108 @@ declare namespace LocalJSX {
          */
         "type"?: "price" | "compare-at";
     }
+
+    interface ClAddToCartAttributes {
+        "kind": "sku" | "bundle";
+        "code": string | undefined;
+        "quantity": number;
+        "name": string | undefined;
+        "imageUrl": string | undefined;
+        "frequency": string | undefined;
+    }
+    interface ClAvailabilityAttributes {
+        "kind": "sku" | "bundle";
+        "code": string | undefined;
+        "rule": "cheapest" | "fastest";
+    }
+    interface ClAvailabilityInfoAttributes {
+        "type": | "min-days"
+    | "max-days"
+    | "min-hours"
+    | "max-hours"
+    | "shipping-method-name"
+    | "shipping-method-price"
+    | undefined;
+    }
+    interface ClAvailabilityStatusAttributes {
+        "type": | "available"
+    | "available-with-info"
+    | "unavailable"
+    | undefined;
+    }
+    interface ClCartAttributes {
+        "type": "mini" | undefined;
+        "openOnAdd": boolean;
+        "open": boolean;
+    }
+    interface ClCartCountAttributes {
+        "hideWhenEmpty": boolean;
+    }
+    interface ClCartLinkAttributes {
+        "target": "_self" | "_blank" | "_parent" | "_top";
+    }
+    interface ClCheckoutLinkAttributes {
+        "target": "_self" | "_blank" | "_parent" | "_top";
+    }
+    interface ClIdentityInfoAttributes {
+        "field": string;
+    }
+    interface ClIdentityLinkAttributes {
+        "target": "_self" | "_blank" | "_parent" | "_top";
+        "type": "login" | "signup" | "logout" | undefined;
+        "resetPasswordUrl": string;
+        "scope": string;
+    }
+    interface ClIdentityStatusAttributes {
+        "type": "guest" | "customer" | undefined;
+    }
+    interface ClMyAccountLinkAttributes {
+        "target": "_self" | "_blank" | "_parent" | "_top";
+        "backToShop": "true" | string;
+    }
+    interface ClPriceAttributes {
+        "kind": "sku" | "bundle";
+        "code": string | undefined;
+    }
+    interface ClPriceAmountAttributes {
+        "type": "price" | "compare-at";
+    }
+
     interface IntrinsicElements {
-        "cl-add-to-cart": ClAddToCart;
-        "cl-availability": ClAvailability;
-        "cl-availability-info": ClAvailabilityInfo;
-        "cl-availability-status": ClAvailabilityStatus;
-        "cl-cart": ClCart;
-        "cl-cart-count": ClCartCount;
-        "cl-cart-link": ClCartLink;
-        "cl-checkout-link": ClCheckoutLink;
-        "cl-identity-info": ClIdentityInfo;
-        "cl-identity-link": ClIdentityLink;
-        "cl-identity-status": ClIdentityStatus;
-        "cl-my-account-link": ClMyAccountLink;
-        "cl-price": ClPrice;
-        "cl-price-amount": ClPriceAmount;
+        "cl-add-to-cart": Omit<ClAddToCart, keyof ClAddToCartAttributes> & { [K in keyof ClAddToCart & keyof ClAddToCartAttributes]?: ClAddToCart[K] } & { [K in keyof ClAddToCart & keyof ClAddToCartAttributes as `attr:${K}`]?: ClAddToCartAttributes[K] } & { [K in keyof ClAddToCart & keyof ClAddToCartAttributes as `prop:${K}`]?: ClAddToCart[K] } & OneOf<"code", ClAddToCart["code"], ClAddToCartAttributes["code"]>;
+        "cl-availability": Omit<ClAvailability, keyof ClAvailabilityAttributes> & { [K in keyof ClAvailability & keyof ClAvailabilityAttributes]?: ClAvailability[K] } & { [K in keyof ClAvailability & keyof ClAvailabilityAttributes as `attr:${K}`]?: ClAvailabilityAttributes[K] } & { [K in keyof ClAvailability & keyof ClAvailabilityAttributes as `prop:${K}`]?: ClAvailability[K] } & OneOf<"code", ClAvailability["code"], ClAvailabilityAttributes["code"]>;
+        "cl-availability-info": Omit<ClAvailabilityInfo, keyof ClAvailabilityInfoAttributes> & { [K in keyof ClAvailabilityInfo & keyof ClAvailabilityInfoAttributes]?: ClAvailabilityInfo[K] } & { [K in keyof ClAvailabilityInfo & keyof ClAvailabilityInfoAttributes as `attr:${K}`]?: ClAvailabilityInfoAttributes[K] } & { [K in keyof ClAvailabilityInfo & keyof ClAvailabilityInfoAttributes as `prop:${K}`]?: ClAvailabilityInfo[K] } & OneOf<"type", ClAvailabilityInfo["type"], ClAvailabilityInfoAttributes["type"]>;
+        "cl-availability-status": Omit<ClAvailabilityStatus, keyof ClAvailabilityStatusAttributes> & { [K in keyof ClAvailabilityStatus & keyof ClAvailabilityStatusAttributes]?: ClAvailabilityStatus[K] } & { [K in keyof ClAvailabilityStatus & keyof ClAvailabilityStatusAttributes as `attr:${K}`]?: ClAvailabilityStatusAttributes[K] } & { [K in keyof ClAvailabilityStatus & keyof ClAvailabilityStatusAttributes as `prop:${K}`]?: ClAvailabilityStatus[K] } & OneOf<"type", ClAvailabilityStatus["type"], ClAvailabilityStatusAttributes["type"]>;
+        "cl-cart": Omit<ClCart, keyof ClCartAttributes> & { [K in keyof ClCart & keyof ClCartAttributes]?: ClCart[K] } & { [K in keyof ClCart & keyof ClCartAttributes as `attr:${K}`]?: ClCartAttributes[K] } & { [K in keyof ClCart & keyof ClCartAttributes as `prop:${K}`]?: ClCart[K] };
+        "cl-cart-count": Omit<ClCartCount, keyof ClCartCountAttributes> & { [K in keyof ClCartCount & keyof ClCartCountAttributes]?: ClCartCount[K] } & { [K in keyof ClCartCount & keyof ClCartCountAttributes as `attr:${K}`]?: ClCartCountAttributes[K] } & { [K in keyof ClCartCount & keyof ClCartCountAttributes as `prop:${K}`]?: ClCartCount[K] };
+        "cl-cart-link": Omit<ClCartLink, keyof ClCartLinkAttributes> & { [K in keyof ClCartLink & keyof ClCartLinkAttributes]?: ClCartLink[K] } & { [K in keyof ClCartLink & keyof ClCartLinkAttributes as `attr:${K}`]?: ClCartLinkAttributes[K] } & { [K in keyof ClCartLink & keyof ClCartLinkAttributes as `prop:${K}`]?: ClCartLink[K] };
+        "cl-checkout-link": Omit<ClCheckoutLink, keyof ClCheckoutLinkAttributes> & { [K in keyof ClCheckoutLink & keyof ClCheckoutLinkAttributes]?: ClCheckoutLink[K] } & { [K in keyof ClCheckoutLink & keyof ClCheckoutLinkAttributes as `attr:${K}`]?: ClCheckoutLinkAttributes[K] } & { [K in keyof ClCheckoutLink & keyof ClCheckoutLinkAttributes as `prop:${K}`]?: ClCheckoutLink[K] };
+        "cl-identity-info": Omit<ClIdentityInfo, keyof ClIdentityInfoAttributes> & { [K in keyof ClIdentityInfo & keyof ClIdentityInfoAttributes]?: ClIdentityInfo[K] } & { [K in keyof ClIdentityInfo & keyof ClIdentityInfoAttributes as `attr:${K}`]?: ClIdentityInfoAttributes[K] } & { [K in keyof ClIdentityInfo & keyof ClIdentityInfoAttributes as `prop:${K}`]?: ClIdentityInfo[K] } & OneOf<"field", ClIdentityInfo["field"], ClIdentityInfoAttributes["field"]>;
+        "cl-identity-link": Omit<ClIdentityLink, keyof ClIdentityLinkAttributes> & { [K in keyof ClIdentityLink & keyof ClIdentityLinkAttributes]?: ClIdentityLink[K] } & { [K in keyof ClIdentityLink & keyof ClIdentityLinkAttributes as `attr:${K}`]?: ClIdentityLinkAttributes[K] } & { [K in keyof ClIdentityLink & keyof ClIdentityLinkAttributes as `prop:${K}`]?: ClIdentityLink[K] } & OneOf<"type", ClIdentityLink["type"], ClIdentityLinkAttributes["type"]>;
+        "cl-identity-status": Omit<ClIdentityStatus, keyof ClIdentityStatusAttributes> & { [K in keyof ClIdentityStatus & keyof ClIdentityStatusAttributes]?: ClIdentityStatus[K] } & { [K in keyof ClIdentityStatus & keyof ClIdentityStatusAttributes as `attr:${K}`]?: ClIdentityStatusAttributes[K] } & { [K in keyof ClIdentityStatus & keyof ClIdentityStatusAttributes as `prop:${K}`]?: ClIdentityStatus[K] } & OneOf<"type", ClIdentityStatus["type"], ClIdentityStatusAttributes["type"]>;
+        "cl-my-account-link": Omit<ClMyAccountLink, keyof ClMyAccountLinkAttributes> & { [K in keyof ClMyAccountLink & keyof ClMyAccountLinkAttributes]?: ClMyAccountLink[K] } & { [K in keyof ClMyAccountLink & keyof ClMyAccountLinkAttributes as `attr:${K}`]?: ClMyAccountLinkAttributes[K] } & { [K in keyof ClMyAccountLink & keyof ClMyAccountLinkAttributes as `prop:${K}`]?: ClMyAccountLink[K] };
+        "cl-price": Omit<ClPrice, keyof ClPriceAttributes> & { [K in keyof ClPrice & keyof ClPriceAttributes]?: ClPrice[K] } & { [K in keyof ClPrice & keyof ClPriceAttributes as `attr:${K}`]?: ClPriceAttributes[K] } & { [K in keyof ClPrice & keyof ClPriceAttributes as `prop:${K}`]?: ClPrice[K] } & OneOf<"code", ClPrice["code"], ClPriceAttributes["code"]>;
+        "cl-price-amount": Omit<ClPriceAmount, keyof ClPriceAmountAttributes> & { [K in keyof ClPriceAmount & keyof ClPriceAmountAttributes]?: ClPriceAmount[K] } & { [K in keyof ClPriceAmount & keyof ClPriceAmountAttributes as `attr:${K}`]?: ClPriceAmountAttributes[K] } & { [K in keyof ClPriceAmount & keyof ClPriceAmountAttributes as `prop:${K}`]?: ClPriceAmount[K] };
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "cl-add-to-cart": LocalJSX.ClAddToCart & JSXBase.HTMLAttributes<HTMLClAddToCartElement>;
-            "cl-availability": LocalJSX.ClAvailability & JSXBase.HTMLAttributes<HTMLClAvailabilityElement>;
-            "cl-availability-info": LocalJSX.ClAvailabilityInfo & JSXBase.HTMLAttributes<HTMLClAvailabilityInfoElement>;
-            "cl-availability-status": LocalJSX.ClAvailabilityStatus & JSXBase.HTMLAttributes<HTMLClAvailabilityStatusElement>;
-            "cl-cart": LocalJSX.ClCart & JSXBase.HTMLAttributes<HTMLClCartElement>;
-            "cl-cart-count": LocalJSX.ClCartCount & JSXBase.HTMLAttributes<HTMLClCartCountElement>;
-            "cl-cart-link": LocalJSX.ClCartLink & JSXBase.HTMLAttributes<HTMLClCartLinkElement>;
-            "cl-checkout-link": LocalJSX.ClCheckoutLink & JSXBase.HTMLAttributes<HTMLClCheckoutLinkElement>;
-            "cl-identity-info": LocalJSX.ClIdentityInfo & JSXBase.HTMLAttributes<HTMLClIdentityInfoElement>;
-            "cl-identity-link": LocalJSX.ClIdentityLink & JSXBase.HTMLAttributes<HTMLClIdentityLinkElement>;
-            "cl-identity-status": LocalJSX.ClIdentityStatus & JSXBase.HTMLAttributes<HTMLClIdentityStatusElement>;
-            "cl-my-account-link": LocalJSX.ClMyAccountLink & JSXBase.HTMLAttributes<HTMLClMyAccountLinkElement>;
-            "cl-price": LocalJSX.ClPrice & JSXBase.HTMLAttributes<HTMLClPriceElement>;
-            "cl-price-amount": LocalJSX.ClPriceAmount & JSXBase.HTMLAttributes<HTMLClPriceAmountElement>;
+            "cl-add-to-cart": LocalJSX.IntrinsicElements["cl-add-to-cart"] & JSXBase.HTMLAttributes<HTMLClAddToCartElement>;
+            "cl-availability": LocalJSX.IntrinsicElements["cl-availability"] & JSXBase.HTMLAttributes<HTMLClAvailabilityElement>;
+            "cl-availability-info": LocalJSX.IntrinsicElements["cl-availability-info"] & JSXBase.HTMLAttributes<HTMLClAvailabilityInfoElement>;
+            "cl-availability-status": LocalJSX.IntrinsicElements["cl-availability-status"] & JSXBase.HTMLAttributes<HTMLClAvailabilityStatusElement>;
+            "cl-cart": LocalJSX.IntrinsicElements["cl-cart"] & JSXBase.HTMLAttributes<HTMLClCartElement>;
+            "cl-cart-count": LocalJSX.IntrinsicElements["cl-cart-count"] & JSXBase.HTMLAttributes<HTMLClCartCountElement>;
+            "cl-cart-link": LocalJSX.IntrinsicElements["cl-cart-link"] & JSXBase.HTMLAttributes<HTMLClCartLinkElement>;
+            "cl-checkout-link": LocalJSX.IntrinsicElements["cl-checkout-link"] & JSXBase.HTMLAttributes<HTMLClCheckoutLinkElement>;
+            "cl-identity-info": LocalJSX.IntrinsicElements["cl-identity-info"] & JSXBase.HTMLAttributes<HTMLClIdentityInfoElement>;
+            "cl-identity-link": LocalJSX.IntrinsicElements["cl-identity-link"] & JSXBase.HTMLAttributes<HTMLClIdentityLinkElement>;
+            "cl-identity-status": LocalJSX.IntrinsicElements["cl-identity-status"] & JSXBase.HTMLAttributes<HTMLClIdentityStatusElement>;
+            "cl-my-account-link": LocalJSX.IntrinsicElements["cl-my-account-link"] & JSXBase.HTMLAttributes<HTMLClMyAccountLinkElement>;
+            "cl-price": LocalJSX.IntrinsicElements["cl-price"] & JSXBase.HTMLAttributes<HTMLClPriceElement>;
+            "cl-price-amount": LocalJSX.IntrinsicElements["cl-price-amount"] & JSXBase.HTMLAttributes<HTMLClPriceAmountElement>;
         }
     }
 }
