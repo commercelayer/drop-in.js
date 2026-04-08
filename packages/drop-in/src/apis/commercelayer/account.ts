@@ -14,10 +14,11 @@ export async function getMyAccountUrl({
     return undefined
   }
 
-  const organizationConfig = await getOrganizationConfig()
-  const lang = config.defaultAttributes?.orders?.language_code
+  const organizationConfig = await getOrganizationConfig({
+    returnUrl,
+  })
 
-  return `${organizationConfig.links.my_account}${lang != null ? `&lang=${lang}` : ""}${returnUrl != null ? `&returnUrl=${returnUrl}` : ""}`
+  return organizationConfig.links.my_account
 }
 
 export async function getIdentityUrl(
@@ -31,10 +32,14 @@ export async function getIdentityUrl(
     return "#"
   }
 
-  const organizationConfig = await getOrganizationConfig()
-  const lang = config.defaultAttributes?.orders?.language_code
+  const organizationConfig = await getOrganizationConfig({
+    identityType: type,
+    clientId: config.clientId,
+    scope: scope ?? config.scope,
+    resetPasswordUrl,
+    returnUrl: getClosestLocationHref(),
+    publicScope: config.scope,
+  })
 
-  return `${organizationConfig.links.identity}/${type}?clientId=${
-    config.clientId
-  }&scope=${scope ?? config.scope}&publicScope=${config.scope}&returnUrl=${getClosestLocationHref()}${lang != null ? `&lang=${lang}` : ""}${resetPasswordUrl != null ? `&resetPasswordUrl=${resetPasswordUrl}` : ""}`
+  return organizationConfig.links.identity
 }

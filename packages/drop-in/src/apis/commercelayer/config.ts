@@ -140,7 +140,7 @@ export function getConfig(): Config {
   }
 }
 
-const getOrganization = memoize(async () => {
+export const getOrganization = memoize(async () => {
   const config = getConfig()
   const client = await createClient(config)
   return await client.organization.retrieve({
