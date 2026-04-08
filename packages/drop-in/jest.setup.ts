@@ -9,7 +9,9 @@ Object.defineProperty(window, 'parent', {
 
 Object.defineProperty(window, 'location', {
   value: {
-    href: 'http://example.com'
+    href: 'http://example.com',
+    // @ts-expect-error
+    reload: jest.fn()
   }
 })
 

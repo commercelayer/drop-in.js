@@ -16,15 +16,11 @@ beforeEach(() => {
     scope: "market:code:usa",
   })
 
-  jest.spyOn(config, "getOrganizationConfig").mockResolvedValue({
-    links: {
-      my_account:
-        "https://drop-in-js.commercelayer.app/my-account?accessToken=:access_token",
-      identity: "https://drop-in-js.commercelayer.app/identity",
-      cart: "https://drop-in-js.commercelayer.app/cart/:order_id?accessToken=:access_token",
-      checkout:
-        "https://drop-in-js.commercelayer.app/checkout/:order_id?accessToken=:access_token",
-    },
+  jest.spyOn(config, "getOrganization").mockResolvedValue({
+    type: "organizations",
+    id: "org_123",
+    created_at: "2024-01-01T00:00:00Z",
+    updated_at: "2024-01-01T00:00:00Z",
   })
 
   log = jest.spyOn(logger, "log")
@@ -65,7 +61,7 @@ describe("cl-identity-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self">
-        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/&amp;lang=en" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;lang=en&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
           Login
         </a>
       </cl-identity-link>
@@ -85,7 +81,7 @@ describe("cl-identity-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self" reset-password-url="https://example.com/reset-password">
-        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/&amp;lang=en&amp;resetPasswordUrl=https://example.com/reset-password" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;lang=en&amp;returnUrl=http://testing.stenciljs.com/&amp;resetPasswordUrl=https://example.com/reset-password" target="_self">
           Login
         </a>
       </cl-identity-link>
@@ -105,7 +101,7 @@ describe("cl-identity-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="signup" target="_self">
-        <a href="https://drop-in-js.commercelayer.app/identity/signup?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/&amp;lang=en" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/signup?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;lang=en&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
           Sign Up
         </a>
       </cl-identity-link>
@@ -145,7 +141,7 @@ describe("cl-identity-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self" scope="market:code:usa-employees">
-        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa-employees&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/&amp;lang=en" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa-employees&amp;publicScope=market:code:usa&amp;lang=en&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
           Login
         </a>
       </cl-identity-link>
@@ -168,7 +164,7 @@ describe("cl-identity-link.spec", () => {
 
     expect(root).toEqualHtml(`
       <cl-identity-link type="login" target="_self">
-        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;returnUrl=http://testing.stenciljs.com/&amp;lang=en" target="_self">
+        <a href="https://drop-in-js.commercelayer.app/identity/login?clientId=kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8&amp;scope=market:code:usa&amp;publicScope=market:code:usa&amp;lang=en&amp;returnUrl=http://testing.stenciljs.com/" target="_self">
           Login
         </a>
       </cl-identity-link>
