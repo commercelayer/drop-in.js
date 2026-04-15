@@ -16,7 +16,8 @@
     "test:unit:watch": "pnpm --filter drop-in.js test:unit:watch",
     "test:e2e:watch": "pnpm --filter drop-in.js test:e2e:watch",
     "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
-    "dep:minor": "pnpm dep:major -t minor",
+    "dep:semver": "pnpm dep:major -t semver",
+    "check": "pnpm ts:check && pnpm lint:fix",
     "ts:check": "pnpm -r --sequential ts:check",
     "lint": "pnpm biome check",
     "lint:fix": "pnpm biome check --write",
@@ -34,7 +35,7 @@
   },
   "packageManager": "pnpm@10.4.0",
   "devDependencies": {
-    "@biomejs/biome": "2.4.10",
+    "@biomejs/biome": "^2.4.10",
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
     "lerna": "^9.0.7",
