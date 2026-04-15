@@ -170,7 +170,11 @@ const preview: Preview = {
     (story) => {
       const script = document.createElement("script")
       script.type = "module"
-      script.src = "dist/drop-in/drop-in.esm.js"
+
+      // This script is existing in the public folder thanks to the "build:copy" script,
+      // which is run in parallel with Storybook in development and before Storybook build in production
+      script.src = "drop-in/drop-in.esm.js"
+
       document.head.appendChild(script)
 
       return story()

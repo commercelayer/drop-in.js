@@ -4,7 +4,7 @@
   "version": "2.26.0",
   "scripts": {
     "start": "concurrently -n copy,sass,app -c 'bgMagenta,bgMagenta,bgMagenta' 'pnpm build:copy:watch' 'pnpm build:sass:watch' 'storybook dev -p 6006'",
-    "build:copy": "cp -r ../drop-in/dist public/",
+    "build:copy": "cp -r ../drop-in/dist/drop-in public/",
     "build:copy:watch": "nodemon --watch ./node_modules/@commercelayer/drop-in.js/dist/drop-in/drop-in.esm.js --exec 'pnpm build:copy'",
     "build:sass": "sass ./stories/assets/styles/:./public/",
     "build:sass:watch": "nodemon --watch ./node_modules/@commercelayer/drop-in.js -e scss --exec 'pnpm build:sass'",
