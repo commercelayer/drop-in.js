@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Create a draft GitHub release 🎁
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           token: ${{ secrets.COMMERCELAYER_CI_TOKEN }}
           draft: true
