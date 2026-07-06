@@ -35,8 +35,8 @@
   },
   "packageManager": "pnpm@10.4.0",
   "devDependencies": {
-    "@biomejs/biome": "^2.4.15",
-    "concurrently": "^9.2.1",
+    "@biomejs/biome": "^2.5.2",
+    "concurrently": "^9.2.3",
     "husky": "^9.1.7",
     "lerna": "^9.0.7",
     "lint-staged": "^16.4.0",
