@@ -6,7 +6,7 @@ module.exports = {
   ],
   filterResults: (name, { upgradedVersionSemver }) => {
     if (
-      name === '@types/node' && parseInt(upgradedVersionSemver?.major) >= 22
+      name === '@types/node' && parseInt(upgradedVersionSemver?.major) >= 24
     ) {
       return false
     }
