@@ -92,7 +92,6 @@ const preview: Preview = {
     },
     backgrounds: {
       disable: true,
-      grid: { disable: true },
     },
     options: {
       storySort: {

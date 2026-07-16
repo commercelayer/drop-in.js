@@ -1,6 +1,6 @@
 import { MarkupIcon } from "@storybook/icons"
 import React from "react"
-import { IconButton } from "storybook/internal/components"
+import { ToggleButton } from "storybook/internal/components"
 import { useGlobals, useStorybookApi } from "storybook/manager-api"
 import {
   ADDON_ID,
@@ -34,13 +34,14 @@ export const Tool = () => {
   }, [toggle, api])
 
   return (
-    <IconButton
+    <ToggleButton
       key={TOOL_ID}
       title={ADDON_TITLE}
+      pressed={active}
       active={active}
       onClick={toggle}
     >
       <MarkupIcon /> {FILENAME}
-    </IconButton>
+    </ToggleButton>
   )
 }
