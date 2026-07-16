@@ -1,3 +1,4 @@
+import { vi } from "vitest"
 import { chunk, isNotNullish, memoize, uniq } from "./utils"
 
 describe("chunk", () => {
@@ -44,7 +45,7 @@ test("isNotNullish should return true when the value is not nullish", () => {
 })
 
 test("memoize should returns a new memoized function", () => {
-  const func = jest
+  const func = vi
     .fn()
     .mockImplementation((a: number, b: number): number => a + b)
 

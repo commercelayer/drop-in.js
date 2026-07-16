@@ -1,3 +1,22 @@
+/**
+ * `@stencil/vitest`'s `stencilVitestPlugin` compiles components on the fly
+ * and always applies Stencil's *default* hydrated flag (`class="hydrated"`),
+ * ignoring this project's custom `hydratedFlag` (`cl-hydrated` attribute,
+ * configured in stencil.config.ts). Depending on how many render ticks have
+ * elapsed, the real `cl-hydrated` attribute may *also* end up applied by the
+ * `stencil` test environment on top of it. Strip both before asserting so
+ * spec fixtures don't have to hardcode either (timing-dependent) marker.
+ */
+export function stripHydrationFlags(root: Element): void {
+  for (const el of [root, ...Array.from(root.querySelectorAll("*"))]) {
+    el.classList.remove("hydrated")
+    if (el.classList.length === 0) {
+      el.removeAttribute("class")
+    }
+    el.removeAttribute("cl-hydrated")
+  }
+}
+
 export async function waitFor(
   waitForChanges: () => Promise<any>,
   fn: () => boolean,

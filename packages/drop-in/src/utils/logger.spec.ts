@@ -1,3 +1,5 @@
+import type { MockInstance } from "vitest"
+import { vi } from "vitest"
 import type { Config } from "@/apis/commercelayer/config"
 import { log } from "./logger"
 
@@ -16,40 +18,32 @@ function injectConfig({
 }
 
 describe("logger", () => {
-  let consoleError: jest.SpyInstance<
-    void,
-    [message?: any, ...optionalParams: any[]]
+  let consoleError: MockInstance<
+    (message?: any, ...optionalParams: any[]) => void
   >
-  let consoleInfo: jest.SpyInstance<
-    void,
-    [message?: any, ...optionalParams: any[]]
+  let consoleInfo: MockInstance<
+    (message?: any, ...optionalParams: any[]) => void
   >
-  let consoleLog: jest.SpyInstance<
-    void,
-    [message?: any, ...optionalParams: any[]]
+  let consoleLog: MockInstance<
+    (message?: any, ...optionalParams: any[]) => void
   >
-  let consoleWarn: jest.SpyInstance<
-    void,
-    [message?: any, ...optionalParams: any[]]
+  let consoleWarn: MockInstance<
+    (message?: any, ...optionalParams: any[]) => void
   >
-  let consoleGroup: jest.SpyInstance<
-    void,
-    [message?: any, ...optionalParams: any[]]
+  let consoleGroup: MockInstance<
+    (message?: any, ...optionalParams: any[]) => void
   >
-  let consoleGroupEnd: jest.SpyInstance<
-    void,
-    [message?: any, ...optionalParams: any[]]
+  let consoleGroupEnd: MockInstance<
+    (message?: any, ...optionalParams: any[]) => void
   >
 
   beforeEach(() => {
-    consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
-    consoleInfo = jest.spyOn(console, "info").mockImplementation(() => {})
-    consoleLog = jest.spyOn(console, "log").mockImplementation(() => {})
-    consoleWarn = jest.spyOn(console, "warn").mockImplementation(() => {})
-    consoleGroup = jest.spyOn(console, "group").mockImplementation(() => {})
-    consoleGroupEnd = jest
-      .spyOn(console, "groupEnd")
-      .mockImplementation(() => {})
+    consoleError = vi.spyOn(console, "error").mockImplementation(() => {})
+    consoleInfo = vi.spyOn(console, "info").mockImplementation(() => {})
+    consoleLog = vi.spyOn(console, "log").mockImplementation(() => {})
+    consoleWarn = vi.spyOn(console, "warn").mockImplementation(() => {})
+    consoleGroup = vi.spyOn(console, "group").mockImplementation(() => {})
+    consoleGroupEnd = vi.spyOn(console, "groupEnd").mockImplementation(() => {})
   })
 
   afterEach(() => {

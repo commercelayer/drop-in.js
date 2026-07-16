@@ -1,14 +1,15 @@
 import type { Price } from "@commercelayer/sdk"
-import { newSpecPage } from "@stencil/core/testing"
-import { ClPriceAmount } from "./cl-price-amount"
+// biome-ignore lint/correctness/noUnusedImports: "h" is used by the classic JSX pragma
+import { h } from "@stencil/core"
+import { render } from "@stencil/vitest"
+import { stripHydrationFlags } from "@/testing/spec-helpers"
+import "./cl-price-amount"
 
 describe("cl-price-amount.spec", () => {
   it("renders without any arguments", async () => {
-    const { root } = await newSpecPage({
-      components: [ClPriceAmount],
-      html: "<cl-price-amount></cl-price-amount>",
-    })
+    const { root } = await render(<cl-price-amount />, { waitForReady: false })
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-price-amount type="price">
         <mock:shadow-root></mock:shadow-root>
@@ -17,11 +18,12 @@ describe("cl-price-amount.spec", () => {
   })
 
   it('renders as formatted_amount when `type="price"`', async () => {
-    const { root, waitForChanges } = await newSpecPage({
-      components: [ClPriceAmount],
-      html: '<cl-price-amount type="price"></cl-price-amount>',
-    })
+    const { root, waitForChanges } = await render(
+      <cl-price-amount type="price" />,
+      { waitForReady: false },
+    )
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-price-amount type="price">
         <mock:shadow-root></mock:shadow-root>
@@ -41,7 +43,7 @@ describe("cl-price-amount.spec", () => {
       formatted_compare_at_amount: "€ 28.50",
     }
 
-    root?.dispatchEvent(
+    root.dispatchEvent(
       new CustomEvent<Price>("priceUpdate", {
         detail: priceUpdateEvent,
       }),
@@ -49,6 +51,7 @@ describe("cl-price-amount.spec", () => {
 
     await waitForChanges()
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-price-amount type="price">
         <mock:shadow-root>
@@ -59,11 +62,12 @@ describe("cl-price-amount.spec", () => {
   })
 
   it('renders as formatted_compare_at_amount when `type="compare-at"`', async () => {
-    const { root, waitForChanges } = await newSpecPage({
-      components: [ClPriceAmount],
-      html: '<cl-price-amount type="compare-at"></cl-price-amount>',
-    })
+    const { root, waitForChanges } = await render(
+      <cl-price-amount type="compare-at" />,
+      { waitForReady: false },
+    )
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-price-amount type="compare-at">
         <mock:shadow-root></mock:shadow-root>
@@ -83,7 +87,7 @@ describe("cl-price-amount.spec", () => {
       formatted_compare_at_amount: "€ 28.50",
     }
 
-    root?.dispatchEvent(
+    root.dispatchEvent(
       new CustomEvent<Price>("priceUpdate", {
         detail: priceUpdateEvent,
       }),
@@ -91,21 +95,25 @@ describe("cl-price-amount.spec", () => {
 
     await waitForChanges()
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-price-amount type="compare-at">
         <mock:shadow-root>
-          <s part='strikethrough'>€ 28.50</s>
+          <s part="strikethrough">
+            € 28.50
+          </s>
         </mock:shadow-root>
       </cl-price-amount>
     `)
   })
 
   it('renders as empty box when `type="compare-at"` and there is no a compare-at amount', async () => {
-    const { root, waitForChanges } = await newSpecPage({
-      components: [ClPriceAmount],
-      html: '<cl-price-amount type="compare-at"></cl-price-amount>',
-    })
+    const { root, waitForChanges } = await render(
+      <cl-price-amount type="compare-at" />,
+      { waitForReady: false },
+    )
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-price-amount type="compare-at">
         <mock:shadow-root></mock:shadow-root>
@@ -125,7 +133,7 @@ describe("cl-price-amount.spec", () => {
       formatted_compare_at_amount: "€ 12.00",
     }
 
-    root?.dispatchEvent(
+    root.dispatchEvent(
       new CustomEvent<Price>("priceUpdate", {
         detail: priceUpdateEvent,
       }),
@@ -133,6 +141,7 @@ describe("cl-price-amount.spec", () => {
 
     await waitForChanges()
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-price-amount type="compare-at">
         <mock:shadow-root></mock:shadow-root>
@@ -141,11 +150,12 @@ describe("cl-price-amount.spec", () => {
   })
 
   it("renders as empty when the Price is undefined", async () => {
-    const { root, waitForChanges } = await newSpecPage({
-      components: [ClPriceAmount],
-      html: '<cl-price-amount type="price"></cl-price-amount>',
-    })
+    const { root, waitForChanges } = await render(
+      <cl-price-amount type="price" />,
+      { waitForReady: false },
+    )
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-price-amount type="price">
         <mock:shadow-root></mock:shadow-root>
@@ -165,7 +175,7 @@ describe("cl-price-amount.spec", () => {
       formatted_compare_at_amount: "€ 28.50",
     }
 
-    root?.dispatchEvent(
+    root.dispatchEvent(
       new CustomEvent<Price>("priceUpdate", {
         detail: priceUpdateEvent,
       }),
@@ -173,7 +183,7 @@ describe("cl-price-amount.spec", () => {
 
     await waitForChanges()
 
-    root?.dispatchEvent(
+    root.dispatchEvent(
       new CustomEvent<Price>("priceUpdate", {
         detail: undefined,
       }),
@@ -181,6 +191,7 @@ describe("cl-price-amount.spec", () => {
 
     await waitForChanges()
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-price-amount type="price">
         <mock:shadow-root></mock:shadow-root>

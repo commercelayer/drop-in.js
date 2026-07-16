@@ -1,41 +1,62 @@
-import { newSpecPage } from "@stencil/core/testing"
-import { mockedAccessToken } from "jest.spec.helpers"
+// biome-ignore lint/correctness/noUnusedImports: "h" is used by the classic JSX pragma
+import { h } from "@stencil/core"
+import { render } from "@stencil/vitest"
+import { vi } from "vitest"
 import * as client from "@/apis/commercelayer/client"
 import type { CLCustomEventDetailMap } from "@/apis/event"
-import { ClCartCount } from "./cl-cart-count"
+import {
+  mockedAccessToken,
+  stripHydrationFlags,
+  waitFor,
+} from "@/testing/spec-helpers"
+import "./cl-cart-count"
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
 
 describe("cl-cart-count.spec", () => {
   it("renders", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    const { root } = await newSpecPage({
-      components: [ClCartCount],
-      html: "<cl-cart-count></cl-cart-count>",
+    const { root, waitForChanges } = await render(<cl-cart-count />, {
+      waitForReady: false,
     })
 
+    await waitFor(
+      waitForChanges,
+      () => root.shadowRoot?.textContent?.trim() === "0",
+    )
+
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-cart-count>
-        <mock:shadow-root>0</mock:shadow-root>
+        <mock:shadow-root>
+          0
+        </mock:shadow-root>
       </cl-cart-count>
     `)
   })
 
   it('renders without content when "hide-when-empty" attribute is set to `true`', async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    const { root } = await newSpecPage({
-      components: [ClCartCount],
-      html: `<cl-cart-count hide-when-empty="true"></cl-cart-count>`,
-    })
+    const { root, waitForChanges } = await render(
+      <cl-cart-count hide-when-empty="true" />,
+      { waitForReady: false },
+    )
 
+    await waitForChanges()
+
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-cart-count hide-when-empty="true">
         <mock:shadow-root></mock:shadow-root>
@@ -44,12 +65,13 @@ describe("cl-cart-count.spec", () => {
   })
 
   it('renders with updated quantity when "cl-cart-update" is triggered with order details', async () => {
-    const { root, waitForChanges, doc } = await newSpecPage({
-      components: [ClCartCount],
-      html: "<cl-cart-count></cl-cart-count>",
+    const { root, waitForChanges } = await render(<cl-cart-count />, {
+      waitForReady: false,
     })
 
-    doc.dispatchEvent(
+    await waitForChanges()
+
+    document.dispatchEvent(
       new CustomEvent<CLCustomEventDetailMap["cl-cart-update"]>(
         "cl-cart-update",
         {
@@ -113,8 +135,9 @@ describe("cl-cart-count.spec", () => {
       ),
     )
 
-    await waitForChanges()
+    await waitFor(waitForChanges, () => root.getAttribute("quantity") === "12")
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-cart-count quantity="12">
         <mock:shadow-root>
@@ -125,12 +148,13 @@ describe("cl-cart-count.spec", () => {
   })
 
   it('renders as empty when "cl-cart-update" is triggered with empty order', async () => {
-    const { root, waitForChanges, doc } = await newSpecPage({
-      components: [ClCartCount],
-      html: "<cl-cart-count></cl-cart-count>",
+    const { root, waitForChanges } = await render(<cl-cart-count />, {
+      waitForReady: false,
     })
 
-    doc.dispatchEvent(
+    await waitForChanges()
+
+    document.dispatchEvent(
       new CustomEvent<CLCustomEventDetailMap["cl-cart-update"]>(
         "cl-cart-update",
         {
@@ -194,9 +218,9 @@ describe("cl-cart-count.spec", () => {
       ),
     )
 
-    await waitForChanges()
+    await waitFor(waitForChanges, () => root.getAttribute("quantity") === "12")
 
-    doc.dispatchEvent(
+    document.dispatchEvent(
       new CustomEvent<CLCustomEventDetailMap["cl-cart-update"]>(
         "cl-cart-update",
         {
@@ -219,11 +243,17 @@ describe("cl-cart-count.spec", () => {
       ),
     )
 
-    await waitForChanges()
+    await waitFor(
+      waitForChanges,
+      () => root.shadowRoot?.textContent?.trim() === "0",
+    )
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-cart-count>
-        <mock:shadow-root>0</mock:shadow-root>
+        <mock:shadow-root>
+          0
+        </mock:shadow-root>
       </cl-cart-count>
     `)
   })

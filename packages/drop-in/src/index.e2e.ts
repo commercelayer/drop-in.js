@@ -1,14 +1,6 @@
-import {
-  type E2EElement,
-  type E2EPage,
-  newE2EPage,
-} from "@stencil/core/testing"
-import {
-  getAccessToken,
-  getCartId,
-  getCommerceLayerConfiguration,
-  waitAndExpectForLineItems,
-} from "jest.e2e.helpers"
+import { render } from "@stencil/vitest"
+import { getAccessToken, getCartId } from "@/testing/e2e-helpers"
+import { waitFor } from "@/testing/spec-helpers"
 
 const codes = {
   nonexisting: "NONEXISTINGSKU",
@@ -24,62 +16,60 @@ const codes = {
 }
 
 const getCodeElements = (code: string) => {
-  const addToCart = async (page: E2EPage): Promise<E2EElement> =>
-    await page.find(`cl-add-to-cart[code="${code}"]`)
+  const addToCart = (root: Element): HTMLElement | null =>
+    root.querySelector<HTMLElement>(`cl-add-to-cart[code="${code}"]`)
 
-  const getPrice = async (page: E2EPage): Promise<E2EElement> =>
-    await page.find(`cl-price[code="${code}"]`)
+  const getPrice = (root: Element): HTMLElement | null =>
+    root.querySelector<HTMLElement>(`cl-price[code="${code}"]`)
 
-  const getPriceAmount = async (page: E2EPage): Promise<E2EElement> =>
-    await (await getPrice(page)).find('cl-price-amount[type="price"]')
+  const getPriceAmount = (root: Element): HTMLElement | null =>
+    getPrice(root)?.querySelector<HTMLElement>(
+      'cl-price-amount[type="price"]',
+    ) ?? null
 
-  const getPriceCompareAtAmount = async (page: E2EPage): Promise<E2EElement> =>
-    await (await getPrice(page)).find('cl-price-amount[type="compare-at"]')
+  const getPriceCompareAtAmount = (root: Element): HTMLElement | null =>
+    getPrice(root)?.querySelector<HTMLElement>(
+      'cl-price-amount[type="compare-at"]',
+    ) ?? null
 
-  const getAvailability = async (page: E2EPage): Promise<E2EElement> =>
-    await page.find(`cl-availability[code="${code}"]`)
+  const getAvailability = (root: Element): HTMLElement | null =>
+    root.querySelector<HTMLElement>(`cl-availability[code="${code}"]`)
 
-  const getAvailabilityStatusAvailable = async (
-    page: E2EPage,
-  ): Promise<E2EElement> =>
-    await (await getAvailability(page)).find(
+  const getAvailabilityStatusAvailable = (root: Element): HTMLElement | null =>
+    getAvailability(root)?.querySelector<HTMLElement>(
       'cl-availability-status[type="available"]',
-    )
+    ) ?? null
 
-  const getAvailabilityStatusUnavailable = async (
-    page: E2EPage,
-  ): Promise<E2EElement> =>
-    await (await getAvailability(page)).find(
+  const getAvailabilityStatusUnavailable = (
+    root: Element,
+  ): HTMLElement | null =>
+    getAvailability(root)?.querySelector<HTMLElement>(
       'cl-availability-status[type="unavailable"]',
-    )
+    ) ?? null
 
-  const getAvailabilityInfoMinDays = async (
-    page: E2EPage,
-  ): Promise<E2EElement> =>
-    await (await getAvailability(page)).find(
+  const getAvailabilityInfoMinDays = (root: Element): HTMLElement | null =>
+    getAvailability(root)?.querySelector<HTMLElement>(
       'cl-availability-info[type="min-days"]',
-    )
+    ) ?? null
 
-  const getAvailabilityInfoMaxDays = async (
-    page: E2EPage,
-  ): Promise<E2EElement> =>
-    await (await getAvailability(page)).find(
+  const getAvailabilityInfoMaxDays = (root: Element): HTMLElement | null =>
+    getAvailability(root)?.querySelector<HTMLElement>(
       'cl-availability-info[type="max-days"]',
-    )
+    ) ?? null
 
-  const getAvailabilityInfoShippingMethodName = async (
-    page: E2EPage,
-  ): Promise<E2EElement> =>
-    await (await getAvailability(page)).find(
+  const getAvailabilityInfoShippingMethodName = (
+    root: Element,
+  ): HTMLElement | null =>
+    getAvailability(root)?.querySelector<HTMLElement>(
       'cl-availability-info[type="shipping-method-name"]',
-    )
+    ) ?? null
 
-  const getAvailabilityInfoShippingMethodPrice = async (
-    page: E2EPage,
-  ): Promise<E2EElement> =>
-    await (await getAvailability(page)).find(
+  const getAvailabilityInfoShippingMethodPrice = (
+    root: Element,
+  ): HTMLElement | null =>
+    getAvailability(root)?.querySelector<HTMLElement>(
       'cl-availability-info[type="shipping-method-price"]',
-    )
+    ) ?? null
 
   return {
     addToCart,
@@ -105,21 +95,23 @@ const subscriptionElements = getCodeElements(codes.subscription)
 const bundleAvailableElements = getCodeElements(codes.bundleAvailable)
 const bundleOutOfStockElements = getCodeElements(codes.bundleOutOfStock)
 
-const getCartLink = async (page: E2EPage): Promise<E2EElement> =>
-  await page.find("cl-cart-link")
+const getCartLink = (root: Element): HTMLElement | null =>
+  root.querySelector<HTMLElement>("cl-cart-link")
 
-const getCartCount = async (page: E2EPage): Promise<E2EElement> =>
-  await page.find("cl-cart-link cl-cart-count")
+const getCartCount = (root: Element): HTMLElement | null =>
+  root.querySelector<HTMLElement>("cl-cart-link cl-cart-count")
 
-const getCheckoutLink = async (page: E2EPage): Promise<E2EElement> =>
-  await page.find("cl-checkout-link")
+const getCheckoutLink = (root: Element): HTMLElement | null =>
+  root.querySelector<HTMLElement>("cl-checkout-link")
 
 describe("index.e2e", () => {
   it("renders", async () => {
-    const page = await newE2EPage({
-      waitUntil: "networkidle0",
-      html: `
-        ${getCommerceLayerConfiguration()}
+    ;(window as any).commercelayerConfig = {
+      clientId: "kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8",
+      scope: "market:code:usa",
+    }
+
+    const { root, waitForChanges } = await render(`
         <div id="container">
           <cl-cart-link target="_blank">
             Cart
@@ -320,195 +312,261 @@ describe("index.e2e", () => {
             </cl-availability>
           </div>
         </div>
-      `,
-    })
+      `)
 
-    await page.waitForChanges()
+    await waitForChanges()
 
-    const accessToken = (await getAccessToken(page))?.accessToken ?? "null"
+    const accessToken = getAccessToken()?.accessToken ?? "null"
 
-    expect(await page.find("#container")).toEqualHtml(`
+    // This first, large assertion checks the light-DOM structure only
+    // (attributes, slotting, hydration) — the shadow content of each
+    // individual sub-element (price, availability info, etc.) is verified
+    // precisely by the many focused assertions below. Puppeteer/jest's
+    // `toEqualHtml` for a page-level `find()` never serialized nested shadow
+    // roots either; `toEqualLightHtml` is the vitest equivalent for that.
+    expect(root).toEqualLightHtml(`
       <div id="container">
         <cl-cart-link target="_blank" cl-hydrated>
-          <!---->
-          <a href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${accessToken}" target="_blank">
+          <a target="_blank" href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${accessToken}">
             Cart
-            <cl-cart-count cl-hydrated=""></cl-cart-count>
+            <cl-cart-count cl-hydrated></cl-cart-count>
           </a>
         </cl-cart-link>
-
-        <cl-checkout-link aria-disabled="true" target="_blank" cl-hydrated>
-          <!---->
+        <cl-checkout-link target="_blank" aria-disabled="true" cl-hydrated>
           <a target="_blank">
             Checkout
           </a>
         </cl-checkout-link>
-
         <div>
-          <cl-add-to-cart kind="sku" code="${codes.available}" quantity="1" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price kind="sku" code="${codes.available}" cl-hydrated>
+          <cl-add-to-cart code="${codes.available}" role="button" tabindex="0" kind="sku" quantity="1" cl-hydrated>
+            Add to cart
+          </cl-add-to-cart>
+          <cl-price code="${codes.available}" kind="sku" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability kind="sku" cl-hydrated code="${codes.available}" rule="cheapest">
-            <cl-availability-status cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
-            <cl-availability-status cl-hydrated type="available-with-info">
-              ready to be shipped in
-              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
-              -
-              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
-              days with
-              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
-              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+          <cl-availability code="${codes.available}" kind="sku" rule="cheapest" cl-hydrated>
+            <cl-availability-status type="available" style="color: green;" cl-hydrated>
+              Available
+              <br>
             </cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+            <cl-availability-status type="available-with-info" cl-hydrated>
+              ready to be shipped in
+              <cl-availability-info type="min-days" cl-hydrated></cl-availability-info>
+              -
+              <cl-availability-info type="max-days" cl-hydrated></cl-availability-info>
+              days with
+              <cl-availability-info type="shipping-method-name" cl-hydrated></cl-availability-info>
+              (
+              <cl-availability-info type="shipping-method-price" cl-hydrated></cl-availability-info>
+              )
+            </cl-availability-status>
+            <cl-availability-status type="unavailable" aria-disabled="true" cl-hydrated>
+              Out Of Stock
+            </cl-availability-status>
           </cl-availability>
         </div>
-
         <div>
-          <cl-add-to-cart kind="sku" code="${codes.noDiscount}" quantity="5" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price kind="sku" code="${codes.noDiscount}" cl-hydrated>
+          <cl-add-to-cart code="${codes.noDiscount}" quantity="5" role="button" tabindex="0" kind="sku" cl-hydrated>
+            Add to cart
+          </cl-add-to-cart>
+          <cl-price code="${codes.noDiscount}" kind="sku" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability kind="sku" cl-hydrated code="${codes.noDiscount}" rule="cheapest">
-            <cl-availability-status cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
-            <cl-availability-status cl-hydrated type="available-with-info">
-              ready to be shipped in
-              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
-              -
-              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
-              days with
-              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
-              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+          <cl-availability code="${codes.noDiscount}" kind="sku" rule="cheapest" cl-hydrated>
+            <cl-availability-status type="available" style="color: green;" cl-hydrated>
+              Available
+              <br>
             </cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+            <cl-availability-status type="available-with-info" cl-hydrated>
+              ready to be shipped in
+              <cl-availability-info type="min-days" cl-hydrated></cl-availability-info>
+              -
+              <cl-availability-info type="max-days" cl-hydrated></cl-availability-info>
+              days with
+              <cl-availability-info type="shipping-method-name" cl-hydrated></cl-availability-info>
+              (
+              <cl-availability-info type="shipping-method-price" cl-hydrated></cl-availability-info>
+              )
+            </cl-availability-status>
+            <cl-availability-status type="unavailable" aria-disabled="true" cl-hydrated>
+              Out Of Stock
+            </cl-availability-status>
           </cl-availability>
         </div>
-
         <div>
-          <cl-add-to-cart kind="sku" aria-disabled="true" code="${codes.outOfStock}" quantity="1" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price kind="sku" code="${codes.outOfStock}" cl-hydrated>
+          <cl-add-to-cart code="${codes.outOfStock}" role="button" tabindex="0" aria-disabled="true" kind="sku" quantity="1" cl-hydrated>
+            Add to cart
+          </cl-add-to-cart>
+          <cl-price code="${codes.outOfStock}" kind="sku" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability kind="sku" cl-hydrated code="${codes.outOfStock}" rule="cheapest">
-            <cl-availability-status aria-disabled="true" cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="available-with-info">
-              ready to be shipped in
-              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
-              -
-              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
-              days with
-              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
-              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+          <cl-availability code="${codes.outOfStock}" kind="sku" rule="cheapest" cl-hydrated>
+            <cl-availability-status type="available" style="color: green;" aria-disabled="true" cl-hydrated>
+              Available
+              <br>
             </cl-availability-status>
-            <cl-availability-status cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+            <cl-availability-status type="available-with-info" aria-disabled="true" cl-hydrated>
+              ready to be shipped in
+              <cl-availability-info type="min-days" cl-hydrated></cl-availability-info>
+              -
+              <cl-availability-info type="max-days" cl-hydrated></cl-availability-info>
+              days with
+              <cl-availability-info type="shipping-method-name" cl-hydrated></cl-availability-info>
+              (
+              <cl-availability-info type="shipping-method-price" cl-hydrated></cl-availability-info>
+              )
+            </cl-availability-status>
+            <cl-availability-status type="unavailable" cl-hydrated>
+              Out Of Stock
+            </cl-availability-status>
           </cl-availability>
         </div>
-
         <div>
-          <cl-add-to-cart kind="sku" code="${codes.doNotTrack}" quantity="9999" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price kind="sku" code="${codes.doNotTrack}" cl-hydrated>
+          <cl-add-to-cart code="${codes.doNotTrack}" quantity="9999" role="button" tabindex="0" kind="sku" cl-hydrated>
+            Add to cart
+          </cl-add-to-cart>
+          <cl-price code="${codes.doNotTrack}" kind="sku" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability kind="sku" cl-hydrated code="${codes.doNotTrack}" rule="cheapest">
-            <cl-availability-status cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
-            <cl-availability-status cl-hydrated type="available-with-info">
-              ready to be shipped in
-              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
-              -
-              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
-              days with
-              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
-              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+          <cl-availability code="${codes.doNotTrack}" kind="sku" rule="cheapest" cl-hydrated>
+            <cl-availability-status type="available" style="color: green;" cl-hydrated>
+              Available
+              <br>
             </cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+            <cl-availability-status type="available-with-info" cl-hydrated>
+              ready to be shipped in
+              <cl-availability-info type="min-days" cl-hydrated></cl-availability-info>
+              -
+              <cl-availability-info type="max-days" cl-hydrated></cl-availability-info>
+              days with
+              <cl-availability-info type="shipping-method-name" cl-hydrated></cl-availability-info>
+              (
+              <cl-availability-info type="shipping-method-price" cl-hydrated></cl-availability-info>
+              )
+            </cl-availability-status>
+            <cl-availability-status type="unavailable" aria-disabled="true" cl-hydrated>
+              Out Of Stock
+            </cl-availability-status>
           </cl-availability>
         </div>
-
         <div>
-          <cl-add-to-cart kind="sku" code="${codes.digitalProduct}" quantity="1" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price kind="sku" code="${codes.digitalProduct}" cl-hydrated>
+          <cl-add-to-cart code="${codes.digitalProduct}" role="button" tabindex="0" kind="sku" quantity="1" cl-hydrated>
+            Add to cart
+          </cl-add-to-cart>
+          <cl-price code="${codes.digitalProduct}" kind="sku" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability kind="sku" cl-hydrated code="${codes.digitalProduct}" rule="cheapest">
-            <cl-availability-status cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="available-with-info">
-              ready to be shipped in
-              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
-              -
-              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
-              days with
-              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
-              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+          <cl-availability code="${codes.digitalProduct}" kind="sku" rule="cheapest" cl-hydrated>
+            <cl-availability-status type="available" style="color: green;" cl-hydrated>
+              Available
+              <br>
             </cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+            <cl-availability-status type="available-with-info" aria-disabled="true" cl-hydrated>
+              ready to be shipped in
+              <cl-availability-info type="min-days" cl-hydrated></cl-availability-info>
+              -
+              <cl-availability-info type="max-days" cl-hydrated></cl-availability-info>
+              days with
+              <cl-availability-info type="shipping-method-name" cl-hydrated></cl-availability-info>
+              (
+              <cl-availability-info type="shipping-method-price" cl-hydrated></cl-availability-info>
+              )
+            </cl-availability-status>
+            <cl-availability-status type="unavailable" aria-disabled="true" cl-hydrated>
+              Out Of Stock
+            </cl-availability-status>
           </cl-availability>
         </div>
-
         <div>
-          <cl-add-to-cart kind="sku" code="${codes.subscription}" quantity="1" frequency="three-month" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
-          <cl-price kind="sku" code="${codes.subscription}" cl-hydrated>
+          <cl-add-to-cart code="${codes.subscription}" quantity="1" frequency="three-month" role="button" tabindex="0" kind="sku" cl-hydrated>
+            Add to cart
+          </cl-add-to-cart>
+          <cl-price code="${codes.subscription}" kind="sku" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability kind="sku" cl-hydrated code="${codes.subscription}" rule="cheapest">
-            <cl-availability-status cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
-            <cl-availability-status cl-hydrated type="available-with-info">
-              ready to be shipped in
-              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
-              -
-              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
-              days with
-              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
-              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+          <cl-availability code="${codes.subscription}" kind="sku" rule="cheapest" cl-hydrated>
+            <cl-availability-status type="available" style="color: green;" cl-hydrated>
+              Available
+              <br>
             </cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+            <cl-availability-status type="available-with-info" cl-hydrated>
+              ready to be shipped in
+              <cl-availability-info type="min-days" cl-hydrated></cl-availability-info>
+              -
+              <cl-availability-info type="max-days" cl-hydrated></cl-availability-info>
+              days with
+              <cl-availability-info type="shipping-method-name" cl-hydrated></cl-availability-info>
+              (
+              <cl-availability-info type="shipping-method-price" cl-hydrated></cl-availability-info>
+              )
+            </cl-availability-status>
+            <cl-availability-status type="unavailable" aria-disabled="true" cl-hydrated>
+              Out Of Stock
+            </cl-availability-status>
           </cl-availability>
         </div>
-
         <div>
-          <cl-add-to-cart kind="bundle" code="${codes.bundleAvailable}" quantity="1" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
+          <cl-add-to-cart kind="bundle" code="${codes.bundleAvailable}" quantity="1" role="button" tabindex="0" cl-hydrated>
+            Add to cart
+          </cl-add-to-cart>
           <cl-price kind="bundle" code="${codes.bundleAvailable}" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability kind="bundle" cl-hydrated code="${codes.bundleAvailable}" rule="cheapest">
-            <cl-availability-status cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="available-with-info">
-              ready to be shipped in
-              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
-              -
-              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
-              days with
-              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
-              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+          <cl-availability kind="bundle" code="${codes.bundleAvailable}" rule="cheapest" cl-hydrated>
+            <cl-availability-status type="available" style="color: green;" cl-hydrated>
+              Available
+              <br>
             </cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+            <cl-availability-status type="available-with-info" aria-disabled="true" cl-hydrated>
+              ready to be shipped in
+              <cl-availability-info type="min-days" cl-hydrated></cl-availability-info>
+              -
+              <cl-availability-info type="max-days" cl-hydrated></cl-availability-info>
+              days with
+              <cl-availability-info type="shipping-method-name" cl-hydrated></cl-availability-info>
+              (
+              <cl-availability-info type="shipping-method-price" cl-hydrated></cl-availability-info>
+              )
+            </cl-availability-status>
+            <cl-availability-status type="unavailable" aria-disabled="true" cl-hydrated>
+              Out Of Stock
+            </cl-availability-status>
           </cl-availability>
         </div>
-
         <div>
-          <cl-add-to-cart aria-disabled="true" kind="bundle" code="${codes.bundleOutOfStock}" quantity="1" role="button" tabindex="0" cl-hydrated>Add to cart</cl-add-to-cart>
+          <cl-add-to-cart kind="bundle" code="${codes.bundleOutOfStock}" quantity="1" role="button" tabindex="0" aria-disabled="true" cl-hydrated>
+            Add to cart
+          </cl-add-to-cart>
           <cl-price kind="bundle" code="${codes.bundleOutOfStock}" cl-hydrated>
             <cl-price-amount type="price" cl-hydrated></cl-price-amount>
             <cl-price-amount type="compare-at" cl-hydrated></cl-price-amount>
           </cl-price>
-          <cl-availability kind="bundle" cl-hydrated code="${codes.bundleOutOfStock}" rule="cheapest">
-            <cl-availability-status aria-disabled="true" cl-hydrated type="available" style="color: green;">Available<br /></cl-availability-status>
-            <cl-availability-status aria-disabled="true" cl-hydrated type="available-with-info">
-              ready to be shipped in
-              <cl-availability-info cl-hydrated type="min-days"></cl-availability-info>
-              -
-              <cl-availability-info cl-hydrated type="max-days"></cl-availability-info>
-              days with
-              <cl-availability-info cl-hydrated type="shipping-method-name"></cl-availability-info>
-              (<cl-availability-info cl-hydrated type="shipping-method-price"></cl-availability-info>)
+          <cl-availability kind="bundle" code="${codes.bundleOutOfStock}" rule="cheapest" cl-hydrated>
+            <cl-availability-status type="available" style="color: green;" aria-disabled="true" cl-hydrated>
+              Available
+              <br>
             </cl-availability-status>
-            <cl-availability-status cl-hydrated type="unavailable">Out Of Stock</cl-availability-status>
+            <cl-availability-status type="available-with-info" aria-disabled="true" cl-hydrated>
+              ready to be shipped in
+              <cl-availability-info type="min-days" cl-hydrated></cl-availability-info>
+              -
+              <cl-availability-info type="max-days" cl-hydrated></cl-availability-info>
+              days with
+              <cl-availability-info type="shipping-method-name" cl-hydrated></cl-availability-info>
+              (
+              <cl-availability-info type="shipping-method-price" cl-hydrated></cl-availability-info>
+              )
+            </cl-availability-status>
+            <cl-availability-status type="unavailable" cl-hydrated>
+              Out Of Stock
+            </cl-availability-status>
           </cl-availability>
         </div>
       </div>
@@ -518,16 +576,16 @@ describe("index.e2e", () => {
      * EXPECTATIONS FOR "AVAILABLE" PRODUCT
      */
 
-    expect(await availableElements.getPriceAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="price">
+    expect(availableElements.getPriceAmount(root)).toEqualHtml(`
+      <cl-price-amount type="price" cl-hydrated>
         <mock:shadow-root>
           $31.00
         </mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(await availableElements.getPriceCompareAtAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="compare-at">
+    expect(availableElements.getPriceCompareAtAmount(root)).toEqualHtml(`
+      <cl-price-amount type="compare-at" cl-hydrated>
         <mock:shadow-root>
           <s part="strikethrough">
             $39.00
@@ -536,20 +594,16 @@ describe("index.e2e", () => {
       </cl-price-amount>
     `)
 
-    expect(
-      await availableElements.getAvailabilityInfoMinDays(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="min-days">
+    expect(availableElements.getAvailabilityInfoMinDays(root)).toEqualHtml(`
+      <cl-availability-info type="min-days" cl-hydrated>
         <mock:shadow-root>
           4
         </mock:shadow-root>
       </cl-availability-info>
     `)
 
-    expect(
-      await availableElements.getAvailabilityInfoMaxDays(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="max-days">
+    expect(availableElements.getAvailabilityInfoMaxDays(root)).toEqualHtml(`
+      <cl-availability-info type="max-days" cl-hydrated>
         <mock:shadow-root>
           6
         </mock:shadow-root>
@@ -557,9 +611,9 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await availableElements.getAvailabilityInfoShippingMethodName(page),
+      availableElements.getAvailabilityInfoShippingMethodName(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-name">
+      <cl-availability-info type="shipping-method-name" cl-hydrated>
         <mock:shadow-root>
           Standard Shipping
         </mock:shadow-root>
@@ -567,9 +621,9 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await availableElements.getAvailabilityInfoShippingMethodPrice(page),
+      availableElements.getAvailabilityInfoShippingMethodPrice(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-price">
+      <cl-availability-info type="shipping-method-price" cl-hydrated>
         <mock:shadow-root>
           $7.00
         </mock:shadow-root>
@@ -580,34 +634,30 @@ describe("index.e2e", () => {
      * EXPECTATIONS FOR "NO DISCOUNT" PRODUCT
      */
 
-    expect(await noDiscountElements.getPriceAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="price">
+    expect(noDiscountElements.getPriceAmount(root)).toEqualHtml(`
+      <cl-price-amount type="price" cl-hydrated>
         <mock:shadow-root>
           $110.00
         </mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(await noDiscountElements.getPriceCompareAtAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="compare-at">
+    expect(noDiscountElements.getPriceCompareAtAmount(root)).toEqualHtml(`
+      <cl-price-amount type="compare-at" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(
-      await noDiscountElements.getAvailabilityInfoMinDays(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="min-days">
+    expect(noDiscountElements.getAvailabilityInfoMinDays(root)).toEqualHtml(`
+      <cl-availability-info type="min-days" cl-hydrated>
         <mock:shadow-root>
           4
         </mock:shadow-root>
       </cl-availability-info>
     `)
 
-    expect(
-      await noDiscountElements.getAvailabilityInfoMaxDays(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="max-days">
+    expect(noDiscountElements.getAvailabilityInfoMaxDays(root)).toEqualHtml(`
+      <cl-availability-info type="max-days" cl-hydrated>
         <mock:shadow-root>
           6
         </mock:shadow-root>
@@ -615,9 +665,9 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await noDiscountElements.getAvailabilityInfoShippingMethodName(page),
+      noDiscountElements.getAvailabilityInfoShippingMethodName(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-name">
+      <cl-availability-info type="shipping-method-name" cl-hydrated>
         <mock:shadow-root>
           Standard Shipping
         </mock:shadow-root>
@@ -625,9 +675,9 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await noDiscountElements.getAvailabilityInfoShippingMethodPrice(page),
+      noDiscountElements.getAvailabilityInfoShippingMethodPrice(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-price">
+      <cl-availability-info type="shipping-method-price" cl-hydrated>
         <mock:shadow-root>
           $7.00
         </mock:shadow-root>
@@ -638,16 +688,16 @@ describe("index.e2e", () => {
      * EXPECTATIONS FOR "OUT OF STOCK" PRODUCT
      */
 
-    expect(await outOfStockElements.getPriceAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="price">
+    expect(outOfStockElements.getPriceAmount(root)).toEqualHtml(`
+      <cl-price-amount type="price" cl-hydrated>
         <mock:shadow-root>
           $31.00
         </mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(await outOfStockElements.getPriceCompareAtAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="compare-at">
+    expect(outOfStockElements.getPriceCompareAtAmount(root)).toEqualHtml(`
+      <cl-price-amount type="compare-at" cl-hydrated>
         <mock:shadow-root>
           <s part="strikethrough">
             $39.00
@@ -656,34 +706,30 @@ describe("index.e2e", () => {
       </cl-price-amount>
     `)
 
-    expect(
-      await outOfStockElements.getAvailabilityInfoMinDays(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="min-days">
+    expect(outOfStockElements.getAvailabilityInfoMinDays(root)).toEqualHtml(`
+      <cl-availability-info type="min-days" cl-hydrated>
+        <mock:shadow-root></mock:shadow-root>
+      </cl-availability-info>
+    `)
+
+    expect(outOfStockElements.getAvailabilityInfoMaxDays(root)).toEqualHtml(`
+      <cl-availability-info type="max-days" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await outOfStockElements.getAvailabilityInfoMaxDays(page),
+      outOfStockElements.getAvailabilityInfoShippingMethodName(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="max-days">
+      <cl-availability-info type="shipping-method-name" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await outOfStockElements.getAvailabilityInfoShippingMethodName(page),
+      outOfStockElements.getAvailabilityInfoShippingMethodPrice(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-name">
-        <mock:shadow-root></mock:shadow-root>
-      </cl-availability-info>
-    `)
-
-    expect(
-      await outOfStockElements.getAvailabilityInfoShippingMethodPrice(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-price">
+      <cl-availability-info type="shipping-method-price" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
@@ -692,16 +738,16 @@ describe("index.e2e", () => {
      * EXPECTATIONS FOR "DO NOT TRACK" PRODUCT
      */
 
-    expect(await doNotTrackElements.getPriceAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="price">
+    expect(doNotTrackElements.getPriceAmount(root)).toEqualHtml(`
+      <cl-price-amount type="price" cl-hydrated>
         <mock:shadow-root>
           $40.00
         </mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(await doNotTrackElements.getPriceCompareAtAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="compare-at">
+    expect(doNotTrackElements.getPriceCompareAtAmount(root)).toEqualHtml(`
+      <cl-price-amount type="compare-at" cl-hydrated>
         <mock:shadow-root>
           <s part="strikethrough">
             $49.00
@@ -710,20 +756,16 @@ describe("index.e2e", () => {
       </cl-price-amount>
     `)
 
-    expect(
-      await doNotTrackElements.getAvailabilityInfoMinDays(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="min-days">
+    expect(doNotTrackElements.getAvailabilityInfoMinDays(root)).toEqualHtml(`
+      <cl-availability-info type="min-days" cl-hydrated>
         <mock:shadow-root>
           4
         </mock:shadow-root>
       </cl-availability-info>
     `)
 
-    expect(
-      await doNotTrackElements.getAvailabilityInfoMaxDays(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="max-days">
+    expect(doNotTrackElements.getAvailabilityInfoMaxDays(root)).toEqualHtml(`
+      <cl-availability-info type="max-days" cl-hydrated>
         <mock:shadow-root>
           6
         </mock:shadow-root>
@@ -731,9 +773,9 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await doNotTrackElements.getAvailabilityInfoShippingMethodName(page),
+      doNotTrackElements.getAvailabilityInfoShippingMethodName(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-name">
+      <cl-availability-info type="shipping-method-name" cl-hydrated>
         <mock:shadow-root>
           Standard Shipping
         </mock:shadow-root>
@@ -741,9 +783,9 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await doNotTrackElements.getAvailabilityInfoShippingMethodPrice(page),
+      doNotTrackElements.getAvailabilityInfoShippingMethodPrice(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-price">
+      <cl-availability-info type="shipping-method-price" cl-hydrated>
         <mock:shadow-root>
           $7.00
         </mock:shadow-root>
@@ -754,18 +796,16 @@ describe("index.e2e", () => {
      * EXPECTATIONS FOR "DIGITAL PRODUCT" PRODUCT
      */
 
-    expect(await digitalProductElements.getPriceAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="price">
+    expect(digitalProductElements.getPriceAmount(root)).toEqualHtml(`
+      <cl-price-amount type="price" cl-hydrated>
         <mock:shadow-root>
           $31.10
         </mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(
-      await digitalProductElements.getPriceCompareAtAmount(page),
-    ).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="compare-at">
+    expect(digitalProductElements.getPriceCompareAtAmount(root)).toEqualHtml(`
+      <cl-price-amount type="compare-at" cl-hydrated>
         <mock:shadow-root>
           <s part="strikethrough">
             $35.50
@@ -775,33 +815,33 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await digitalProductElements.getAvailabilityInfoMinDays(page),
+      digitalProductElements.getAvailabilityInfoMinDays(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="min-days">
+      <cl-availability-info type="min-days" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await digitalProductElements.getAvailabilityInfoMaxDays(page),
+      digitalProductElements.getAvailabilityInfoMaxDays(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="max-days">
+      <cl-availability-info type="max-days" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await digitalProductElements.getAvailabilityInfoShippingMethodName(page),
+      digitalProductElements.getAvailabilityInfoShippingMethodName(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-name">
+      <cl-availability-info type="shipping-method-name" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await digitalProductElements.getAvailabilityInfoShippingMethodPrice(page),
+      digitalProductElements.getAvailabilityInfoShippingMethodPrice(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-price">
+      <cl-availability-info type="shipping-method-price" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
@@ -810,18 +850,16 @@ describe("index.e2e", () => {
      * EXPECTATIONS FOR "SUBSCRIPTION" PRODUCT
      */
 
-    expect(await subscriptionElements.getPriceAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="price">
+    expect(subscriptionElements.getPriceAmount(root)).toEqualHtml(`
+      <cl-price-amount type="price" cl-hydrated>
         <mock:shadow-root>
           $107.00
         </mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(
-      await subscriptionElements.getPriceCompareAtAmount(page),
-    ).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="compare-at">
+    expect(subscriptionElements.getPriceCompareAtAmount(root)).toEqualHtml(`
+      <cl-price-amount type="compare-at" cl-hydrated>
         <mock:shadow-root>
           <s part="strikethrough">
             $119.90
@@ -830,20 +868,16 @@ describe("index.e2e", () => {
       </cl-price-amount>
     `)
 
-    expect(
-      await subscriptionElements.getAvailabilityInfoMinDays(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="min-days">
+    expect(subscriptionElements.getAvailabilityInfoMinDays(root)).toEqualHtml(`
+      <cl-availability-info type="min-days" cl-hydrated>
         <mock:shadow-root>
           4
         </mock:shadow-root>
       </cl-availability-info>
     `)
 
-    expect(
-      await subscriptionElements.getAvailabilityInfoMaxDays(page),
-    ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="max-days">
+    expect(subscriptionElements.getAvailabilityInfoMaxDays(root)).toEqualHtml(`
+      <cl-availability-info type="max-days" cl-hydrated>
         <mock:shadow-root>
           6
         </mock:shadow-root>
@@ -851,9 +885,9 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await subscriptionElements.getAvailabilityInfoShippingMethodName(page),
+      subscriptionElements.getAvailabilityInfoShippingMethodName(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-name">
+      <cl-availability-info type="shipping-method-name" cl-hydrated>
         <mock:shadow-root>
           Standard Shipping
         </mock:shadow-root>
@@ -861,9 +895,9 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await subscriptionElements.getAvailabilityInfoShippingMethodPrice(page),
+      subscriptionElements.getAvailabilityInfoShippingMethodPrice(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-price">
+      <cl-availability-info type="shipping-method-price" cl-hydrated>
         <mock:shadow-root>
           $7.00
         </mock:shadow-root>
@@ -874,18 +908,16 @@ describe("index.e2e", () => {
      * EXPECTATIONS FOR "AVAILABLE BUNDLE" PRODUCT
      */
 
-    expect(await bundleAvailableElements.getPriceAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="price">
+    expect(bundleAvailableElements.getPriceAmount(root)).toEqualHtml(`
+      <cl-price-amount type="price" cl-hydrated>
         <mock:shadow-root>
           $100.00
         </mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(
-      await bundleAvailableElements.getPriceCompareAtAmount(page),
-    ).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="compare-at">
+    expect(bundleAvailableElements.getPriceCompareAtAmount(root)).toEqualHtml(`
+      <cl-price-amount type="compare-at" cl-hydrated>
         <mock:shadow-root>
           <s part="strikethrough">
             $405.00
@@ -895,35 +927,33 @@ describe("index.e2e", () => {
     `)
 
     expect(
-      await bundleAvailableElements.getAvailabilityInfoMinDays(page),
+      bundleAvailableElements.getAvailabilityInfoMinDays(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="min-days">
+      <cl-availability-info type="min-days" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await bundleAvailableElements.getAvailabilityInfoMaxDays(page),
+      bundleAvailableElements.getAvailabilityInfoMaxDays(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="max-days">
+      <cl-availability-info type="max-days" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await bundleAvailableElements.getAvailabilityInfoShippingMethodName(page),
+      bundleAvailableElements.getAvailabilityInfoShippingMethodName(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-name">
+      <cl-availability-info type="shipping-method-name" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await bundleAvailableElements.getAvailabilityInfoShippingMethodPrice(
-        page,
-      ),
+      bundleAvailableElements.getAvailabilityInfoShippingMethodPrice(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-price">
+      <cl-availability-info type="shipping-method-price" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
@@ -932,54 +962,48 @@ describe("index.e2e", () => {
      * EXPECTATIONS FOR "AVAILABLE OUT-OF-STOCK" PRODUCT
      */
 
-    expect(await bundleOutOfStockElements.getPriceAmount(page)).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="price">
+    expect(bundleOutOfStockElements.getPriceAmount(root)).toEqualHtml(`
+      <cl-price-amount type="price" cl-hydrated>
         <mock:shadow-root>
           $85.30
         </mock:shadow-root>
       </cl-price-amount>
     `)
 
-    expect(
-      await bundleOutOfStockElements.getPriceCompareAtAmount(page),
-    ).toEqualHtml(`
-      <cl-price-amount cl-hydrated type="compare-at">
+    expect(bundleOutOfStockElements.getPriceCompareAtAmount(root)).toEqualHtml(`
+      <cl-price-amount type="compare-at" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-price-amount>
     `)
 
     expect(
-      await bundleOutOfStockElements.getAvailabilityInfoMinDays(page),
+      bundleOutOfStockElements.getAvailabilityInfoMinDays(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="min-days">
+      <cl-availability-info type="min-days" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await bundleOutOfStockElements.getAvailabilityInfoMaxDays(page),
+      bundleOutOfStockElements.getAvailabilityInfoMaxDays(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="max-days">
+      <cl-availability-info type="max-days" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await bundleOutOfStockElements.getAvailabilityInfoShippingMethodName(
-        page,
-      ),
+      bundleOutOfStockElements.getAvailabilityInfoShippingMethodName(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-name">
+      <cl-availability-info type="shipping-method-name" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
 
     expect(
-      await bundleOutOfStockElements.getAvailabilityInfoShippingMethodPrice(
-        page,
-      ),
+      bundleOutOfStockElements.getAvailabilityInfoShippingMethodPrice(root),
     ).toEqualHtml(`
-      <cl-availability-info cl-hydrated type="shipping-method-price">
+      <cl-availability-info type="shipping-method-price" cl-hydrated>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
     `)
@@ -988,28 +1012,29 @@ describe("index.e2e", () => {
      * ADD TO CART
      */
 
-    expect(await getCartCount(page)).toEqualHtml(`
+    expect(getCartCount(root)).toEqualHtml(`
       <cl-cart-count cl-hydrated>
-        <mock:shadow-root>0</mock:shadow-root>
+        <mock:shadow-root>
+          0
+        </mock:shadow-root>
       </cl-cart-count>
     `)
 
-    expect(await getCartLink(page)).toEqualHtml(`
+    expect(getCartLink(root)).toEqualHtml(`
       <cl-cart-link target="_blank" cl-hydrated>
-        <!---->
-        <a
-          href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${accessToken}"
-          target="_blank"
-        >
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${accessToken}">
           Cart
-          <cl-cart-count cl-hydrated></cl-cart-count>
+          <cl-cart-count cl-hydrated>
+            <mock:shadow-root>
+              0
+            </mock:shadow-root>
+          </cl-cart-count>
         </a>
       </cl-cart-link>
     `)
 
-    expect(await getCheckoutLink(page)).toEqualHtml(`
-      <cl-checkout-link aria-disabled="true" target="_blank" cl-hydrated>
-        <!---->
+    expect(getCheckoutLink(root)).toEqualHtml(`
+      <cl-checkout-link target="_blank" aria-disabled="true" cl-hydrated>
         <a target="_blank">
           Checkout
         </a>
@@ -1020,24 +1045,23 @@ describe("index.e2e", () => {
      * ADDING "OUT OF STOCK" TO CART
      */
 
-    await (await outOfStockElements.addToCart(page)).click()
+    outOfStockElements.addToCart(root)?.click()
 
-    expect(await getCartLink(page)).toEqualHtml(`
+    expect(getCartLink(root)).toEqualHtml(`
       <cl-cart-link target="_blank" cl-hydrated>
-        <!---->
-        <a
-          href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${accessToken}"
-          target="_blank"
-        >
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/cart/null?accessToken=${accessToken}">
           Cart
-          <cl-cart-count cl-hydrated></cl-cart-count>
+          <cl-cart-count cl-hydrated>
+            <mock:shadow-root>
+              0
+            </mock:shadow-root>
+          </cl-cart-count>
         </a>
       </cl-cart-link>
     `)
 
-    expect(await getCheckoutLink(page)).toEqualHtml(`
-      <cl-checkout-link aria-disabled="true" target="_blank" cl-hydrated>
-        <!---->
+    expect(getCheckoutLink(root)).toEqualHtml(`
+      <cl-checkout-link target="_blank" aria-disabled="true" cl-hydrated>
         <a target="_blank">
           Checkout
         </a>
@@ -1048,63 +1072,63 @@ describe("index.e2e", () => {
      * ADDING "AVAILABLE" TO CART
      */
 
-    expect(await availableElements.addToCart(page)).not.toHaveAttribute(
+    expect(availableElements.addToCart(root)).not.toHaveAttribute(
       "aria-disabled",
     )
-    expect(await availableElements.addToCart(page)).not.toHaveAttribute(
-      "aria-busy",
+    expect(availableElements.addToCart(root)).not.toHaveAttribute("aria-busy")
+
+    availableElements.addToCart(root)?.click()
+
+    await waitFor(
+      waitForChanges,
+      () =>
+        availableElements.addToCart(root)?.hasAttribute("aria-busy") ?? false,
     )
 
-    await (await availableElements.addToCart(page)).click()
+    expect(availableElements.addToCart(root)).toHaveAttribute("aria-disabled")
+    expect(availableElements.addToCart(root)).toHaveAttribute("aria-busy")
 
-    expect(await availableElements.addToCart(page)).toHaveAttribute(
+    // Waits for the real add-to-cart request against the Commerce Layer
+    // sandbox to finish (the button's own "aria-busy" state, set by the
+    // component while the request is in flight, doubles as the completion
+    // signal) — this replaces network-response interception, since no
+    // Puppeteer/Playwright `page` object is available inside a Vitest
+    // browser-mode test.
+    await waitFor(
+      waitForChanges,
+      () => !availableElements.addToCart(root)?.hasAttribute("aria-busy"),
+    )
+
+    expect(availableElements.addToCart(root)).not.toHaveAttribute(
       "aria-disabled",
     )
-    expect(await availableElements.addToCart(page)).toHaveAttribute("aria-busy")
+    expect(availableElements.addToCart(root)).not.toHaveAttribute("aria-busy")
 
-    await waitAndExpectForLineItems(page, {
-      code: codes.available,
-      quantity: 1,
-    })
-
-    await page.waitForNetworkIdle()
-
-    expect(await availableElements.addToCart(page)).not.toHaveAttribute(
-      "aria-disabled",
-    )
-    expect(await availableElements.addToCart(page)).not.toHaveAttribute(
-      "aria-busy",
-    )
-
-    const cartId = (await getCartId(page)) ?? "null"
-    expect(await getCartLink(page)).toEqualHtml(`
+    const cartId = getCartId() ?? "null"
+    expect(getCartLink(root)).toEqualHtml(`
       <cl-cart-link target="_blank" cl-hydrated>
-        <!---->
-        <a
-          href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
-          target="_blank"
-        >
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}">
           Cart
-          <cl-cart-count cl-hydrated quantity="1"></cl-cart-count>
+          <cl-cart-count cl-hydrated quantity="1">
+            <mock:shadow-root>
+              1
+            </mock:shadow-root>
+          </cl-cart-count>
         </a>
       </cl-cart-link>
     `)
 
-    expect(await getCartCount(page)).toEqualHtml(`
-      <cl-cart-count quantity="1" cl-hydrated>
+    expect(getCartCount(root)).toEqualHtml(`
+      <cl-cart-count cl-hydrated quantity="1">
         <mock:shadow-root>
           1
         </mock:shadow-root>
       </cl-cart-count>
     `)
 
-    expect(await getCheckoutLink(page)).toEqualHtml(`
+    expect(getCheckoutLink(root)).toEqualHtml(`
       <cl-checkout-link target="_blank" cl-hydrated>
-        <!---->
-        <a
-          href="https://drop-in-js.commercelayer.app/checkout/${cartId}?accessToken=${accessToken}"
-          target="_blank"
-        >
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/checkout/${cartId}?accessToken=${accessToken}">
           Checkout
         </a>
       </cl-checkout-link>
@@ -1114,43 +1138,37 @@ describe("index.e2e", () => {
      * ADDING "NO DISCOUNT" TO CART
      */
 
-    await (await noDiscountElements.addToCart(page)).click()
+    noDiscountElements.addToCart(root)?.click()
 
-    await waitAndExpectForLineItems(page, {
-      code: codes.noDiscount,
-      quantity: 5,
-    })
+    await waitFor(
+      waitForChanges,
+      () => !noDiscountElements.addToCart(root)?.hasAttribute("aria-busy"),
+    )
 
-    await page.waitForNetworkIdle()
-
-    expect(await getCartLink(page)).toEqualHtml(`
+    expect(getCartLink(root)).toEqualHtml(`
       <cl-cart-link target="_blank" cl-hydrated>
-        <!---->
-        <a
-          href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
-          target="_blank"
-        >
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}">
           Cart
-          <cl-cart-count cl-hydrated quantity="6"></cl-cart-count>
+          <cl-cart-count cl-hydrated quantity="6">
+            <mock:shadow-root>
+              6
+            </mock:shadow-root>
+          </cl-cart-count>
         </a>
       </cl-cart-link>
     `)
 
-    expect(await getCartCount(page)).toEqualHtml(`
-      <cl-cart-count quantity="6" cl-hydrated>
+    expect(getCartCount(root)).toEqualHtml(`
+      <cl-cart-count cl-hydrated quantity="6">
         <mock:shadow-root>
           6
         </mock:shadow-root>
       </cl-cart-count>
     `)
 
-    expect(await getCheckoutLink(page)).toEqualHtml(`
+    expect(getCheckoutLink(root)).toEqualHtml(`
       <cl-checkout-link target="_blank" cl-hydrated>
-        <!---->
-        <a
-          href="https://drop-in-js.commercelayer.app/checkout/${cartId}?accessToken=${accessToken}"
-          target="_blank"
-        >
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/checkout/${cartId}?accessToken=${accessToken}">
           Checkout
         </a>
       </cl-checkout-link>
@@ -1160,43 +1178,37 @@ describe("index.e2e", () => {
      * ADDING "DO NOT TRACK" TO CART
      */
 
-    await (await doNotTrackElements.addToCart(page)).click()
+    doNotTrackElements.addToCart(root)?.click()
 
-    await waitAndExpectForLineItems(page, {
-      code: codes.doNotTrack,
-      quantity: 9999,
-    })
+    await waitFor(
+      waitForChanges,
+      () => !doNotTrackElements.addToCart(root)?.hasAttribute("aria-busy"),
+    )
 
-    await page.waitForNetworkIdle()
-
-    expect(await getCartLink(page)).toEqualHtml(`
+    expect(getCartLink(root)).toEqualHtml(`
       <cl-cart-link target="_blank" cl-hydrated>
-        <!---->
-        <a
-          href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}"
-          target="_blank"
-        >
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/cart/${cartId}?accessToken=${accessToken}">
           Cart
-          <cl-cart-count cl-hydrated quantity="10005"></cl-cart-count>
+          <cl-cart-count cl-hydrated quantity="10005">
+            <mock:shadow-root>
+              10005
+            </mock:shadow-root>
+          </cl-cart-count>
         </a>
       </cl-cart-link>
     `)
 
-    expect(await getCartCount(page)).toEqualHtml(`
-      <cl-cart-count quantity="10005" cl-hydrated>
+    expect(getCartCount(root)).toEqualHtml(`
+      <cl-cart-count cl-hydrated quantity="10005">
         <mock:shadow-root>
           10005
         </mock:shadow-root>
       </cl-cart-count>
     `)
 
-    expect(await getCheckoutLink(page)).toEqualHtml(`
+    expect(getCheckoutLink(root)).toEqualHtml(`
       <cl-checkout-link target="_blank" cl-hydrated>
-        <!---->
-        <a
-          href="https://drop-in-js.commercelayer.app/checkout/${cartId}?accessToken=${accessToken}"
-          target="_blank"
-        >
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/checkout/${cartId}?accessToken=${accessToken}">
           Checkout
         </a>
       </cl-checkout-link>

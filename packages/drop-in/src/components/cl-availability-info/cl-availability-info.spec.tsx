@@ -1,14 +1,18 @@
-import { newSpecPage } from "@stencil/core/testing"
+// biome-ignore lint/correctness/noUnusedImports: "h" is used by the classic JSX pragma
+import { h } from "@stencil/core"
+import { render } from "@stencil/vitest"
 import type { AvailabilityUpdateEventPayload, Sku } from "@/apis/types"
-import { ClAvailabilityInfo } from "./cl-availability-info"
+import { stripHydrationFlags } from "@/testing/spec-helpers"
+import "./cl-availability-info"
 
 describe("cl-availability-info.spec", () => {
   it("renders without attributes", async () => {
-    const page = await newSpecPage({
-      components: [ClAvailabilityInfo],
-      html: "<cl-availability-info></cl-availability-info>",
+    const { root } = await render(<cl-availability-info type={undefined} />, {
+      waitForReady: false,
     })
-    expect(page.root).toEqualHtml(`
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <cl-availability-info>
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-info>
@@ -16,21 +20,22 @@ describe("cl-availability-info.spec", () => {
   })
 
   it("renders the availability message when the product is available (cheapest as default)", async () => {
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClAvailabilityInfo],
-      html: `
-        <div>
-          <cl-availability-info type="min-days"></cl-availability-info>
-          <cl-availability-info type="max-days"></cl-availability-info>
-          <cl-availability-info type="min-hours"></cl-availability-info>
-          <cl-availability-info type="max-hours"></cl-availability-info>
-          <cl-availability-info type="shipping-method-name"></cl-availability-info>
-          <cl-availability-info type="shipping-method-price"></cl-availability-info>
-        </div>
-      `,
-    })
+    const { root, waitForChanges } = await render(
+      <div>
+        <cl-availability-info type="min-days" />
+        <cl-availability-info type="max-days" />
+        <cl-availability-info type="min-hours" />
+        <cl-availability-info type="max-hours" />
+        <cl-availability-info type="shipping-method-name" />
+        <cl-availability-info type="shipping-method-price" />
+      </div>,
+      { waitForReady: false },
+    )
 
-    expect(body).toEqualHtml(`
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-info type="min-days">
           <mock:shadow-root></mock:shadow-root>
@@ -109,7 +114,7 @@ describe("cl-availability-info.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-info").forEach((element) => {
+    root.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -123,46 +128,60 @@ describe("cl-availability-info.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-info type="min-days">
-          <mock:shadow-root>5</mock:shadow-root>
+          <mock:shadow-root>
+            5
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="max-days">
-          <mock:shadow-root>10</mock:shadow-root>
+          <mock:shadow-root>
+            10
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="min-hours">
-          <mock:shadow-root>120</mock:shadow-root>
+          <mock:shadow-root>
+            120
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="max-hours">
-          <mock:shadow-root>240</mock:shadow-root>
+          <mock:shadow-root>
+            240
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="shipping-method-name">
-          <mock:shadow-root>Standard</mock:shadow-root>
+          <mock:shadow-root>
+            Standard
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="shipping-method-price">
-          <mock:shadow-root>$7.00</mock:shadow-root>
+          <mock:shadow-root>
+            $7.00
+          </mock:shadow-root>
         </cl-availability-info>
       </div>
     `)
   })
 
   it("renders the availability message when the product is available (fastest)", async () => {
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClAvailabilityInfo],
-      html: `
-        <div>
-          <cl-availability-info type="min-days"></cl-availability-info>
-          <cl-availability-info type="max-days"></cl-availability-info>
-          <cl-availability-info type="min-hours"></cl-availability-info>
-          <cl-availability-info type="max-hours"></cl-availability-info>
-          <cl-availability-info type="shipping-method-name"></cl-availability-info>
-          <cl-availability-info type="shipping-method-price"></cl-availability-info>
-        </div>
-      `,
-    })
+    const { root, waitForChanges } = await render(
+      <div>
+        <cl-availability-info type="min-days" />
+        <cl-availability-info type="max-days" />
+        <cl-availability-info type="min-hours" />
+        <cl-availability-info type="max-hours" />
+        <cl-availability-info type="shipping-method-name" />
+        <cl-availability-info type="shipping-method-price" />
+      </div>,
+      { waitForReady: false },
+    )
 
-    expect(body).toEqualHtml(`
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-info type="min-days">
           <mock:shadow-root></mock:shadow-root>
@@ -241,7 +260,7 @@ describe("cl-availability-info.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-info").forEach((element) => {
+    root.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -255,46 +274,60 @@ describe("cl-availability-info.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-info type="min-days">
-          <mock:shadow-root>6</mock:shadow-root>
+          <mock:shadow-root>
+            6
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="max-days">
-          <mock:shadow-root>7</mock:shadow-root>
+          <mock:shadow-root>
+            7
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="min-hours">
-          <mock:shadow-root>144</mock:shadow-root>
+          <mock:shadow-root>
+            144
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="max-hours">
-          <mock:shadow-root>168</mock:shadow-root>
+          <mock:shadow-root>
+            168
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="shipping-method-name">
-          <mock:shadow-root>Express</mock:shadow-root>
+          <mock:shadow-root>
+            Express
+          </mock:shadow-root>
         </cl-availability-info>
         <cl-availability-info type="shipping-method-price">
-          <mock:shadow-root>$20.00</mock:shadow-root>
+          <mock:shadow-root>
+            $20.00
+          </mock:shadow-root>
         </cl-availability-info>
       </div>
     `)
   })
 
   it("should not render the availability message when the product is unavailable", async () => {
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClAvailabilityInfo],
-      html: `
-        <div>
-          <cl-availability-info type="min-days"></cl-availability-info>
-          <cl-availability-info type="max-days"></cl-availability-info>
-          <cl-availability-info type="min-hours"></cl-availability-info>
-          <cl-availability-info type="max-hours"></cl-availability-info>
-          <cl-availability-info type="shipping-method-name"></cl-availability-info>
-          <cl-availability-info type="shipping-method-price"></cl-availability-info>
-        </div>
-      `,
-    })
+    const { root, waitForChanges } = await render(
+      <div>
+        <cl-availability-info type="min-days" />
+        <cl-availability-info type="max-days" />
+        <cl-availability-info type="min-hours" />
+        <cl-availability-info type="max-hours" />
+        <cl-availability-info type="shipping-method-name" />
+        <cl-availability-info type="shipping-method-price" />
+      </div>,
+      { waitForReady: false },
+    )
 
-    expect(body).toEqualHtml(`
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-info type="min-days">
           <mock:shadow-root></mock:shadow-root>
@@ -331,7 +364,7 @@ describe("cl-availability-info.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-info").forEach((element) => {
+    root.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -345,7 +378,8 @@ describe("cl-availability-info.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-info type="min-days">
           <mock:shadow-root></mock:shadow-root>
@@ -370,21 +404,22 @@ describe("cl-availability-info.spec", () => {
   })
 
   it("renders as empty when the SKU is undefined", async () => {
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClAvailabilityInfo],
-      html: `
-        <div>
-          <cl-availability-info type="min-days"></cl-availability-info>
-          <cl-availability-info type="max-days"></cl-availability-info>
-          <cl-availability-info type="min-hours"></cl-availability-info>
-          <cl-availability-info type="max-hours"></cl-availability-info>
-          <cl-availability-info type="shipping-method-name"></cl-availability-info>
-          <cl-availability-info type="shipping-method-price"></cl-availability-info>
-        </div>
-      `,
-    })
+    const { root, waitForChanges } = await render(
+      <div>
+        <cl-availability-info type="min-days" />
+        <cl-availability-info type="max-days" />
+        <cl-availability-info type="min-hours" />
+        <cl-availability-info type="max-hours" />
+        <cl-availability-info type="shipping-method-name" />
+        <cl-availability-info type="shipping-method-price" />
+      </div>,
+      { waitForReady: false },
+    )
 
-    expect(body).toEqualHtml(`
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-info type="min-days">
           <mock:shadow-root></mock:shadow-root>
@@ -445,7 +480,7 @@ describe("cl-availability-info.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-info").forEach((element) => {
+    root.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -459,7 +494,7 @@ describe("cl-availability-info.spec", () => {
 
     await waitForChanges()
 
-    body.querySelectorAll("cl-availability-info").forEach((element) => {
+    root.querySelectorAll("cl-availability-info").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -473,7 +508,8 @@ describe("cl-availability-info.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-info type="min-days">
           <mock:shadow-root></mock:shadow-root>
