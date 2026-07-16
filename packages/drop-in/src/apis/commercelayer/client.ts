@@ -57,6 +57,7 @@ const getSalesChannel = memoize(
         return `commercelayer_${t}-${configuration.clientId}-${scope}`
       },
       storage: {
+        name: "cookie",
         async getItem(key: string) {
           return JSON.parse(Cookies.get(key) ?? "null")
         },
@@ -79,7 +80,7 @@ const configToClientCredentials = (
   debug:
     config.debug !== "none"
       ? {
-          logLevel: "info",
+          logLevel: "verbose",
         }
       : undefined,
   domain: config.domain,
