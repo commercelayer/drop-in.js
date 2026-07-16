@@ -11,6 +11,19 @@ export default defineVitestConfig({
     projects: [
       {
         plugins: [stencilVitestPlugin()],
+        // Vite 8's oxc transformer defaults JSX to development mode, which
+        // injects `__self`/`__source` props onto every h() call and breaks
+        // toEqualHtml() snapshot comparisons. @stencil/vitest only fills in
+        // `oxc.jsx` when it's unset, so setting it here (with development:
+        // false) overrides its default instead of relying on it.
+        oxc: {
+          jsx: {
+            runtime: "classic",
+            pragma: "h",
+            pragmaFrag: "Fragment",
+            development: false,
+          },
+        },
         resolve: {
           alias: {
             "@": srcDir,

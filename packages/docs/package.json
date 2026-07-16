@@ -41,7 +41,7 @@
     "sass": "^1.101.0",
     "storybook": "^10.5.1",
     "typescript": "^5.9.3",
-    "vite": "^7.3.6"
+    "vite": "^8.1.5"
   },
   "dependencies": {
     "@commercelayer/drop-in.js": "workspace:^2.26.2",
