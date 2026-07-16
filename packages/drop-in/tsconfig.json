@@ -15,13 +15,12 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "h.Fragment",
 
-    "baseUrl": ".",
     "paths": {
-      "@/apis/*": ["src/apis/*"],
-      "@/components/*": ["src/components/*"],
-      "@/global/*": ["src/global/*"],
-      "@/utils/*": ["src/utils/*"],
-      "@/testing/*": ["src/testing/*"]
+      "@/apis/*": ["./src/apis/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/global/*": ["./src/global/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/testing/*": ["./src/testing/*"]
     },
 
     "types": ["vitest/globals", "@stencil/vitest/globals"],

@@ -71,10 +71,17 @@ const getSalesChannel = memoize(
   (clientCredentials) => JSON.stringify(clientCredentials),
 )
 
-const configToClientCredentials = (config: Config) => ({
+const configToClientCredentials = (
+  config: Config,
+): Parameters<typeof makeSalesChannel>[0] => ({
   clientId: config.clientId,
   scope: config.scope,
-  debug: config.debug !== "none",
+  debug:
+    config.debug !== "none"
+      ? {
+          logLevel: "info",
+        }
+      : undefined,
   domain: config.domain,
 })
 
