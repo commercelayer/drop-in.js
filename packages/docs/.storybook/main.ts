@@ -1,3 +1,4 @@
+// This file has been automatically migrated to valid ESM format by Storybook.
 import { createRequire } from "node:module"
 import remarkGfm from "remark-gfm"
 import type { StorybookConfig } from "storybook/internal/types"

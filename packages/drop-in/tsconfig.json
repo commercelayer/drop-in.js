@@ -3,6 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "declaration": false,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "lib": ["dom", "es2022"],
     "moduleResolution": "bundler",
@@ -14,15 +15,15 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "h.Fragment",
 
-    "baseUrl": ".",
     "paths": {
-      "@/apis/*": ["src/apis/*"],
-      "@/components/*": ["src/components/*"],
-      "@/global/*": ["src/global/*"],
-      "@/utils/*": ["src/utils/*"],
-      "jest.e2e.helpers": ["jest.e2e.helpers"],
-      "jest.spec.helpers": ["jest.spec.helpers"]
+      "@/apis/*": ["./src/apis/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/global/*": ["./src/global/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/testing/*": ["./src/testing/*"]
     },
+
+    "types": ["vitest/globals", "@stencil/vitest/globals"],
 
     "strict": true,
     "noImplicitAny": true,

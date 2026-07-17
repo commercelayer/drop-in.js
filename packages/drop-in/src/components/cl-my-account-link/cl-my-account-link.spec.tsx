@@ -1,23 +1,26 @@
-import { newSpecPage } from "@stencil/core/testing"
-import { mockedAccessToken } from "jest.spec.helpers"
+// biome-ignore lint/correctness/noUnusedImports: "h" is used by the classic JSX pragma
+import { h } from "@stencil/core"
+import { render } from "@stencil/vitest"
+import { vi } from "vitest"
 import * as client from "@/apis/commercelayer/client"
 import * as config from "@/apis/commercelayer/config"
 import { fireEvent } from "@/apis/event"
-import { ClMyAccountLink } from "./cl-my-account-link"
+import { mockedAccessToken, stripHydrationFlags } from "@/testing/spec-helpers"
+import "./cl-my-account-link"
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  vi.resetAllMocks()
 })
 
 describe("cl-my-account-link.spec", () => {
   it("renders the my-account without href when guest", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    jest.spyOn(config, "getOrganizationConfig").mockResolvedValue({
+    vi.spyOn(config, "getOrganizationConfig").mockResolvedValue({
       links: {
         my_account:
           "https://drop-in-js.commercelayer.app/my-account?accessToken=token-123",
@@ -28,13 +31,14 @@ describe("cl-my-account-link.spec", () => {
       },
     })
 
-    const { root, waitForChanges } = await newSpecPage({
-      components: [ClMyAccountLink],
-      html: "<cl-my-account-link>My Account</cl-my-account-link>",
-    })
+    const { root, waitForChanges } = await render(
+      <cl-my-account-link>My Account</cl-my-account-link>,
+      { waitForReady: false },
+    )
 
     await waitForChanges()
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-my-account-link aria-disabled="true" target="_self">
         <a target="_self">
@@ -45,13 +49,13 @@ describe("cl-my-account-link.spec", () => {
   })
 
   it("renders the my-account with a defined target", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    jest.spyOn(config, "getOrganizationConfig").mockResolvedValue({
+    vi.spyOn(config, "getOrganizationConfig").mockResolvedValue({
       links: {
         my_account:
           "https://drop-in-js.commercelayer.app/my-account?accessToken=token-123",
@@ -62,13 +66,14 @@ describe("cl-my-account-link.spec", () => {
       },
     })
 
-    const { root, waitForChanges } = await newSpecPage({
-      components: [ClMyAccountLink],
-      html: '<cl-my-account-link target="_blank">My Account</cl-my-account-link>',
-    })
+    const { root, waitForChanges } = await render(
+      <cl-my-account-link target="_blank">My Account</cl-my-account-link>,
+      { waitForReady: false },
+    )
 
     await waitForChanges()
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-my-account-link aria-disabled="true" target="_blank">
         <a target="_blank">
@@ -79,14 +84,14 @@ describe("cl-my-account-link.spec", () => {
   })
 
   it("renders the my-account url when user is logged in", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "customer",
       ownerId: "1234",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    jest.spyOn(config, "getOrganizationConfig").mockResolvedValue({
+    vi.spyOn(config, "getOrganizationConfig").mockResolvedValue({
       links: {
         my_account:
           "https://drop-in-js.commercelayer.app/my-account?accessToken=token-123&lang=en",
@@ -97,16 +102,17 @@ describe("cl-my-account-link.spec", () => {
       },
     })
 
-    const { root, waitForChanges } = await newSpecPage({
-      components: [ClMyAccountLink],
-      html: '<cl-my-account-link target="_blank">My Account</cl-my-account-link>',
-    })
+    const { root, waitForChanges } = await render(
+      <cl-my-account-link target="_blank">My Account</cl-my-account-link>,
+      { waitForReady: false },
+    )
 
     await waitForChanges()
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-my-account-link target="_blank">
-        <a href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123&lang=en" target="_blank">
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123&lang=en">
           My Account
         </a>
       </cl-my-account-link>
@@ -114,14 +120,14 @@ describe("cl-my-account-link.spec", () => {
   })
 
   it("renders the my-account without href when user logged out", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "customer",
       ownerId: "1234",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    jest.spyOn(config, "getOrganizationConfig").mockResolvedValue({
+    vi.spyOn(config, "getOrganizationConfig").mockResolvedValue({
       links: {
         my_account:
           "https://drop-in-js.commercelayer.app/my-account?accessToken=token-123&lang=en",
@@ -132,22 +138,23 @@ describe("cl-my-account-link.spec", () => {
       },
     })
 
-    const { root, waitForChanges } = await newSpecPage({
-      components: [ClMyAccountLink],
-      html: '<cl-my-account-link target="_blank">My Account</cl-my-account-link>',
-    })
+    const { root, waitForChanges } = await render(
+      <cl-my-account-link target="_blank">My Account</cl-my-account-link>,
+      { waitForReady: false },
+    )
 
     await waitForChanges()
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-my-account-link target="_blank">
-        <a href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123&lang=en" target="_blank">
+        <a target="_blank" href="https://drop-in-js.commercelayer.app/my-account?accessToken=token-123&lang=en">
           My Account
         </a>
       </cl-my-account-link>
     `)
 
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "guest",
       accessToken: "token-1234",
       scope: "market:code:usa",
@@ -161,8 +168,9 @@ describe("cl-my-account-link.spec", () => {
     await waitForChanges()
     await waitForChanges()
 
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
-      <cl-my-account-link aria-disabled="true" target="_blank">
+      <cl-my-account-link target="_blank" aria-disabled="true">
         <a target="_blank">
           My Account
         </a>

@@ -111,3 +111,7 @@ dist-*
 # JWT keys
 private.key
 public.key
+
+# Vitest browser-mode test artifacts (failure screenshots/attachments)
+.vitest-attachments/
+__screenshots__/

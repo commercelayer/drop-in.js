@@ -10,7 +10,7 @@ export interface CommerceLayerConfig {
    * The version of the library.
    * This is automatically set by the build process and should not be manually specified.
    */
-  version: "drop-in.js@2.26.2"
+  version?: "drop-in.js@2.26.2"
 
   /**
    * The client ID (from you API credentials).

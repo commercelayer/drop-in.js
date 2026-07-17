@@ -1,5 +1,5 @@
 import { html } from "common-tags"
-import type litHtml from "lit-html"
+import type * as litHtml from "lit-html"
 import { render } from "lit-html"
 
 export const create = (value: litHtml.TemplateResult): string => {

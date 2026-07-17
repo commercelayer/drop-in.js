@@ -14,6 +14,7 @@
     "test:unit": "pnpm --filter drop-in.js test:unit",
     "test:watch": "pnpm --filter drop-in.js test:watch",
     "test:unit:watch": "pnpm --filter drop-in.js test:unit:watch",
+    "test:e2e": "pnpm --filter drop-in.js test:e2e",
     "test:e2e:watch": "pnpm --filter drop-in.js test:e2e:watch",
     "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
     "dep:semver": "pnpm dep:major -t semver",
@@ -30,17 +31,17 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=20.19",
+    "node": ">=22.22.1",
     "pnpm": "10.4.0"
   },
   "packageManager": "pnpm@10.4.0",
   "devDependencies": {
-    "@biomejs/biome": "^2.4.15",
-    "concurrently": "^9.2.1",
+    "@biomejs/biome": "^2.5.4",
+    "concurrently": "^10.0.3",
     "husky": "^9.1.7",
     "lerna": "^9.0.7",
-    "lint-staged": "^16.4.0",
+    "lint-staged": "^17.0.8",
     "replace-in-file": "^8.4.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   }
 }

@@ -1,116 +1,149 @@
-import { newSpecPage } from "@stencil/core/testing"
-import { mockedAccessToken } from "jest.spec.helpers"
+// biome-ignore lint/correctness/noUnusedImports: "h" is used by the classic JSX pragma
+import { h } from "@stencil/core"
+import { render } from "@stencil/vitest"
+import { vi } from "vitest"
 import * as cart from "@/apis/commercelayer/cart"
 import * as client from "@/apis/commercelayer/client"
-import { ClCartLink } from "@/components/cl-cart-link/cl-cart-link"
-import { ClCart } from "./cl-cart"
+import {
+  mockedAccessToken,
+  stripHydrationFlags,
+  waitFor,
+} from "@/testing/spec-helpers"
+import "@/components/cl-cart-link/cl-cart-link"
+import "./cl-cart"
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  vi.resetAllMocks()
 })
 
 describe("cl-cart.spec", () => {
   it("renders", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    jest
-      .spyOn(cart, "getCartUrl")
-      .mockResolvedValue("https://example.com/checkout-url")
+    vi.spyOn(cart, "getCartUrl").mockResolvedValue(
+      "https://example.com/checkout-url",
+    )
 
-    const page = await newSpecPage({
-      components: [ClCart],
-      html: "<cl-cart></cl-cart>",
+    const { root, waitForChanges, unmount } = await render(<cl-cart />, {
+      waitForReady: false,
     })
 
-    expect(page.root).toEqualHtml(`
+    await waitFor(
+      waitForChanges,
+      () =>
+        root.shadowRoot?.querySelector("iframe")?.hasAttribute("src") ?? false,
+    )
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <cl-cart>
         <mock:shadow-root>
           <div part="container">
             <iframe
               part="iframe"
               title="My Cart"
-              id="iFrameResizer0"
               allow="payment"
               src="https://example.com/checkout-url"
-              style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
-            ></iframe>
+              id="iFrameResizer0"></iframe>
           </div>
         </mock:shadow-root>
       </cl-cart>
     `)
+
+    unmount()
   })
 
   it("renders as minicart when used inside a `cl-cart-link`.", async () => {
-    jest
-      .spyOn(cart, "getCartUrl")
-      .mockResolvedValue("https://example.com/checkout-url")
+    vi.spyOn(cart, "getCartUrl").mockResolvedValue(
+      "https://example.com/checkout-url",
+    )
 
-    const page = await newSpecPage({
-      components: [ClCart, ClCartLink],
-      html: `
-        <cl-cart-link>
-          <span>Cart</span>
-          <cl-cart></cl-cart>
-        </cl-cart-link>
-      `,
-    })
-
-    await page.waitForChanges()
-
-    expect(page.root).toEqualHtml(`
-      <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
+    const { root, waitForChanges } = await render(
+      <cl-cart-link>
         <span>Cart</span>
+        <cl-cart></cl-cart>
+      </cl-cart-link>,
+      { waitForReady: false },
+    )
+
+    await waitForChanges()
+
+    const minicarts = document.querySelectorAll("cl-cart")
+    const minicart = minicarts[minicarts.length - 1]
+    if (minicart == null) {
+      throw new Error("cl-cart minicart was not moved to document.body")
+    }
+
+    await waitFor(
+      waitForChanges,
+      () =>
+        minicart.shadowRoot?.querySelector("iframe")?.hasAttribute("id") ??
+        false,
+    )
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
+      <cl-cart-link role="button" tabindex="0" target="_self">
+        <span>
+          Cart
+        </span>
       </cl-cart-link>
     `)
 
-    expect(page.body.children[1]).toEqualHtml(`
-      <cl-cart type="mini" aria-hidden="true" tabindex="-1">
+    stripHydrationFlags(minicart)
+    await expect(minicart).toEqualHtml(`
+      <cl-cart aria-hidden="true" tabindex="-1" type="mini">
         <mock:shadow-root>
           <div part="container">
-            <button aria-label="Close" part="close-button" type="button">
+            <button type="button" aria-label="Close" part="close-button">
               Close
             </button>
             <iframe
               part="iframe"
               title="My Cart"
-              id="iFrameResizer1"
               allow="payment"
-              style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
-            ></iframe>
+              id="iFrameResizer1"></iframe>
           </div>
         </mock:shadow-root>
       </cl-cart>
     `)
 
-    await page.root?.click()
+    root.click()
 
-    await page.waitForChanges()
+    await waitFor(
+      waitForChanges,
+      () =>
+        minicart.shadowRoot?.querySelector("iframe")?.hasAttribute("src") ??
+        false,
+    )
 
-    expect(page.root).toEqualHtml(`
-      <cl-cart-link cl-hydrated role="button" tabindex="0" target="_self">
-        <span>Cart</span>
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
+      <cl-cart-link role="button" tabindex="0" target="_self">
+        <span>
+          Cart
+        </span>
       </cl-cart-link>
     `)
 
-    expect(page.body.children[1]).toEqualHtml(`
-      <cl-cart type="mini" open role="alertdialog" aria-modal="true">
+    stripHydrationFlags(minicart)
+    await expect(minicart).toEqualHtml(`
+      <cl-cart type="mini" role="alertdialog" aria-modal="true" open>
         <mock:shadow-root>
           <div part="container">
-            <button aria-label="Close" part="close-button" type="button">
+            <button type="button" aria-label="Close" part="close-button">
               Close
             </button>
             <iframe
               part="iframe"
               title="My Cart"
-              id="iFrameResizer1"
               allow="payment"
-              src="https://example.com/checkout-url"
-              style="width: 1px; min-width: 100%; min-height: 100%; border: none; overflow: hidden;"
-            ></iframe>
+              id="iFrameResizer1"
+              src="https://example.com/checkout-url"></iframe>
           </div>
         </mock:shadow-root>
       </cl-cart>

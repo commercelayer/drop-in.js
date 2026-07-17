@@ -1,0 +1,24 @@
+import { vi } from "vitest"
+
+Object.defineProperty(window, "postMessage", {
+  value: vi.fn(),
+})
+
+Object.defineProperty(window, "parent", {
+  value: Object.create(window),
+})
+
+Object.defineProperty(window, "location", {
+  value: {
+    href: "http://example.com",
+    reload: vi.fn(),
+  },
+})
+
+Object.defineProperty(window, "commercelayerConfig", {
+  configurable: true,
+  value: {
+    clientId: "kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8",
+    scope: "market:code:usa",
+  },
+})

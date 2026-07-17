@@ -1,25 +1,38 @@
-import { newSpecPage } from "@stencil/core/testing"
-import { mockedAccessToken } from "jest.spec.helpers"
+// biome-ignore lint/correctness/noUnusedImports: "h" is used by the classic JSX pragma
+import { h } from "@stencil/core"
+import { render } from "@stencil/vitest"
+import type { MockInstance } from "vitest"
+import { vi } from "vitest"
 import * as client from "@/apis/commercelayer/client"
 import { fireEvent } from "@/apis/event"
+import {
+  mockedAccessToken,
+  stripHydrationFlags,
+  waitFor,
+} from "@/testing/spec-helpers"
 import * as logger from "@/utils/logger"
-import { ClIdentityStatus } from "./cl-identity-status"
+import "./cl-identity-status"
 
-let log: jest.SpyInstance
+let log: MockInstance<typeof logger.log>
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  vi.resetAllMocks()
 
-  log = jest.spyOn(logger, "log")
+  log = vi.spyOn(logger, "log")
 })
 
 describe("cl-identity-status.spec", () => {
   it("renders without any arguments", async () => {
-    const { root } = await newSpecPage({
-      components: [ClIdentityStatus],
-      html: "<cl-identity-status></cl-identity-status>",
-    })
+    const { root, waitForChanges } = await render(
+      <cl-identity-status type={undefined} />,
+      {
+        waitForReady: false,
+      },
+    )
 
+    await waitFor(waitForChanges, () => root.hasAttribute("aria-disabled"))
+
+    stripHydrationFlags(root)
     expect(root).toEqualHtml(`
       <cl-identity-status aria-disabled="true">
         <mock:shadow-root></mock:shadow-root>
@@ -35,27 +48,26 @@ describe("cl-identity-status.spec", () => {
   })
 
   it("renders as guest when user is guest", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    const { body } = await newSpecPage({
-      components: [ClIdentityStatus],
-      html: `
-        <div>
-          <cl-identity-status type="guest">
-            • i'm a guest
-          </cl-identity-status>
-          <cl-identity-status type="customer">
-            • i'm a customer
-          </cl-identity-status>
-        </div>
-      `,
-    })
+    const { root, waitForChanges } = await render(
+      <div>
+        <cl-identity-status type="guest">• i'm a guest</cl-identity-status>
+        <cl-identity-status type="customer">
+          • i'm a customer
+        </cl-identity-status>
+      </div>,
+      { waitForReady: false },
+    )
 
-    expect(body).toEqualHtml(`
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-identity-status type="guest">
           <mock:shadow-root>
@@ -63,7 +75,7 @@ describe("cl-identity-status.spec", () => {
           </mock:shadow-root>
           • i'm a guest
         </cl-identity-status>
-        <cl-identity-status type="customer" aria-disabled="true">
+        <cl-identity-status aria-disabled="true" type="customer">
           <mock:shadow-root></mock:shadow-root>
           • i'm a customer
         </cl-identity-status>
@@ -74,30 +86,29 @@ describe("cl-identity-status.spec", () => {
   })
 
   it("renders as customer when user is customer", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "customer",
       ownerId: "1234",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    const { body } = await newSpecPage({
-      components: [ClIdentityStatus],
-      html: `
-        <div>
-          <cl-identity-status type="guest">
-            • i'm a guest
-          </cl-identity-status>
-          <cl-identity-status type="customer">
-            • i'm a customer
-          </cl-identity-status>
-        </div>
-      `,
-    })
-
-    expect(body).toEqualHtml(`
+    const { root, waitForChanges } = await render(
       <div>
-        <cl-identity-status type="guest" aria-disabled="true">
+        <cl-identity-status type="guest">• i'm a guest</cl-identity-status>
+        <cl-identity-status type="customer">
+          • i'm a customer
+        </cl-identity-status>
+      </div>,
+      { waitForReady: false },
+    )
+
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
+      <div>
+        <cl-identity-status aria-disabled="true" type="guest">
           <mock:shadow-root></mock:shadow-root>
           • i'm a guest
         </cl-identity-status>
@@ -114,27 +125,26 @@ describe("cl-identity-status.spec", () => {
   })
 
   it("renders as customer when user logged in", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "guest",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClIdentityStatus],
-      html: `
-        <div>
-          <cl-identity-status type="guest">
-            • i'm a guest
-          </cl-identity-status>
-          <cl-identity-status type="customer">
-            • i'm a customer
-          </cl-identity-status>
-        </div>
-      `,
-    })
+    const { root, waitForChanges } = await render(
+      <div>
+        <cl-identity-status type="guest">• i'm a guest</cl-identity-status>
+        <cl-identity-status type="customer">
+          • i'm a customer
+        </cl-identity-status>
+      </div>,
+      { waitForReady: false },
+    )
 
-    expect(body).toEqualHtml(`
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-identity-status type="guest">
           <mock:shadow-root>
@@ -142,7 +152,7 @@ describe("cl-identity-status.spec", () => {
           </mock:shadow-root>
           • i'm a guest
         </cl-identity-status>
-        <cl-identity-status type="customer" aria-disabled="true">
+        <cl-identity-status aria-disabled="true" type="customer">
           <mock:shadow-root></mock:shadow-root>
           • i'm a customer
         </cl-identity-status>
@@ -158,7 +168,8 @@ describe("cl-identity-status.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-identity-status type="guest" aria-disabled="true">
           <mock:shadow-root></mock:shadow-root>
@@ -177,30 +188,29 @@ describe("cl-identity-status.spec", () => {
   })
 
   it("renders as guest when user logged out", async () => {
-    jest.spyOn(client, "getAccessToken").mockResolvedValue({
+    vi.spyOn(client, "getAccessToken").mockResolvedValue({
       ownerType: "customer",
       ownerId: "1234",
       accessToken: mockedAccessToken,
       scope: "market:code:usa",
     })
 
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClIdentityStatus],
-      html: `
-        <div>
-          <cl-identity-status type="guest">
-            • i'm a guest
-          </cl-identity-status>
-          <cl-identity-status type="customer">
-            • i'm a customer
-          </cl-identity-status>
-        </div>
-      `,
-    })
-
-    expect(body).toEqualHtml(`
+    const { root, waitForChanges } = await render(
       <div>
-        <cl-identity-status type="guest" aria-disabled="true">
+        <cl-identity-status type="guest">• i'm a guest</cl-identity-status>
+        <cl-identity-status type="customer">
+          • i'm a customer
+        </cl-identity-status>
+      </div>,
+      { waitForReady: false },
+    )
+
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
+      <div>
+        <cl-identity-status aria-disabled="true" type="guest">
           <mock:shadow-root></mock:shadow-root>
           • i'm a guest
         </cl-identity-status>
@@ -221,7 +231,8 @@ describe("cl-identity-status.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-identity-status type="guest">
           <mock:shadow-root>

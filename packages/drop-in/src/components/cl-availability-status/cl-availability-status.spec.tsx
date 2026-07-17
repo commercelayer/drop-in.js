@@ -1,15 +1,23 @@
-import { newSpecPage } from "@stencil/core/testing"
+// biome-ignore lint/correctness/noUnusedImports: "h" is used by the classic JSX pragma
+import { h } from "@stencil/core"
+import { render } from "@stencil/vitest"
 import type { AvailabilityUpdateEventPayload, Sku } from "@/apis/types"
-import { ClAvailabilityStatus } from "./cl-availability-status"
+import { stripHydrationFlags } from "@/testing/spec-helpers"
+import "./cl-availability-status"
 
 describe("cl-availability-status.spec", () => {
   it("renders without any arguments", async () => {
-    const page = await newSpecPage({
-      components: [ClAvailabilityStatus],
-      html: "<cl-availability-status></cl-availability-status>",
-    })
+    const { root, waitForChanges } = await render(
+      <cl-availability-status type={undefined} />,
+      {
+        waitForReady: false,
+      },
+    )
 
-    expect(page.root).toEqualHtml(`
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <cl-availability-status aria-disabled="true">
         <mock:shadow-root></mock:shadow-root>
       </cl-availability-status>
@@ -17,34 +25,35 @@ describe("cl-availability-status.spec", () => {
   })
 
   it("renders as available when SKU is available", async () => {
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClAvailabilityStatus],
-      html: `
-        <div>
-          <cl-availability-status type="available">
-            • available
-          </cl-availability-status>
-          <cl-availability-status type="available-with-info">
-            • available with info
-          </cl-availability-status>
-          <cl-availability-status type="unavailable">
-            • out of stock
-          </cl-availability-status>
-        </div>
-      `,
-    })
-
-    expect(body).toEqualHtml(`
+    const { root, waitForChanges } = await render(
       <div>
-        <cl-availability-status type="available" aria-disabled="true">
+        <cl-availability-status type="available">
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="available-with-info">
+          • available with info
+        </cl-availability-status>
+        <cl-availability-status type="unavailable">
+          • out of stock
+        </cl-availability-status>
+      </div>,
+      { waitForReady: false },
+    )
+
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
+      <div>
+        <cl-availability-status aria-disabled="true" type="available">
           <mock:shadow-root></mock:shadow-root>
           • available
         </cl-availability-status>
-        <cl-availability-status type="available-with-info" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available-with-info">
           <mock:shadow-root></mock:shadow-root>
           • available with info
         </cl-availability-status>
-        <cl-availability-status type="unavailable" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="unavailable">
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>
@@ -65,7 +74,7 @@ describe("cl-availability-status.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-status").forEach((element) => {
+    root.querySelectorAll("cl-availability-status").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -79,7 +88,8 @@ describe("cl-availability-status.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-status type="available">
           <mock:shadow-root>
@@ -87,11 +97,11 @@ describe("cl-availability-status.spec", () => {
           </mock:shadow-root>
           • available
         </cl-availability-status>
-        <cl-availability-status type="available-with-info" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available-with-info">
           <mock:shadow-root></mock:shadow-root>
           • available with info
         </cl-availability-status>
-        <cl-availability-status type="unavailable" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="unavailable">
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>
@@ -100,34 +110,35 @@ describe("cl-availability-status.spec", () => {
   })
 
   it("renders as available with info when SKU is available and has delivery lead times", async () => {
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClAvailabilityStatus],
-      html: `
-        <div>
-          <cl-availability-status type="available">
-            • available
-          </cl-availability-status>
-          <cl-availability-status type="available-with-info">
-            • available with info
-          </cl-availability-status>
-          <cl-availability-status type="unavailable">
-            • out of stock
-          </cl-availability-status>
-        </div>
-      `,
-    })
-
-    expect(body).toEqualHtml(`
+    const { root, waitForChanges } = await render(
       <div>
-        <cl-availability-status type="available" aria-disabled="true">
+        <cl-availability-status type="available">
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="available-with-info">
+          • available with info
+        </cl-availability-status>
+        <cl-availability-status type="unavailable">
+          • out of stock
+        </cl-availability-status>
+      </div>,
+      { waitForReady: false },
+    )
+
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
+      <div>
+        <cl-availability-status aria-disabled="true" type="available">
           <mock:shadow-root></mock:shadow-root>
           • available
         </cl-availability-status>
-        <cl-availability-status type="available-with-info" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available-with-info">
           <mock:shadow-root></mock:shadow-root>
           • available with info
         </cl-availability-status>
-        <cl-availability-status type="unavailable" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="unavailable">
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>
@@ -190,7 +201,7 @@ describe("cl-availability-status.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-status").forEach((element) => {
+    root.querySelectorAll("cl-availability-status").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -204,7 +215,8 @@ describe("cl-availability-status.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
         <cl-availability-status type="available">
           <mock:shadow-root>
@@ -218,7 +230,7 @@ describe("cl-availability-status.spec", () => {
           </mock:shadow-root>
           • available with info
         </cl-availability-status>
-        <cl-availability-status type="unavailable" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="unavailable">
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>
@@ -227,34 +239,35 @@ describe("cl-availability-status.spec", () => {
   })
 
   it("renders as unavailable when SKU is out of stock", async () => {
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClAvailabilityStatus],
-      html: `
-        <div>
-          <cl-availability-status type="available">
-            • available
-          </cl-availability-status>
-          <cl-availability-status type="available-with-info">
-            • available with info
-          </cl-availability-status>
-          <cl-availability-status type="unavailable">
-            • out of stock
-          </cl-availability-status>
-        </div>
-      `,
-    })
-
-    expect(body).toEqualHtml(`
+    const { root, waitForChanges } = await render(
       <div>
-        <cl-availability-status type="available" aria-disabled="true">
+        <cl-availability-status type="available">
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="available-with-info">
+          • available with info
+        </cl-availability-status>
+        <cl-availability-status type="unavailable">
+          • out of stock
+        </cl-availability-status>
+      </div>,
+      { waitForReady: false },
+    )
+
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
+      <div>
+        <cl-availability-status aria-disabled="true" type="available">
           <mock:shadow-root></mock:shadow-root>
           • available
         </cl-availability-status>
-        <cl-availability-status type="available-with-info" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available-with-info">
           <mock:shadow-root></mock:shadow-root>
           • available with info
         </cl-availability-status>
-        <cl-availability-status type="unavailable" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="unavailable">
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>
@@ -275,7 +288,7 @@ describe("cl-availability-status.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-status").forEach((element) => {
+    root.querySelectorAll("cl-availability-status").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -289,13 +302,14 @@ describe("cl-availability-status.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
-        <cl-availability-status type="available" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available">
           <mock:shadow-root></mock:shadow-root>
           • available
         </cl-availability-status>
-        <cl-availability-status type="available-with-info" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available-with-info">
           <mock:shadow-root></mock:shadow-root>
           • available with info
         </cl-availability-status>
@@ -310,34 +324,35 @@ describe("cl-availability-status.spec", () => {
   })
 
   it("renders as unavailable when item has less than available quantity (considering items in the cart)", async () => {
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClAvailabilityStatus],
-      html: `
-        <div>
-          <cl-availability-status type="available">
-            • available
-          </cl-availability-status>
-          <cl-availability-status type="available-with-info">
-            • available with info
-          </cl-availability-status>
-          <cl-availability-status type="unavailable">
-            • out of stock
-          </cl-availability-status>
-        </div>
-      `,
-    })
-
-    expect(body).toEqualHtml(`
+    const { root, waitForChanges } = await render(
       <div>
-        <cl-availability-status type="available" aria-disabled="true">
+        <cl-availability-status type="available">
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="available-with-info">
+          • available with info
+        </cl-availability-status>
+        <cl-availability-status type="unavailable">
+          • out of stock
+        </cl-availability-status>
+      </div>,
+      { waitForReady: false },
+    )
+
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
+      <div>
+        <cl-availability-status aria-disabled="true" type="available">
           <mock:shadow-root></mock:shadow-root>
           • available
         </cl-availability-status>
-        <cl-availability-status type="available-with-info" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available-with-info">
           <mock:shadow-root></mock:shadow-root>
           • available with info
         </cl-availability-status>
-        <cl-availability-status type="unavailable" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="unavailable">
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>
@@ -358,7 +373,7 @@ describe("cl-availability-status.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-status").forEach((element) => {
+    root.querySelectorAll("cl-availability-status").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -372,13 +387,14 @@ describe("cl-availability-status.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
-        <cl-availability-status type="available" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available">
           <mock:shadow-root></mock:shadow-root>
           • available
         </cl-availability-status>
-        <cl-availability-status type="available-with-info" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available-with-info">
           <mock:shadow-root></mock:shadow-root>
           • available with info
         </cl-availability-status>
@@ -393,34 +409,35 @@ describe("cl-availability-status.spec", () => {
   })
 
   it("renders as empty when the SKU is undefined", async () => {
-    const { body, waitForChanges } = await newSpecPage({
-      components: [ClAvailabilityStatus],
-      html: `
-        <div>
-          <cl-availability-status type="available">
-            • available
-          </cl-availability-status>
-          <cl-availability-status type="available-with-info">
-            • available with info
-          </cl-availability-status>
-          <cl-availability-status type="unavailable">
-            • out of stock
-          </cl-availability-status>
-        </div>
-      `,
-    })
-
-    expect(body).toEqualHtml(`
+    const { root, waitForChanges } = await render(
       <div>
-        <cl-availability-status type="available" aria-disabled="true">
+        <cl-availability-status type="available">
+          • available
+        </cl-availability-status>
+        <cl-availability-status type="available-with-info">
+          • available with info
+        </cl-availability-status>
+        <cl-availability-status type="unavailable">
+          • out of stock
+        </cl-availability-status>
+      </div>,
+      { waitForReady: false },
+    )
+
+    await waitForChanges()
+
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
+      <div>
+        <cl-availability-status aria-disabled="true" type="available">
           <mock:shadow-root></mock:shadow-root>
           • available
         </cl-availability-status>
-        <cl-availability-status type="available-with-info" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available-with-info">
           <mock:shadow-root></mock:shadow-root>
           • available with info
         </cl-availability-status>
-        <cl-availability-status type="unavailable" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="unavailable">
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>
@@ -441,7 +458,7 @@ describe("cl-availability-status.spec", () => {
       },
     }
 
-    body.querySelectorAll("cl-availability-status").forEach((element) => {
+    root.querySelectorAll("cl-availability-status").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: {
@@ -455,7 +472,7 @@ describe("cl-availability-status.spec", () => {
 
     await waitForChanges()
 
-    body.querySelectorAll("cl-availability-status").forEach((element) => {
+    root.querySelectorAll("cl-availability-status").forEach((element) => {
       element.dispatchEvent(
         new CustomEvent<AvailabilityUpdateEventPayload>("availabilityUpdate", {
           detail: undefined,
@@ -465,17 +482,18 @@ describe("cl-availability-status.spec", () => {
 
     await waitForChanges()
 
-    expect(body).toEqualHtml(`
+    stripHydrationFlags(root)
+    expect(root).toEqualHtml(`
       <div>
-        <cl-availability-status aria-disabled="true" type="available">
+        <cl-availability-status type="available" aria-disabled="true">
           <mock:shadow-root></mock:shadow-root>
           • available
         </cl-availability-status>
-        <cl-availability-status type="available-with-info" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="available-with-info">
           <mock:shadow-root></mock:shadow-root>
           • available with info
         </cl-availability-status>
-        <cl-availability-status type="unavailable" aria-disabled="true">
+        <cl-availability-status aria-disabled="true" type="unavailable">
           <mock:shadow-root></mock:shadow-root>
           • out of stock
         </cl-availability-status>

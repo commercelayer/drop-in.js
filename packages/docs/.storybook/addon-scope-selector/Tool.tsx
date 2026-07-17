@@ -1,8 +1,8 @@
 import { BasketIcon, CheckIcon } from "@storybook/icons"
 import React from "react"
 import {
-  IconButton,
   Separator,
+  ToggleButton,
   TooltipLinkList,
   WithTooltip,
 } from "storybook/internal/components"
@@ -47,13 +47,14 @@ export const Tool = () => {
           />
         )}
       >
-        <IconButton
+        <ToggleButton
           key={TOOL_ID}
           title={ADDON_TITLE}
+          pressed={scopes.some(isActive)}
           active={scopes.some(isActive)}
         >
           <BasketIcon /> {getSelectedScopeKey()}
-        </IconButton>
+        </ToggleButton>
       </WithTooltip>
     </>
   )
