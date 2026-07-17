@@ -16,7 +16,7 @@ export const Tool = () => {
           window.open(LINK_URL, "_blank")
         }}
       >
-        {/* DO NOT REMOVE - replace version */}v2.26.2
+        {/* DO NOT REMOVE - replace version */}v2.27.0
       </ToggleButton>
     </>
   )

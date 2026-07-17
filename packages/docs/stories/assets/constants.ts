@@ -23,7 +23,7 @@ export const codes = {
 
 // prd
 export const createConfig = (scope: string): CommerceLayerConfig => ({
-  version: "drop-in.js@2.26.2",
+  version: "drop-in.js@2.27.0",
   clientId: "kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8",
   scope,
   debug: "all",
