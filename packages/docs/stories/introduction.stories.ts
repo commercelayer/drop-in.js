@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from "@storybook/html-vite"
+import type { Meta, StoryContext, StoryFn } from "@storybook/html-vite"
 import { html } from "lit-html"
 import { PARAM_KEY as DROP_IN_CSS_PARAM_KEY } from "../.storybook/addon-drop-in-css/constants"
 import { PARAM_KEY as MINICART_CSS_PARAM_KEY } from "../.storybook/addon-minicart-css/constants"
@@ -12,12 +12,11 @@ const meta: Meta = {
 
 export default meta
 
-export const Basic: StoryFn = (_args, context) => {
-  const baseUrl = location.href.substring(
-    0,
-    location.href.indexOf("/iframe.html"),
-  )
-
+/**
+ * Loads drop-in from the CDN and configures it, as a store would.
+ * Shown in the code snippet only: running it would replace the library and config the preview sets up.
+ */
+const librarySetup = (context: StoryContext): string => {
   const dropInCssEnabled = context.globals[DROP_IN_CSS_PARAM_KEY]
   const minicartCssEnabled = context.globals[MINICART_CSS_PARAM_KEY]
 
@@ -50,7 +49,18 @@ export const Basic: StoryFn = (_args, context) => {
           }
         }
       </script>
+    `,
+  ).replaceAll("<!---->", "")
+}
 
+export const Basic: StoryFn = () => {
+  const baseUrl = location.href.substring(
+    0,
+    location.href.indexOf("/iframe.html"),
+  )
+
+  return create(
+    html`
       <!-- for demonstration purpose only -->
       <script src="https://cdn.tailwindcss.com"></script>
 
@@ -195,4 +205,13 @@ export const Basic: StoryFn = (_args, context) => {
       </div>
     `,
   ).replaceAll("<!---->", "")
+}
+
+Basic.parameters = {
+  docs: {
+    source: {
+      transform: (code: string, context: StoryContext) =>
+        `${librarySetup(context)}\n\n${code}`,
+    },
+  },
 }
