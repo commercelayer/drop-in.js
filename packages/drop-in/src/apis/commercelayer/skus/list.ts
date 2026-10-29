@@ -1,22 +1,63 @@
+import type { Resource } from "@commercelayer/sdk/single-client"
 import type { Sku } from "@/apis/types"
 import { pDebounce } from "@/utils/debounce"
 import { logGroup } from "@/utils/logger"
-import { chunk, memoize, uniq } from "@/utils/utils"
+import { chunk, uniq } from "@/utils/utils"
 import { createClient } from "../client"
 import { getConfig } from "../config"
 
-const _getSkusViaList = async (codes: string[]): Promise<SkuViaList> => {
+/** Attribute names of a resource: every field except `id`, `type`, `meta` and relationships. */
+type AttributeName<R extends Resource> = Exclude<
+  {
+    [K in keyof R]-?: NonNullable<R[K]> extends Resource | Resource[]
+      ? never
+      : K
+  }[keyof R],
+  "id" | "type" | "meta"
+>
+
+/**
+ * Every SKU attribute, so the type check fails when the SDK adds one that is not listed here,
+ * or when one listed here no longer exists.
+ */
+const skuAttributes = {
+  code: true,
+  name: true,
+  description: true,
+  image_url: true,
+  pieces_per_pack: true,
+  weight: true,
+  unit_of_weight: true,
+  hs_tariff_number: true,
+  do_not_ship: true,
+  do_not_track: true,
+  inventory: true,
+  jwt_custom_claim: true,
+  created_at: true,
+  updated_at: true,
+  reference: true,
+  reference_origin: true,
+  metadata: true
+} as const satisfies Record<AttributeName<Sku>, true>
+
+/**
+ * SKU attributes requested on the list, so each SKU matches what retrieving it returns.
+ * Naming `inventory` in the fields is what makes the list return stock information.
+ */
+export const skuFields = Object.keys(skuAttributes) as Array<
+  keyof typeof skuAttributes
+>
+
+const _getSkus = async (codes: string[]): Promise<SkuList> => {
   const client = await createClient(getConfig())
 
   const uniqCodes = uniq(codes)
 
-  const log = logGroup(
-    "`getSkusViaList` method invoked with a list of SKU codes",
-  )
+  const log = logGroup("`getSkus` method invoked with a list of SKU codes")
 
   log(
     "info",
-    '`getSkusViaList` is the method involved in fetching a list of SKUs from Commerce Layer. You can follow the request in the "network" panel.',
+    '`getSkus` is the method involved in fetching a list of SKUs from Commerce Layer. You can follow the request in the "network" panel.',
   )
   log("info", "codes", uniqCodes)
 
@@ -30,7 +71,7 @@ const _getSkusViaList = async (codes: string[]): Promise<SkuViaList> => {
           pageSize,
           filters: { code_in: codes.join(",") },
           fields: {
-            skus: ["id", "code"],
+            skus: skuFields,
           },
         })
       }),
@@ -38,9 +79,9 @@ const _getSkusViaList = async (codes: string[]): Promise<SkuViaList> => {
   ).flat()
 
   // TODO: this should be used as cache for future calls or to avoid fetching multiple time same items
-  const skus: SkuViaList = response.reduce<SkuViaList>((skus, sku) => {
-    if (sku.id !== undefined && sku.code !== undefined) {
-      skus[sku.code] = sku
+  const skus: SkuList = response.reduce<SkuList>((skus, sku) => {
+    if (sku.code !== undefined) {
+      skus[sku.code] = sku as Sku
     }
 
     return skus
@@ -51,19 +92,12 @@ const _getSkusViaList = async (codes: string[]): Promise<SkuViaList> => {
   return skus
 }
 
-const getSkusViaList = pDebounce(_getSkusViaList, { wait: 10, maxWait: 50 })
-
 /**
- * Get a SKU by providing a SKU code using the `list` API.
- * List API **does not provide** _stock information_.
- * @protected
+ * Gets SKUs, including their inventory, by their codes using the `list` API.
+ * Codes requested close together are fetched with a single request.
  */
-export const _getSkuViaList = memoize(
-  async (code: string): Promise<SkuViaList[string]> => {
-    return await getSkusViaList([code]).then((result) => result[code])
-  },
-)
+export const getSkus = pDebounce(_getSkus, { wait: 10, maxWait: 50 })
 
-interface SkuViaList {
-  [code: string]: Pick<Sku, "id" | "code"> | undefined
+interface SkuList {
+  [code: string]: Sku | undefined
 }

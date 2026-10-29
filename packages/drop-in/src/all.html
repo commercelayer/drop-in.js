@@ -1,0 +1,191 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>drop-in.js</title>
+    <meta name="description" content="MFE elements by Commerce Layer" />
+
+    <style>
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+
+      #main-navigation {
+        a {
+          opacity: .4;
+          &:link {
+            opacity: 1;
+            text-decoration: underline;
+          }
+        }
+      }
+    </style>
+
+    <script type="module" src="./build/drop-in.esm.js"></script>
+    <script nomodule src="./build/drop-in.js"></script>
+
+    <link href="./build/drop-in.css" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      document.addEventListener('cl-identity-gettoken', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-identity-gettoken', e.detail));
+      document.addEventListener('cl-skus-getsku', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-skus-getsku', e.detail));
+      document.addEventListener('cl-skus-getprice', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-skus-getprice', e.detail));
+      document.addEventListener('cl-bundles-getbundle', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-bundles-getbundle', e.detail));
+      document.addEventListener('cl-bundles-getprice', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-bundles-getprice', e.detail));
+      document.addEventListener('cl-cart-additem', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-cart-additem', e.detail));
+      document.addEventListener('cl-cart-hostedcartupdate', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-cart-hostedcartupdate', e.detail));
+      document.addEventListener('cl-cart-update', (e) => console.info('[CommerceLayer • drop-in.js] [event] cl-cart-update', e.detail));
+    </script>
+
+    <script>
+      // // stg
+      // window.commercelayerConfig = {
+      //   domain: 'commercelayer.co',
+      //   clientId: 'gQMSINLyMm2TrZo0UGEEdubC7uSgm9-QTG4eTVUTV1o',
+      //   scope: 'market:code:europe',
+      //   debug: 'all',
+      //   defaultAttributes: {
+      //     orders: {
+      //       return_url: 'https://example.com'
+      //     }
+      //   }
+      //   // validScopes: ['market:545', 'market:1234', ''],
+      // };
+
+      // prd
+      window.commercelayerConfig = {
+        clientId: 'kuSKPbeKbU9LG9LjndzieKWRcfiXFuEfO0OYHXKH9J8',
+        scope: 'market:code:usa',
+        debug: 'all',
+        storageOrderKeySuffix: '1234',
+        defaultAttributes: {
+          orders: {
+            return_url: 'https://example.com'
+          }
+        }
+      };
+    </script>
+  </head>
+  <body class="bg-[url(https://www.transparenttextures.com/patterns/food.png)] pt-[152px]">
+    <nav id="header" class="backdrop-blur-md fixed top-0 left-0 w-full">
+      <div class="container mx-auto p-6 flex">
+        <menu id="main-navigation">
+            <div>
+              <cl-identity-status type="guest">
+                <cl-identity-link type="login" class="mr-4">Login</cl-identity-link>
+                <cl-identity-link type="signup">Signup</cl-identity-link>
+              </cl-identity-status>
+              <cl-identity-status type="customer">
+                <cl-my-account-link class="mr-4" back-to-shop="true">My Account</cl-my-account-link>
+                <cl-identity-link type="logout">Logout</cl-identity-link>
+              </cl-identity-status>
+            </div>
+            <div class="my-4">
+                <cl-cart-link target="_blank" class="mr-4">Cart link</cl-cart-link>
+                <cl-checkout-link target="_blank">Checkout link</cl-checkout-link>
+            </div>
+            <div>
+              You have <cl-cart-count class="font-bold"></cl-cart-count> item/s in the cart
+            </div>
+        </menu>
+
+        <div id="cart" class="flex items-start flex-grow justify-end">
+          <!-- <cl-cart type="mini" open-on-add></cl-cart> -->
+
+          <!-- <cl-cart type="mini" open="true" open-on-add="false"></cl-cart> -->
+
+          <cl-cart-link class="ml-4">
+            <span class="sr-only">My cart with <cl-cart-count></cl-cart-count> items.</span>
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="none"
+            >
+              <path
+                stroke="#000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M23 23H8.725L5.238 3.825A1 1 0 0 0 4.261 3H2M10 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM23 28a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
+              />
+              <path
+                stroke="#000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7.813 18h15.7a1.988 1.988 0 0 0 1.962-1.637L27 8H6"
+              />
+            </svg>
+            <cl-cart-count aria-hidden="true" hide-when-empty="true"></cl-cart-count>
+            <cl-cart open-on-add></cl-cart>
+          </cl-cart-link>
+        </div>
+      </div>
+    </nav>
+    <div class="container mx-auto p-6">
+
+      <main>
+        <div id="product-list" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-center gap-6">
+          <!-- client-side generated -->
+        </div>
+
+        <script>
+          /** Every SKU code in the organization, rendered together so their inventory is fetched with a single `skus` request. */
+          const skuCodes = [
+            '5PANECAP000000FFFFFFXXXX',
+            '5PANECAP9D9CA1FFFFFFXXXX',
+            'BACKPACK000000FFFFFFXXXX',
+            'BACKPACK818488000000XXXX',
+            'BACKPACKFFFFFF000000XXXX',
+            'BOTT17OZFFFFFF000000XXXX',
+            'DUFFLBAG000000FFFFFFXXXX',
+            'EBOOKECOMPLAYBOOKED1XXXX',
+            'GMUG11OZFFFFFF000000XXXX',
+            'POLOMXXX000000FFFFFFLXXX',
+            'POLOMXXX000000FFFFFFMXXX',
+            'POLOMXXX000000FFFFFFSXXX',
+            'TSHIRTMSFFFFFF000000LXXX',
+            'TSHIRTMSFFFFFF000000MXXX',
+            'TSHIRTMSFFFFFF000000SXXX',
+            'TSHIRTMSFFFFFF000000XLXX',
+          ]
+
+          document.getElementById('product-list').innerHTML = skuCodes.map((code) => `
+            <div class="rounded overflow-hidden shadow-lg px-6 py-4 flex flex-col gap-2 border border-gray-100 bg-white">
+              <img alt="${code}" src="https://data.commercelayer.app/seed/images/skus/${code}_FLAT.png" class="w-2/3 mx-auto" />
+              <small>${code}</small>
+              <cl-price code="${code}">
+                <cl-price-amount type="compare-at"></cl-price-amount>
+                <cl-price-amount></cl-price-amount>
+              </cl-price>
+              <cl-add-to-cart code="${code}">Add to cart</cl-add-to-cart>
+              <cl-availability code="${code}" class="text-sm">
+                <cl-availability-status type="available" style="color: #1fda8a">available<br /></cl-availability-status>
+                <cl-availability-status type="available-with-info">
+                  ready to be shipped in
+                  <cl-availability-info type="min-days"></cl-availability-info>-<cl-availability-info type="max-days"></cl-availability-info>
+                  days
+                </cl-availability-status>
+                <cl-availability-status type="unavailable" style="color: #ff656b">out of stock</cl-availability-status>
+              </cl-availability>
+            </div>
+          `).join('')
+        </script>
+      </main>
+
+    </div>
+  </body>
+</html>
