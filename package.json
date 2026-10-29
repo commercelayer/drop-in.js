@@ -16,14 +16,15 @@
     "test:unit:watch": "pnpm --filter drop-in.js test:unit:watch",
     "test:e2e": "pnpm --filter drop-in.js test:e2e",
     "test:e2e:watch": "pnpm --filter drop-in.js test:e2e:watch",
-    "dep:major": "pnpm dlx npm-check-updates --packageFile '**/package.json' -u",
+    "dep:major": "pnpm dlx npm-check-updates --packageManager pnpm --packageFile '**/package.json' -u",
     "dep:semver": "pnpm dep:major -t semver",
     "check": "pnpm ts:check && pnpm lint:fix",
     "ts:check": "pnpm -r --sequential ts:check",
     "lint": "pnpm biome check",
     "lint:fix": "pnpm biome check --write",
     "version": "node replace-jsdelivr.js && git add .",
-    "ls-engines": "pnpm dlx ls-engines"
+    "ls-engines": "pnpm dlx ls-engines",
+    "lerna": "pnpm dlx --package=@lerna-lite/cli@5.6.4 --package=@lerna-lite/version@5.6.4 lerna"
   },
   "author": {
     "name": "Marco Montalbano",
@@ -31,17 +32,16 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=22.22.1",
+    "node": ">=22.22.2",
     "pnpm": "10.4.0"
   },
   "packageManager": "pnpm@10.4.0",
   "devDependencies": {
-    "@biomejs/biome": "^2.5.4",
-    "concurrently": "^10.0.3",
+    "@biomejs/biome": "^2.6.3",
+    "concurrently": "^10.0.6",
     "husky": "^9.1.7",
-    "lerna": "^9.0.7",
-    "lint-staged": "^17.0.8",
-    "replace-in-file": "^8.4.0",
+    "lint-staged": "^17.6.0",
+    "replace-in-file": "^9.0.0",
     "typescript": "^6.0.3"
   }
 }

@@ -1,7 +1,5 @@
 # cl-add-to-cart
 
-
-
 <!-- Auto Generated Below -->
 
 
@@ -15,6 +13,13 @@
 | `kind`              | `kind`      | Indicates whether the code refers to a `sku` or a `bundle`.                                                                                                                                  | `"bundle" \| "sku" \| undefined` | `"sku"`     |
 | `name`              | `name`      | A custom name for the product or bundle that will be added to the cart. If not provided, the name will be taken from the item being added.                                                   | `string \| undefined`            | `undefined` |
 | `quantity`          | `quantity`  | The number of units of the selected product you want to add to the shopping cart.                                                                                                            | `number`                         | `1`         |
+
+
+## Slots
+
+| Slot | Description      |
+| ---- | ---------------- |
+|      | The default slot |
 
 
 ----------------------------------------------

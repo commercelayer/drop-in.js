@@ -1,7 +1,7 @@
 import type {
   orders as sdkOrders,
   organization as sdkOrganization,
-} from "@commercelayer/sdk"
+} from "@commercelayer/sdk/single-client"
 // biome-ignore lint/correctness/noUnusedImports: "h" is used by the classic JSX pragma
 import { h } from "@stencil/core"
 import { render } from "@stencil/vitest"

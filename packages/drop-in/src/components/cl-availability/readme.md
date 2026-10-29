@@ -1,7 +1,5 @@
 # cl-availability
 
-
-
 <!-- Auto Generated Below -->
 
 
@@ -12,6 +10,13 @@
 | `code` _(required)_ | `code`    | The SKU or bundle code (i.e. the unique identifier of the product or bundle whose availability you want to display).                                                                                                                            | `string \| undefined`            | `undefined`  |
 | `kind`              | `kind`    | Indicates whether the code refers to a `sku` or a `bundle`.  _⚠️ `bundle` support is limited. The `cl-availability-info` component does not display availability information for bundles._                                                      | `"bundle" \| "sku" \| undefined` | `"sku"`      |
 | `rule`              | `rule`    | The rule used to determine the information that will be displayed. `cheapest` is the delivery lead time associated with the lower shipping method cost, `fastest` is the delivery lead time associated with the lower average time to delivery. | `"cheapest" \| "fastest"`        | `"cheapest"` |
+
+
+## Slots
+
+| Slot | Description      |
+| ---- | ---------------- |
+|      | The default slot |
 
 
 ----------------------------------------------

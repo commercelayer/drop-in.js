@@ -1,6 +1,7 @@
 import { makeSalesChannel } from "@commercelayer/js-auth"
-import CommerceLayer, {
+import {
   bundles,
+  CommerceLayer,
   type Customer,
   customers,
   line_items,
@@ -8,7 +9,7 @@ import CommerceLayer, {
   organization,
   prices,
   skus,
-} from "@commercelayer/sdk"
+} from "@commercelayer/sdk/single-client"
 import Cookies from "js-cookie"
 import { memoize } from "lodash-es"
 import { fireEvent } from "@/apis/event"
@@ -111,6 +112,7 @@ export async function createClient(config: Config) {
   const token = await getAccessToken(config)
 
   CommerceLayer({
+    apiVersion: "2026-05",
     accessToken: token.accessToken,
     domain: config.domain,
     fetch: async (input, init) => {

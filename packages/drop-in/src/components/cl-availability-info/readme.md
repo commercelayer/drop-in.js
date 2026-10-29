@@ -1,7 +1,5 @@
 # cl-availability-info
 
-
-
 <!-- Auto Generated Below -->
 
 

@@ -1,8 +1,8 @@
 {
   "version": "2.27.0",
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "useNx": false,
+  "$schema": "https://unpkg.com/@lerna-lite/cli@5.6.4/schemas/lerna-schema.json",
   "npmClient": "pnpm",
+  "useWorkspaces": true,
   "command": {
     "version": {
       "preid": "beta"

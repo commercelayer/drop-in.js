@@ -1,7 +1,5 @@
 # cl-availability-status
 
-
-
 <!-- Auto Generated Below -->
 
 
@@ -10,6 +8,13 @@
 | Property            | Attribute | Description                                                                         | Type                                                                 | Default     |
 | ------------------- | --------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------- |
 | `type` _(required)_ | `type`    | The product availability status. It determines the visibility of the inner message. | `"available" \| "available-with-info" \| "unavailable" \| undefined` | `undefined` |
+
+
+## Slots
+
+| Slot | Description      |
+| ---- | ---------------- |
+|      | The default slot |
 
 
 ----------------------------------------------

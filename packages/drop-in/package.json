@@ -46,35 +46,35 @@
     "email": "marco.montalbano@commercelayer.io"
   },
   "dependencies": {
-    "@commercelayer/js-auth": "^8.0.0",
-    "@commercelayer/organization-config": "^2.8.4",
-    "@commercelayer/sdk": "^7.12.0",
-    "@types/lodash": "^4.17.24",
+    "@commercelayer/js-auth": "^8.0.2",
+    "@commercelayer/organization-config": "^2.8.5",
+    "@commercelayer/sdk": "^8.0.3",
+    "@types/lodash": "^4.17.27",
     "@types/lodash-es": "^4.17.12",
     "iframe-resizer": "4.3.11",
     "js-cookie": "^3.0.8",
     "lodash-es": "^4.18.1",
-    "type-fest": "^5.8.0"
+    "type-fest": "^5.10.0"
   },
   "peerDependencies": {
     "@stencil/core": "^4.0.0"
   },
   "devDependencies": {
-    "@stencil/core": "^4.43.5",
-    "@stencil/sass": "3.2.3",
-    "@stencil/vitest": "^1.14.0",
+    "@stencil/core": "^4.45.2",
+    "@stencil/sass": "3.3.3",
+    "@stencil/vitest": "^1.16.1",
     "@types/iframe-resizer": "^4.0.0",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^22.20.1",
-    "@vitest/browser-playwright": "^4.1.10",
+    "@types/node": "^22.20.5",
+    "@vitest/browser-playwright": "^5.0.5",
     "lodash": "^4.18.1",
-    "sass": "^1.101.0",
+    "sass": "^1.106.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.5"
   },
   "license": "MIT",
   "engines": {
-    "node": ">=22.22.1",
+    "node": ">=22.22.2",
     "pnpm": "10.4.0"
   }
 }

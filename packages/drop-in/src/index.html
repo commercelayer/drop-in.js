@@ -204,7 +204,7 @@
 
             const codes = Array.from(select.querySelectorAll('option')).flatMap(option => (
               [[
-                option.innerText,
+                option.textContent,
                 {
                   code: option.value,
                   quantity: parseInt(option.dataset.quantity, 10),
@@ -224,7 +224,7 @@
              * @type {(productCard: Element, options: { code: string; quantity?: number; name?: string; imageUrl?: string; frequency?: string; kind?: 'bundle' | 'sku'; description?: string; }) => void}
              */
             function updateProductCard(productCard, { code, quantity, description, name, imageUrl, frequency, kind }) {
-              productCard.querySelector('[data-id="pc--sku"]').innerText = code;
+              productCard.querySelector('[data-id="pc--sku"]').textContent = code;
               productCard.querySelector('[data-id="pc--img"]').src = kind === 'bundle'
                 ? 'https://res.cloudinary.com/commercelayer/image/upload/v1681465805/demo-store/assets/white-glossy-mug-15oz-valentines-day.png'
                 : `https://data.commercelayer.app/seed/images/skus/${code}_FLAT.png`
@@ -245,7 +245,7 @@
 
               productCard.querySelector('[data-id="pc--quantity"]').addEventListener('keyup', (event) => {
                 const qnt = parseInt(event.currentTarget.value, 10)
-                productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : qnt < -101 ? -101 : qnt
+                productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : Math.max(qnt , -101)
                 if (qnt > 101) {
                   event.currentTarget.value = 101
                 }
@@ -257,7 +257,7 @@
 
               productCard.querySelector('[data-id="pc--quantity"]').addEventListener('input', (event) => {
                 const qnt = parseInt(event.currentTarget.value, 10)
-              productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : qnt < -101 ? -101 : qnt
+              productCard.querySelector('cl-add-to-cart').quantity = qnt > 101 ? 101 : Math.max(qnt , -101)
               if (qnt > 101) {
                 event.currentTarget.value = 101
               }
