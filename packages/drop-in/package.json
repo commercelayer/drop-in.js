@@ -48,7 +48,7 @@
   "dependencies": {
     "@commercelayer/js-auth": "^8.0.2",
     "@commercelayer/organization-config": "^2.8.5",
-    "@commercelayer/sdk": "^7.12.1",
+    "@commercelayer/sdk": "^8.0.3",
     "@types/lodash": "^4.17.27",
     "@types/lodash-es": "^4.17.12",
     "iframe-resizer": "4.3.11",
@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@stencil/core": "^4.45.2",
-    "@stencil/sass": "3.2.3",
+    "@stencil/sass": "3.3.3",
     "@stencil/vitest": "^1.16.1",
     "@types/iframe-resizer": "^4.0.0",
     "@types/js-cookie": "^3.0.6",
