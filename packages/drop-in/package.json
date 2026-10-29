@@ -66,11 +66,11 @@
     "@types/iframe-resizer": "^4.0.0",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^22.20.5",
-    "@vitest/browser-playwright": "^4.1.12",
+    "@vitest/browser-playwright": "^5.0.5",
     "lodash": "^4.18.1",
     "sass": "^1.106.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.12"
+    "vitest": "^5.0.5"
   },
   "license": "MIT",
   "engines": {

@@ -41,7 +41,7 @@
     "concurrently": "^10.0.6",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
-    "replace-in-file": "^8.4.0",
+    "replace-in-file": "^9.0.0",
     "typescript": "^6.0.3"
   }
 }
