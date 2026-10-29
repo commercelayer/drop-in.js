@@ -22,7 +22,8 @@
       "!**/*.d.ts",
       "!**/replace-jsdelivr.js",
       "!**/node_modules",
-      "!**/package.json"
+      "!**/package.json",
+      "!**/packages/drop-in/src/components/**/readme.md"
     ]
   },
   "formatter": {

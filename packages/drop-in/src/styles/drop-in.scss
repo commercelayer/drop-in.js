@@ -18,7 +18,7 @@ cl-price-amount {
 
   &[type="compare-at"] {
     color: #878888;
-    font-size: .875em;
+    font-size: 0.875em;
     font-weight: 300;
     line-height: 1.25em;
     text-decoration: line-through;
@@ -77,7 +77,8 @@ cl-add-to-cart {
   }
 }
 
-cl-cart-link, .cl-cart-link {
+cl-cart-link,
+.cl-cart-link {
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -87,7 +88,7 @@ cl-cart-link, .cl-cart-link {
     bottom: 0;
     right: 0;
 
-    font-size: .5rem;
+    font-size: 0.5rem;
 
     border-radius: 50%;
     background-color: var(--cl-color-primary);
@@ -101,12 +102,13 @@ cl-cart-link, .cl-cart-link {
 
     padding: 0.2rem;
 
-    &[hide-when-empty=""], &[hide-when-empty="true"] {
+    &[hide-when-empty=""],
+    &[hide-when-empty="true"] {
       opacity: 0;
     }
 
     &[quantity] {
-      transition: opacity .3s;
+      transition: opacity 0.3s;
       opacity: 1;
     }
   }
